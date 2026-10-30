@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["DOM", "DOM.Iterable", "ES2022", "WebWorker"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "rootDir": ".",
+    "rewriteRelativeImportExtensions": true,
+    "types": ["@cloudflare/workers-types"]
+  },
+  "include": ["access.ts", "appMcp.ts", "appSession.ts", "directory.ts", "index.ts", "manifest.ts", "resource.ts", "server.ts", "types.ts"]
+}

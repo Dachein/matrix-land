@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "types": ["vite/client", "react", "react-dom"],
+    "paths": {
+      "@frontier-workspace/mate": ["../../sdk/mate/dist/index.d.ts"]
+    }
+  },
+  "include": ["src", "vite.config.ts"]
+}

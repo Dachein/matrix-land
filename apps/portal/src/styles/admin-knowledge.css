@@ -1,0 +1,446 @@
+.portal-admin-knowledge-page .portal-admin-toolbar {
+  flex-wrap: wrap;
+}
+
+.portal-admin-knowledge-filter {
+  flex: 0 1 210px;
+  width: 210px;
+}
+
+.portal-admin-knowledge-filter .workspaceListboxTrigger {
+  min-height: 38px;
+}
+
+.portal-admin-knowledge-metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.portal-admin-knowledge-table {
+  min-width: 1260px;
+}
+
+.portal-admin-knowledge-table th:nth-child(1) {
+  min-width: 250px;
+}
+
+.portal-admin-knowledge-table th:nth-child(2) {
+  min-width: 190px;
+}
+
+.portal-admin-knowledge-table th:nth-child(3) {
+  min-width: 150px;
+}
+
+.portal-admin-knowledge-table th:nth-child(4) {
+  min-width: 170px;
+}
+
+.portal-admin-knowledge-table td:nth-child(5),
+.portal-admin-knowledge-table td:nth-child(6) {
+  text-align: center;
+}
+
+.portal-admin-knowledge-table th:last-child,
+.portal-admin-knowledge-table td:last-child {
+  background: var(--portal-paper);
+  padding-left: var(--portal-space-2);
+  padding-right: var(--portal-space-3);
+  position: sticky;
+  right: 0;
+  width: 48px;
+  z-index: 1;
+}
+
+.portal-admin-knowledge-table th:last-child {
+  background: var(--portal-paper-soft);
+}
+
+.portal-admin-knowledge-table tbody tr:hover td:last-child {
+  background: var(--portal-paper-soft);
+}
+
+.portal-admin-knowledge-service-link {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  font: inherit;
+  gap: var(--portal-space-3);
+  min-width: 0;
+  padding: 0;
+  text-align: left;
+  width: 100%;
+}
+
+.portal-admin-knowledge-service-link:hover strong {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.portal-admin-knowledge-service-link:focus-visible {
+  border-radius: var(--portal-radius);
+  box-shadow: 0 0 0 3px var(--portal-focus-ring);
+  outline: 0;
+}
+
+.portal-admin-knowledge-service-link > span:last-child {
+  min-width: 0;
+}
+
+.portal-admin-knowledge-mark {
+  align-items: center;
+  background: color-mix(in srgb, var(--portal-green) 10%, var(--portal-paper));
+  border: 1px solid color-mix(in srgb, var(--portal-green) 28%, var(--portal-line));
+  color: var(--portal-green);
+  display: inline-flex;
+  flex: 0 0 auto;
+  height: 34px;
+  justify-content: center;
+  width: 34px;
+}
+
+.portal-admin-knowledge-mark.large {
+  height: 42px;
+  width: 42px;
+}
+
+.portal-admin-person.compact {
+  gap: var(--portal-space-2);
+}
+
+.portal-admin-knowledge-collaborators {
+  max-width: 220px;
+  overflow-wrap: anywhere;
+}
+
+.portal-admin-muted-value {
+  color: var(--portal-soft);
+  font-size: var(--portal-type-ui);
+}
+
+.portal-admin-number {
+  font-size: var(--portal-type-title);
+  text-align: center;
+}
+
+.portal-admin-knowledge-permission {
+  align-items: center;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: var(--portal-type-micro);
+  font-weight: 800;
+  gap: 5px;
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+
+.portal-admin-knowledge-permission.company {
+  background: color-mix(in srgb, var(--portal-green) 9%, var(--portal-paper));
+  color: var(--portal-green);
+}
+
+.portal-admin-knowledge-permission.targeted {
+  background: color-mix(in srgb, var(--portal-blue) 8%, var(--portal-paper));
+  color: var(--portal-blue);
+}
+
+.portal-admin-knowledge-permission.private {
+  background: var(--portal-paper-soft);
+  color: var(--portal-muted);
+}
+
+.portal-admin-dialog.portal-admin-knowledge-dialog {
+  max-height: min(920px, calc(100vh - 40px));
+  width: min(1040px, 100%);
+}
+
+.portal-admin-knowledge-dialog-title {
+  align-items: center;
+  display: flex;
+  gap: var(--portal-space-3);
+  min-width: 0;
+}
+
+.portal-admin-knowledge-dialog-title > div {
+  min-width: 0;
+}
+
+.portal-admin-knowledge-dialog-title small {
+  display: block;
+  max-width: 680px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.portal-admin-knowledge-dialog-body {
+  display: grid;
+  gap: var(--portal-space-5);
+}
+
+.portal-admin-knowledge-policy-note {
+  align-items: flex-start;
+  background: color-mix(in srgb, var(--portal-green) 6%, var(--portal-paper));
+  border: 1px solid var(--portal-line);
+  border-left: 4px solid var(--portal-green);
+  display: flex;
+  gap: var(--portal-space-3);
+  padding: var(--portal-space-4);
+}
+
+.portal-admin-knowledge-policy-note > svg {
+  color: var(--portal-green);
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+.portal-admin-knowledge-policy-note span,
+.portal-admin-knowledge-policy-note small {
+  display: block;
+}
+
+.portal-admin-knowledge-policy-note small {
+  color: var(--portal-muted);
+  line-height: 1.55;
+  margin-top: 3px;
+}
+
+.portal-admin-knowledge-detail-section {
+  border: 1px solid var(--portal-line);
+}
+
+.portal-admin-knowledge-detail-section > header {
+  background: var(--portal-paper-soft);
+  border-bottom: 1px solid var(--portal-line);
+  padding: var(--portal-space-4);
+}
+
+.portal-admin-knowledge-detail-section > header h3 {
+  font-size: var(--portal-type-title);
+  margin: var(--portal-space-1) 0 0;
+}
+
+.portal-admin-knowledge-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+}
+
+.portal-admin-knowledge-detail-grid > div {
+  border-bottom: 1px solid var(--portal-line);
+  min-width: 0;
+  padding: var(--portal-space-4);
+}
+
+.portal-admin-knowledge-detail-grid > div:nth-child(2n) {
+  border-left: 1px solid var(--portal-line);
+}
+
+.portal-admin-knowledge-detail-grid > div.full {
+  border-left: 0;
+  grid-column: 1 / -1;
+}
+
+.portal-admin-knowledge-detail-grid dt {
+  color: var(--portal-muted);
+  font-size: var(--portal-type-micro);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.portal-admin-knowledge-detail-grid dd {
+  line-height: 1.55;
+  margin: var(--portal-space-2) 0 0;
+  overflow-wrap: anywhere;
+}
+
+.portal-admin-knowledge-activity-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.5fr;
+}
+
+.portal-admin-knowledge-activity-strip > div {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--portal-space-3);
+  padding: var(--portal-space-4);
+}
+
+.portal-admin-knowledge-activity-strip > div + div {
+  border-left: 1px solid var(--portal-line);
+}
+
+.portal-admin-knowledge-activity-strip svg {
+  color: var(--portal-green);
+  margin-top: 2px;
+}
+
+.portal-admin-knowledge-activity-strip span,
+.portal-admin-knowledge-activity-strip small,
+.portal-admin-knowledge-activity-strip strong {
+  display: block;
+}
+
+.portal-admin-knowledge-activity-strip small {
+  color: var(--portal-muted);
+  font-size: var(--portal-type-micro);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.portal-admin-knowledge-activity-strip strong {
+  margin-top: var(--portal-space-1);
+}
+
+.portal-admin-knowledge-permission-summary {
+  align-items: center;
+  border-bottom: 1px solid var(--portal-line);
+  display: flex;
+  gap: var(--portal-space-3);
+  padding: var(--portal-space-4);
+}
+
+.portal-admin-knowledge-permission-summary p {
+  color: var(--portal-muted);
+  margin: 0;
+}
+
+.portal-admin-knowledge-principal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.portal-admin-knowledge-principal-group {
+  min-width: 0;
+}
+
+.portal-admin-knowledge-principal-group + .portal-admin-knowledge-principal-group {
+  border-left: 1px solid var(--portal-line);
+}
+
+.portal-admin-knowledge-principal-group.viewer {
+  border-left: 0;
+  border-top: 1px solid var(--portal-line);
+  grid-column: 1 / -1;
+}
+
+.portal-admin-knowledge-principal-group > header {
+  align-items: center;
+  border-bottom: 1px solid var(--portal-line);
+  color: var(--portal-muted);
+  display: flex;
+  gap: var(--portal-space-2);
+  min-height: 46px;
+  padding: 0 var(--portal-space-4);
+}
+
+.portal-admin-knowledge-principal-group > header h4 {
+  font-size: var(--portal-type-body);
+  margin: 0;
+}
+
+.portal-admin-knowledge-principal-group > div {
+  display: grid;
+  gap: var(--portal-space-2);
+  padding: var(--portal-space-3);
+}
+
+.portal-admin-knowledge-principal-group.viewer > div {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.portal-admin-knowledge-principal {
+  align-items: center;
+  border: 1px solid var(--portal-line);
+  display: flex;
+  gap: var(--portal-space-3);
+  min-width: 0;
+  padding: var(--portal-space-3);
+}
+
+.portal-admin-knowledge-principal > span:last-child {
+  min-width: 0;
+}
+
+.portal-admin-knowledge-principal strong,
+.portal-admin-knowledge-principal small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.portal-admin-knowledge-principal small {
+  color: var(--portal-muted);
+  font-size: var(--portal-type-ui);
+  margin-top: 2px;
+}
+
+.portal-admin-knowledge-principal-icon {
+  align-items: center;
+  background: var(--portal-paper-soft);
+  color: var(--portal-green);
+  display: inline-flex;
+  flex: 0 0 auto;
+  height: 30px;
+  justify-content: center;
+  width: 30px;
+}
+
+.portal-admin-knowledge-empty-principal {
+  color: var(--portal-soft);
+  margin: 0;
+  padding: var(--portal-space-3);
+}
+
+@media (max-width: 1080px) {
+  .portal-admin-knowledge-page .portal-admin-search {
+    margin-right: 0;
+    width: 100%;
+  }
+
+  .portal-admin-knowledge-filter {
+    flex: 1 1 220px;
+    width: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .portal-admin-dialog.portal-admin-knowledge-dialog {
+    border: 0;
+    height: 100%;
+    max-height: 100%;
+    width: 100%;
+  }
+
+  .portal-admin-knowledge-detail-grid,
+  .portal-admin-knowledge-activity-strip,
+  .portal-admin-knowledge-principal-grid,
+  .portal-admin-knowledge-principal-group.viewer > div {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-admin-knowledge-detail-grid > div,
+  .portal-admin-knowledge-detail-grid > div:nth-child(2n) {
+    border-left: 0;
+    grid-column: 1;
+  }
+
+  .portal-admin-knowledge-activity-strip > div + div,
+  .portal-admin-knowledge-principal-group + .portal-admin-knowledge-principal-group {
+    border-left: 0;
+    border-top: 1px solid var(--portal-line);
+  }
+
+  .portal-admin-knowledge-principal-group.viewer {
+    grid-column: 1;
+  }
+
+  .portal-admin-knowledge-permission-summary {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

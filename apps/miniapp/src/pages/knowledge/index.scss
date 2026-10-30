@@ -1,0 +1,35 @@
+.knowledge-page { display: flex; flex-direction: column; height: 100vh; overflow: hidden; background: #f6f5f1; }
+.knowledge-head { position: relative; display: flex; flex: none; align-items: center; padding: 0 24px; border-bottom: 1px solid #e5e2d9; background: #faf9f6; }
+.knowledge-menu-trigger { display: flex; flex: none; align-items: center; width: 76px; height: 76px; color: #34342f; font-size: 44px; font-weight: 600; }
+.knowledge-menu-trigger.back { font-size: 54px; font-weight: 400; }
+.knowledge-title { position: absolute; left: 50%; color: #25251f; font-size: 25px; font-weight: 700; white-space: nowrap; transform: translateX(-50%); }
+.knowledge-head-spacer { margin-left: auto; width: 76px; }
+.knowledge-content { flex: 1; min-height: 0; height: 0; padding: 20px 26px calc(36px + env(safe-area-inset-bottom)); box-sizing: border-box; }
+.knowledge-toolbar { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+.knowledge-search { display: flex; flex: 1; min-width: 0; align-items: center; gap: 10px; height: 68px; padding: 0 18px; border: 1px solid #dbd8ce; background: #fff; color: #858177; font-size: 31px; }
+.knowledge-search input { flex: 1; min-width: 0; height: 100%; color: #292923; font-size: 24px; }
+.knowledge-upload { flex: none; height: 68px; margin: 0; padding: 0 16px; border-radius: 2px; background: var(--ink); color: #fff; font-size: 24px; line-height: 68px; }
+.knowledge-upload::after { border: 0; }
+.knowledge-upload[disabled] { opacity: .55; }
+.knowledge-upload-status { display: block; margin: 0 0 16px; color: #637c4f; font-size: 20px; line-height: 1.5; }
+.knowledge-filters { display: flex; gap: 0; margin-bottom: 18px; border: 1px solid #ddd9cf; background: #fff; }
+.knowledge-filters text { flex: 1; padding: 13px 4px; color: #77736a; font-size: 24px; text-align: center; }
+.knowledge-filters text + text { border-left: 1px solid #ddd9cf; }
+.knowledge-filters text.active { background: var(--ink); color: #fff; box-shadow: inset 0 -5px var(--accent); }
+.knowledge-breadcrumbs { display: flex; gap: 4px; align-items: center; min-height: 53px; margin-bottom: 14px; overflow: hidden; color: var(--muted); font-size: 20px; white-space: nowrap; }
+.knowledge-breadcrumbs text { flex: none; max-width: 220px; overflow: hidden; text-overflow: ellipsis; }
+.knowledge-breadcrumbs text:last-child { color: #292923; font-weight: 650; }
+.knowledge-list { border-top: 1px solid #dedbd2; border-bottom: 1px solid #dedbd2; background: #fff; }
+.knowledge-row { display: flex; align-items: center; min-height: 92px; padding: 12px 15px; border-top: 1px solid #e5e2d9; box-sizing: border-box; }
+.knowledge-row:first-child { border-top: 0; }
+.knowledge-row-icon { flex: none; width: 33px; height: 33px; margin-right: 15px; }
+.knowledge-row-copy { flex: 1; min-width: 0; }
+.knowledge-row-name { display: block; overflow: hidden; color: #292923; font-size: 25px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+.knowledge-row-detail { display: block; overflow: hidden; margin-top: 5px; color: #77736a; font-size: 20px; text-overflow: ellipsis; white-space: nowrap; }
+.knowledge-row-sharing { display: flex; flex: none; align-items: center; margin-left: 16px; color: #817d73; font-size: 18px; font-weight: 400; white-space: nowrap; }
+.knowledge-row-chevron { flex: none; margin-left: 10px; color: #a8a49b; font-size: 30px; }
+.knowledge-list-group { display: block; padding: 15px; border-top: 1px solid #dedbd2; border-left: 5px solid var(--accent); background: #f2f0ea; color: #373831; font-size: 22px; font-weight: 700; }
+.knowledge-list-empty { display: block; padding: 24px 15px; color: #89857b; font-size: 20px; }
+.knowledge-state { display: block; padding: 48px 12px; color: #817d73; font-size: 22px; text-align: center; }
+.knowledge-error { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 48px 12px; color: var(--danger); font-size: 22px; text-align: center; }
+.knowledge-error button { min-width: 150px; height: 66px; border: 1px solid #d4d0c7; background: #fff; color: #292923; font-size: 22px; line-height: 66px; }

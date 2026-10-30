@@ -1,0 +1,2 @@
+ALTER TABLE auth_users ADD COLUMN job_title TEXT NOT NULL DEFAULT '';
+ALTER TABLE auth_app_users ADD COLUMN job_title TEXT NOT NULL DEFAULT '';

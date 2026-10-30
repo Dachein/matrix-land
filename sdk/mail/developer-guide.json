@@ -1,0 +1,17 @@
+{
+  "legacyNativeEmailSupportedThrough": "2026-12-31",
+  "legacyNativeEmailTimeZone": "Asia/Shanghai",
+  "newApplicationPolicy": "Use Workspace Mail SDK for new applications and explicitly requested email upgrades. Existing native-email applications retain compatibility through the end of 2026; do not migrate them as part of an unrelated deployment.",
+  "developmentPrompt": [
+    "请为当前 APPS 应用开发或升级邮件能力，统一使用 Workspace Mail SDK @frontier-workspace/mail {{SDK_VERSION}}。请直接实施并验证，保留应用现有业务逻辑、邮箱地址、域名和数据。",
+    "",
+    "1. 先调用 apps_app_read(action=get, appId=当前应用 ID)，核对当前开发指引、邮件能力、资源和权限；已有应用先检查源码中的 env.EMAIL.send 及邮件封装。新应用或本次明确要求升级的邮件功能使用 SDK；不主动改动其他旧应用。旧原生发信兼容支持至 2026-12-31（Asia/Shanghai）。",
+    "2. 固定安装 {{SDK_PACKAGE_URL}}，从 @frontier-workspace/mail 导入 WorkspaceMail。仅在服务端使用平台配置的 WORKSPACE_MAIL_ENDPOINT 和 WORKSPACE_MAIL_TOKEN。通过 APPS 创建或设置中的统一应用邮箱，或 apps_app_write(action=update_config, emailEnabled=true, emailPrefix=指定名称)，一次开通同一地址的收信与发信；调用 apps_app_read(action=mail_sdk, appId=当前应用 ID) 获取完整开发资源。不要自行申请 Cloudflare Token、平台签名密钥或选择其他应用的邮箱。",
+    "3. 发信统一使用 mail.send 或 mail.reply，使用与业务记录绑定并持久保存的 idempotencyKey。重复请求沿用同一个 key；遇到 delivery_unknown 时先查询和核对，不换 key 重发。附件通过 SDK 的 contentBase64 字段传输，由邮件服务保存原件、正文和独立附件；不要把邮件存进共用媒体桶或合并为 Base64 JSON 对象。",
+    "4. 收件使用 mailbox、list、get、getAttachment；按 nextCursor、nextBodyOffset、nextOffset 读取完整内容。邮件更新带 expectedVersion。使用 mailbox() 核对分配地址、收发能力及 Trigger 待投递/失败数量；不要自行拼接邮箱地址。",
+    "5. 普通 APPS 收件不自动创建 Mate Task。需要新邮件 Trigger 时，先开发 POST /_workspace/mail/received：在登录中间件之前用 verifyWorkspaceMailEvent(request,{token:env.WORKSPACE_MAIL_TOKEN,appId:env.WORKSPACE_APP_ID}) 验签，将 event.id 和待处理工作持久化并以唯一约束去重后返回 acknowledgeWorkspaceMailEvent(event)。通过 mail.get(event.messageId) 读取正文与附件；业务任务独立重试，回复仍使用持久化幂等 key。验证回调后在 APPS 开启 emailTriggerEnabled；通知至少投递一次，最多重试 20 次，不追溯历史邮件。Mate 的 Task 判定与结果回复仍由用户发布的 inboxPrompt 和 Runtime 处理。",
+    "6. 升级现有原生发信应用时，先完成源码替换和本地验证，再将 WORKSPACE_MAIL_LEGACY_NATIVE_EMAIL=0 与新版源码一起部署；保留可回滚的版本。没有源码或权限时说明具体缺口，不通过关闭旧通道来代替迁移。",
+    "7. 完成本地构建和相关测试，核对发件地址、邮件内容、中文附件名、附件字节及幂等性。使用当前会话明确授权的测试收件地址验证真实收发，避免向业务收件人发送测试邮件。",
+    "8. 发布遵循项目现有 CI/CD。APPS 应用按官方指引使用最新已发布 Workspace CLI，上传源码备份，填写版本号、版本名称和更新说明；按当前会话的发布授权执行预览、发布和回滚检查。交付改动、测试结果、线上版本及回滚方式。"
+  ]
+}

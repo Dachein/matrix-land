@@ -1,0 +1,10 @@
+ALTER TABLE apps_domains ADD COLUMN provider TEXT NOT NULL DEFAULT 'cloudflare';
+ALTER TABLE apps_domains ADD COLUMN provider_resource_id TEXT;
+ALTER TABLE apps_domains ADD COLUMN dns_record_id TEXT;
+ALTER TABLE apps_domains ADD COLUMN route_id TEXT;
+ALTER TABLE apps_domains ADD COLUMN certificate_status TEXT NOT NULL DEFAULT 'unknown';
+ALTER TABLE apps_domains ADD COLUMN route_status TEXT NOT NULL DEFAULT 'unknown';
+ALTER TABLE apps_domains ADD COLUMN fallback_url TEXT;
+ALTER TABLE apps_domains ADD COLUMN last_checked_at TEXT;
+ALTER TABLE apps_domains ADD COLUMN error_code TEXT;
+ALTER TABLE apps_domains ADD COLUMN error_message TEXT;

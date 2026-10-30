@@ -1,0 +1,19 @@
+.portal-apps-surface .mate-plugins .mate-plugins-heading { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+.mate-plugin-tabs { display: flex; gap: 20px; border-bottom: 1px solid var(--portal-line); }
+.mate-plugin-tabs [role="tab"] { display: inline-flex; align-items: center; gap: 6px; padding: 8px 2px 10px; margin-bottom: -1px; border: 0; border-bottom: 2px solid transparent; background: transparent; color: var(--portal-muted); font: inherit; font-size: 12px; font-weight: 500; }
+.mate-plugin-tabs [role="tab"][aria-selected="true"] { color: var(--portal-ink); border-bottom-color: currentColor; font-weight: 700; }
+.mate-plugin-tab-count { color: var(--portal-soft); font-size: 11px; }
+.mate-plugin-panel { min-width: 0; }
+.mate-plugin-panel > p { color: var(--portal-soft); font-size: 12px; line-height: 1.6; }
+.mate-plugin-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--portal-line); padding: 12px 0; }
+.mate-plugin-row > div:first-child { min-width: 0; }
+.mate-plugin-row strong, .mate-plugin-row small { display: block; overflow-wrap: anywhere; }
+.mate-plugin-row strong { color: var(--portal-ink); font-size: 12px; }
+.mate-plugin-row small { color: var(--portal-soft); font-size: 11px; line-height: 1.6; }
+.mate-plugin-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.mate-plugin-row button, .mate-plugins-heading button { flex-shrink: 0; white-space: nowrap; }
+.mate-plugin-panel > .mate-plugins-hint { margin-top: 12px; font-size: 10px; }
+.mate-plugin-confirm { padding: 12px; border: 1px solid var(--portal-line); background: var(--portal-paper-soft); }
+.mate-plugin-confirm p { margin-bottom: 10px; }
+.mate-plugin-confirm button + button { margin-left: 8px; }
+@media (max-width: 600px) { .mate-plugin-row { align-items: flex-start; flex-wrap: wrap; } }

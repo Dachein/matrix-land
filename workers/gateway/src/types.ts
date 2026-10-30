@@ -1,0 +1,11 @@
+export interface Env {
+  DB: D1Database;
+  LITELLM_PROVISIONING_KEY?: string;
+  LITELLM_URL?: string;
+  MODEL_HEALTH_CONCURRENCY?: string;
+  MODEL_HEALTH_DEGRADED_MS?: string;
+  MODEL_HEALTH_EXCLUDED_MODELS?: string;
+  MODEL_HEALTH_TIMEOUT_MS?: string;
+  USAGE_HISTORY_START_DATE?: string;
+  USAGE_REFRESH_LOOKBACK_DAYS?: string;
+}

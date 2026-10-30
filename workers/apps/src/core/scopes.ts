@@ -1,0 +1,9 @@
+export const APP_WRITE_SCOPES = ["apps:apps:write", "apps:apps:admin"];
+export const SKILL_WRITE_SCOPES = ["apps:skills:write", "apps:skills:admin"];
+export const MATE_WRITE_SCOPES = ["apps:mates:write", "apps:mates:admin"];
+export const SECRETS_WRITE_SCOPES = ["apps:secrets:write", "apps:apps:admin"];
+export const WRITE_SCOPES = [...APP_WRITE_SCOPES, ...SKILL_WRITE_SCOPES, ...SECRETS_WRITE_SCOPES];
+export const APP_READ_SCOPES = ["apps:apps:read", ...APP_WRITE_SCOPES];
+export const SKILL_READ_SCOPES = ["apps:skills:read", ...SKILL_WRITE_SCOPES];
+export const MATE_READ_SCOPES = ["apps:mates:read", ...MATE_WRITE_SCOPES];
+export const READ_SCOPES = ["apps:apps:read", "apps:skills:read", ...WRITE_SCOPES];

@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "workspace.agentruntime/v1",
+  "mate": {
+    "mateId": "knowledge-assistant",
+    "displayName": "Knowledge Mate",
+    "jobRole": "Find and explain authorized internal knowledge",
+    "description": "A platform Knowledge Mate that searches every Agent-enabled Knowledge Service currently visible to the invoking user.",
+    "ownerUserId": "user_publisher",
+    "addresses": [
+      { "type": "email", "address": "knowledge-assistant@agents.example.com" },
+      { "type": "pass_mcp", "tool": "mate_call" }
+    ]
+  },
+  "release": {
+    "releaseId": "knowledge-assistant-r1",
+    "version": 1,
+    "status": "candidate",
+    "soul": {
+      "id": "knowledge-assistant-soul",
+      "version": 1,
+      "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "handbooks": [
+      {
+        "id": "knowledge-assistant-runtime-handbook",
+        "version": 1,
+        "digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+      }
+    ],
+    "skills": []
+  },
+  "resources": {
+    "appMcpBindings": [],
+    "knowledgeServiceBindings": [],
+    "knowledgeServiceScope": {
+      "mode": "all_visible_to_invoking_user",
+      "allowedOperations": ["search", "read"],
+      "authority": { "mode": "invoking_user" },
+      "requiresCurrentUserAuthorization": true
+    },
+    "builtInToolBindings": [
+      { "toolId": "public_web_read", "requiresCurrentUserContext": true },
+      { "toolId": "public_web_search", "requiresCurrentUserContext": true },
+      { "toolId": "ocr", "requiresCurrentUserContext": true },
+      { "toolId": "document_read", "requiresCurrentUserContext": true },
+      { "toolId": "artifact_create", "requiresCurrentUserContext": true }
+    ],
+    "skillDiscoveryPolicy": {
+      "discoverAndRecommend": true,
+      "autoInstall": false,
+      "installationRequests": false
+    }
+  },
+  "modelPolicy": {
+    "defaultModel": "tencent-deepseek-v4-flash",
+    "allowedModels": ["tencent-deepseek-v4-flash"],
+    "allowUserSelection": false,
+    "multimodal": {
+      "imageInput": true,
+      "documentInput": true,
+      "audioInput": false
+    }
+  },
+  "channels": {
+    "standalone": { "enabled": true },
+    "embedded": { "enabled": false },
+    "inbox": {
+      "email": { "enabled": true },
+      "mateCall": {
+        "enabled": true,
+        "transport": "workspace_pass_mcp",
+        "tool": "mate_call"
+      },
+      "schedule": { "enabled": false },
+      "webhook": { "enabled": false }
+    }
+  },
+  "invocationPolicy": {
+    "visibility": "organization",
+    "requireAuthenticatedUser": true,
+    "allowedCallerKinds": ["user", "app", "mate", "email_binding"]
+  },
+  "eligibilityPolicy": {
+    "denyIfRequirementUnknown": true,
+    "resourceRequirements": []
+  },
+  "preferenceSchema": {
+    "version": 1,
+    "fields": [
+      { "key": "language", "type": "enum", "sensitive": false, "allowedValues": ["zh-CN", "en"] },
+      { "key": "responseDensity", "type": "enum", "sensitive": false, "allowedValues": ["brief", "normal", "detailed"] }
+    ]
+  },
+  "taskPolicy": {
+    "requireUserOwnership": true,
+    "conclusionRequired": true,
+    "defaultTimezone": "UTC",
+    "scheduledJobs": [],
+    "approvals": {
+      "writeRiskLevels": ["medium", "high", "critical"],
+      "singleUse": true,
+      "revalidateDelegation": true
+    },
+    "mateCallLimits": {
+      "maxDepth": 3,
+      "maxChildrenPerTask": 8,
+      "maxTasksPerRoot": 24,
+      "maxRunSeconds": 1800
+    }
+  },
+  "memoryPolicy": {
+    "conversationHistory": {
+      "enabled": true,
+      "preserveOriginals": true,
+      "compaction": {
+        "enabled": true,
+        "strategy": "non_destructive_overlay",
+        "triggerEstimatedTokens": 64000,
+        "protectHeadMessages": 3,
+        "tailTokenBudget": 16000,
+        "minTailMessages": 4,
+        "maxSummaryTokens": 4000
+      }
+    },
+    "userMemory": {
+      "storage": "structured_runtime_api",
+      "automaticConversationExtraction": false,
+      "freeformFiles": false
+    }
+  },
+  "experiencePolicy": {
+    "automaticHandbookMutation": false,
+    "requiresSanitization": true,
+    "requiresReview": true,
+    "conversation": {
+      "enabled": true,
+      "channels": ["web"]
+    },
+    "taskInbox": {
+      "enabled": true,
+      "channels": ["mate_call", "email"]
+    },
+    "ownerTesting": {
+      "enabled": true,
+      "candidateReleaseOnly": true,
+      "isolatedFromLiveData": true
+    }
+  }
+}

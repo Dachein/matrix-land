@@ -1,0 +1,42 @@
+{
+  "name": "@frontier-workspace/auth",
+  "version": "0.1.0",
+  "description": "Official Workspace App Session, organization directory, Resource API, and App MCP RBAC SDK for Cloudflare Workers and Pages Functions.",
+  "type": "module",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "import": "./dist/server.js"
+    },
+    "./resource": {
+      "types": "./dist/resource.d.ts",
+      "import": "./dist/resource.js"
+    },
+    "./app-mcp": {
+      "types": "./dist/appMcp.d.ts",
+      "import": "./dist/appMcp.js"
+    },
+    "./directory": {
+      "types": "./dist/directory.d.ts",
+      "import": "./dist/directory.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepare": "npm run build",
+    "pack:sdk": "npm run build && npm pack"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "private": true
+}

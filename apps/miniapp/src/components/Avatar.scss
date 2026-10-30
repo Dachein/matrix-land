@@ -1,0 +1,5 @@
+.avatar { position: relative; display: flex; flex: none; align-items: center; justify-content: center; overflow: hidden; border-radius: 20%; background: transparent; }
+.avatar-image { display: block; width: 100%; height: 100%; }
+.avatar-image-configured { position: absolute; inset: 0; }
+.avatar-image-loading { opacity: 0; }
+.avatar-monogram { color: #fff; font-weight: 700; line-height: 1; }

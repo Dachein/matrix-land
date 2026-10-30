@@ -1,0 +1,9 @@
+{
+  "name": "workspace-backup-transfer-agent",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "start": "node src/index.mjs" },
+  "dependencies": { "ssh2": "^1.17.0" },
+  "engines": { "node": ">=22" }
+}

@@ -1,0 +1,2 @@
+-- The canonical schema is managed by db/d1-migrations.
+-- Apply locally with: npm run backup-worker:db:migrations:apply:local

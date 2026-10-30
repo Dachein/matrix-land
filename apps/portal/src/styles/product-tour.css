@@ -1,0 +1,424 @@
+.product-tour-backdrop {
+  position: fixed;
+  z-index: 1200;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: auto;
+  background: var(--portal-ink-a88);
+  padding: clamp(12px, 3vw, 48px);
+}
+
+.product-tour {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: min(1440px, 100%);
+  max-height: min(900px, calc(100vh - clamp(24px, 6vw, 96px)));
+  min-height: min(720px, calc(100vh - clamp(24px, 6vw, 96px)));
+  overflow: hidden;
+  border: 1px solid var(--portal-line-strong);
+  background: var(--portal-paper);
+  box-shadow: var(--portal-shadow-tour);
+  color: var(--portal-ink);
+}
+
+.product-tour-header {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 78px;
+  border-bottom: 1px solid var(--portal-line);
+  padding: 14px 18px 14px 22px;
+}
+
+.product-tour-heading {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.product-tour-heading small,
+.product-tour-story > div:first-child > small {
+  color: var(--portal-muted);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.product-tour-heading h2 {
+  margin: 0;
+  font-size: clamp(20px, 2vw, 30px);
+  font-weight: 920;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+}
+
+.product-tour-header-actions {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.product-tour-progress-copy {
+  color: var(--portal-muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.product-tour-icon-button {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--portal-line-strong);
+  background: var(--portal-paper);
+  cursor: pointer;
+}
+
+.product-tour-icon-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.product-tour-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.82fr) minmax(300px, 0.78fr);
+  min-width: 0;
+  min-height: 0;
+}
+
+.product-tour-viewport {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border-right: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+}
+
+.product-tour-container {
+  display: flex;
+  height: 100%;
+  touch-action: pan-y pinch-zoom;
+}
+
+.product-tour-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  min-height: 0;
+  background: var(--portal-paper-soft);
+}
+
+.product-tour-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
+  user-select: none;
+}
+
+.product-tour-story {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: clamp(18px, 2.4vw, 32px);
+  min-width: 0;
+  min-height: 0;
+  background: var(--portal-ink);
+  color: var(--portal-paper);
+  padding: clamp(24px, 3.1vw, 46px);
+}
+
+.product-tour-story > div:first-child {
+  display: grid;
+  gap: 12px;
+}
+
+.product-tour-story > div:first-child > small {
+  color: var(--portal-signal);
+}
+
+.product-tour-story h3 {
+  margin: 0;
+  font-size: clamp(28px, 3vw, 48px);
+  font-weight: 930;
+  letter-spacing: -0.05em;
+  line-height: 0.98;
+}
+
+.product-tour-summary {
+  margin: 0;
+  color: var(--portal-white-a74);
+  font-size: clamp(15px, 1.25vw, 19px);
+  font-weight: 600;
+  line-height: 1.55;
+}
+
+.product-tour-narration {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px;
+  align-content: end;
+  align-items: start;
+  border-top: 1px solid var(--portal-white-a22);
+  padding-top: 20px;
+}
+
+.product-tour-narration svg {
+  width: 18px;
+  height: 18px;
+  color: var(--portal-signal);
+}
+
+.product-tour-narration p {
+  margin: 0;
+  color: var(--portal-white-a68);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.product-tour-narration-button {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  border: 1px solid var(--portal-signal);
+  background: var(--portal-signal);
+  color: var(--portal-ink);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.product-tour-narration-button svg {
+  width: 17px;
+  height: 17px;
+  fill: currentColor;
+}
+
+.product-tour-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  min-height: 92px;
+  border-top: 1px solid var(--portal-line);
+}
+
+.product-tour-scene-nav {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  min-width: 0;
+}
+
+.product-tour-scene-nav button {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  border: 0;
+  border-right: 1px solid var(--portal-line);
+  background: var(--portal-paper);
+  padding: 13px 15px;
+  color: var(--portal-muted);
+  cursor: pointer;
+  text-align: left;
+}
+
+.product-tour-scene-nav button:hover,
+.product-tour-scene-nav button:focus-visible,
+.product-tour-scene-nav button.active {
+  background: var(--portal-paper-soft);
+  color: var(--portal-ink);
+}
+
+.product-tour-scene-nav button.active {
+  box-shadow: inset 0 4px 0 var(--portal-signal);
+}
+
+.product-tour-scene-nav span {
+  color: var(--portal-signal);
+  font-size: 14px;
+  font-weight: 950;
+}
+
+.product-tour-scene-nav strong {
+  overflow: hidden;
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.product-tour-paging {
+  display: flex;
+}
+
+.product-tour-paging button {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  min-width: 112px;
+  border: 0;
+  border-left: 1px solid var(--portal-line);
+  background: var(--portal-paper);
+  color: var(--portal-ink);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.product-tour-paging button.primary {
+  background: var(--portal-ink);
+  color: var(--portal-paper);
+}
+
+.product-tour-paging button:disabled {
+  color: var(--portal-line-strong);
+  cursor: default;
+}
+
+.product-tour-paging svg {
+  width: 17px;
+  height: 17px;
+}
+
+.product-tour button:focus-visible {
+  outline: 3px solid var(--portal-signal);
+  outline-offset: -3px;
+}
+
+@media (max-width: 980px) {
+  .product-tour {
+    min-height: min(820px, calc(100vh - 24px));
+    max-height: calc(100vh - 24px);
+  }
+
+  .product-tour-body {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(260px, 1.2fr) minmax(0, 0.8fr);
+  }
+
+  .product-tour-viewport {
+    border-right: 0;
+    border-bottom: 1px solid var(--portal-line);
+  }
+
+  .product-tour-story {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) auto;
+    grid-template-rows: 1fr;
+    align-items: center;
+    padding: 24px;
+  }
+
+  .product-tour-story h3 {
+    font-size: clamp(24px, 5vw, 38px);
+  }
+
+  .product-tour-narration {
+    align-content: start;
+  }
+
+  .product-tour-narration-button {
+    align-self: stretch;
+    padding: 0 18px;
+  }
+
+  .product-tour-scene-nav strong {
+    display: none;
+  }
+
+  .product-tour-scene-nav button {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 680px) {
+  .product-tour-backdrop {
+    display: block;
+    padding: 0;
+  }
+
+  .product-tour {
+    width: 100%;
+    min-height: 100dvh;
+    max-height: none;
+    border: 0;
+  }
+
+  .product-tour-header {
+    min-height: 64px;
+    padding: 10px 12px 10px 16px;
+  }
+
+  .product-tour-heading h2 {
+    font-size: 20px;
+  }
+
+  .product-tour-heading small,
+  .product-tour-progress-copy {
+    font-size: 9px;
+  }
+
+  .product-tour-body {
+    grid-template-rows: minmax(235px, 0.85fr) minmax(0, 1.15fr);
+  }
+
+  .product-tour-story {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    gap: 15px;
+    padding: 20px;
+  }
+
+  .product-tour-story h3 {
+    font-size: 30px;
+  }
+
+  .product-tour-summary {
+    font-size: 14px;
+  }
+
+  .product-tour-narration {
+    align-content: start;
+    padding-top: 14px;
+  }
+
+  .product-tour-narration p {
+    font-size: 12px;
+  }
+
+  .product-tour-footer {
+    position: sticky;
+    bottom: 0;
+    grid-template-columns: 1fr;
+    min-height: 116px;
+    background: var(--portal-paper);
+  }
+
+  .product-tour-scene-nav {
+    min-height: 48px;
+  }
+
+  .product-tour-scene-nav button {
+    padding: 8px;
+  }
+
+  .product-tour-paging {
+    min-height: 60px;
+  }
+
+  .product-tour-paging button {
+    flex: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .product-tour * {
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,16 @@
+.mate-settings-page { padding: 0 28px calc(36px + env(safe-area-inset-bottom)); }
+.settings-topbar { position: relative; display: flex; align-items: center; justify-content: space-between; }
+.settings-back { width: 64px; color: var(--ink); font-size: 48px; line-height: 1; }
+.settings-title { flex: 1; color: var(--ink); font-size: 26px; font-weight: 650; text-align: center; }
+.settings-topbar-spacer { width: 64px; flex: none; }
+.settings-card { margin-top: 28px; padding: 28px; border-radius: 4px; }
+.settings-card-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.settings-name { display: block; min-width: 0; flex: 1; color: var(--ink); font-size: 30px; font-weight: 730; overflow-wrap: anywhere; }
+.settings-delete-button { width: auto; min-width: 88px; height: 58px; margin: 0; padding: 0 18px; border: 1px solid #d9c8c5; border-radius: 4px; background: #fff; color: var(--danger); font-size: 21px; line-height: 56px; }
+.settings-delete-button::after { border: 0; }
+.settings-delete-button[disabled] { color: #99968f; }
+.settings-help { display: block; margin: 8px 0 28px; color: var(--muted); font-size: 20px; line-height: 1.5; }
+.settings-code { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; color: var(--muted); font-size: 20px; }
+.settings-code text:nth-child(2) { color: var(--ink); font-weight: 650; }
+.settings-save { width: 100%; height: 80px; margin-top: 22px; border-radius: 4px; background: var(--ink); color: #fff; font-size: 25px; line-height: 80px; }
+.settings-save[disabled] { background: #d8d5cd; }

@@ -1,0 +1,184 @@
+.knowledgeFolderPickerOverlay {
+  position: fixed;
+  z-index: 10000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  background: var(--portal-ink-a34, rgba(17, 17, 15, .34));
+  padding: var(--portal-space-5, 24px);
+}
+
+.knowledgeFolderPickerDialog {
+  --picker-ink: var(--portal-ink, #11110f);
+  --picker-muted: var(--portal-muted, #5e5a52);
+  --picker-soft: var(--portal-soft, #817b71);
+  --picker-line: var(--portal-line, #d4d0c7);
+  --picker-line-strong: var(--portal-line-strong, #aaa49a);
+  --picker-paper: var(--portal-paper, #fff);
+  --picker-paper-soft: var(--portal-paper-soft, #faf9f6);
+  --picker-blue: var(--portal-blue, #245cab);
+  --picker-blue-hover: var(--portal-blue-a06, rgba(36, 92, 171, .06));
+  --picker-focus: var(--portal-focus-ring, rgba(17, 17, 15, .18));
+  width: min(520px, 100%);
+  max-height: min(680px, 90vh);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--picker-line-strong);
+  border-radius: var(--portal-radius, 3px);
+  background: var(--picker-paper);
+  color: var(--picker-ink);
+  box-shadow: var(--portal-shadow-float, 0 18px 48px rgba(17, 17, 15, .16));
+  font: 12px/1.5 Inter, "Noto Sans SC", ui-sans-serif, system-ui, sans-serif;
+}
+
+.knowledgeFolderPickerDialog button,
+.knowledgeFolderPickerDialog input { font: inherit; }
+
+.knowledgeFolderPickerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid var(--picker-line);
+  padding: 16px;
+}
+
+.knowledgeFolderPickerTitle { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.knowledgeFolderPickerTitle svg { color: var(--picker-blue); }
+
+.knowledgeFolderPickerDialog .iconButton {
+  display: inline-grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--picker-line);
+  border-radius: var(--portal-radius, 3px);
+  background: var(--picker-paper);
+  color: var(--picker-ink);
+  padding: 0;
+}
+
+.knowledgeFolderPickerLocation {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 52px;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--picker-line);
+  padding: 0 16px;
+  white-space: nowrap;
+  scrollbar-width: thin;
+}
+
+.knowledgeFolderPickerLocation button {
+  display: inline-flex;
+  align-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--picker-muted);
+  padding: 5px 0;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.knowledgeFolderPickerLocation > button:first-child { color: var(--picker-ink); }
+.knowledgeFolderPickerLocation button[aria-current="location"],
+.knowledgeFolderPickerLocation button:hover { color: var(--picker-blue); }
+.knowledgeFolderPickerCrumb { display: inline-flex; align-items: center; gap: 6px; color: var(--picker-soft); }
+.knowledgeFolderPickerCrumb button { max-width: 180px; overflow: hidden; text-overflow: ellipsis; }
+
+.knowledgeFolderPickerListHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 34px;
+  color: var(--picker-soft);
+  padding: 0 16px;
+  font-size: 10px;
+}
+
+.knowledgeFolderPickerList {
+  min-height: 170px;
+  overflow-y: auto;
+  border-top: 1px solid var(--picker-line);
+  border-bottom: 1px solid var(--picker-line);
+}
+
+.knowledgeFolderPickerList p { padding: 18px 16px; color: var(--picker-soft); font-size: 11px; }
+.knowledgeFolderPickerList p[role="alert"] { color: var(--portal-rose, #b23a4a); }
+
+.knowledgeFolderPickerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 59px;
+  border: 0;
+  border-top: 1px solid var(--picker-line);
+  background: var(--picker-paper);
+  color: var(--picker-soft);
+  padding: 0 16px;
+  text-align: left;
+}
+
+.knowledgeFolderPickerRow:first-child { border-top: 0; }
+.knowledgeFolderPickerRow:hover,
+.knowledgeFolderPickerRow:focus-visible { background: var(--picker-blue-hover); }
+.knowledgeFolderPickerRowName { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.knowledgeFolderPickerRowName svg { flex: 0 0 auto; color: var(--picker-blue); }
+.knowledgeFolderPickerRowName strong { overflow: hidden; color: var(--picker-ink); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+
+.knowledgeFolderPickerTools { padding: 12px 16px; }
+.knowledgeFolderPickerDialog .primaryButton,
+.knowledgeFolderPickerDialog .secondaryButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 38px;
+  border-radius: var(--portal-radius, 3px);
+  padding: 0 14px;
+  font-weight: 860;
+  white-space: nowrap;
+}
+.knowledgeFolderPickerDialog .primaryButton { border: 1px solid var(--picker-ink); background: var(--picker-ink); color: var(--picker-paper); }
+.knowledgeFolderPickerDialog .secondaryButton { border: 1px solid var(--picker-line-strong); background: var(--picker-paper); color: var(--picker-ink); }
+.knowledgeFolderPickerDialog button:disabled { cursor: default; opacity: .55; }
+.knowledgeFolderPickerDialog button:not(:disabled) { cursor: pointer; }
+.knowledgeFolderPickerDialog button:focus-visible,
+.knowledgeFolderPickerDialog input:focus-visible { outline: 3px solid var(--picker-focus); outline-offset: 2px; }
+
+.knowledgeFolderPickerCreate { display: grid; gap: 8px; }
+.knowledgeFolderPickerCreate label { color: var(--picker-muted); font-size: 10px; font-weight: 850; }
+.knowledgeFolderPickerCreate > div { display: flex; gap: 8px; }
+.knowledgeFolderPickerCreate input {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 38px;
+  border: 1px solid var(--picker-line-strong);
+  border-radius: var(--portal-radius, 3px);
+  background: var(--picker-paper);
+  color: var(--picker-ink);
+  padding: 8px 10px;
+}
+.knowledgeFolderPickerCreateCancel { justify-self: start; border: 0; background: transparent; color: var(--picker-muted); padding: 2px 0; }
+.knowledgeFolderPickerCreateCancel:hover { color: var(--picker-blue); }
+
+.knowledgeFolderPickerActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  border-top: 1px solid var(--picker-line);
+  padding: 12px 16px;
+}
+.knowledgeFolderPickerActions > span { flex: 1 1 auto; min-width: 0; overflow: hidden; color: var(--picker-soft); text-overflow: ellipsis; white-space: nowrap; font-size: 11px; }
+
+@media (max-width: 520px) {
+  .knowledgeFolderPickerOverlay { padding: 12px; }
+  .knowledgeFolderPickerActions { flex-wrap: wrap; }
+  .knowledgeFolderPickerActions > span { flex-basis: 100%; }
+}

@@ -1,0 +1,6 @@
+.portal-apps-surface .appsModal.mate-connections-modal { display: flex; flex-direction: column; height: min(560px, calc(100dvh - 40px)); max-height: calc(100dvh - 40px); overflow: hidden; }
+.mate-connections-modal > .appsModalHeader { flex-shrink: 0; }
+.portal-apps-surface .mate-connections-modal > .mate-plugins { display: flex; flex: 1; flex-direction: column; min-height: 0; margin: 0; border: 0; padding: var(--portal-space-4); background: var(--portal-paper); }
+.mate-connections-modal .mate-plugin-tabs { flex-shrink: 0; }
+.mate-connections-modal .mate-plugin-panel { flex: 1; min-height: 0; overflow-y: auto; }
+.mate-connections-modal .mate-plugin-confirm { flex-shrink: 0; }

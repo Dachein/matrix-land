@@ -1,0 +1,101 @@
+body:has(> #root > .tm-launch-gate) {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+.tm-launch-gate,
+.tm-launch-gate *,
+.tm-launch-gate *::before,
+.tm-launch-gate *::after {
+  box-sizing: border-box;
+}
+
+.tm-launch-gate {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 10px;
+  padding: 28px;
+  overflow: hidden;
+  background: #edece5;
+  color: #18231d;
+  font-family: Inter, "Noto Sans SC", ui-sans-serif, system-ui, sans-serif;
+  font-synthesis: none;
+  text-align: center;
+}
+
+.tm-launch-gate.is-minimal,
+.portal-mate-page .tm-launch-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+}
+
+.tm-launch-gate-spinner {
+  width: 34px;
+  height: 34px;
+  border: 3px solid #d3d8d0;
+  border-top-color: #277a4b;
+  border-radius: 50%;
+  animation: tm-launch-gate-spin .8s linear infinite;
+}
+
+.tm-launch-gate-minimal-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes tm-launch-gate-spin {
+  to { transform: rotate(360deg); }
+}
+
+.tm-launch-gate-avatar {
+  width: 76px;
+  height: 76px;
+  display: block;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.tm-launch-gate-eyebrow {
+  margin: 2px 0 0;
+  color: #67736c;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.tm-launch-gate h1 {
+  margin: 0;
+  font-size: clamp(25px, 4vw, 38px);
+  line-height: 1.15;
+}
+
+.tm-launch-gate > p:not(.tm-launch-gate-eyebrow) {
+  max-width: 540px;
+  margin: 0;
+  color: #67736c;
+  line-height: 1.6;
+}
+
+@media (max-width: 640px) {
+  .tm-launch-gate {
+    padding: 22px;
+  }
+
+  .tm-launch-gate-avatar {
+    width: 64px;
+    height: 64px;
+  }
+}

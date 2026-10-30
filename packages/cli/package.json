@@ -1,0 +1,27 @@
+{
+  "name": "@frontier-workspace/cli",
+  "version": "0.1.0",
+  "description": "Workspace MCP CLI for desktop agents, hosted MCP, default Agent mailboxes, uploads and APPS deployment",
+  "type": "module",
+  "bin": {
+    "frontier-workspace": "bin/frontier-workspace.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "CHANGELOG.md",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "fflate": "^0.8.2",
+    "ignore": "^7.0.6"
+  },
+  "license": "MIT",
+  "private": true
+}

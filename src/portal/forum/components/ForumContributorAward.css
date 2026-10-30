@@ -1,0 +1,51 @@
+.forumContributorAwardBadge {
+  align-items: center;
+  background: color-mix(in srgb, var(--portal-violet) 12%, var(--portal-paper));
+  border: 1px solid color-mix(in srgb, var(--portal-violet) 42%, var(--portal-line));
+  color: var(--portal-violet);
+  cursor: help;
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 10px;
+  font-weight: 850;
+  gap: 5px;
+  line-height: 1;
+  padding: 4px 7px;
+  position: relative;
+  vertical-align: middle;
+}
+
+.forumContributorAwardBadge b {
+  color: var(--portal-violet);
+  font-size: 9px;
+}
+
+.forumContributorAwardBadge::after {
+  background: var(--portal-ink);
+  border: 1px solid var(--portal-line-strong);
+  color: var(--portal-paper);
+  content: attr(data-tooltip);
+  font-size: 10px;
+  font-weight: 650;
+  line-height: 1.45;
+  max-width: 280px;
+  opacity: 0;
+  padding: 7px 9px;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 7px);
+  transform: translateY(-3px);
+  transition: opacity 120ms ease, transform 120ms ease;
+  visibility: hidden;
+  white-space: normal;
+  width: max-content;
+  z-index: 45;
+}
+
+.forumContributorAwardBadge:hover::after,
+.forumContributorAwardBadge:focus-visible::after {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+}

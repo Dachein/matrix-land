@@ -1,0 +1,17 @@
+.file-import-page { min-height: 100vh; background: #f6f5f1; color: #292822; }
+.file-import-head { display: flex; align-items: center; gap: 28px; padding: calc(env(safe-area-inset-top) + 28px) 28px 28px; background: #faf9f6; font-size: 30px; font-weight: 700; }
+.file-import-head text:first-child { font-size: 48px; line-height: 1; }
+.file-import-content { padding: 68px 32px; }
+.file-import-eyebrow { display: block; color: var(--muted); font-size: 18px; font-weight: 700; letter-spacing: 3px; }
+.file-import-title { display: block; margin: 14px 0 38px; font-size: 38px; font-weight: 700; }
+.file-import-card { display: flex; align-items: center; gap: 20px; min-height: 124px; margin-bottom: 42px; padding: 22px; border: 1px solid #e2dfd6; background: #fff; }
+.file-import-icon { flex: none; width: 50px; height: 60px; }
+.file-import-file { min-width: 0; }
+.file-import-name { display: block; overflow: hidden; font-size: 25px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+.file-import-meta { display: block; margin-top: 8px; color: #77736b; font-size: 20px; }
+.file-import-primary, .file-import-secondary, .file-import-choose { height: 88px; margin: 18px 0; border-radius: 4px; font-size: 25px; font-weight: 650; line-height: 88px; }
+.file-import-primary { background: var(--ink); color: #fff; }
+.file-import-secondary, .file-import-choose { border: 1px solid var(--line); background: #fff; color: var(--ink); }
+.file-import-secondary[disabled], .file-import-choose[disabled] { background: #fff; color: #77736b; }
+.file-import-hint, .file-import-status, .file-import-error { display: block; margin-top: 24px; font-size: 20px; line-height: 1.5; }
+.file-import-hint { color: var(--muted); }.file-import-status { color: var(--success); }.file-import-error { color: var(--danger); }

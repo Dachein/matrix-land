@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180" fill="none">
+  <title>Model Context Protocol</title>
+  <mask id="mcp-mark-mask" x="7" y="7" width="166" height="166" maskUnits="userSpaceOnUse" style="mask-type:luminance">
+    <path d="M173 7H7v166h166V7Z" fill="#fff"/>
+  </mask>
+  <g mask="url(#mcp-mark-mask)" stroke="#000" stroke-width="11.0667" stroke-linecap="round">
+    <path d="m23.5996 85.2532 62.6025-62.6025c8.6436-8.6436 22.6579-8.6436 31.3009 0 8.644 8.6435 8.644 22.6576 0 31.3012L70.2254 101.23"/>
+    <path d="m70.8789 100.578 46.6251-46.626c8.644-8.6437 22.659-8.6437 31.302 0l.326.326c8.644 8.6436 8.644 22.6577 0 31.3012l-56.6181 56.6188c-2.8812 2.881-2.8812 7.552 0 10.433l11.6261 11.626"/>
+    <path d="m101.853 38.3013-46.3 46.2998c-8.6436 8.6436-8.6436 22.6569 0 31.3009 8.6436 8.644 22.6576 8.644 31.3013 0l46.2997-46.2995"/>
+  </g>
+</svg>

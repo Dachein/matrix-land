@@ -1,0 +1,4533 @@
+.portal-apps-workspace {
+  width: min(100%, 1160px);
+}
+
+.portal-apps-page {
+  gap: var(--portal-space-5);
+}
+
+.portal-apps-heading {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--portal-space-8);
+  align-items: center;
+  overflow: hidden;
+  border-bottom: 1px solid var(--portal-line-strong);
+  background:
+    linear-gradient(90deg, var(--portal-signal) 0 4px, transparent 4px),
+    linear-gradient(135deg, var(--portal-paper) 0%, var(--portal-paper-soft) 100%);
+  box-shadow: var(--portal-shadow-paper);
+  padding: var(--portal-space-6) var(--portal-space-6) var(--portal-space-6) calc(var(--portal-space-6) + 4px);
+}
+
+.portal-apps-heading::after {
+  position: absolute;
+  z-index: 0;
+  top: -76px;
+  right: 142px;
+  width: 174px;
+  height: 174px;
+  border: 1px solid var(--portal-ink-a08);
+  border-radius: 50%;
+  box-shadow: 0 0 0 28px var(--portal-ink-a055), 0 0 0 57px var(--portal-ink-a055);
+  content: "";
+  pointer-events: none;
+}
+
+.portal-apps-heading > * {
+  position: relative;
+  z-index: 1;
+}
+
+.portal-apps-heading .portal-page-heading-copy {
+  display: grid;
+  min-width: 0;
+}
+
+.portal-apps-kicker {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  width: fit-content;
+  margin-bottom: 10px;
+  color: var(--portal-soft);
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.portal-apps-orbit-mark {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  border: 1px solid var(--portal-line-strong);
+  border-radius: 50%;
+}
+
+.portal-apps-orbit-mark::before {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--portal-ink);
+  border-radius: 50%;
+  content: "";
+}
+
+.portal-apps-orbit-mark i {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--portal-red);
+}
+
+.portal-apps-quote {
+  display: grid;
+  gap: 8px;
+  margin: 13px 0 0;
+}
+
+.portal-workspace-inner .portal-page .portal-apps-heading .portal-apps-quote > p {
+  max-width: 680px;
+  margin: 0;
+  color: var(--portal-ink-soft);
+  font-size: clamp(16px, 2vw, 20px);
+  font-weight: 690;
+  line-height: 1.45;
+  text-wrap: balance;
+}
+
+.portal-apps-quote cite {
+  width: fit-content;
+  font-style: normal;
+}
+
+.portal-apps-quote a {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  border-bottom: 1px solid var(--portal-line-strong);
+  color: var(--portal-muted);
+  padding-bottom: 3px;
+  font-size: 10px;
+  font-weight: 760;
+  letter-spacing: 0.025em;
+  transition: border-color 140ms ease, color 140ms ease;
+}
+
+.portal-apps-quote a:hover {
+  border-color: var(--portal-blue);
+  color: var(--portal-blue);
+}
+
+.portal-apps-quote a svg {
+  transition: transform 140ms ease;
+}
+
+.portal-apps-quote a:hover svg {
+  transform: translate(1px, -1px);
+}
+
+.portal-apps-heading-actions {
+  display: grid;
+  flex: 0 0 auto;
+  gap: 10px;
+  justify-items: end;
+}
+
+.portal-apps-new-control {
+  display: inline-flex;
+}
+
+.portal-apps-object-count {
+  display: flex;
+  gap: 7px;
+  align-items: baseline;
+  color: var(--portal-soft);
+  font-size: 9px;
+  font-weight: 820;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.portal-apps-object-count b {
+  color: var(--portal-ink);
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+}
+
+.portal-apps-create-menu {
+  position: fixed;
+  z-index: 1200;
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--portal-line);
+  border-radius: var(--portal-radius);
+  background: var(--portal-paper);
+  box-shadow: var(--portal-shadow-float);
+}
+
+.portal-apps-create-menu button {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: var(--portal-space-2);
+  align-items: start;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--portal-line);
+  background: transparent;
+  color: var(--portal-ink);
+  padding: var(--portal-space-3);
+  text-align: left;
+}
+
+.portal-apps-create-menu button:last-child {
+  border-bottom: 0;
+}
+
+.portal-apps-create-menu button:hover,
+.portal-apps-create-menu button:focus-visible {
+  background: var(--portal-paper-soft);
+}
+
+.portal-apps-create-menu button span {
+  display: grid;
+  gap: 3px;
+}
+
+.portal-apps-create-menu button small {
+  color: var(--portal-soft);
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.portal-apps-surface {
+  --accent-action: var(--portal-ink);
+  --accent-action-border: var(--portal-ink);
+  --accent-action-muted: var(--portal-muted);
+  --accent-link: var(--portal-blue);
+  --border-check: var(--portal-line-strong);
+  --border-control: var(--portal-line-strong);
+  --border-control-hover: var(--portal-ink);
+  --border-default: var(--portal-line);
+  --brand-primary-rgb: 17, 17, 15;
+  --color-ink: var(--portal-ink);
+  --color-inverse: var(--portal-white);
+  --color-line: var(--portal-line);
+  --color-muted: var(--portal-muted);
+  --color-muted-strong: var(--portal-soft);
+  --color-surface: var(--portal-paper);
+  --color-surface-strong: var(--portal-paper-soft);
+  --color-surface-subtle: var(--portal-paper-soft);
+  --color-surface-warm: var(--portal-shell);
+  --danger: var(--portal-rose);
+  --duration-fast: 140ms;
+  --ease-standard: ease;
+  --focus-ring: var(--portal-focus-ring);
+  --radius-md: var(--portal-radius);
+  --radius-sm: 2px;
+  --shadow-modal: var(--portal-shadow-float);
+  --shadow-notice: var(--portal-shadow-paper);
+  --space-4: var(--portal-space-4);
+  --space-6: var(--portal-space-6);
+  --state-danger-border: var(--portal-rose);
+  --state-danger-ring: var(--portal-focus-ring);
+  --state-danger-surface-soft: var(--portal-paper-soft);
+  --state-info-border: var(--portal-blue);
+  --state-info-muted-border: var(--portal-line);
+  --state-info-muted-border-strong: var(--portal-line-strong);
+  --state-info-muted-surface: var(--portal-paper-soft);
+  --state-info-surface-muted: var(--portal-paper-soft);
+  --state-info-text: var(--portal-blue);
+  --state-success-border: var(--portal-green);
+  --state-success-border-focus: var(--portal-green);
+  --state-success-border-strong: var(--portal-green);
+  --state-success-ring: var(--portal-focus-ring);
+  --state-success-surface: var(--portal-paper-soft);
+  --state-success-surface-soft: var(--portal-paper-soft);
+  --state-success-surface-strong: var(--portal-paper-soft);
+  --state-warning-border: var(--portal-warning);
+  --state-warning-surface: var(--portal-paper-soft);
+  --state-warning-surface-strong: var(--portal-paper-soft);
+  --state-warning-text: var(--portal-warning);
+  --success: var(--portal-green);
+  --surface-card: var(--portal-paper);
+  --surface-hover: var(--portal-paper-soft);
+  --surface-muted: var(--portal-shell);
+  --surface-overlay: var(--portal-ink-a34);
+  --surface-overlay-soft: var(--portal-ink-a25);
+  display: grid;
+  min-width: 0;
+  gap: var(--portal-space-4);
+}
+
+.portal-apps-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--portal-space-4);
+  align-items: center;
+}
+
+.portal-apps-search {
+  width: min(360px, 38vw);
+}
+
+.portal-apps-filter-group {
+  display: flex;
+  gap: var(--portal-space-2);
+  align-items: center;
+}
+
+html[lang="zh-CN"] .portal-apps-kind-filter.segmentedControl > button:first-child {
+  flex: 0 0 auto;
+  min-width: 52px;
+  white-space: nowrap;
+}
+
+.portal-apps-status-filter {
+  min-width: 158px;
+}
+
+.portal-select-field {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--portal-space-2);
+  align-items: center;
+  min-height: 38px;
+  border: 1px solid var(--portal-line-strong);
+  border-radius: var(--portal-radius);
+  background: var(--portal-paper);
+  color: var(--portal-soft);
+  padding: 0 10px;
+}
+
+.portal-select-field select {
+  min-height: 34px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--portal-ink);
+}
+
+.portal-apps-message {
+  border: 1px solid var(--portal-line);
+  border-left: 3px solid var(--portal-green);
+  background: var(--portal-paper);
+  color: var(--portal-green);
+  padding: var(--portal-space-3);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.portal-apps-message.error {
+  border-left-color: var(--portal-rose);
+  color: var(--portal-rose);
+}
+
+.portal-apps-surface .pageStack {
+  display: grid;
+  gap: var(--portal-space-5);
+  min-width: 0;
+}
+
+.portal-apps-surface .panel {
+  border: 1px solid var(--portal-line);
+  border-radius: var(--portal-radius);
+  background: var(--portal-paper);
+  box-shadow: var(--portal-shadow-paper);
+  padding: var(--portal-space-4);
+}
+
+.portal-apps-surface .appsMetricGrid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper);
+  box-shadow: var(--portal-shadow-paper);
+}
+
+.portal-apps-surface .appsMetric {
+  min-height: 92px;
+  border: 0;
+  border-right: 1px solid var(--portal-line);
+  border-radius: 0;
+  box-shadow: none;
+  padding: var(--portal-space-4);
+}
+
+.portal-apps-surface .appsMetric:last-child {
+  border-right: 0;
+}
+
+.portal-apps-surface .appsMetricIcon {
+  border: 0;
+  border-radius: 2px;
+  background: var(--portal-ink);
+  color: var(--portal-signal);
+}
+
+.portal-apps-surface .appsMetricCopy strong {
+  font-size: 22px;
+}
+
+.portal-apps-surface .appsTopControls {
+  flex-wrap: nowrap;
+}
+
+.portal-apps-surface .searchControl,
+.portal-apps-surface .selectControl {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 7px;
+  align-items: center;
+  min-height: 38px;
+  border: 1px solid var(--portal-line-strong);
+  border-radius: var(--portal-radius);
+  background: var(--portal-paper);
+  color: var(--portal-soft);
+  padding: 0 10px;
+}
+
+.portal-apps-surface .searchControl:focus-within,
+.portal-apps-surface .selectControl:focus-within {
+  border-color: var(--portal-blue);
+  outline: 3px solid var(--portal-focus-ring);
+  outline-offset: 1px;
+}
+
+.portal-apps-surface .searchControl input,
+.portal-apps-surface .selectControl select {
+  width: 100%;
+  min-width: 0;
+  min-height: 34px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--portal-ink);
+}
+
+.portal-apps-surface .segmentedControl {
+  display: inline-flex;
+  min-height: 38px;
+  border: 1px solid var(--portal-line);
+  border-radius: var(--portal-radius);
+  background: var(--portal-shell-strong);
+  padding: 3px;
+}
+
+.portal-apps-surface .segmentedControl button {
+  min-height: 30px;
+  border: 0;
+  border-radius: 2px;
+  background: transparent;
+  color: var(--portal-muted);
+  padding: 0 11px;
+  font-weight: 820;
+}
+
+.portal-apps-surface .segmentedControl button.active {
+  background: var(--portal-paper);
+  color: var(--portal-ink);
+  box-shadow: 0 1px 0 var(--portal-ink-a10);
+}
+
+.portal-apps-surface .appsApiMode {
+  border-radius: var(--portal-radius);
+}
+
+.portal-apps-surface .formMessage {
+  border: 1px solid var(--portal-line);
+  border-left: 3px solid var(--portal-green);
+  background: var(--portal-paper);
+  color: var(--portal-green);
+  padding: var(--portal-space-3);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.portal-apps-surface .formMessage.error {
+  border-left-color: var(--portal-rose);
+  color: var(--portal-rose);
+}
+
+.portal-apps-surface .appsProductPanel {
+  gap: var(--portal-space-3);
+  padding: 0;
+}
+
+.portal-apps-surface .sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--portal-space-4);
+  align-items: end;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--portal-line);
+  padding: var(--portal-space-4);
+}
+
+.portal-apps-surface .sectionHeader .eyebrow,
+.portal-apps-surface .eyebrow {
+  color: var(--portal-soft);
+  font-size: 10px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.portal-apps-surface .sectionHeader h2 {
+  margin-top: 5px;
+  font-size: 18px;
+}
+
+.portal-apps-surface .appsProductList {
+  border: 0;
+  border-radius: 0;
+}
+
+.portal-apps-surface .appsProductRow {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) minmax(120px, auto) 28px;
+  gap: var(--portal-space-4);
+  align-items: center;
+  min-height: 102px;
+  border-bottom: 1px solid var(--portal-line);
+  border-left: 3px solid transparent;
+  background: transparent;
+  padding: var(--portal-space-4);
+}
+
+.portal-apps-surface .appsProductRow:hover,
+.portal-apps-surface .appsProductRow:focus-visible {
+  border-left-color: var(--portal-signal);
+  background: var(--portal-paper-soft);
+}
+
+.portal-apps-surface .appsProductIcon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  overflow: hidden;
+  border: 1px solid var(--portal-ink-a10);
+  border-radius: 2px;
+  background: var(--portal-blue);
+  color: var(--portal-white);
+}
+
+.portal-apps-surface .appsProductIcon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portal-apps-surface .appsProductMain {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.portal-apps-surface .appsProductMain > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: center;
+}
+
+.portal-apps-surface .appsProductIcon.app {
+  background: var(--portal-signal);
+  color: var(--portal-ink);
+}
+
+.portal-apps-surface .appsProductIcon.mate {
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  border-color: transparent;
+  background: transparent;
+  color: var(--portal-ink);
+}
+
+.portal-apps-surface .appsProductIcon.mate img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.portal-apps-surface .appsProductMain > small {
+  color: var(--portal-soft);
+  font-size: 10px;
+}
+
+.portal-apps-surface .appsMateCollapse {
+  border: 0;
+  background: transparent;
+  color: var(--portal-signal);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.portal-apps-surface .appsProductMain strong {
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.portal-apps-surface .appsProductMain span {
+  color: var(--portal-soft);
+  font-size: 9px;
+}
+
+.portal-apps-surface .appsAuthorGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  color: var(--portal-soft);
+}
+
+.portal-apps-surface .appsAuthorAvatarStack {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  padding-left: 1px;
+}
+
+.portal-apps-surface .appsAuthorAvatar {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  overflow: hidden;
+  border: 2px solid var(--portal-paper);
+  border-radius: 50%;
+  background: var(--avatar-a, var(--portal-ink-soft));
+  color: var(--avatar-ink, var(--portal-white));
+  font-size: 8px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.portal-apps-surface .appsAuthorAvatar + .appsAuthorAvatar {
+  margin-left: -7px;
+}
+
+.portal-apps-surface .appsAuthorAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portal-apps-surface .appsAuthorAvatar.more {
+  z-index: 1;
+  background: var(--portal-ink);
+  color: var(--portal-paper);
+}
+
+.portal-apps-surface .appsAuthorLabel {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--portal-muted);
+  font-size: 10px;
+  font-weight: 760;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.portal-apps-surface .appsAuthorGroup.compact {
+  gap: 5px;
+  max-width: min(220px, 100%);
+}
+
+.portal-apps-surface .appsAuthorGroup.compact .appsAuthorAvatar {
+  width: 20px;
+  height: 20px;
+  border-width: 1px;
+  font-size: 7px;
+}
+
+.portal-apps-surface .appsAuthorGroup.compact .appsAuthorAvatar + .appsAuthorAvatar {
+  margin-left: -5px;
+}
+
+.portal-apps-surface .appsAuthorGroup.compact .appsAuthorLabel {
+  font-size: 9px;
+}
+
+.portal-apps-surface .appsProductMain p {
+  font-size: 11px;
+}
+
+.portal-apps-surface .appsProductStatus {
+  display: grid;
+  justify-items: end;
+  gap: 5px;
+}
+
+.portal-apps-surface .appsProductStatus small,
+.portal-apps-surface .appsProductChevron {
+  color: var(--portal-soft);
+  font-size: 9px;
+}
+
+.portal-apps-surface .statusBadge,
+.portal-apps-surface .appsMarketMini,
+.portal-apps-surface .riskBadge {
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  min-height: 20px;
+  border: 1px solid var(--portal-line);
+  border-radius: 2px;
+  background: var(--portal-paper-soft);
+  color: var(--portal-muted);
+  padding: 0 6px;
+  font-size: 8px;
+  font-weight: 820;
+  text-transform: uppercase;
+}
+
+.portal-apps-surface .statusBadge.published,
+.portal-apps-surface .statusBadge.listed,
+.portal-apps-surface .statusBadge.live,
+.portal-apps-surface .statusBadge.active {
+  border-color: var(--portal-green);
+  color: var(--portal-green);
+}
+
+.portal-apps-surface .statusBadge.pending_review,
+.portal-apps-surface .statusBadge.pending,
+.portal-apps-surface .statusBadge.deployed {
+  border-color: var(--portal-warning);
+  color: var(--portal-warning);
+}
+
+.portal-apps-surface .emptyState {
+  border: 1px dashed var(--portal-line-strong);
+  background: var(--portal-paper-soft);
+  color: var(--portal-soft);
+  padding: var(--portal-space-8);
+  text-align: center;
+}
+
+.portal-apps-surface .appsMateEmptyGuide {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: var(--portal-space-5);
+  align-items: center;
+  border: 1px dashed var(--portal-line-strong);
+  background:
+    radial-gradient(circle at 92% 18%, color-mix(in srgb, var(--portal-signal) 16%, transparent), transparent 26%),
+    var(--portal-paper-soft);
+  padding: clamp(24px, 4vw, 48px);
+}
+
+.portal-apps-surface .appsMateEmptyIcon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border: 1px solid var(--portal-ink);
+  background: var(--portal-ink);
+  color: var(--portal-signal);
+}
+
+.portal-apps-surface .appsMateEmptyIcon svg:last-child {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+}
+
+.portal-apps-surface .appsMateEmptyCopy {
+  display: grid;
+  gap: 7px;
+}
+
+.portal-apps-surface .appsMateEmptyCopy h3 {
+  font-size: clamp(18px, 2vw, 24px);
+}
+
+.portal-apps-surface .appsMateEmptyCopy > p:not(.eyebrow) {
+  max-width: 680px;
+  color: var(--portal-muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.portal-apps-surface .appsMateEmptyCopy ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.portal-apps-surface .appsMateEmptyCopy li {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--portal-green);
+  font-size: 10px;
+  font-weight: 760;
+}
+
+.portal-apps-surface .appsMateEmptyCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 46px;
+  border: 1px solid var(--portal-ink);
+  background: var(--portal-ink);
+  color: var(--portal-signal);
+  padding: 0 18px;
+  font-size: 11px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.portal-apps-surface .appsMateEmptyCta:hover,
+.portal-apps-surface .appsMateEmptyCta:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: var(--portal-shadow-paper);
+}
+
+.portal-apps-surface .appsModal.appsMateQuickModal {
+  width: min(760px, calc(100vw - 48px));
+  border: 2px solid var(--portal-ink);
+  background: var(--portal-paper);
+  box-shadow: 18px 18px 0 color-mix(in srgb, var(--portal-ink) 22%, transparent);
+  overflow: hidden;
+}
+
+.portal-apps-surface .appsMateQuickModal .appsModalHeader {
+  min-height: 98px;
+  border-bottom: 0;
+  background:
+    linear-gradient(108deg, transparent 0 68%, color-mix(in srgb, var(--portal-signal) 18%, transparent) 68% 100%),
+    var(--portal-ink);
+  color: var(--portal-white);
+  padding: var(--portal-space-5);
+}
+
+.portal-apps-surface .appsMateQuickModal .appsModalHeader::before {
+  align-self: stretch;
+  width: 5px;
+  background: var(--portal-signal);
+  content: "";
+}
+
+.portal-apps-surface .appsMateQuickModal .appsModalHeader > div:first-of-type {
+  flex: 1 1 auto;
+}
+
+.portal-apps-surface .appsMateQuickModal .appsModalHeader .eyebrow {
+  color: var(--portal-signal);
+  letter-spacing: .16em;
+}
+
+.portal-apps-surface .appsMateQuickModal .appsModalHeader h2 {
+  color: var(--portal-white);
+  font-size: 25px;
+  letter-spacing: -.025em;
+}
+
+.portal-apps-surface .appsMateQuickModal .appsModalHeader .iconButton {
+  border-color: color-mix(in srgb, var(--portal-white) 46%, transparent);
+  background: transparent;
+  color: var(--portal-white);
+}
+
+.portal-apps-surface .appsQuickSetupBody,
+.portal-apps-surface .appsQuickSuccessBody {
+  display: grid;
+  gap: var(--portal-space-5);
+  padding: var(--portal-space-5);
+}
+
+.portal-apps-surface .appsQuickSuccessBody {
+  position: relative;
+  gap: 1px;
+  background: var(--portal-ink);
+  padding: 0;
+}
+
+.portal-apps-surface .appsQuickHero,
+.portal-apps-surface .appsQuickSuccessTitle {
+  display: flex;
+  gap: var(--portal-space-3);
+  align-items: center;
+}
+
+.portal-apps-surface .appsQuickHero > span,
+.portal-apps-surface .appsQuickSuccessTitle > span {
+  display: grid;
+  flex: 0 0 44px;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  background: var(--portal-ink);
+  color: var(--portal-signal);
+}
+
+.portal-apps-surface .appsQuickSuccessTitle > span {
+  flex-basis: 56px;
+  width: 56px;
+  height: 56px;
+  border-radius: 0;
+  background: var(--portal-signal);
+  color: var(--portal-ink);
+}
+
+.portal-apps-surface .appsQuickSuccessTitle {
+  gap: var(--portal-space-4);
+  background: var(--portal-ink);
+  color: var(--portal-white);
+  padding: var(--portal-space-5);
+}
+
+.portal-apps-surface .appsQuickHero h3,
+.portal-apps-surface .appsQuickSuccessTitle h3,
+.portal-apps-surface .appsQuickProvisioning h3 {
+  font-size: 20px;
+}
+
+.portal-apps-surface .appsQuickHero p,
+.portal-apps-surface .appsQuickSuccessTitle p,
+.portal-apps-surface .appsQuickProvisioning p {
+  margin-top: 4px;
+  color: var(--portal-muted);
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.portal-apps-surface .appsQuickSuccessTitle h3 {
+  color: var(--portal-white);
+  font-size: 24px;
+  letter-spacing: -.025em;
+}
+
+.portal-apps-surface .appsQuickSuccessTitle p {
+  color: color-mix(in srgb, var(--portal-white) 68%, transparent);
+}
+
+.portal-apps-surface .appsQuickIdentity {
+  padding: var(--portal-space-4);
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+}
+
+.portal-apps-surface .appsQuickDefaults {
+  display: grid;
+  grid-template-columns: minmax(150px, .75fr) minmax(0, 1.25fr);
+  gap: var(--portal-space-4);
+  border-left: 3px solid var(--portal-signal);
+  background: color-mix(in srgb, var(--portal-signal) 8%, var(--portal-paper));
+  padding: var(--portal-space-4);
+}
+
+.portal-apps-surface .appsQuickDefaults > div,
+.portal-apps-surface .appsQuickDefaults ul {
+  display: grid;
+  gap: 7px;
+}
+
+.portal-apps-surface .appsQuickDefaults small {
+  color: var(--portal-muted);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.portal-apps-surface .appsQuickDefaults ul {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.portal-apps-surface .appsQuickDefaults li {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+  color: var(--portal-green);
+  font-size: 10px;
+  font-weight: 760;
+}
+
+.portal-apps-surface .appsQuickDefaults li svg {
+  flex: 0 0 auto;
+}
+
+.portal-apps-surface .appsQuickActions {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--portal-space-3);
+  padding-top: var(--portal-space-2);
+}
+
+.portal-apps-surface .appsQuickProvisioning {
+  display: grid;
+  justify-items: center;
+  min-height: 430px;
+  align-content: center;
+  padding: var(--portal-space-6);
+  text-align: center;
+}
+
+.portal-apps-surface .appsQuickProvisioning.failed .appsQuickBotPulse {
+  animation: none;
+  background: var(--portal-warning);
+  color: var(--portal-paper);
+}
+
+.portal-apps-surface .appsQuickRetryActions {
+  display: flex;
+  gap: var(--portal-space-3);
+  margin-top: var(--portal-space-4);
+}
+
+.portal-apps-surface .appsQuickBotPulse {
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  margin-bottom: var(--portal-space-4);
+  border-radius: 50%;
+  background: var(--portal-ink);
+  color: var(--portal-signal);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--portal-signal) 34%, transparent);
+  animation: apps-quick-pulse 1.6s ease-out infinite;
+}
+
+@keyframes apps-quick-pulse {
+  70% { box-shadow: 0 0 0 16px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+.portal-apps-surface .appsQuickProvisioning ol {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: min(560px, 100%);
+  margin: var(--portal-space-6) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.portal-apps-surface .appsQuickProvisioning li {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 7px;
+  color: var(--portal-soft);
+  font-size: 9px;
+}
+
+.portal-apps-surface .appsQuickProvisioning li::before {
+  position: absolute;
+  z-index: 0;
+  top: 13px;
+  right: 50%;
+  left: -50%;
+  height: 1px;
+  background: var(--portal-line);
+  content: "";
+}
+
+.portal-apps-surface .appsQuickProvisioning li:first-child::before { display: none; }
+
+.portal-apps-surface .appsQuickProvisioning li > span {
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--portal-line);
+  border-radius: 50%;
+  background: var(--portal-paper);
+}
+
+.portal-apps-surface .appsQuickProvisioning li.active,
+.portal-apps-surface .appsQuickProvisioning li.done { color: var(--portal-green); font-weight: 800; }
+.portal-apps-surface .appsQuickProvisioning li.active > span,
+.portal-apps-surface .appsQuickProvisioning li.done > span { border-color: var(--portal-green); background: var(--portal-green); color: var(--portal-white); }
+.portal-apps-surface .appsQuickProvisioning li.done::before,
+.portal-apps-surface .appsQuickProvisioning li.active::before { background: var(--portal-green); }
+
+.portal-apps-surface .appsQuickAccessGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--portal-ink);
+}
+
+.portal-apps-surface .appsQuickAccessCard {
+  position: relative;
+  display: grid;
+  gap: var(--portal-space-3);
+  min-width: 0;
+  border: 0;
+  background: var(--portal-paper);
+  padding: 42px var(--portal-space-5) var(--portal-space-5);
+}
+
+.portal-apps-surface .appsQuickAccessCard::before {
+  position: absolute;
+  top: 13px;
+  left: var(--portal-space-5);
+  color: var(--portal-soft);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .16em;
+}
+
+.portal-apps-surface .appsQuickAccessCard.web {
+  grid-column: 1 / -1;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  background: var(--portal-ink);
+  color: var(--portal-white);
+}
+.portal-apps-surface .appsQuickAccessCard.web::before { color: var(--portal-signal); content: "01  /  WEB"; }
+.portal-apps-surface .appsQuickAccessCard.web p { color: color-mix(in srgb, var(--portal-white) 62%, transparent); }
+.portal-apps-surface .appsQuickAccessCard.web > svg { color: var(--portal-signal); }
+.portal-apps-surface .appsQuickAccessCard.weixin {
+  grid-row: span 2;
+  align-content: start;
+  background: var(--portal-paper);
+  color: var(--portal-ink);
+  box-shadow: inset 0 5px 0 var(--portal-signal);
+  text-align: center;
+}
+.portal-apps-surface .appsQuickAccessCard.weixin::before { color: var(--portal-green); content: "02  /  WECHAT"; }
+.portal-apps-surface .appsQuickAccessCard.weixin > div:last-child {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  border-top: 1px solid var(--portal-line);
+  padding-top: var(--portal-space-4);
+}
+.portal-apps-surface .appsQuickAccessCard.weixin > div:last-child > svg { color: var(--portal-green); }
+.portal-apps-surface .appsQuickAccessCard.weixin p { color: var(--portal-muted); }
+.portal-apps-surface .appsQuickAccessCard.compact { grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; min-height: 142px; }
+.portal-apps-surface .appsQuickAccessCard.email::before { color: var(--portal-green); content: "03  /  EMAIL"; }
+.portal-apps-surface .appsQuickAccessCard.compact:not(.email)::before { content: "04  /  CONTROL"; }
+.portal-apps-surface .appsQuickAccessCard strong { display: block; font-size: 13px; }
+.portal-apps-surface .appsQuickAccessCard p { overflow: hidden; margin-top: 4px; color: var(--portal-muted); font-size: 9px; line-height: 1.5; text-overflow: ellipsis; }
+.portal-apps-surface .appsQuickCardActions { display: flex; gap: 7px; }
+
+.portal-apps-surface .appsQuickQr {
+  display: grid;
+  min-height: 224px;
+  place-items: center;
+  border: 0;
+  background: var(--portal-white);
+  padding: var(--portal-space-3);
+  box-shadow: none;
+}
+
+.portal-apps-surface .appsQuickQr > img { display: block; width: 208px; max-width: 100%; }
+.portal-apps-surface .appsQuickQr > small { color: var(--portal-muted); font-size: 9px; }
+.portal-apps-surface .appsQuickQrState,
+.portal-apps-surface .appsQuickVerify { display: grid; justify-items: center; gap: 10px; color: var(--portal-muted); text-align: center; }
+.portal-apps-surface .appsQuickQrState.active { color: var(--portal-green); }
+.portal-apps-surface .appsQuickVerify input { width: 150px; height: 38px; border: 1px solid var(--portal-line-strong); font-size: 17px; letter-spacing: .18em; text-align: center; }
+
+.portal-apps-surface .appsQuickSuccessBody > .appsQuickActions {
+  background: var(--portal-paper);
+  padding: var(--portal-space-4) var(--portal-space-5);
+}
+
+/* Existing APPS domain forms run inside the V2 shell through this token adapter. */
+.portal-apps-surface .appsModalOverlay,
+.portal-apps-surface .profileModalOverlay,
+.portal-apps-surface .assetReviewOverlay {
+  position: fixed;
+  z-index: 90;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  background: var(--portal-ink-a34);
+  padding: var(--portal-space-6);
+}
+
+.portal-apps-surface .appsModal,
+.portal-apps-surface .appsDetailModal,
+.portal-apps-surface .profileModal {
+  position: relative;
+  width: min(980px, 100%);
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  border: 1px solid var(--portal-line-strong);
+  border-radius: var(--portal-radius);
+  background: var(--portal-paper);
+  box-shadow: var(--portal-shadow-float);
+}
+
+.portal-apps-surface .appsDetailModal {
+  --apps-detail-picker-width: 380px;
+
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  width: min(820px, calc(100vw - 48px));
+  height: min(820px, calc(100vh - 48px));
+  height: min(820px, calc(100dvh - 48px));
+  max-height: none;
+  overflow: hidden;
+  padding: var(--portal-space-5);
+}
+
+.portal-apps-surface .appsDetailModal.withAccessPicker {
+  width: min(calc(820px + var(--apps-detail-picker-width) + var(--portal-space-4)), calc(100vw - 48px));
+}
+
+.portal-apps-surface .profileCloseButton {
+  position: absolute;
+  z-index: 3;
+  top: var(--portal-space-4);
+  right: var(--portal-space-4);
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--portal-line);
+  border-radius: var(--portal-radius);
+  background: var(--portal-paper);
+  color: var(--portal-ink);
+  padding: 0;
+}
+
+.portal-apps-surface .assetReviewHero {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: var(--portal-space-4);
+  align-items: center;
+  border-bottom: 1px solid var(--portal-line);
+  padding: 0 48px var(--portal-space-5) 0;
+}
+
+.portal-apps-surface .adminAssetTypeIcon {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  overflow: hidden;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-signal);
+}
+
+.portal-apps-surface .adminAssetTypeIcon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portal-apps-surface .assetReviewHero h2 {
+  margin-top: 5px;
+  font-size: 28px;
+}
+
+.portal-apps-surface .appsProductHeroMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 12px;
+  align-items: center;
+  margin-top: 7px;
+}
+
+.portal-apps-surface .appsProductHeroMeta > span {
+  color: var(--portal-soft);
+  font-size: 10px;
+}
+
+.portal-apps-surface .assetReviewBody {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  gap: var(--portal-space-4);
+  align-items: stretch;
+  min-height: 0;
+  overflow: hidden;
+  margin-top: var(--portal-space-5);
+}
+
+.portal-apps-surface .assetReviewBody.isTargetedAccessMode {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.portal-apps-surface .assetReviewDetails,
+.portal-apps-surface .assetReviewFormPanel {
+  display: grid;
+  gap: var(--portal-space-4);
+  min-width: 0;
+}
+
+.portal-apps-surface .assetReviewDetails {
+  grid-template-rows: auto minmax(0, 1fr);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.portal-apps-surface .assetReviewFormPanel {
+  position: sticky;
+  top: 0;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+  padding: var(--portal-space-4);
+}
+
+.portal-apps-surface .assetReviewFormPanel h3 {
+  border-bottom: 1px solid var(--portal-line);
+  padding-bottom: var(--portal-space-2);
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.portal-apps-surface .appReviewTabs {
+  display: flex;
+  gap: 3px;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-shell-strong);
+  padding: 3px;
+}
+
+.portal-apps-surface .appReviewTabs button {
+  min-height: 32px;
+  border: 0;
+  background: transparent;
+  color: var(--portal-muted);
+  padding: 0 10px;
+  font-weight: 820;
+}
+
+.portal-apps-surface .appReviewTabs button.active {
+  background: var(--portal-paper);
+  color: var(--portal-ink);
+}
+
+.portal-apps-surface .appsDetailTabPanel {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.portal-apps-surface .appsDetailTabPanel.hasFooter {
+  grid-template-rows: minmax(0, 1fr) auto;
+}
+
+.portal-apps-surface .appsDetailTabScroll {
+  display: grid;
+  grid-auto-rows: max-content;
+  align-content: start;
+  gap: var(--portal-space-4);
+  min-width: 0;
+  min-height: 0;
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-anchor: none;
+  overscroll-behavior: contain;
+  padding-right: 2px;
+  scrollbar-gutter: stable;
+}
+
+.portal-apps-surface .appsDetailTabScroll.isSettingsTab {
+  grid-auto-rows: minmax(0, 1fr);
+  align-content: stretch;
+  overflow: hidden;
+  padding-right: 0;
+}
+
+.portal-apps-surface .appsDetailTabScroll.isHistoryTab {
+  grid-auto-rows: minmax(0, 1fr);
+  align-content: stretch;
+  overflow: hidden;
+  padding-right: 0;
+}
+
+.portal-apps-surface .appsDetailTabFooter {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--portal-space-3);
+  align-items: center;
+  min-height: 58px;
+  border-top: 1px solid var(--portal-line);
+  background: var(--portal-paper);
+  padding: var(--portal-space-3) 2px 0;
+}
+
+.portal-apps-surface .appsTabUtilityActions,
+.portal-apps-surface .appsTabPrimaryActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--portal-space-2);
+  align-items: center;
+}
+
+.portal-apps-surface .appsTabPrimaryActions {
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+.portal-apps-surface .appsTabFooterHint {
+  color: var(--portal-warning);
+  font-size: 8px;
+  font-weight: 760;
+}
+
+.portal-apps-surface .assetDetailSection,
+.portal-apps-surface .appReviewSection {
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper);
+  padding: var(--portal-space-4);
+}
+
+.portal-apps-surface .assetDetailGrid,
+.portal-apps-surface .appReviewGrid,
+.portal-apps-surface .formGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--portal-space-3);
+}
+
+.portal-apps-surface .assetDetailItem,
+.portal-apps-surface .assetDetailItem.wide,
+.portal-apps-surface .appReviewGrid > label,
+.portal-apps-surface .formGrid > label {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+
+.portal-apps-surface .assetDetailItem.wide,
+.portal-apps-surface .appReviewGrid > .wide,
+.portal-apps-surface .formGrid > .full,
+.portal-apps-surface .formGrid > .wide {
+  grid-column: 1 / -1;
+}
+
+.portal-apps-surface .appsBasicInfoSection {
+  overflow: hidden;
+  padding: 0;
+}
+
+.portal-apps-surface .appsBasicInfoSection > h3 {
+  margin: 0;
+  border-bottom: 1px solid var(--portal-line);
+  padding: 14px var(--portal-space-4);
+  font-size: 13px;
+}
+
+.portal-apps-surface .appsBasicInfoGrid {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--portal-line);
+}
+
+.portal-apps-surface .appsBasicInfoGrid .assetDetailItem {
+  grid-column: span 6;
+  align-content: start;
+  min-height: 74px;
+  gap: 7px;
+  background: var(--portal-paper);
+  padding: 13px var(--portal-space-4) 15px;
+}
+
+.portal-apps-surface .appsBasicInfoGrid .assetDetailItem.span-3 {
+  grid-column: span 3;
+}
+
+.portal-apps-surface .appsBasicInfoGrid .assetDetailItem.span-4 {
+  grid-column: span 4;
+}
+
+.portal-apps-surface .appsBasicInfoGrid .assetDetailItem.span-5 {
+  grid-column: span 5;
+}
+
+.portal-apps-surface .appsBasicInfoGrid .assetDetailItem.span-7 {
+  grid-column: span 7;
+}
+
+.portal-apps-surface .appsBasicInfoGrid .assetDetailItem.span-12,
+.portal-apps-surface .appsBasicInfoGrid .assetDetailItem.wide {
+  grid-column: 1 / -1;
+}
+
+.portal-apps-surface .appsBasicInfoGrid .assetDetailItem > span {
+  color: var(--portal-soft);
+  font-size: 9px;
+  font-weight: 820;
+  letter-spacing: 0.035em;
+}
+
+.portal-apps-surface .appsBasicInfoGrid .assetDetailItem > strong,
+.portal-apps-surface .appsBasicInfoGrid .assetDetailItem > code,
+.portal-apps-surface .appsBasicInfoGrid .assetDetailItem > a,
+.portal-apps-surface .appsBasicInfoGrid .assetDetailItem > p {
+  min-width: 0;
+  margin: 0;
+  color: var(--portal-ink);
+  font-size: 12px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.portal-apps-surface .appsBasicInfoGrid .assetDetailItem > code {
+  font-weight: 760;
+}
+
+.portal-apps-surface .appsBasicInfoGrid .assetDetailItem > a {
+  color: var(--portal-blue);
+  font-weight: 720;
+}
+
+.portal-apps-surface .appsDetailValueWithAction {
+  display: flex;
+  gap: var(--portal-space-3);
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+}
+
+.portal-apps-surface .appsDetailValueWithAction > a:not(.secondaryButton) {
+  min-width: 0;
+  color: var(--portal-blue);
+  font-size: 12px;
+  font-weight: 720;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.portal-apps-surface .appsDetailValueWithAction > .secondaryButton {
+  flex: 0 0 auto;
+  background: transparent;
+}
+
+.portal-apps-surface .appsBasicInfoGrid .assetDetailItem.is-primary > strong {
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.portal-apps-surface .appsBasicInfoGrid .assetDetailItem.is-prose > p {
+  color: var(--portal-muted);
+  font-weight: 560;
+  line-height: 1.6;
+}
+
+.portal-apps-surface .appsBasicInfoTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.portal-apps-surface .appsBasicInfoTags b {
+  min-height: 22px;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+  color: var(--portal-muted);
+  padding: 4px 7px;
+  font-size: 9px;
+  font-weight: 780;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.portal-apps-surface .appsDevResourceSection {
+  overflow: hidden;
+  padding: 0;
+}
+
+.portal-apps-surface .appsDevResourceHeader {
+  min-height: 62px;
+  border-bottom: 1px solid var(--portal-line);
+  padding: 13px var(--portal-space-4);
+}
+
+.portal-apps-surface .appsDevResourceHeader > div {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.portal-apps-surface .appsDevResourceHeader p {
+  margin: 0;
+  color: var(--portal-soft);
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.portal-apps-surface .appsResourceInventory {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--portal-line);
+}
+
+.portal-apps-surface .appsResourceInventory > .emptyState {
+  grid-column: 1 / -1;
+  background: var(--portal-paper);
+}
+
+.portal-apps-surface .appsResourceInventoryItem {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) auto;
+  gap: var(--portal-space-3);
+  align-items: center;
+  min-width: 0;
+  min-height: 78px;
+  background: var(--portal-paper);
+  padding: 12px var(--portal-space-4);
+}
+
+.portal-apps-surface .appsResourceIdentity {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.portal-apps-surface .appsResourceIdentity > strong {
+  color: var(--portal-ink);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.portal-apps-surface .appsResourceMeta {
+  display: grid;
+  justify-items: end;
+  gap: 5px;
+  min-width: 68px;
+}
+
+.portal-apps-surface .appsResourceMeta > small {
+  color: var(--portal-soft);
+  font-size: 8px;
+  font-weight: 760;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.portal-apps-surface .appsResourceStatus {
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  border: 1px solid var(--portal-line-strong);
+  background: var(--portal-paper-soft);
+  color: var(--portal-muted);
+  padding: 0 7px;
+  font-size: 8px;
+  font-weight: 850;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.portal-apps-surface .appsResourceStatus.ready {
+  border-color: var(--portal-green);
+  color: var(--portal-green);
+}
+
+.portal-apps-surface .appsResourceStatus.pending {
+  border-color: var(--portal-warning);
+  color: var(--portal-warning);
+}
+
+.portal-apps-surface .appReviewGrid label > span,
+.portal-apps-surface .formGrid label > span,
+.portal-apps-surface .appsCreateForm label > span {
+  color: var(--portal-muted);
+  font-size: 9px;
+  font-weight: 820;
+}
+
+.portal-apps-surface .appsDomainHint {
+  color: var(--portal-ink);
+  font-size: 11px;
+  font-weight: 820;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.portal-apps-surface .appsFieldHint {
+  color: var(--portal-muted);
+  font-size: 10px;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.portal-apps-surface input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(.visuallyHidden):not(.peopleMentionInput),
+.portal-apps-surface textarea,
+.portal-apps-surface select {
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid var(--portal-line-strong);
+  border-radius: var(--portal-radius);
+  background: var(--portal-paper);
+  color: var(--portal-ink);
+  padding: 8px 10px;
+}
+
+.portal-apps-surface .searchControl > input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(.visuallyHidden) {
+  min-height: 34px;
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+.portal-apps-surface .portal-search-field {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--portal-space-2);
+  align-items: center;
+  min-height: 38px;
+  border: 1px solid var(--portal-line-strong);
+  border-radius: var(--portal-radius);
+  background: var(--portal-paper);
+  color: var(--portal-soft);
+  padding: 0 10px;
+}
+
+.portal-apps-surface .portal-search-field:focus-within,
+.portal-apps-surface .portal-select-field:focus-within {
+  border-color: var(--portal-blue);
+  outline: 3px solid var(--portal-focus-ring);
+  outline-offset: 1px;
+}
+
+.portal-apps-surface .portal-search-field input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(.visuallyHidden),
+.portal-apps-surface .portal-select-field select {
+  width: 100%;
+  min-width: 0;
+  min-height: 34px;
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--portal-ink);
+  padding: 0;
+}
+
+.portal-apps-surface .portal-select-field {
+  min-width: 122px;
+}
+
+.portal-apps-surface textarea {
+  min-height: 92px;
+  resize: vertical;
+}
+
+.portal-apps-surface input[type="range"] {
+  width: 100%;
+  accent-color: var(--portal-blue);
+}
+
+.portal-apps-surface input.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  border: 0;
+  clip: rect(0 0 0 0);
+  padding: 0;
+  white-space: nowrap;
+}
+
+.portal-apps-surface .formActions,
+.portal-apps-surface .appsDetailActionStack,
+.portal-apps-surface .appsDeleteConfirmActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--portal-space-2);
+}
+
+.portal-apps-surface .appsMateCurrentLink {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--portal-space-3);
+  border: 1px solid var(--portal-line);
+  background: var(--portal-shell);
+  padding: var(--portal-space-3);
+}
+
+.portal-apps-surface .appsMateCurrentLink > div {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+
+.portal-apps-surface .appsMateCurrentLink span,
+.portal-apps-surface .appsMateCurrentLink small {
+  color: var(--portal-soft);
+  font-size: 10px;
+}
+
+.portal-apps-surface .appsMateCurrentLink strong {
+  overflow: hidden;
+  color: var(--portal-ink);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.portal-apps-surface .appsModalHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--portal-space-4);
+  align-items: center;
+  border-bottom: 1px solid var(--portal-line);
+  padding: var(--portal-space-4);
+}
+
+.portal-apps-surface .appsModalHeader h2 {
+  font-size: 22px;
+}
+
+.portal-apps-surface .appsModalBody,
+.portal-apps-surface .appsCreateForm {
+  display: grid;
+  gap: var(--portal-space-4);
+  padding: var(--portal-space-4);
+}
+
+.portal-apps-surface .appsModal.appsCreateModal {
+  width: min(820px, calc(100vw - 48px));
+}
+
+.portal-apps-surface .appsModal.appsCreateModal.withAccessPicker {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: min(820px, calc(100vh - 48px));
+  overflow: hidden;
+  width: min(1080px, calc(100vw - 48px));
+}
+
+.portal-apps-surface .appsModal.appsMcpModal {
+  width: min(820px, calc(100vw - 48px));
+}
+
+.portal-apps-surface .appsCreateFormMain {
+  display: grid;
+  align-content: start;
+  gap: var(--portal-space-4);
+  min-width: 0;
+}
+
+.portal-apps-surface .appsCreateForm.withAccessPicker {
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 380px);
+  gap: 0;
+  align-items: stretch;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.portal-apps-surface .appsCreateForm.withAccessPicker .appsCreateFormMain {
+  min-height: 0;
+  overflow: auto;
+  padding: var(--portal-space-4);
+}
+
+.portal-apps-surface .appsCreateAccessPickerPane {
+  align-self: stretch;
+  min-height: 0;
+  overflow: hidden;
+  border-left: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+  padding: var(--portal-space-4);
+}
+
+.portal-apps-surface .appsCreateAccessPickerPane .accessTargetPicker {
+  height: 100%;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+}
+
+.portal-apps-surface .appsCreateInlineListbox .workspaceListboxTrigger,
+.portal-apps-surface .appReviewGrid .workspaceListboxTrigger {
+  min-height: 38px;
+}
+
+.portal-apps-surface .appCoverField {
+  display: grid;
+  gap: var(--portal-space-2);
+}
+
+.portal-apps-surface .mateAvatarChoices {
+  display: grid;
+  gap: var(--portal-space-2);
+  grid-column: 1 / -1;
+  color: var(--portal-muted);
+  font-size: var(--portal-type-ui);
+  font-weight: 700;
+}
+
+.portal-apps-surface .mateAvatarChoicesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(52px, 64px));
+  gap: var(--portal-space-2);
+}
+
+.portal-apps-surface .mateAvatarChoice {
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  border: 2px solid var(--portal-line);
+  border-radius: var(--portal-radius);
+  background: var(--portal-paper);
+  padding: 0;
+  cursor: pointer;
+}
+
+.portal-apps-surface .mateAvatarChoice:hover,
+.portal-apps-surface .mateAvatarChoice:focus-visible,
+.portal-apps-surface .mateAvatarChoice.selected {
+  border-color: var(--portal-red);
+  outline: 2px solid var(--portal-red);
+  outline-offset: 2px;
+}
+
+.portal-apps-surface .mateAvatarChoice img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portal-apps-surface .appCoverFieldHeader,
+.portal-apps-surface .appCoverUploadSummary,
+.portal-apps-surface .appCoverUploadButtons {
+  display: flex;
+  align-items: center;
+}
+
+.portal-apps-surface .appCoverFieldHeader {
+  justify-content: space-between;
+  color: var(--portal-muted);
+  font-size: var(--portal-type-ui);
+  font-weight: 800;
+}
+
+.portal-apps-surface .appCoverFieldHeader strong,
+.portal-apps-surface .appCoverUploadError {
+  color: var(--portal-rose);
+}
+
+.portal-apps-surface .appCoverUploadSummary {
+  gap: var(--portal-space-3);
+  min-width: 0;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+  padding: var(--portal-space-2);
+}
+
+.portal-apps-surface .appCoverThumbnail {
+  display: grid;
+  flex: 0 0 72px;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  overflow: hidden;
+  border: 1px solid var(--portal-line-strong);
+  border-radius: var(--portal-radius);
+  background: var(--portal-paper);
+  color: var(--portal-soft);
+  padding: 0;
+  cursor: pointer;
+}
+
+.portal-apps-surface .appCoverThumbnail img,
+.portal-apps-surface .appCoverPreview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portal-apps-surface .appCoverUploadSummaryCopy {
+  display: grid;
+  flex: 1 1 auto;
+  gap: 4px;
+  min-width: 0;
+}
+
+.portal-apps-surface .appCoverUploadSummaryCopy strong {
+  font-size: var(--portal-type-body);
+}
+
+.portal-apps-surface .appCoverUploadSummaryCopy small,
+.portal-apps-surface .appCoverUploadActions small {
+  color: var(--portal-muted);
+  font-size: var(--portal-type-ui);
+  line-height: 1.5;
+}
+
+.portal-apps-surface .appCoverUploadSummaryCopy small.appCoverUploadError,
+.portal-apps-surface .appCoverUploadActions small.appCoverUploadError {
+  color: var(--portal-rose);
+}
+
+.portal-apps-surface .appCoverManagement {
+  display: grid;
+  grid-template-columns: minmax(180px, 240px) minmax(0, 1fr);
+  gap: var(--portal-space-4);
+  align-items: center;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper);
+  padding: var(--portal-space-3);
+}
+
+.portal-apps-surface .appCoverPreview {
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+}
+
+.portal-apps-surface .appCoverPreview > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: var(--portal-space-2);
+  width: 100%;
+  height: 100%;
+  color: var(--portal-soft);
+  font-size: var(--portal-type-ui);
+}
+
+.portal-apps-surface .appCoverUploadActions {
+  display: grid;
+  gap: var(--portal-space-3);
+}
+
+.portal-apps-surface .appCoverUploadButtons {
+  flex-wrap: wrap;
+  gap: var(--portal-space-2);
+}
+
+.portal-apps-surface .appsManifestActions,
+.portal-apps-surface .capabilityHeaderActions,
+.portal-apps-surface .appsSectionHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--portal-space-3);
+  align-items: center;
+}
+
+.portal-apps-surface .appsSectionHeader h3,
+.portal-apps-surface .appsSectionHeader strong {
+  font-size: 12px;
+}
+
+.portal-apps-surface .appsCreateSelectPanel,
+.portal-apps-surface .appsCreateResourcePreviewPanel,
+.portal-apps-surface .appsAccessTargetsPanel,
+.portal-apps-surface .appsSecretEditor,
+.portal-apps-surface .appsDeleteConfirmPanel,
+.portal-apps-surface .mcpInstallPickerCard,
+.portal-apps-surface .mcpConnectionListBlock {
+  display: grid;
+  gap: var(--portal-space-3);
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+  padding: var(--portal-space-4);
+}
+
+.portal-apps-surface .appsCreateSelectPanelHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(160px, auto);
+  gap: var(--portal-space-3);
+  align-items: end;
+}
+
+.portal-apps-surface .appsCreateSelectPanelHeader > div,
+.portal-apps-surface .appsCreateSelectPanelChildren {
+  display: grid;
+  gap: 5px;
+}
+
+.portal-apps-surface .appsCreatePanelMeta {
+  color: var(--portal-soft);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.portal-apps-surface .appsCreateSelectPanelHeader p,
+.portal-apps-surface .appsCreateSelectPanelChildren p,
+.portal-apps-surface .appsTypeHeader p,
+.portal-apps-surface .appsValidationHint,
+.portal-apps-surface .appsPrivateAccessNote {
+  color: var(--portal-soft);
+  font-size: 10px;
+}
+
+.portal-apps-surface .appsAccessTemplateGrid,
+.portal-apps-surface .appsCreateResourcePreviewGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--portal-space-2);
+}
+
+.portal-apps-surface .mateCapacityGroup { display: grid; gap: var(--portal-space-2); padding: var(--portal-space-3); border: 1px solid var(--portal-line); border-radius: var(--portal-radius-control); }
+.portal-apps-surface .mateCapacityGroup + .mateCapacityGroup { margin-top: var(--portal-space-2); }
+.portal-apps-surface .mateCapacityGroupHeader { display: flex; align-items: center; justify-content: space-between; gap: var(--portal-space-3); }
+.portal-apps-surface .mateCapacityGroupHeader h4 { margin: 0; font-size: 14px; }
+.portal-apps-surface .mateCapacityGroupLabel { display: flex; align-items: center; gap: var(--portal-space-2); font-size: 12px; cursor: pointer; }
+.portal-apps-surface .mateCapacityGroupLabel input { appearance: none; position: relative; width: 38px; height: 22px; flex: 0 0 38px; margin: 0; border: 0; border-radius: 999px; background: var(--portal-line-strong); cursor: pointer; transition: background 120ms ease; }
+.portal-apps-surface .mateCapacityGroupLabel input::before { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: var(--portal-white); content: ""; transition: transform 120ms ease; }
+.portal-apps-surface .mateCapacityGroupLabel input:checked { background: var(--portal-signal); }
+.portal-apps-surface .mateCapacityGroupLabel input:checked::before { transform: translateX(16px); }
+.portal-apps-surface .mateCapacityGroupLabel input:focus-visible { outline: 2px solid var(--portal-focus-ring); outline-offset: 2px; }
+.portal-apps-surface .mateResourceToolToggle { margin-left: auto; white-space: nowrap; }
+.portal-apps-surface .mateCapacityChildren { padding-left: var(--portal-space-4); }
+
+.portal-apps-surface .appsAccessTemplateOption,
+.portal-apps-surface .appsCreateResourceSelectItem,
+.portal-apps-surface .appsCreateResourcePreviewItem {
+  position: relative;
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  border: 1px solid var(--portal-line);
+  border-left: 3px solid transparent;
+  border-radius: var(--portal-radius);
+  background: var(--portal-paper);
+  color: var(--portal-muted);
+  padding: var(--portal-space-3);
+  text-align: left;
+}
+
+.portal-apps-surface .appsAccessTemplateOption:hover,
+.portal-apps-surface .appsCreateResourceSelectItem:hover,
+.portal-apps-surface .appsAccessTemplateOption.active,
+.portal-apps-surface .appsCreateResourceSelectItem.active {
+  border-left-color: var(--portal-signal);
+  background: var(--portal-paper-soft);
+}
+
+.portal-apps-surface .appsCreateResourceSelectItem.locked,
+.portal-apps-surface .appsCreateResourceSelectItem.locked:hover {
+  cursor: not-allowed;
+  border-left-color: var(--portal-green);
+  background: var(--portal-paper-soft);
+  opacity: 0.78;
+}
+
+.portal-apps-surface .appsCreateResourcePreviewItem {
+  border-left-color: var(--portal-signal);
+}
+
+.portal-apps-surface .appsAccessTemplateOption strong,
+.portal-apps-surface .appsCreateResourceSelectItem strong,
+.portal-apps-surface .appsCreateResourcePreviewItem strong {
+  color: var(--portal-ink);
+  font-size: 11px;
+}
+
+.portal-apps-surface .appsCreateResourceSelectItem > div,
+.portal-apps-surface .appsCreateResourcePreviewItem > div {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.portal-apps-surface .appsAccessTemplateOption span,
+.portal-apps-surface .appsCreateResourceSelectItem small,
+.portal-apps-surface .appsCreateResourcePreviewItem small {
+  color: var(--portal-soft);
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+.portal-apps-surface .appsCreateResourceSelectItem em {
+  width: fit-content;
+  margin-top: 3px;
+  padding: 2px 5px;
+  background: var(--portal-green-a10);
+  color: var(--portal-green);
+  font-size: 8px;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+
+.portal-apps-surface .appsAccessConfigSection {
+  overflow: hidden;
+  padding: 0;
+}
+
+.portal-apps-surface .appsAccessSettingsWorkspace {
+  height: 100%;
+  min-height: 0;
+}
+
+.portal-apps-surface .appsAccessSettingsWorkspace.withAccessPicker {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: var(--portal-space-4);
+  overflow: hidden;
+}
+
+.portal-apps-surface .appsAccessSettingsFormColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--portal-space-4);
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.portal-apps-surface .appsAccessSettingsFormColumn > * {
+  flex: 0 0 auto;
+}
+
+.portal-apps-surface .appsAccessSettingsMain {
+  display: grid;
+  align-content: start;
+  gap: var(--portal-space-4);
+  min-width: 0;
+  min-height: 0;
+  padding: var(--portal-space-4);
+}
+
+.portal-apps-surface .appsAccessSettingsHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--portal-space-3);
+  align-items: start;
+  border-bottom: 1px solid var(--portal-line);
+  padding-bottom: var(--portal-space-3);
+}
+
+.portal-apps-surface .appsAccessSettingsHeader > div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.portal-apps-surface .appsAccessSettingsHeader h3 {
+  font-size: 13px;
+}
+
+.portal-apps-surface .appsAccessSettingsHeader p {
+  margin: 0;
+  color: var(--portal-soft);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.portal-apps-surface .appsAccessSettingsHeader > span {
+  flex: 0 0 auto;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+  color: var(--portal-muted);
+  padding: 5px 7px;
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 0.04em;
+}
+
+.portal-apps-surface .appsAccessModeGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--portal-space-2);
+}
+
+.portal-apps-surface .appsAccessLoginControl {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--portal-space-3);
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+  padding: var(--portal-space-3);
+}
+
+.portal-apps-surface .appsAccessLoginControl > div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.portal-apps-surface .appsAccessLoginControl small {
+  color: var(--portal-soft);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.portal-apps-surface .appsAccessLoginControl .workspaceListbox {
+  flex: 0 0 min(180px, 38%);
+}
+
+.portal-apps-surface .appsAccessModeOption {
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-content: start;
+  min-height: 76px;
+  border-left-width: 1px;
+  padding: 10px;
+}
+
+.portal-apps-surface .appsAccessModeOption.active {
+  border-color: var(--portal-ink);
+  border-left: 3px solid var(--portal-signal);
+  padding-left: 8px;
+}
+
+.portal-apps-surface .appsAccessModeIndicator {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--portal-line-strong);
+  background: var(--portal-paper);
+  color: transparent;
+}
+
+.portal-apps-surface .appsAccessModeOption.active .appsAccessModeIndicator {
+  border-color: var(--portal-ink);
+  background: var(--portal-ink);
+  color: var(--portal-signal);
+}
+
+.portal-apps-surface .appsAccessModeCopy {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.portal-apps-surface .appsAccessModeCopy > strong {
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.portal-apps-surface .appsAccessModeCopy > span {
+  font-size: 8px;
+  line-height: 1.4;
+}
+
+.portal-apps-surface .appsAccessTargetSummaryPanel {
+  display: grid;
+  gap: var(--portal-space-2);
+  min-width: 0;
+  border-top: 1px solid var(--portal-line);
+  padding-top: var(--portal-space-3);
+}
+
+.portal-apps-surface .appsAccessTargetSummaryPanel > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--portal-space-2);
+  align-items: baseline;
+}
+
+.portal-apps-surface .appsAccessTargetSummaryHeader > div {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.portal-apps-surface .appsAccessTargetSummaryPanel > div:first-child strong {
+  font-size: 10px;
+}
+
+.portal-apps-surface .appsAccessTargetSummaryPanel > div:first-child small,
+.portal-apps-surface .appsAccessDirectoryState {
+  color: var(--portal-soft);
+  font-size: 8px;
+}
+
+.portal-apps-surface .appsAccessTargetSummaryPanel .accessTargetSelectedTags {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-height: 148px;
+  overflow: auto;
+}
+
+.portal-apps-surface .appsAccessTargetSummaryPanel .accessTargetSelectedTag {
+  min-height: 42px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.portal-apps-surface .appsAccessTargetSummaryPanel .accessTargetSelectedTag.department,
+.portal-apps-surface .appsAccessTargetSummaryPanel .accessTargetSelectedTag.department:hover,
+.portal-apps-surface .appsAccessTargetSummaryPanel .accessTargetSelectedTag.department:focus-visible {
+  border-left-color: var(--portal-green);
+}
+
+.portal-apps-surface .appsAccessTargetSummaryPanel .accessTargetSelectedTag.department svg:first-child {
+  color: var(--portal-green);
+}
+
+.portal-apps-surface .appsAccessTargetSummaryPanel .accessTargetSelectedTag.user {
+  border-left-color: var(--portal-warning);
+  background: var(--portal-warm-paper);
+}
+
+.portal-apps-surface .appsAccessTargetSummaryPanel .accessTargetSelectedTag.user:hover,
+.portal-apps-surface .appsAccessTargetSummaryPanel .accessTargetSelectedTag.user:focus-visible {
+  border-left-color: var(--portal-warning);
+}
+
+.portal-apps-surface .appsAccessTargetSummaryPanel .accessTargetSelectedTag.user svg:first-child {
+  color: var(--portal-warning);
+}
+
+.portal-apps-surface .appsAccessPickerPane {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: var(--portal-space-3);
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border-left: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+  padding: var(--portal-space-4);
+}
+
+.portal-apps-surface .appsAccessPickerPaneHeader {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--portal-space-3);
+  align-items: center;
+  border-bottom: 1px solid var(--portal-line);
+  padding-bottom: var(--portal-space-3);
+}
+
+.portal-apps-surface .appsAccessPickerPane .accessTargetPicker {
+  height: 100%;
+}
+
+.portal-apps-surface .appsAccessPickerUnavailable {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: var(--portal-space-2);
+  height: 100%;
+  border: 1px dashed var(--portal-line-strong);
+  color: var(--portal-soft);
+  padding: var(--portal-space-5);
+  text-align: center;
+}
+
+.portal-apps-surface .appsAccessPickerUnavailable p {
+  max-width: 300px;
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.portal-apps-surface .appsAccessSettingsActions {
+  justify-content: flex-start;
+  border-top: 1px solid var(--portal-line);
+  padding-top: var(--portal-space-3);
+}
+
+.portal-apps-surface .appsTypeSection {
+  display: grid;
+  gap: var(--portal-space-2);
+}
+
+.portal-apps-surface .appsTypeHeader {
+  align-items: end;
+}
+
+.portal-apps-surface .appsTypeHeader > div {
+  display: grid;
+  gap: 4px;
+}
+
+.portal-apps-surface .appsTypeGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--portal-space-2);
+}
+
+.portal-apps-surface .appsTypeOption {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: var(--portal-space-3);
+  min-height: 172px;
+  min-width: 0;
+  border: 1px solid var(--portal-line);
+  border-left: 4px solid transparent;
+  border-radius: var(--portal-radius);
+  background: var(--portal-paper);
+  color: var(--portal-muted);
+  padding: var(--portal-space-3);
+  text-align: left;
+  transition: background 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.portal-apps-surface .appsTypeOption:hover,
+.portal-apps-surface .appsTypeOption.active {
+  background: var(--portal-paper-soft);
+}
+
+.portal-apps-surface .appsTypeOption.active {
+  border-color: var(--portal-line-strong);
+  border-left-color: var(--portal-signal);
+  box-shadow: var(--portal-shadow-paper);
+}
+
+.portal-apps-surface .appsTypeMark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--portal-line-strong);
+  background: var(--portal-paper-soft);
+  color: var(--portal-ink);
+  font-size: 11px;
+  font-weight: 940;
+  line-height: 1;
+}
+
+.portal-apps-surface .appsTypeMark svg {
+  stroke-width: 2.4;
+}
+
+.portal-apps-surface .appsTypeMark.web {
+  border-color: var(--portal-blue);
+  background: var(--portal-blue);
+  color: var(--portal-white);
+}
+
+.portal-apps-surface .appsTypeMark.agent_app {
+  border-color: var(--portal-blue);
+  background: var(--portal-blue);
+  color: var(--portal-white);
+  box-shadow: inset 0 -4px 0 var(--portal-ink-a16);
+}
+
+.portal-apps-surface .appsTypeMark.automation {
+  border-color: var(--portal-ink-a18);
+  background: var(--portal-signal);
+}
+
+.portal-apps-surface .appsTypeMark.static_page {
+  background:
+    linear-gradient(135deg, transparent 0 12px, var(--portal-line-strong) 12px 13px, transparent 13px),
+    var(--portal-paper-soft);
+}
+
+.portal-apps-surface .appsTypeMark.container {
+  border-color: var(--portal-ink);
+  background: var(--portal-ink);
+  color: var(--portal-white);
+}
+
+.portal-apps-surface .appsTypeCopy {
+  display: grid;
+  gap: var(--portal-space-2);
+  min-width: 0;
+}
+
+.portal-apps-surface .appsTypeOption strong {
+  display: block;
+  color: var(--portal-ink);
+  font-size: 13px;
+  line-height: 1.22;
+  overflow-wrap: anywhere;
+}
+
+.portal-apps-surface .appsTypeCopy span {
+  display: block;
+  color: var(--portal-soft);
+  font-size: 11px;
+  line-height: 1.48;
+  overflow-wrap: anywhere;
+}
+
+.portal-apps-surface .appsCreateResourceSelectIndicator,
+.portal-apps-surface .appsCreateResourcePreviewCheck {
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--portal-line-strong);
+  background: var(--portal-paper);
+}
+
+.portal-apps-surface .appsCreateResourcePreviewCheck {
+  border-color: var(--portal-ink);
+  background: var(--portal-ink);
+  color: var(--portal-signal);
+}
+
+.portal-apps-surface .active .appsCreateResourceSelectIndicator {
+  border-color: var(--portal-ink);
+  background: var(--portal-ink);
+  color: var(--portal-signal);
+}
+
+.portal-apps-surface .appsCreateResourceSelectGroup,
+.portal-apps-surface .appsAccessTargetTree,
+.portal-apps-surface .appsSkillStructureList,
+.portal-apps-surface .appsSecretList,
+.portal-apps-surface .appsHistoryList {
+  display: grid;
+  gap: var(--portal-space-2);
+}
+
+.portal-apps-surface .appsAccessTargetHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--portal-space-3);
+  align-items: center;
+}
+
+.portal-apps-surface .appsAccessSelectedTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.portal-apps-surface .appsAccessSelectedTags button {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  min-height: 26px;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper);
+  color: var(--portal-muted);
+  padding: 3px 7px;
+  font-size: 9px;
+}
+
+.portal-apps-surface .appsAccessTargetSearch {
+  width: 100%;
+}
+
+.portal-apps-surface .appsAccessTargetTree {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper);
+  padding: var(--portal-space-2);
+}
+
+.portal-apps-surface .appsAccessTreeNode,
+.portal-apps-surface .appsAccessTreeChildren {
+  display: grid;
+  gap: 3px;
+}
+
+.portal-apps-surface .appsAccessTreeChildren {
+  margin-left: var(--portal-space-5);
+}
+
+.portal-apps-surface .appsAccessTreeLine {
+  display: grid;
+  grid-template-columns: 24px 22px minmax(0, 1fr);
+  gap: 5px;
+  align-items: center;
+  min-height: 34px;
+  padding: 4px;
+}
+
+.portal-apps-surface .appsAccessTreeLine:hover,
+.portal-apps-surface .appsAccessTreeLine.active {
+  background: var(--portal-paper-soft);
+}
+
+.portal-apps-surface .appsAccessTreeExpandButton,
+.portal-apps-surface .appsAccessTreeExpandSpacer,
+.portal-apps-surface .appsAccessTreeCheck {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper);
+  color: var(--portal-muted);
+}
+
+.portal-apps-surface .appsAccessTreeExpandSpacer {
+  border-color: transparent;
+  background: transparent;
+}
+
+.portal-apps-surface .appsAccessTreeSelect input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.portal-apps-surface .appsAccessTreeLine.active .appsAccessTreeCheck {
+  border-color: var(--portal-ink);
+  background: var(--portal-ink);
+  color: var(--portal-signal);
+}
+
+.portal-apps-surface .appsAccessTreeText {
+  display: grid;
+  gap: 2px;
+}
+
+.portal-apps-surface .appsAccessTreeText strong {
+  font-size: 10px;
+}
+
+.portal-apps-surface .appsAccessTreeText small {
+  color: var(--portal-soft);
+  font-size: 8px;
+}
+
+.portal-apps-surface .appsCopyNoticeOverlay {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--portal-ink-a34);
+  padding: var(--portal-space-5);
+}
+
+.portal-apps-surface .appsCopyNoticeModal {
+  display: grid;
+  justify-items: center;
+  gap: var(--portal-space-3);
+  width: min(420px, 100%);
+  border: 1px solid var(--portal-line-strong);
+  background: var(--portal-paper);
+  box-shadow: var(--portal-shadow-float);
+  padding: var(--portal-space-6);
+  text-align: center;
+}
+
+.portal-apps-surface .appsCopyNoticeIcon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  background: var(--portal-ink);
+  color: var(--portal-signal);
+}
+
+.portal-apps-surface .appsSecretRow,
+.portal-apps-surface .appsSkillStructureGroup {
+  display: grid;
+  gap: var(--portal-space-2);
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper);
+  padding: var(--portal-space-3);
+}
+
+.portal-apps-surface .appsProgressRail {
+  border: 0;
+  background: var(--portal-paper);
+  padding: 0;
+}
+
+.portal-apps-surface .appsProgressSteps {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+  background: var(--portal-line);
+  padding: 0;
+  list-style: none;
+}
+
+.portal-apps-surface .appsProgressRailItem {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: var(--portal-space-3);
+  align-items: start;
+  min-height: 76px;
+  background: var(--portal-paper);
+  padding: var(--portal-space-3);
+}
+
+.portal-apps-surface .appsProgressRailItem:last-child {
+  min-height: 76px;
+}
+
+.portal-apps-surface .appsProgressRailItem > div {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.portal-apps-surface .appsProgressStepLabel {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.portal-apps-surface .appsProgressStepLabel strong {
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+.portal-apps-surface .appsProgressRailItem small {
+  color: var(--portal-soft);
+  font-size: 8px;
+  line-height: 1.35;
+}
+
+.portal-apps-surface .appsProgressStepNumber,
+.portal-apps-surface .appsResourceCheck {
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--portal-line-strong);
+  color: var(--portal-soft);
+}
+
+.portal-apps-surface .appsProgressStepNumber {
+  position: relative;
+  z-index: 1;
+  width: 28px;
+  height: 28px;
+  background: var(--portal-paper);
+  font-size: 9px;
+  font-weight: 850;
+}
+
+.portal-apps-surface .appsResourceCheck {
+  width: 22px;
+  height: 22px;
+}
+
+.portal-apps-surface .appsProgressRailItem.ready .appsProgressStepNumber {
+  border-color: var(--portal-green);
+  background: var(--portal-green);
+  color: var(--portal-white);
+}
+
+.portal-apps-surface .appsResourceCheck.ready {
+  border-color: var(--portal-green);
+  color: var(--portal-green);
+}
+
+.portal-apps-surface .appsProgressRailItem.pending .appsProgressStepNumber,
+.portal-apps-surface .appsResourceCheck.pending {
+  border-color: var(--portal-muted);
+  background: var(--portal-muted);
+  color: var(--portal-white);
+}
+
+.portal-apps-surface .appsProgressRailItem.idle .appsProgressStepNumber {
+  border-color: var(--portal-line);
+  background: var(--portal-shell-strong);
+  color: var(--portal-soft);
+}
+
+.portal-apps-surface .appsBasicProgressSection {
+  overflow: hidden;
+  padding: 0;
+}
+
+.portal-apps-surface .appsBasicProgressSection > h3 {
+  margin: 0;
+  border-bottom: 1px solid var(--portal-line);
+  padding: 12px var(--portal-space-4);
+  font-size: 12px;
+}
+
+.portal-apps-surface .appsBasicProgressSection .appsProgressRail {
+  padding: 0;
+}
+
+.portal-apps-surface .appsProgressRail.horizontal .appsProgressSteps {
+  grid-template-columns: repeat(var(--apps-progress-count), minmax(0, 1fr));
+}
+
+.portal-apps-surface .appsProgressRail.horizontal .appsProgressRailItem,
+.portal-apps-surface .appsProgressRail.horizontal .appsProgressRailItem:last-child {
+  grid-template-columns: 28px minmax(0, 1fr);
+  min-height: 76px;
+  padding: var(--portal-space-3);
+}
+
+.portal-apps-surface .appsProgressRail.horizontal .appsProgressRailItem > div {
+  padding-right: 4px;
+}
+
+.portal-apps-surface .appsProgressRail.horizontal .appsProgressStepLabel {
+  align-items: flex-start;
+}
+
+.portal-apps-surface .appsProgressRail.horizontal .appsProgressStepLabel strong {
+  min-height: 26px;
+}
+
+.portal-apps-surface .appsPublishCoverPreview {
+  display: block;
+  width: 96px;
+  height: 96px;
+  border: 1px solid var(--portal-line);
+  object-fit: cover;
+}
+
+.portal-apps-surface .appsPublishReadOnlyGrid {
+  gap: 0;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper);
+}
+
+.portal-apps-surface .appsPublishReadOnlyGrid .assetDetailItem {
+  align-content: start;
+  min-height: 58px;
+  background: var(--portal-paper);
+  padding: 10px 12px;
+  box-shadow: inset -1px -1px 0 var(--portal-line);
+}
+
+.portal-apps-surface .appsPublishReadOnlyGrid .assetDetailItem > span {
+  color: var(--portal-soft);
+  font-size: 8px;
+  font-weight: 760;
+}
+
+.portal-apps-surface .appsPublishReadOnlyGrid .assetDetailItem > strong {
+  overflow-wrap: anywhere;
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.portal-apps-surface .appsSecretMeta,
+.portal-apps-surface .appsSkillStructureGroupHead,
+.portal-apps-surface .appsSkillFileRow {
+  display: grid;
+  gap: 3px;
+}
+
+.portal-apps-surface .appsResourceCopyValue {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  justify-self: start;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  color: var(--portal-blue);
+  padding: 0;
+  font-size: 10px;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.portal-apps-surface .appsResourceCopyValue > span:first-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.portal-apps-surface .appsResourceCopyValue > svg {
+  flex: 0 0 auto;
+  opacity: 0.62;
+}
+
+.portal-apps-surface .appsResourceCopyValue:hover > svg,
+.portal-apps-surface .appsResourceCopyValue:focus-visible > svg {
+  opacity: 1;
+}
+
+.portal-apps-surface .appsSecretRow {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+}
+
+.portal-apps-surface .appsSecretRowActions {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--portal-space-3);
+  align-items: center;
+}
+
+.portal-apps-surface .appsSkillStructureSection {
+  overflow: hidden;
+  padding: 0;
+}
+
+.portal-apps-surface .appsSkillStructureHeader {
+  align-items: flex-start;
+  border-bottom: 1px solid var(--portal-line);
+  padding: 14px var(--portal-space-4);
+}
+
+.portal-apps-surface .appsSkillStructureHeader h3 {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.portal-apps-surface .appsSkillStructureHeader p {
+  margin: 4px 0 0;
+  color: var(--portal-soft);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.portal-apps-surface .appsSkillStructureSummary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  border-bottom: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+}
+
+.portal-apps-surface .appsSkillStructureSummary > div {
+  display: grid;
+  gap: 5px;
+  align-content: center;
+  min-width: 0;
+  min-height: 64px;
+  border-right: 1px solid var(--portal-line);
+  padding: 10px var(--portal-space-4);
+}
+
+.portal-apps-surface .appsSkillStructureSummary > div:last-child {
+  border-right: 0;
+}
+
+.portal-apps-surface .appsSkillStructureSummary span {
+  color: var(--portal-soft);
+  font-size: 10px;
+  font-weight: 780;
+  line-height: 1.3;
+}
+
+.portal-apps-surface .appsSkillStructureSummary strong {
+  overflow-wrap: anywhere;
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+.portal-apps-surface .appsSkillStructureList {
+  gap: var(--portal-space-3);
+  padding: var(--portal-space-4);
+}
+
+.portal-apps-surface .appsSkillStructureGroup {
+  gap: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+.portal-apps-surface .appsSkillStructureGroupHead {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--portal-space-3);
+  align-items: center;
+  min-height: 44px;
+  background: var(--portal-paper-soft);
+  padding: 9px 12px;
+}
+
+.portal-apps-surface .appsSkillStructureGroupIdentity {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 7px;
+  align-items: baseline;
+  min-width: 0;
+}
+
+.portal-apps-surface .appsSkillStructureGroupIdentity strong {
+  overflow-wrap: anywhere;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.portal-apps-surface .appsSkillStructureGroupIdentity span,
+.portal-apps-surface .appsSkillStructureGroupHead small {
+  color: var(--portal-soft);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.portal-apps-surface .appsSkillFileList {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--portal-line);
+  padding: 0;
+}
+
+.portal-apps-surface .appsSkillFileRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--portal-space-3);
+  align-items: center;
+  min-height: 36px;
+  border-bottom: 1px solid var(--portal-line);
+  padding: 8px 12px;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+.portal-apps-surface .appsSkillFileRow:last-child {
+  border-bottom: 0;
+}
+
+.portal-apps-surface .appsSkillFileRow > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.portal-apps-surface .appsSkillFileRow small {
+  color: var(--portal-soft);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.portal-apps-surface .appsSkillFileMore {
+  background: var(--portal-paper-soft);
+  color: var(--portal-muted);
+  padding: 8px 12px;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.portal-apps-surface .appsHistorySection {
+  display: grid;
+  grid-template-rows: auto auto auto minmax(0, 1fr);
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+.portal-apps-surface .appsHistoryFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  border-bottom: 1px solid var(--portal-line);
+  background: var(--portal-paper);
+  padding: 8px var(--portal-space-4);
+}
+
+.portal-apps-surface .appsHistoryFilters button {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+  color: var(--portal-muted);
+  padding: 5px 8px;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 760;
+  cursor: pointer;
+}
+
+.portal-apps-surface .appsHistoryFilters button[aria-pressed="true"] {
+  border-color: var(--portal-ink);
+  background: var(--portal-ink);
+  color: var(--portal-paper);
+}
+
+.portal-apps-surface .appsHistoryFilters button span {
+  opacity: 0.72;
+}
+
+.portal-apps-surface .appsHistoryFilters.is-empty {
+  min-height: 0;
+  border: 0;
+  padding: 0;
+}
+
+.portal-apps-surface .appsHistoryMessages:empty {
+  min-height: 0;
+}
+
+.portal-apps-surface .appsHistoryMessage {
+  margin: 0;
+  border-bottom: 1px solid var(--portal-line);
+  padding: 7px var(--portal-space-4);
+  color: var(--portal-red);
+  font-size: 10px;
+}
+
+.portal-apps-surface .appsHistoryHeader {
+  align-items: flex-start;
+  border-bottom: 1px solid var(--portal-line);
+  padding: var(--portal-space-4);
+}
+
+.portal-apps-surface .appsHistoryHeader h3 {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.portal-apps-surface .appsHistoryHeader p {
+  margin: 4px 0 0;
+  color: var(--portal-soft);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.portal-apps-surface .appsHistoryCount {
+  flex: 0 0 auto;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+  color: var(--portal-muted);
+  padding: 5px 8px;
+  font-size: 10px;
+  font-weight: 760;
+  line-height: 1.2;
+}
+
+.portal-apps-surface .appsHistoryList {
+  align-content: start;
+  grid-auto-rows: max-content;
+  gap: var(--portal-space-2);
+  min-height: 0;
+  margin: 0;
+  overflow-y: auto;
+  background: var(--portal-paper-soft);
+  padding: var(--portal-space-3);
+  list-style: none;
+  scrollbar-gutter: stable;
+}
+
+.portal-apps-surface .appsHistoryItem {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) minmax(108px, auto);
+  gap: var(--portal-space-3);
+  align-items: start;
+  min-height: 0;
+  border: 1px solid var(--portal-line);
+  border-left: 3px solid var(--portal-ink);
+  background: var(--portal-paper);
+  padding: 12px 14px 12px 12px;
+}
+
+.portal-apps-surface .appsHistoryItem.deployment {
+  border-left-color: var(--portal-green);
+}
+
+.portal-apps-surface .appsHistoryItem.backup {
+  border-left-color: var(--portal-warning);
+}
+
+.portal-apps-surface .appsHistoryItem.community {
+  border-left-color: var(--portal-blue);
+}
+
+.portal-apps-surface .appsHistoryIcon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+  color: var(--portal-muted);
+}
+
+.portal-apps-surface .appsHistoryItem.deployment .appsHistoryIcon {
+  border-color: var(--portal-green);
+  color: var(--portal-green);
+}
+
+.portal-apps-surface .appsHistoryItem.backup .appsHistoryIcon {
+  border-color: var(--portal-warning);
+  color: var(--portal-warning);
+}
+
+.portal-apps-surface .appsHistoryItem.community .appsHistoryIcon {
+  border-color: var(--portal-blue);
+  color: var(--portal-blue);
+}
+
+.portal-apps-surface .appsHistoryEventCopy,
+.portal-apps-surface .appsHistoryEventTime {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-width: 0;
+}
+
+.portal-apps-surface .appsHistoryEventLabel {
+  overflow-wrap: anywhere;
+  font-size: 14px;
+  line-height: 1.3;
+}
+
+.portal-apps-surface .appsHistoryEventMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 8px;
+  align-items: center;
+  min-width: 0;
+}
+
+.portal-apps-surface .appsHistoryEventMeta span {
+  color: var(--portal-soft);
+  font-size: 10px;
+  font-weight: 780;
+  letter-spacing: 0.02em;
+}
+
+.portal-apps-surface .appsHistoryEventMeta code {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  color: var(--portal-muted);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.portal-apps-surface .appsHistoryEventMeta strong,
+.portal-apps-surface .appsHistoryActor strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--portal-ink);
+  font-size: 11px;
+}
+
+.portal-apps-surface .appsHistoryActor {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 8px;
+  align-items: center;
+  color: var(--portal-soft);
+  font-size: 10px;
+}
+
+.portal-apps-surface .appsHistoryNotes {
+  border-top: 1px dashed var(--portal-line);
+  padding-top: 6px;
+  color: var(--portal-muted);
+  font-size: 10px;
+}
+
+.portal-apps-surface .appsHistoryNotes summary {
+  width: fit-content;
+  color: var(--portal-ink);
+  font-weight: 760;
+  cursor: pointer;
+}
+
+.portal-apps-surface .appsHistoryNotes p {
+  margin: 7px 0 0;
+  max-width: 72ch;
+  white-space: pre-wrap;
+  line-height: 1.55;
+}
+
+.portal-apps-surface .appsHistoryActions {
+  display: flex;
+  align-items: center;
+  min-height: 24px;
+}
+
+.portal-apps-surface .appsHistoryActions button {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+  color: var(--portal-ink);
+  padding: 5px 8px;
+  font: inherit;
+  font-size: 10px;
+  font-weight: 760;
+  cursor: pointer;
+}
+
+.portal-apps-surface .appsHistoryActions button:disabled {
+  cursor: wait;
+  opacity: 0.58;
+}
+
+.portal-apps-surface .appsHistoryActions > span {
+  color: var(--portal-soft);
+  font-size: 10px;
+}
+
+.portal-apps-surface .appsHistoryEventTime {
+  justify-items: end;
+  text-align: right;
+}
+
+.portal-apps-surface .appsHistoryEventTime strong {
+  color: var(--portal-ink);
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.portal-apps-surface .appsHistoryEventTime time {
+  color: var(--portal-soft);
+  font-size: 10px;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.portal-apps-surface .appsHistoryList > .emptyState {
+  margin: auto 0;
+  list-style: none;
+}
+
+.portal-apps-surface .appsDetailDangerZone,
+.portal-apps-surface .appsMarketSubmitSection,
+.portal-apps-surface .appsMarketSubmitWarning,
+.portal-apps-surface .appsPrivateAccessNote {
+  border: 1px solid var(--portal-line);
+  border-left: 3px solid var(--portal-warning);
+  background: var(--portal-paper-soft);
+  padding: var(--portal-space-3);
+}
+
+.portal-apps-surface .appsPrivateAccessNote {
+  display: flex;
+  gap: var(--portal-space-2);
+  align-items: center;
+}
+
+.portal-apps-surface .appsDetailDangerZone,
+.portal-apps-surface .appsDeleteConfirmPanel {
+  border-left-color: var(--portal-rose);
+}
+
+.portal-apps-surface .appsDangerTextButton {
+  border: 0;
+  background: transparent;
+  color: var(--portal-rose);
+  padding: 0;
+  font-weight: 820;
+}
+
+.portal-apps-surface .appsCopyAgentButton {
+  display: inline-flex;
+  justify-content: center;
+  gap: var(--portal-space-2);
+  align-items: center;
+  min-width: 184px;
+}
+
+.portal-apps-surface .appsCopyAgentButton[aria-busy="true"] {
+  opacity: 1;
+}
+
+.portal-apps-surface .appsHandoffAction {
+  display: grid;
+  gap: var(--portal-space-2);
+  align-self: start;
+}
+
+.portal-apps-surface .appsHandoffMenu {
+  display: grid;
+  width: min(340px, calc(100vw - 64px));
+  overflow: hidden;
+  border: 1px solid var(--portal-line-strong);
+  border-radius: var(--portal-radius);
+  background: var(--portal-paper);
+  box-shadow: var(--portal-shadow-float);
+}
+
+.portal-apps-surface .appsHandoffMenu > button {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: var(--portal-space-2);
+  align-items: start;
+  border: 0;
+  border-bottom: 1px solid var(--portal-line);
+  background: transparent;
+  color: var(--portal-ink);
+  padding: 12px;
+  text-align: left;
+}
+
+.portal-apps-surface .appsHandoffMenu > button:last-child {
+  border-bottom: 0;
+}
+
+.portal-apps-surface .appsHandoffMenu > button:hover,
+.portal-apps-surface .appsHandoffMenu > button:focus-visible {
+  background: var(--portal-paper-soft);
+}
+
+.portal-apps-surface .appsHandoffMenu > button:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.portal-apps-surface .appsHandoffMenu > button > svg {
+  margin-top: 2px;
+}
+
+.portal-apps-surface .appsHandoffMenu > button > span {
+  display: grid;
+  gap: 3px;
+}
+
+.portal-apps-surface .appsHandoffMenu strong {
+  font-size: 11px;
+}
+
+.portal-apps-surface .appsHandoffMenu small {
+  color: var(--portal-soft);
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.portal-apps-surface .appsCopyCountdown {
+  display: inline-grid;
+  place-items: center;
+  min-width: 24px;
+  font-size: 9px;
+}
+
+.portal-apps-surface .appsApiMode,
+.portal-apps-surface .capabilityStatusText {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  min-height: 22px;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+  color: var(--portal-muted);
+  padding: 0 7px;
+  font-size: 8px;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.portal-apps-surface .appsApiMode.live,
+.portal-apps-surface .capabilityStatusText.enabled {
+  border-color: var(--portal-green);
+  color: var(--portal-green);
+}
+
+.portal-apps-surface .capabilityStatusText.warning {
+  border-color: var(--portal-warning);
+  color: var(--portal-warning);
+}
+
+.portal-apps-surface .capabilityStatusText svg {
+  flex: 0 0 auto;
+}
+
+.portal-apps-surface .appsCapabilityCard {
+  overflow: hidden;
+  border-left: 3px solid var(--portal-line-strong);
+  padding: 0;
+}
+
+.portal-apps-surface .appsCapabilityCard.is-enabled {
+  border-left-color: var(--portal-green);
+}
+
+.portal-apps-surface .appsCapabilityCard.is-warning {
+  border-left-color: var(--portal-warning);
+}
+
+.portal-apps-surface .appsCapabilityHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--portal-space-4);
+  align-items: center;
+  min-height: 76px;
+  padding: var(--portal-space-3) var(--portal-space-4);
+}
+
+.portal-apps-surface .appsCapabilityIdentity {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: var(--portal-space-3);
+  align-items: start;
+  min-width: 0;
+}
+
+.portal-apps-surface .appsCapabilityMark {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+  color: var(--portal-muted);
+}
+
+.portal-apps-surface .appsCapabilityCard.is-enabled .appsCapabilityMark {
+  border-color: var(--portal-green);
+  background: var(--portal-green-a10);
+  color: var(--portal-green);
+}
+
+.portal-apps-surface .appsCapabilityCard.is-warning .appsCapabilityMark {
+  border-color: var(--portal-warning);
+  background: var(--portal-warm-paper);
+  color: var(--portal-warning);
+}
+
+.portal-apps-surface .appsCapabilityCopy {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.portal-apps-surface .appsCapabilityTitleRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.portal-apps-surface .appsCapabilityCopy h3 {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.portal-apps-surface .appsCapabilityCopy p {
+  max-width: 680px;
+  margin: 0;
+  color: var(--portal-soft);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.portal-apps-surface .appsCapabilityControls {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--portal-space-2);
+  align-items: center;
+}
+
+.portal-apps-surface .appsCapabilityControls > .primaryButton,
+.portal-apps-surface .appsCapabilityControls > .secondaryButton {
+  min-width: 76px;
+}
+
+.portal-apps-surface .appsCapabilityBody {
+  display: grid;
+  gap: var(--portal-space-3);
+  border-top: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+  padding: var(--portal-space-3) var(--portal-space-4) var(--portal-space-4);
+}
+
+.portal-apps-surface .appsAppResourceGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--portal-space-2);
+}
+
+.portal-apps-surface .appsAppResourceItem {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) auto;
+  gap: var(--portal-space-3);
+  align-items: center;
+  min-width: 0;
+  min-height: 92px;
+  border: 1px solid var(--portal-line);
+  border-left: 3px solid var(--portal-line-strong);
+  border-radius: var(--portal-radius);
+  background: var(--portal-paper);
+  padding: var(--portal-space-3);
+}
+
+.portal-apps-surface .appsAppResourceItem.is-added {
+  border-left-color: var(--portal-green);
+}
+
+.portal-apps-surface .appsAppResourceMark {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--portal-line-strong);
+  color: var(--portal-muted);
+}
+
+.portal-apps-surface .appsAppResourceItem.is-added .appsAppResourceMark {
+  border-color: var(--portal-ink);
+  background: var(--portal-ink);
+  color: var(--portal-signal);
+}
+
+.portal-apps-surface .appsAppResourceCopy {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.portal-apps-surface .appsAppResourceCopy > strong {
+  color: var(--portal-ink);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.portal-apps-surface .appsAppResourceCopy > small,
+.portal-apps-surface .appsAppResourceCopy > span {
+  color: var(--portal-soft);
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.portal-apps-surface .appsAppResourceCopy > span,
+.portal-apps-surface .appsAppResourceLocked {
+  font-weight: 780;
+}
+
+.portal-apps-surface .appsAppResourceLocked {
+  color: var(--portal-green);
+  font-size: 9px;
+  white-space: nowrap;
+}
+
+.portal-apps-surface .appsAppResourceItem > .primaryButton {
+  min-width: 82px;
+}
+
+.portal-apps-surface .appsCollaboratorSummary,
+.portal-apps-surface .appsCollaboratorEditor {
+  display: grid;
+  gap: var(--portal-space-3);
+  min-width: 0;
+}
+
+.portal-apps-surface .appsCollaboratorSummary > div:first-child {
+  display: grid;
+  gap: 3px;
+}
+
+.portal-apps-surface .appsCollaboratorSummary > div:first-child > strong {
+  font-size: 10px;
+}
+
+.portal-apps-surface .appsCollaboratorSummary > div:first-child > small {
+  color: var(--portal-soft);
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.portal-apps-surface .appsCollaboratorSummary .peopleMentionPicker {
+  width: 100%;
+}
+
+.portal-apps-surface .appsCollaboratorEditor {
+  gap: var(--portal-space-2);
+}
+
+.portal-apps-surface .appsCollaboratorActions {
+  justify-content: flex-end;
+}
+
+.portal-apps-surface .appsCapabilityDetails {
+  gap: 1px;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-line);
+}
+
+.portal-apps-surface .appsCapabilityDetails .assetDetailItem {
+  align-content: start;
+  gap: 4px;
+  min-height: 54px;
+  background: var(--portal-paper);
+  padding: 9px 10px;
+}
+
+.portal-apps-surface .appsCapabilityDetails .assetDetailItem > span {
+  color: var(--portal-soft);
+  font-size: 8px;
+  font-weight: 780;
+}
+
+.portal-apps-surface .appsCapabilityDetails .assetDetailItem > strong {
+  min-width: 0;
+  font-size: 10px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.portal-apps-surface .appsCapabilitySetupForm {
+  display: grid;
+  gap: var(--portal-space-3);
+}
+
+.portal-apps-surface .appsCapabilitySetupForm > label {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.portal-apps-surface .appsCapabilitySetupForm > label > span {
+  color: var(--portal-muted);
+  font-size: 9px;
+  font-weight: 820;
+}
+
+.portal-apps-surface .appsCapabilitySetupForm > label > small,
+.portal-apps-surface .appsCapabilityHelp {
+  margin: 0;
+  color: var(--portal-soft);
+  font-size: 8px;
+  line-height: 1.5;
+}
+
+.portal-apps-surface .appsCapabilitySetupForm > .appsMailTriggerOption {
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  column-gap: var(--portal-space-2);
+}
+
+.portal-apps-surface .appsMailTriggerOption > input {
+  grid-row: 1 / 3;
+  width: auto;
+  margin: 0;
+}
+
+.portal-apps-surface .appsMailTriggerOption > small {
+  grid-column: 2;
+}
+
+.portal-apps-surface .appsMailDevelopmentGuide {
+  display: grid;
+  gap: var(--portal-space-3);
+  min-width: 0;
+}
+
+.portal-apps-surface .appsMailDevelopmentGuide > details {
+  min-width: 0;
+  color: var(--portal-soft);
+  font-size: 12px;
+}
+
+.portal-apps-surface .appsMailDevelopmentGuide summary {
+  cursor: pointer;
+}
+
+.portal-apps-surface .appsMailDevelopmentGuide pre {
+  max-height: 240px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: var(--portal-paper-soft);
+  padding: var(--portal-space-3);
+}
+
+.portal-apps-surface .appsCapabilitySetupForm .formActions {
+  justify-content: flex-end;
+}
+
+.portal-apps-surface .appsEmailAddressInput {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  min-width: 0;
+  border: 1px solid var(--portal-line-strong);
+  background: var(--portal-paper);
+}
+
+.portal-apps-surface .appsEmailAddressInput > input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not(.visuallyHidden) {
+  min-width: 0;
+  border: 0;
+  box-shadow: none;
+}
+
+.portal-apps-surface .appsEmailAddressInput > span {
+  display: flex;
+  align-items: center;
+  border-left: 1px solid var(--portal-line);
+  background: var(--portal-shell);
+  color: var(--portal-muted);
+  padding: 0 10px;
+  font-size: 9px;
+  font-weight: 760;
+}
+
+.portal-apps-surface .appsEmailAddressInput.appsMateCodeInput {
+  grid-template-columns: minmax(0, 1fr) auto;
+  overflow: hidden;
+  border-radius: var(--portal-radius);
+}
+
+.portal-apps-surface .appsEmailAddressInput.appsMateCodeInput > span {
+  min-height: 36px;
+  border-top: 0;
+  border-left: 1px solid var(--portal-line);
+  white-space: nowrap;
+}
+
+.portal-apps-surface .appsSecretMeta {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.portal-apps-surface .appsSecretTitleRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--portal-space-2);
+  align-items: center;
+}
+
+.portal-apps-surface .appsSecretTitleRow > strong {
+  min-width: 0;
+  font-size: 10px;
+  overflow-wrap: anywhere;
+}
+
+.portal-apps-surface .appsSecretMeta > span,
+.portal-apps-surface .appsSecretMeta > small {
+  color: var(--portal-soft);
+  font-size: 8px;
+  line-height: 1.4;
+}
+
+.portal-apps-surface .appReviewGrid > .appsSecretRequired {
+  display: flex;
+  gap: var(--portal-space-2);
+  align-items: center;
+  align-self: end;
+  min-height: 34px;
+  color: var(--portal-muted);
+  font-size: 9px;
+  font-weight: 820;
+}
+
+.portal-apps-surface .appsSecretRequired > input {
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.portal-apps-surface .appsApiMode.offline {
+  border-color: var(--portal-rose);
+  color: var(--portal-rose);
+}
+
+.portal-apps-surface .mcpConnectionSummary {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: var(--portal-space-3);
+  align-items: center;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+  padding: var(--portal-space-4);
+}
+
+.portal-apps-surface .mcpConnectionMark,
+.portal-apps-surface .mcpAgentIcon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper);
+  color: var(--portal-blue);
+}
+
+.portal-apps-surface .mcpAgentIcon img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.portal-apps-surface .mcpConnectionWorkspace,
+.portal-apps-surface .mcpConnectionList,
+.portal-apps-surface .mcpInstallPickerCard,
+.portal-apps-surface .mcpAgentChoiceRow {
+  display: grid;
+  gap: var(--portal-space-3);
+}
+
+.portal-apps-surface .mcpConnectionRow {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) auto 34px;
+  gap: var(--portal-space-3);
+  align-items: center;
+  border-bottom: 1px solid var(--portal-line);
+  padding: var(--portal-space-2) 0;
+}
+
+.portal-apps-surface .mcpConnectionRowMain,
+.portal-apps-surface .mcpConnectionLastSeen {
+  display: grid;
+  gap: 2px;
+}
+
+.portal-apps-surface .mcpConnectionRowMain span,
+.portal-apps-surface .mcpConnectionLastSeen,
+.portal-apps-surface .mcpAgentChoiceHint,
+.portal-apps-surface .mcpInstallConfigHint {
+  color: var(--portal-soft);
+  font-size: 9px;
+}
+
+.portal-apps-surface .mcpPromptPreview {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-ink);
+  color: var(--portal-white);
+  padding: var(--portal-space-3);
+  white-space: pre-wrap;
+}
+
+.portal-apps-surface .mcpInstallActions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.portal-apps-surface .iconSelect {
+  display: grid;
+  gap: 8px;
+  position: relative;
+}
+
+.portal-apps-surface .iconSelectTrigger {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--portal-space-2);
+  align-items: center;
+  width: 100%;
+  min-height: 38px;
+  border: 1px solid var(--portal-line-strong);
+  background: var(--portal-paper);
+  color: var(--portal-ink);
+  padding: 0 10px;
+}
+
+.portal-apps-surface .iconSelectPopover {
+  position: absolute;
+  z-index: 104;
+  top: calc(100% + 4px);
+  right: 0;
+  left: 0;
+  border: 1px solid var(--portal-line-strong);
+  background: var(--portal-paper);
+  box-shadow: var(--portal-shadow-float);
+  padding: 4px;
+}
+
+.portal-apps-surface .iconSelectOption {
+  display: flex;
+  gap: var(--portal-space-2);
+  align-items: center;
+  width: 100%;
+  min-height: 38px;
+  border: 0;
+  background: transparent;
+  color: var(--portal-ink);
+  padding: 5px;
+  text-align: left;
+}
+
+.portal-apps-surface .iconSelectOption:hover,
+.portal-apps-surface .iconSelectOption.active {
+  background: var(--portal-paper-soft);
+}
+
+.portal-apps-surface .iconSelectIcon img,
+.portal-apps-surface .iconSelectValue img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.portal-apps-surface .mcpAgentSelect .iconSelectIcon {
+  border: 0;
+  background: transparent;
+}
+
+.portal-apps-surface .appsDetailActionStack > .primaryButton,
+.portal-apps-surface .appsDetailActionStack > .secondaryButton {
+  width: 100%;
+}
+
+@media (max-width: 1180px) {
+  .portal-apps-surface .appsDetailModal {
+    --apps-detail-picker-width: 340px;
+  }
+
+  .portal-apps-controls {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .portal-apps-search {
+    width: 100%;
+  }
+
+  .portal-apps-filter-group {
+    justify-content: flex-start;
+  }
+
+  .portal-apps-surface .appsTopControls {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .portal-apps-surface .appsSearchControl {
+    width: 100%;
+    max-width: none;
+    flex-basis: auto;
+  }
+
+  .portal-apps-surface .appsFilterGroup {
+    justify-content: flex-start;
+  }
+
+  .portal-apps-surface .appsCreateForm.withAccessPicker {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 340px);
+  }
+
+  .portal-apps-surface .appsAccessSettingsWorkspace.withAccessPicker {
+    grid-template-columns: minmax(0, 1fr) 340px;
+  }
+}
+
+@media (max-width: 920px) {
+  .portal-apps-surface .assetReviewBody {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-apps-surface .assetReviewFormPanel {
+    position: static;
+  }
+}
+
+@media (max-width: 760px) {
+  .portal-apps-heading {
+    align-items: stretch;
+    flex-direction: column;
+    padding: var(--portal-space-5);
+  }
+
+  .portal-apps-heading::after {
+    top: -48px;
+    right: -1px;
+    width: 122px;
+    height: 122px;
+  }
+
+  .portal-apps-heading-actions {
+    justify-items: stretch;
+  }
+
+  .portal-apps-object-count {
+    justify-content: flex-end;
+  }
+
+  .portal-apps-heading-actions > button {
+    width: 100%;
+  }
+
+  .portal-apps-new-control,
+  .portal-apps-new-control > button {
+    width: 100%;
+  }
+
+  .portal-apps-filter-group {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .portal-apps-surface .appsMetricGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-apps-surface .appsMetric,
+  .portal-apps-surface .appsMetric:last-child {
+    border-right: 0;
+    border-bottom: 1px solid var(--portal-line);
+  }
+
+  .portal-apps-surface .appsMetric:last-child {
+    border-bottom: 0;
+  }
+
+  .portal-apps-surface .appsFilterGroup {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .portal-apps-surface .appsCreateForm.withAccessPicker {
+    grid-template-columns: 1fr;
+    overflow: auto;
+  }
+
+  .portal-apps-surface .appsCreateForm.withAccessPicker .appsCreateFormMain {
+    overflow: visible;
+  }
+
+  .portal-apps-surface .appsCreateAccessPickerPane {
+    max-height: 420px;
+    border-top: 1px solid var(--portal-line);
+    border-left: 0;
+  }
+
+  .portal-apps-surface .appsAccessSettingsWorkspace {
+    position: relative;
+    height: 100%;
+  }
+
+  .portal-apps-surface .appsAccessSettingsWorkspace.withAccessPicker {
+    display: block;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .portal-apps-surface .appsAccessSettingsFormColumn {
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .portal-apps-surface .appsAccessPickerPane {
+    position: absolute;
+    z-index: 4;
+    inset: 0;
+    height: 100%;
+    border-left: 0;
+    background: var(--portal-paper);
+  }
+
+  .portal-apps-surface .segmentedControl {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .portal-apps-surface .appsProductRow {
+    grid-template-columns: 44px minmax(0, 1fr) 24px;
+    gap: var(--portal-space-3);
+  }
+
+  .portal-apps-surface .appsProductIcon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .portal-apps-surface .appsMatePanel .appsProductRow {
+    grid-template-columns: 56px minmax(0, 1fr) 24px;
+  }
+
+  .portal-apps-surface .appsProductIcon.mate {
+    width: 56px;
+    height: 56px;
+  }
+
+  .portal-apps-surface .appsProductStatus {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .portal-apps-surface .appsProductChevron {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+  }
+
+  .portal-apps-surface .appsModalOverlay,
+  .portal-apps-surface .profileModalOverlay,
+  .portal-apps-surface .assetReviewOverlay,
+  .portal-apps-surface .appsCopyNoticeOverlay {
+    align-items: end;
+    padding: 0;
+  }
+
+  .portal-apps-surface .appsModal,
+  .portal-apps-surface .appsDetailModal,
+  .portal-apps-surface .profileModal {
+    width: 100%;
+    max-height: 92vh;
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+  }
+
+  .portal-apps-surface .appsModal.appsCreateModal,
+  .portal-apps-surface .appsModal.appsCreateModal.withAccessPicker,
+  .portal-apps-surface .appsModal.appsMateQuickModal,
+  .portal-apps-surface .appsModal.appsMcpModal {
+    width: 100%;
+  }
+
+  .portal-apps-surface .appsMateEmptyGuide,
+  .portal-apps-surface .appsQuickDefaults,
+  .portal-apps-surface .appsQuickAccessGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-apps-surface .appsMateEmptyIcon { display: none; }
+  .portal-apps-surface .appsMateEmptyCta { justify-content: center; }
+  .portal-apps-surface .appsQuickDefaults ul { grid-template-columns: 1fr; }
+  .portal-apps-surface .appsQuickAccessCard.web,
+  .portal-apps-surface .appsQuickAccessCard.compact { grid-template-columns: auto minmax(0, 1fr); }
+  .portal-apps-surface .appsQuickAccessCard .appsQuickCardActions,
+  .portal-apps-surface .appsQuickAccessCard.compact > button { grid-column: 1 / -1; }
+
+  .portal-apps-surface .appsDetailModal {
+    width: 100%;
+    height: 92vh;
+    height: 92dvh;
+    max-height: 92vh;
+    padding: var(--portal-space-4);
+  }
+
+  .portal-apps-surface .appsDetailModal.withAccessPicker {
+    width: 100%;
+  }
+
+  .portal-apps-surface .assetReviewBody {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-apps-surface .assetReviewFormPanel {
+    position: static;
+  }
+
+  .portal-apps-surface .assetDetailGrid,
+  .portal-apps-surface .appReviewGrid,
+  .portal-apps-surface .formGrid,
+  .portal-apps-surface .appsCreateSelectPanelHeader {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-apps-surface .appCoverUploadSummary {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .portal-apps-surface .appCoverUploadSummaryCopy {
+    min-width: calc(100% - 88px);
+  }
+
+  .portal-apps-surface .appCoverManagement {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-apps-surface .appCoverPreview {
+    max-width: 240px;
+  }
+
+  .portal-apps-surface .appsBasicInfoGrid .assetDetailItem,
+  .portal-apps-surface .appsBasicInfoGrid .assetDetailItem.span-3,
+  .portal-apps-surface .appsBasicInfoGrid .assetDetailItem.span-4,
+  .portal-apps-surface .appsBasicInfoGrid .assetDetailItem.span-5,
+  .portal-apps-surface .appsBasicInfoGrid .assetDetailItem.span-7,
+  .portal-apps-surface .appsBasicInfoGrid .assetDetailItem.span-12 {
+    grid-column: 1 / -1;
+  }
+
+  .portal-apps-surface .appsHistoryHeader {
+    gap: var(--portal-space-2);
+  }
+
+  .portal-apps-surface .appsHistoryItem {
+    grid-template-columns: 34px minmax(0, 1fr);
+    min-height: 0;
+    padding: 11px;
+  }
+
+  .portal-apps-surface .appsHistoryIcon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .portal-apps-surface .appsHistoryEventTime {
+    grid-column: 2;
+    justify-items: start;
+    text-align: left;
+  }
+
+  .portal-apps-surface .appsSkillStructureSummary > div {
+    padding-right: 10px;
+    padding-left: 10px;
+  }
+
+  .portal-apps-surface .appsResourceInventory {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-apps-surface .appsAccessTemplateGrid,
+  .portal-apps-surface .appsCreateResourcePreviewGrid,
+  .portal-apps-surface .appsAppResourceGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-apps-surface .appsTypeGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .portal-apps-surface .appsTypeOption {
+    min-height: 156px;
+  }
+
+  .portal-apps-surface .mcpConnectionRow {
+    grid-template-columns: 38px minmax(0, 1fr) 34px;
+  }
+
+  .portal-apps-surface .mcpConnectionLastSeen {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 520px) {
+  .portal-apps-surface .appsDetailTabFooter {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .portal-apps-surface .appsTabPrimaryActions {
+    justify-content: stretch;
+    margin-left: 0;
+  }
+
+  .portal-apps-surface .appsTabPrimaryActions > .primaryButton,
+  .portal-apps-surface .appsTabPrimaryActions > .secondaryButton {
+    flex: 1;
+  }
+
+  .portal-apps-surface .appsHandoffAction,
+  .portal-apps-surface .appsHandoffAction > .appsCopyAgentButton,
+  .portal-apps-surface .appsHandoffMenu {
+    width: 100%;
+  }
+
+  .portal-apps-surface .appsDetailValueWithAction {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .portal-apps-surface .appsProgressRail.horizontal .appsProgressSteps {
+    grid-template-columns: repeat(var(--apps-progress-count), minmax(120px, 1fr));
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+
+  .portal-apps-surface .appsDetailTabs {
+    overflow-x: auto;
+  }
+
+  .portal-apps-surface .appsAccessModeGrid,
+  .portal-apps-surface .appsAccessTargetSummaryPanel .accessTargetSelectedTags {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-apps-surface .appsCapabilityHeader {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-apps-surface .appsCapabilityControls {
+    justify-content: space-between;
+  }
+
+  .portal-apps-surface .appsCapabilityDetails {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-apps-surface .appsCapabilityDetails .assetDetailItem.wide {
+    grid-column: auto;
+  }
+
+  .portal-apps-surface .appsEmailAddressInput {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-apps-surface .appsEmailAddressInput > span {
+    min-height: 32px;
+    border-top: 1px solid var(--portal-line);
+    border-left: 0;
+  }
+
+  .portal-apps-surface .appsSecretRow {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-apps-surface .appsSecretRowActions {
+    justify-content: flex-start;
+  }
+
+  .portal-apps-surface .appsAccessSettingsHeader {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .portal-apps-surface .appsDevResourceHeader {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .portal-apps-surface .appsResourceInventoryItem {
+    grid-template-columns: 22px minmax(0, 1fr);
+  }
+
+  .portal-apps-surface .appsAppResourceItem {
+    grid-template-columns: 22px minmax(0, 1fr);
+  }
+
+  .portal-apps-surface .appsAppResourceItem > .primaryButton,
+  .portal-apps-surface .appsAppResourceLocked {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .portal-apps-surface .appsResourceMeta {
+    grid-column: 2;
+    grid-row: 2;
+    grid-auto-flow: column;
+    justify-content: start;
+    justify-items: start;
+    min-width: 0;
+  }
+
+  .portal-apps-surface .appsTypeGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-apps-surface .appsTypeOption {
+    min-height: 0;
+  }
+}
+.appsBackupSecurity { display: grid; gap: 16px; padding: 4px 0 28px; }
+.appsBackupLoading { display: flex; gap: 8px; align-items: center; padding: 32px; color: var(--portal-muted); }
+.appsBackupPanel { display: grid; gap: 18px; padding: 20px; border: 1px solid var(--portal-line); border-radius: 0; background: var(--portal-paper); }
+.appsBackupPanel > header { display: flex; gap: 12px; align-items: flex-start; margin: -20px -20px 0; border-bottom: 1px solid var(--portal-line); padding: 16px 20px; }
+.appsBackupPanel > header > span { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--portal-line); border-radius: 0; background: var(--portal-blue-a06); color: var(--portal-blue); }
+.appsBackupManualAction { flex: 0 0 auto; margin-left: auto; }
+.appsBackupProgress { display: grid; gap: 10px; border: 1px solid var(--portal-line); padding: 14px; background: var(--portal-paper-soft); }
+.appsBackupProgressHeading { display: flex; justify-content: space-between; gap: 16px; align-items: center; font-size: 12px; }
+.appsBackupProgressHeading span { color: var(--portal-muted); font-weight: 700; }
+.appsBackupProgress progress { width: 100%; height: 8px; overflow: hidden; border: 0; border-radius: 0; background: var(--portal-line); }
+.appsBackupProgress progress::-webkit-progress-bar { background: var(--portal-line); }
+.appsBackupProgress progress::-webkit-progress-value { background: var(--portal-blue); }
+.appsBackupProgress progress::-moz-progress-bar { background: var(--portal-blue); }
+.appsBackupLogError { margin: -8px 0 0; color: var(--portal-rose); font-weight: 700; }
+.appsBackupPanel h3 { margin: 0 0 4px; }
+.appsBackupPanel p { font-size: 13px; }
+.appsBackupSwitch { display: flex; justify-content: space-between; gap: 20px; align-items: center; border: 1px solid var(--portal-line); border-radius: 0; background: var(--portal-paper-soft); padding: 14px; }
+.appsBackupSwitch span { display: grid; gap: 3px; }
+.appsBackupSwitch small { color: var(--portal-muted); }
+.appsBackupSwitch input { width: 42px; height: 22px; accent-color: var(--portal-blue); }
+.appsBackupFields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.appsBackupField { display: grid; gap: 7px; align-content: start; color: var(--portal-muted); font-size: 12px; font-weight: 750; }
+.appsBackupField > input { width: 100%; height: 38px; border: 1px solid var(--portal-line-strong); border-radius: var(--portal-radius); background: var(--portal-paper); color: var(--portal-ink); padding: 0 10px; }
+.appsBackupListbox { width: 100%; }
+.appsBackupListbox .workspaceListboxTrigger { min-height: 38px; }
+.appsBackupFieldHelp { color: var(--portal-soft); font-size: 11px; font-weight: 600; line-height: 1.45; }
+.appsBackupScheduleNote { grid-column: 1 / -1; margin: 0; color: var(--portal-soft); font-size: 11px; font-weight: 650; }
+.appsBackupRetention { display: grid; gap: 14px; border: 1px solid var(--portal-line); border-radius: 0; padding: 14px; }
+.appsBackupRetentionToggle { display: flex; gap: 11px; align-items: flex-start; cursor: pointer; }
+.appsBackupRetentionToggle > input { flex: 0 0 auto; width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--portal-blue); }
+.appsBackupRetentionToggle > span { display: grid; gap: 3px; }
+.appsBackupRetentionToggle small { color: var(--portal-muted); font-weight: 600; }
+.appsBackupRetentionControls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; padding-left: 29px; }
+.appsBackupSummary { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; color: var(--portal-muted); font-size: 12px; }
+.appsBackupSummary .warning, .appsBackupError { color: var(--portal-rose); }
+.appsBackupJobs { display: grid; gap: 8px; }
+.appsBackupJobs article { display: grid; grid-template-columns: minmax(170px, 1fr) auto auto; gap: 12px; align-items: center; padding: 12px; border: 1px solid var(--portal-line); border-radius: 0; }
+.appsBackupJobs article > div:first-child, .appsBackupJobs article > div:first-child span { display: grid; gap: 3px; }
+.appsBackupJobs small { color: var(--portal-muted); }
+.appsBackupDownload { color: var(--portal-blue); font-weight: 400; text-decoration: underline; text-underline-offset: 2px; }
+.backupStatus { display: inline-flex; width: max-content; border-radius: var(--portal-radius-structural); padding: 4px 8px; background: var(--portal-ink-a065); color: var(--portal-muted); font-size: 11px; font-weight: 800; }
+.backupStatus.status-succeeded { background: var(--portal-green-a10); color: var(--portal-green); }
+.backupStatus.status-failed { background: var(--portal-rose-a06); color: var(--portal-rose); }
+.backupStatus.status-waiting_for_node { background: var(--portal-gold-a10); color: var(--portal-warning); }
+@media (max-width: 760px) { .appsBackupPanel > header { flex-wrap: wrap; } .appsBackupManualAction { margin-left: 48px; } .appsBackupFields, .appsBackupRetentionControls { grid-template-columns: 1fr; } .appsBackupRetentionControls { padding-left: 0; } .appsBackupJobs article { grid-template-columns: 1fr; } }

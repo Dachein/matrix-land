@@ -1,0 +1,25 @@
+{
+  "name": "@frontier-workspace/mail",
+  "version": "0.1.0",
+  "description": "Workspace Mail SDK for APPS apps, Mate and authorized local agents.",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "files": [
+    "dist",
+    "README.md",
+    "DEVELOPMENT_PROMPT.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,239 @@
+.portal-auth-experience {
+  position: relative;
+  isolation: isolate;
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: var(--portal-auth-fallback);
+  touch-action: none;
+}
+
+.portal-auth-scenes,
+.portal-auth-scene,
+.portal-auth-scene img,
+.portal-auth-scene-veil {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.portal-auth-scenes {
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.portal-auth-scene {
+  margin: 0;
+  opacity: 0;
+  transform: scale(1.018);
+  transition: opacity 480ms ease, transform 900ms ease;
+  will-change: opacity, transform;
+}
+
+.portal-auth-scene.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.portal-auth-scene img {
+  object-fit: cover;
+  object-position: center;
+}
+
+.portal-auth-scene-veil {
+  z-index: 2;
+  background:
+    var(--portal-auth-veil-left),
+    var(--portal-auth-veil-bottom);
+}
+
+.portal-auth-experience .portal-auth-panel {
+  position: absolute;
+  z-index: 4;
+  bottom: clamp(66px, 9vh, 104px);
+  left: clamp(28px, 5vw, 88px);
+  width: min(620px, 43vw);
+  min-height: 0;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  color: var(--portal-white);
+  padding: 0;
+  touch-action: auto;
+}
+
+.portal-auth-experience .portal-auth-panel h1 {
+  max-width: 11.8ch;
+  color: var(--portal-white);
+  font-size: clamp(42px, 4.2vw, 66px);
+  line-height: 0.95;
+  text-shadow: var(--portal-auth-title-shadow);
+}
+
+.portal-auth-experience .portal-auth-brand {
+  color: var(--portal-white);
+  text-shadow: var(--portal-auth-copy-shadow);
+}
+
+.portal-auth-experience .portal-auth-panel .primaryButton {
+  min-width: 204px;
+  min-height: 46px;
+  border-color: var(--portal-white);
+  border-radius: 0;
+  background: var(--portal-white);
+  color: var(--portal-ink);
+  padding: 0 22px;
+  font-size: 14px;
+  box-shadow: var(--portal-auth-button-shadow);
+}
+
+.portal-auth-experience .portal-auth-panel .primaryButton:hover {
+  border-color: var(--portal-paper-soft);
+  background: var(--portal-paper-soft);
+}
+
+.portal-auth-experience .portal-auth-switch {
+  color: var(--portal-white-a72);
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.4;
+  text-decoration-color: var(--portal-auth-link-line);
+  text-decoration-thickness: 1px;
+  text-shadow: var(--portal-auth-link-shadow);
+}
+
+.portal-auth-experience .portal-auth-switch:hover {
+  color: var(--portal-white);
+}
+
+.portal-auth-experience .portal-email-auth-form .formFieldLabel {
+  color: var(--portal-white);
+  text-shadow: var(--portal-auth-link-shadow);
+}
+
+.portal-auth-experience .portal-email-auth-form .textInput,
+.portal-auth-experience .portal-email-auth-delivery {
+  border-color: var(--portal-auth-input-border);
+  background: var(--portal-auth-input-bg);
+  color: var(--portal-ink);
+  backdrop-filter: blur(10px);
+}
+
+.portal-auth-progress {
+  position: absolute;
+  z-index: 5;
+  right: clamp(30px, 5vw, 88px);
+  bottom: clamp(36px, 6vh, 70px);
+  width: min(208px, 42vw);
+  height: 52px;
+  touch-action: auto;
+}
+
+.portal-auth-track-line {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: var(--portal-auth-track);
+  box-shadow: var(--portal-auth-track-shadow);
+}
+
+.portal-auth-node {
+  --portal-auth-node-color: var(--portal-auth-node-1);
+  --portal-auth-node-ring: var(--portal-auth-node-1-ring);
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--portal-auth-node-border);
+  border-radius: 50%;
+  outline-offset: 5px;
+  background: var(--portal-auth-node-color);
+  padding: 0;
+  transform: translate(-50%, -50%);
+  transition: background 220ms ease, box-shadow 220ms ease, transform 220ms ease;
+}
+
+.portal-auth-node:nth-of-type(2) {
+  --portal-auth-node-color: var(--portal-auth-node-2);
+  --portal-auth-node-ring: var(--portal-auth-node-2-ring);
+}
+
+.portal-auth-node:nth-of-type(3) {
+  --portal-auth-node-color: var(--portal-auth-node-3);
+  --portal-auth-node-ring: var(--portal-auth-node-3-ring);
+}
+
+.portal-auth-node:nth-of-type(4) {
+  --portal-auth-node-color: var(--portal-auth-node-4);
+  --portal-auth-node-ring: var(--portal-auth-node-4-ring);
+}
+
+.portal-auth-node:hover,
+.portal-auth-node.is-active {
+  background: var(--portal-auth-node-color);
+  box-shadow: 0 0 0 5px var(--portal-auth-node-ring), var(--portal-auth-node-shadow);
+  transform: translate(-50%, -50%) scale(1.16);
+}
+
+.portal-auth-progress-ping {
+  position: absolute;
+  bottom: calc(50% + 8px);
+  width: 62px;
+  height: 67px;
+  object-fit: contain;
+  filter: var(--portal-auth-ping-shadow);
+  image-rendering: pixelated;
+  pointer-events: none;
+  transform: translateX(-50%);
+  transition: left 2.1s cubic-bezier(0.36, 0.04, 0.18, 1);
+  will-change: left;
+}
+
+.portal-auth-progress-ping.is-quick {
+  transition-duration: 680ms;
+}
+
+@media (max-width: 900px) {
+  .portal-auth-experience .portal-auth-panel {
+    right: 24px;
+    bottom: 126px;
+    left: 24px;
+    width: auto;
+    max-height: calc(100svh - 154px);
+    overflow-y: auto;
+    padding: 0;
+  }
+
+  .portal-auth-experience .portal-auth-panel h1 {
+    font-size: clamp(36px, 10vw, 48px);
+  }
+
+  .portal-auth-scene img {
+    object-position: 58% center;
+  }
+
+  .portal-auth-progress {
+    right: 28px;
+    bottom: 28px;
+    left: auto;
+    width: min(208px, calc(100vw - 56px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portal-auth-scene {
+    transform: none;
+    transition: none;
+  }
+
+  .portal-auth-progress-ping {
+    transition: none;
+  }
+}

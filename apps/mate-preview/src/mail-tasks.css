@@ -1,0 +1,180 @@
+.mate-mail-workspace { display:flex; flex-direction:column; min-width:0; min-height:0; height:100%; overflow:hidden; color:var(--portal-ink,#20211d); background:var(--portal-paper,#fff); }
+.mate-mail-workspace button, .mate-mail-workspace textarea, .mate-mail-workspace input, .mate-mail-workspace select { font:inherit; }
+.mate-mail-workspace button { cursor:pointer; color:inherit; }
+.mate-mail-workspace button:disabled { opacity:.5; cursor:default; }
+.mate-mail-workspace button:focus-visible, .mate-mail-workspace a:focus-visible, .mate-mail-workspace summary:focus-visible { outline:2px solid var(--portal-ink,#20211d); outline-offset:2px; }
+.mate-mail-toolbar { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:16px 24px; min-height:112px; padding:20px 28px; border-bottom:1px solid var(--portal-line,#ddd); background:var(--portal-shell,#e9e8e2); flex-shrink:0; }
+.mate-mail-toolbar-title, .mate-mail-toolbar-links { display:flex; align-items:center; gap:14px; min-width:0; }
+.mate-mail-toolbar-title { flex:1; }
+.mate-mail-toolbar-title > button { flex:none; }
+.mate-mail-toolbar .mate-mail-mate-avatar { width:58px; height:58px; flex:none; border:0; border-radius:0; background:transparent; }
+.mate-mail-mate-avatar img { width:100%; height:100%; object-fit:contain; image-rendering:pixelated; }
+.mate-mail-identity { min-width:0; }
+.mate-mail-toolbar-title h1 { margin:4px 0 0; font-size:22px; line-height:1.3; letter-spacing:-.03em; }
+.mate-mail-identity p { margin:5px 0 0; max-width:48ch; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--portal-muted,#62665a); font-size:12px; line-height:1.5; }
+.mate-mail-breadcrumb { color:var(--portal-muted,#62665a); font-size:10px; font-weight:650; letter-spacing:.04em; }
+.mate-mail-breadcrumb span { margin:0 6px; color:var(--portal-line-strong,#aaa49a); }
+.mate-mail-toolbar button, .mate-mail-toolbar a { display:inline-flex; align-items:center; gap:8px; border:0; background:transparent; color:inherit; padding:8px; text-decoration:none; cursor:pointer; font:inherit; font-size:12px; }
+.mate-mail-toolbar a span { overflow-wrap:anywhere; }
+.mate-mail-toolbar button:hover, .mate-mail-toolbar a:hover { background:var(--portal-shell-strong,#e4e3dd); }
+.mate-mail-toolbar-links { flex-wrap:wrap; }
+.mate-mail-columns { display:grid; grid-template-columns:320px minmax(0,1fr); flex:1; min-height:0; }
+.mate-mail-list { min-width:0; min-height:0; display:flex; flex-direction:column; background:var(--portal-paper-soft,#faf9f6); border-right:1px solid var(--portal-line,#ddd); }
+.mate-mail-tabs { display:flex; gap:4px; margin:18px 16px 0; padding:4px; border:1px solid var(--portal-line,#ddd); border-radius:var(--portal-radius-control,3px); background:var(--portal-shell-strong,#deddd6); flex-shrink:0; }
+.mate-mail-tabs > button { flex:1; padding:9px 8px; border:0; border-radius:var(--portal-radius-control,3px); background:transparent; font-size:13px; font-weight:750; }
+.mate-mail-tabs > button[aria-selected="true"] { background:var(--portal-paper,#fff); box-shadow:0 1px 2px #1111; }
+.mate-mail-tabs > button:hover { background:var(--portal-shell-strong,#deded6); }
+.mate-mail-tabs span { margin-left:8px; color:var(--portal-soft,#77786e); font-size:11px; font-weight:400; }
+.mate-mail-list-scroll { overflow-y:auto; flex:1; padding:0 12px 24px; scrollbar-gutter:stable; }
+.mate-mail-list-scroll > p { margin:20px 12px; font-size:12px; color:var(--portal-soft,#77786e); }
+.mate-mail-list-caption { padding:0 4px 12px; font-size:11px; color:var(--portal-soft,#77786e); }
+.mate-mail-list-item { display:flex; align-items:flex-start; gap:10px; width:100%; height:120px; box-sizing:border-box; overflow:hidden; border:1px solid transparent; border-left:3px solid transparent; border-radius:var(--portal-radius-control,3px); padding:10px 10px; margin-bottom:2px; background:transparent; text-align:left; transition:background 150ms ease,border-color 150ms ease; }
+.mate-mail-list-item:hover { background:var(--portal-shell,#e9e8e2); }
+.mate-mail-list-item[data-selected="true"] { border-color:var(--portal-line,#ddd); border-left-color:var(--portal-signal,#b0ff32); background:var(--portal-paper,#fff); box-shadow:var(--portal-shadow-paper); }
+.mate-mail-source-icon { display:grid; place-items:center; width:26px; height:26px; flex:none; color:var(--portal-muted,#62665a); }
+.mate-mail-item-copy { display:flex; flex-direction:column; min-width:0; height:100%; flex:1; }
+.mate-mail-item-title { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex-shrink:0; font-size:14px; font-weight:400; line-height:21px; }
+.mate-mail-instruction-title { display:flex; align-items:baseline; gap:6px; min-width:0; font-size:13px; font-weight:400; line-height:21px; }
+.mate-mail-instruction-title > :first-child { flex:none; }
+.mate-mail-item-id { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--portal-muted,#62665a); font-size:10px; font-weight:400; }
+.mate-mail-item-preview { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; max-height:40px; flex-shrink:0; margin-top:4px; color:var(--portal-muted,#62665a); font-size:13px; font-weight:400; line-height:20px; overflow-wrap:anywhere; }
+.mate-mail-item-bottom { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:auto; padding-top:6px; flex-shrink:0; }
+.mate-mail-item-bottom > time { white-space:nowrap; font-size:10px; color:var(--portal-soft,#77786e); }
+.mate-task-badge { display:inline-flex; white-space:nowrap; padding:2px 6px; border-radius:var(--portal-radius-structural,0); font-size:10px; line-height:1.4; background:#e6e7e0; color:#62665a; }
+.mate-task-badge[data-status="completed"] { background:#e3ecd8; color:#42642b; }
+.mate-task-badge[data-status="failed"] { background:#f3e0da; color:#9a4630; }
+.mate-task-badge[data-status="running"], .mate-task-badge[data-status="waiting_for_approval"] { background:#f0e8cf; color:#82642b; }
+.mate-mail-reader { display:flex; flex-direction:column; min-width:0; min-height:0; background:var(--portal-canvas,#f3f2ee); }
+.mate-mail-heading { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px 16px; min-height:68px; padding:14px 28px; border-bottom:1px solid var(--portal-line,#ddd); flex-shrink:0; }
+.mate-mail-heading-title { display:flex; flex-direction:column; gap:4px; min-width:0; }
+.mate-mail-heading h2 { margin:0; font-size:14px; line-height:1.4; font-weight:750; }
+.mate-mail-heading-meta { display:flex; flex-wrap:wrap; align-items:center; gap:8px; color:var(--portal-soft,#77786e); font-size:11px; }
+.mate-mail-thread-id { display:inline-flex; align-items:center; gap:8px; padding:4px 7px; border:1px solid var(--portal-line,#ddd); border-radius:var(--portal-radius-control,3px); background:var(--portal-paper,#fff); font-size:11px !important; }
+.mate-mail-thread-id:hover { background:var(--portal-shell,#efeee8); }
+.mate-mail-timeline { min-height:0; overflow-y:auto; padding:18px 28px 28px; flex:1; scrollbar-gutter:stable; overscroll-behavior:contain; }
+.mate-mail-letter { border:1px solid var(--portal-line,#ddd); border-radius:var(--portal-radius-control,3px); background:var(--portal-paper,#fff); box-shadow:var(--portal-shadow-paper); margin-bottom:14px; }
+.mate-mail-letter > summary { display:flex; align-items:center; gap:14px; padding:16px 20px; cursor:pointer; list-style:none; background:transparent; border-radius:inherit; }
+.mate-mail-letter > summary::-webkit-details-marker, .mate-mail-process > summary::-webkit-details-marker { display:none; }
+.mate-mail-letter > summary:hover { background:var(--portal-paper-soft,#faf9f6); }
+.mate-letter-source { display:grid; place-items:center; width:38px; height:38px; flex:none; border-radius:var(--portal-radius-round,50%); color:var(--portal-paper,#fff); background:var(--portal-ink,#20211d); }
+.mate-mail-letter > summary > span:nth-child(2) { min-width:0; flex:1; }
+.mate-mail-letter summary strong { display:block; font-size:14px; line-height:1.5; font-weight:750; margin:0 0 4px; }
+.mate-letter-excerpt { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; margin-top:8px; font-size:13px; line-height:1.5; color:var(--portal-muted,#62665a); overflow-wrap:anywhere; }
+.mate-mail-letter[open] > summary .mate-letter-excerpt { display:none; }
+.mate-mail-letter summary small { display:block; font-size:11px; line-height:1.6; color:var(--portal-soft,#77786e); overflow-wrap:anywhere; }
+.mate-mail-letter[open] > summary { border-bottom:1px solid var(--portal-line,#ddd); }
+.mate-mail-letter[open] > summary > svg { transform:rotate(180deg); }
+.mate-mail-letter-body { padding:20px 24px 0; font-size:14px; line-height:1.75; overflow-wrap:anywhere; }
+.mate-mail-message-heading { display:flex; align-items:center; flex-wrap:wrap; justify-content:space-between; gap:12px; font-size:11px; color:var(--portal-soft,#77786e); margin-bottom:12px; }
+.mate-mail-message-heading > span { color:var(--portal-ink,#20211d); font-weight:650; }
+.mate-mail-message-heading.is-receipt { border-top:1px solid var(--portal-line,#ddd); padding-top:20px; margin-top:20px; }
+.mate-mail-receipt-label { margin-left:8px; padding-left:8px; border-left:1px solid var(--portal-line,#ddd); font-weight:400; color:var(--portal-soft,#77786e); }
+.mate-mail-deliverables { display:flex; flex-wrap:wrap; gap:8px; margin:18px 0; }
+.mate-mail-deliverables > small { display:block; flex-basis:100%; color:var(--portal-soft,#77786e); font-size:11px; margin-bottom:0; }
+.mate-mail-deliverables > div { display:flex; align-items:center; gap:10px; padding:10px 12px; border:1px solid var(--portal-line,#ddd); font-size:12px; margin:0; min-width:0; max-width:100%; border-radius:var(--portal-radius-control,3px); background:var(--portal-paper-soft,#faf9f6); }
+.mate-mail-deliverables > div > span { flex:1; }
+.mate-mail-deliverables > div > span > small { display:block; font-size:10px; margin-top:4px; }
+.mate-mail-deliverables button, .mate-mail-process button { border:0; background:transparent; font-size:11px; text-decoration:underline; }
+.mate-mail-letter-footer { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; margin:18px 0; font-size:10px; color:var(--portal-soft,#77786e); }
+.mate-mail-letter-footer button { display:inline-flex; align-items:center; gap:6px; border:0; background:transparent; font-size:11px; padding:4px 0; }
+.mate-mail-letter-footer button:hover { text-decoration:underline; }
+.mate-mail-process { border-top:1px solid var(--portal-line,#ddd); padding:12px 0; color:var(--portal-soft,#77786e); font-size:11px; }
+.mate-mail-process > summary { display:flex; justify-content:space-between; cursor:pointer; list-style:none; color:var(--portal-ink,#20211d); }
+.mate-mail-process ol { padding-left:20px; }
+.mate-mail-schedule-rule { border:1px solid var(--portal-line,#ddd); background:var(--portal-paper,#fff); border-radius:var(--portal-radius-control,3px); box-shadow:var(--portal-shadow-paper); padding:18px 20px; margin-bottom:22px; font-size:13px; }
+.mate-mail-schedule-rule > div { display:flex; align-items:center; gap:10px; }
+.mate-mail-schedule-rule > div > strong { flex:1; }
+.mate-mail-schedule-rule dl { display:grid; grid-template-columns:auto minmax(0,1fr); gap:8px 16px; font-size:11px; margin:16px 0; }
+.mate-mail-schedule-rule dt { color:var(--portal-soft,#77786e); }
+.mate-mail-schedule-rule dd { margin:0; overflow-wrap:anywhere; }
+.mate-mail-reply { border-top:1px solid var(--portal-line,#ddd); padding:12px 28px 10px; flex-shrink:0; background:var(--portal-canvas,#f3f2ee); }
+.mate-mail-compose-card { display:grid; grid-template-columns:36px minmax(0,1fr) auto; align-items:center; gap:12px; border:1px solid var(--portal-line,#ddd); border-left:3px solid var(--portal-ink,#20211d); border-radius:var(--portal-radius-control,3px); background:var(--portal-paper,#fff); padding:12px; box-shadow:var(--portal-shadow-paper); }
+.mate-mail-compose-input { min-width:0; }
+.mate-mail-reply label { display:block; font-size:12px; font-weight:750; margin-bottom:5px; }
+.mate-mail-reply textarea { display:block; width:100%; min-height:26px; max-height:120px; resize:vertical; border:0; background:transparent; padding:3px 0; font-size:12px; line-height:1.6; color:inherit; }
+.mate-mail-reply textarea:focus { outline:none; min-height:52px; }
+.mate-mail-compose-card:focus-within { border-color:var(--portal-line-strong,#aaa49a); border-left-color:var(--portal-ink,#20211d); }
+.mate-mail-reply > p { margin:7px 0 0; font-size:10px; color:var(--portal-soft,#77786e); }
+.mate-mail-reply button { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:36px; border:0; border-radius:var(--portal-radius-control,3px); background:var(--portal-ink,#20211d); color:var(--portal-paper,#fff); padding:9px 12px; font-size:12px; font-weight:750; }
+.mate-mail-reply button:not(:disabled):hover { background:var(--portal-muted,#62665a); }
+.mate-mail-error { color:#9a4630 !important; font-size:12px; }
+.mate-mail-reply-error { margin:10px 32px; }
+.mate-mail-muted { color:var(--portal-soft,#77786e); font-size:13px; }
+.mate-mail-older { display:block; border:1px solid var(--portal-line,#ddd); background:transparent; padding:10px 16px; margin:20px auto; font-size:12px !important; }
+.mate-mail-welcome { max-width:400px; margin:10vh auto; text-align:center; }
+.mate-mail-welcome > svg { color:var(--portal-soft,#77786e); }
+.mate-mail-welcome h2 { font-size:20px; margin:20px 0 12px; }
+.mate-mail-welcome p { font-size:13px; line-height:1.8; color:var(--portal-soft,#77786e); }
+.mate-mail-back-list { display:none; }
+.mate-task-guide-overlay { position:fixed; inset:0; z-index:110; display:grid; place-items:center; overflow:auto; background:var(--portal-ink-a34,#1115); backdrop-filter:blur(3px); padding:20px; }
+.mate-task-guide { width:min(460px,100%); max-height:calc(100dvh - 40px); overflow:auto; border:1px solid var(--portal-line-strong,#aaa49a); background:var(--portal-paper-soft,#f6f5ef); color:var(--portal-ink,#20211d); box-shadow:var(--portal-shadow-tour,0 20px 80px #0002); }
+.mate-task-guide-heading { display:grid; gap:5px; min-width:0; }
+.mate-task-guide-heading > small { color:var(--portal-soft,#818176); font-size:11px; line-height:1.5; }
+.mate-task-guide-step { animation:mate-guide-enter 400ms ease both; }
+.mate-task-guide-step.is-prompt { animation-delay:350ms; }
+.mate-task-guide-actions { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.mate-task-guide-actions > .primaryButton { flex:1 1 auto; }
+.mate-task-guide-prompt { display:flex; align-items:flex-end; gap:12px; padding:14px; border:1px solid var(--portal-line-strong,#aaa49a); background:var(--portal-paper-soft,#f6f5ef); }
+.mate-task-guide-prompt-text { display:grid; flex:1; min-width:0; font-size:14px; line-height:1.7; overflow-wrap:anywhere; }
+.mate-task-guide-prompt-text > span { grid-area:1 / 1; }
+.mate-task-guide-prompt-measure { visibility:hidden; }
+.mate-task-guide-cursor { display:inline-block; width:1px; height:1em; margin-left:2px; vertical-align:-.1em; background:var(--portal-ink,#20211d); animation:mate-guide-blink 800ms step-end infinite; }
+.mate-task-guide-accessible-prompt { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+.mate-task-guide-send { display:grid; place-items:center; flex:0 0 28px; height:28px; border-radius:50%; color:var(--portal-muted,#66675e); background:var(--portal-rail-hover,#e9e9e1); }
+@keyframes mate-guide-enter { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+@keyframes mate-guide-blink { 50% { opacity:0; } }
+@media (max-width:520px) { .mate-task-guide-overlay { padding:12px; } .mate-task-guide { max-height:calc(100dvh - 24px); } }
+@media (prefers-reduced-motion:reduce) { .mate-task-guide :is(.mate-task-guide-step,.mate-task-guide-cursor) { animation:none; } }
+.mate-mail-list-tools { padding:16px 16px 12px; }
+.mate-mail-search { display:flex; align-items:center; gap:8px; padding:0 10px; min-height:38px; border:1px solid var(--portal-line-strong,#aaa49a); border-radius:var(--portal-radius-control,3px); background:var(--portal-paper,#fff); color:var(--portal-soft,#77786e); }
+.mate-mail-search:focus-within { outline:2px solid var(--portal-ink,#20211d); outline-offset:1px; }
+.mate-mail-search input { width:100%; min-width:0; border:0; background:transparent; outline:none; font-size:12px; color:var(--portal-ink,#20211d); padding:10px 0; }
+.mate-mail-search input::-webkit-search-cancel-button { display:none; }
+.mate-mail-search > svg { flex:none; }
+.mate-mail-search button { display:grid; place-items:center; border:0; background:transparent; padding:4px; }
+.mate-mail-list-filter { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:12px; font-size:11px; color:var(--portal-soft,#77786e); }
+.mate-mail-list-filter > .workspaceListbox { width: min(60%, 160px); }
+.mate-mail-list-empty { display:flex; align-items:center; flex-direction:column; gap:12px; padding:32px 12px; text-align:center; color:var(--portal-soft,#77786e); font-size:12px; }
+.mate-mail-list-empty p { margin:0; line-height:1.7; }
+.mate-mail-list-empty button { border:1px solid var(--portal-line,#ddd); background:var(--portal-paper,#fff); padding:8px 12px; font-size:12px; }
+.mate-letter-summary small b { color:var(--portal-muted,#62665a); font-weight:700; }
+.mate-letter-summary em { font-style:normal; font-size:10px; margin-left:8px; color:var(--portal-muted,#62665a); }
+.mate-mail-avatar { display:inline-grid; place-items:center; width:30px; height:30px; flex:none; border-radius:var(--portal-radius-round,50%); background:var(--portal-ink,#20211d); color:var(--portal-paper,#fff); overflow:hidden; font-size:11px; }
+.mate-mail-avatar img { width:100%; height:100%; object-fit:contain; }
+.mate-mail-user-avatar { width:36px; height:36px; font-weight:800; }
+.mate-mail-message-heading > .mate-mail-receipt-author { display:inline-flex; align-items:center; gap:8px; }
+.mate-mail-receipt-author .mate-mail-receipt-label { margin-left:0; }
+@media(min-width:1700px) { .mate-mail-columns { grid-template-columns:350px minmax(0,1fr); } .mate-mail-letter-body { padding:24px 30px 0; } }
+@media(max-width:1100px) { .mate-mail-columns { grid-template-columns:280px minmax(0,1fr); } .mate-mail-toolbar-links { flex-wrap:wrap; gap:5px; } .mate-mail-toolbar-links a { max-width:240px; } .mate-mail-heading, .mate-mail-timeline { padding-left:20px; padding-right:20px; } .mate-mail-reply { padding-left:20px; padding-right:20px; } }
+@media(max-width:700px) {
+  .mate-mail-toolbar { min-height:0; padding:12px; gap:10px; }
+  .mate-mail-toolbar .mate-mail-mate-avatar { width:40px; height:40px; }
+  .mate-mail-identity p { display:none; }
+  .mate-mail-toolbar-title { gap:8px; }
+  .mate-mail-toolbar-title h1 { font-size:18px; }
+  .mate-mail-toolbar-links { width:100%; gap:0; }
+  .mate-mail-toolbar-links a { flex:1; max-width:none; font-size:10px; }
+  .mate-mail-toolbar-links button { font-size:10px; padding:6px; }
+  .mate-mail-columns { grid-template-columns:minmax(0,1fr); }
+  .mate-mail-list { border-right:0; }
+  .mate-mail-reader { display:none; }
+  .mate-mail-workspace[data-mobile-reading="true"] .mate-mail-list { display:none; }
+  .mate-mail-workspace[data-mobile-reading="true"] .mate-mail-reader { display:flex; }
+  .mate-mail-back-list { display:flex; align-items:center; gap:8px; margin:10px 16px 0; width:fit-content; padding:6px 0; border:0; background:transparent; font-size:12px; }
+  .mate-mail-heading { padding:12px 16px; }
+  .mate-mail-heading-meta { gap:6px; }
+  .mate-mail-timeline { padding:14px 12px; } .mate-mail-letter-body { padding:16px 14px 0; } .mate-mail-letter > summary { padding:14px 12px; gap:10px; flex-wrap:wrap; }
+  .mate-letter-source { width:30px; height:30px; }
+  .mate-mail-letter summary strong { font-size:13px; }
+  .mate-mail-letter summary small { font-size:10px; }
+  .mate-mail-letter > summary > .mate-task-badge { margin-left:0; }
+  .mate-mail-letter > summary > svg { margin-left:auto; }
+  .mate-mail-letter-body { font-size:13px; }
+  .mate-mail-message-heading time { font-size:10px; }
+  .mate-mail-reply { padding:10px 12px; }
+  .mate-mail-compose-card { grid-template-columns:minmax(0,1fr) auto; gap:8px; padding:10px; }
+  .mate-mail-user-avatar { display:none; }
+  .mate-mail-reply button { padding:8px; font-size:11px; }
+  .mate-mail-reply > p { line-height:1.5; font-size:10px; }
+}
+@media(prefers-reduced-motion:reduce) { .mate-mail-list-item { transition:none; } }

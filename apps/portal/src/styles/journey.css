@@ -1,0 +1,732 @@
+.journeyProfileModal {
+  width: min(1180px, 100%);
+  max-height: calc(100dvh - 20px);
+}
+
+.journeyProfileModal .profileHero {
+  grid-template-columns: 58px minmax(0, 1fr);
+  justify-items: start;
+  gap: 14px;
+  min-height: 86px;
+  padding: 14px 68px 14px 22px;
+}
+
+.journeyProfileModal .profileAvatarLarge {
+  width: 58px;
+  height: 58px;
+  border-width: 2px;
+  font-size: 18px;
+}
+
+.journeyProfileModal .profileAvatarUploadCue {
+  right: 0;
+  bottom: 0;
+  width: 22px;
+  height: 22px;
+}
+
+.journeyProfileModal .profileHeroCopy {
+  justify-items: start;
+  align-content: center;
+  gap: 3px;
+  text-align: left;
+}
+
+.journeyProfileModal .profileHeroCopy h2 {
+  font-size: 19px;
+}
+
+.journeyProfileModal .profileHeroCopy .profileHeroBio {
+  max-width: 620px;
+  overflow: hidden;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.journeyProfileModal .profileLevelMarker {
+  min-height: 24px;
+  border-color: var(--portal-line-strong);
+  border-radius: 2px;
+  background: var(--portal-paper);
+  color: var(--portal-ink);
+  padding: 0 8px;
+  font-size: 10px;
+}
+
+.journeyProfileModal .profileTabs {
+  padding: 7px 22px 0;
+}
+
+.journeyProfileModal .profileTabs button {
+  min-height: 36px;
+}
+
+.journeyProfileModal .profileBody {
+  background: var(--portal-paper-soft);
+  padding: 20px 26px 30px;
+}
+
+.journeyProfileModal .profileFooter {
+  position: sticky;
+  z-index: 6;
+  bottom: 0;
+  background: var(--portal-paper);
+}
+
+.journeyShowcase {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+
+.journeyHero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  gap: 12px;
+  min-width: 0;
+  border: 1px solid var(--portal-line-strong);
+  border-radius: var(--portal-radius);
+  background: var(--portal-paper);
+  padding: 12px;
+  box-shadow: var(--portal-shadow-paper);
+}
+
+.journeyCurrentLevel {
+  display: grid;
+  grid-template-columns: 148px minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+  min-width: 0;
+}
+
+.journeyHeroImage {
+  position: relative;
+  overflow: hidden;
+  width: 148px;
+  height: 148px;
+  border: 1px solid var(--portal-line);
+  border-radius: 2px;
+  background: var(--portal-warm-paper);
+}
+
+.journeyHeroImage > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.journeyLevelGlyph {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--portal-ink);
+  border-radius: 2px;
+  background: var(--portal-white-a94);
+}
+
+.journeyLevelGlyph img {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.journeyHeroCopy {
+  display: grid;
+  align-content: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.journeyHeroCopy > span,
+.journeySectionHeader > span {
+  color: var(--portal-red);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.journeyHeroCopy h2,
+.journeySectionHeader h3 {
+  margin: 0;
+  color: var(--portal-ink);
+}
+
+.journeyHeroCopy h2 {
+  font-size: 28px;
+  line-height: 1.04;
+}
+
+.journeyHeroCopy p,
+.journeyNextLevel p,
+.journeyBadgeRowText p {
+  margin: 0;
+  color: var(--portal-muted);
+  line-height: 1.45;
+}
+
+.journeyHeroCopy p,
+.journeyNextLevel p {
+  font-size: 14px;
+}
+
+.journeyHeroStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.journeyHeroStats strong,
+.journeyBadgeSummary strong {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  border-top: 2px solid var(--portal-ink);
+  color: var(--portal-ink);
+  padding-top: 5px;
+  font-size: 18px;
+}
+
+.journeyHeroStats b {
+  font-weight: 930;
+}
+
+.journeyHeroStats small,
+.journeyBadgeSummary small {
+  color: var(--portal-soft);
+  font-size: 11px;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.journeyNextLevel {
+  display: grid;
+  align-content: center;
+  gap: 7px;
+  min-width: 0;
+  border-left: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+  padding: 16px;
+}
+
+.journeyNextLevelGlyph {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--portal-line-strong);
+  background: var(--portal-paper);
+}
+
+.journeyNextLevelGlyph img {
+  width: 25px;
+  height: 25px;
+}
+
+.journeyNextLevel small {
+  color: var(--portal-red);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.journeyNextLevel strong {
+  color: var(--portal-ink);
+  font-size: 16px;
+}
+
+.journeyNextLevel.complete {
+  background: linear-gradient(135deg, var(--portal-gold-a10), var(--portal-violet-a06)), var(--portal-paper-soft);
+}
+
+.journeyLevelRail {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  min-width: 0;
+  border: 1px solid var(--portal-line-strong);
+  border-radius: var(--portal-radius);
+  background: var(--portal-paper);
+}
+
+.journeyLevelStep {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  min-width: 0;
+  min-height: 174px;
+  border-right: 1px solid var(--portal-line);
+  padding: 13px 12px 14px;
+}
+
+.journeyLevelStep:last-child {
+  border-right: 0;
+}
+
+.journeyLevelStep.current {
+  background: var(--portal-paper-soft);
+  box-shadow: inset 0 3px 0 var(--portal-red);
+}
+
+.journeyLevelStep.upcoming {
+  color: var(--portal-soft);
+}
+
+.journeyLevelStepHead {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.journeyLevelStepGlyph {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper);
+}
+
+.journeyLevelStep.complete .journeyLevelStepGlyph {
+  border-color: var(--portal-ink);
+  background: var(--portal-ink);
+}
+
+.journeyLevelStep.complete .journeyLevelStepGlyph img {
+  filter: brightness(0) invert(1);
+}
+
+.journeyLevelStep.current .journeyLevelStepGlyph {
+  border-color: var(--portal-ink);
+}
+
+.journeyLevelStep.upcoming .journeyLevelStepGlyph {
+  opacity: 0.62;
+}
+
+.journeyLevelStepGlyph img {
+  width: 23px;
+  height: 23px;
+}
+
+.journeyLevelStepCopy {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.journeyLevelStep small {
+  color: var(--portal-soft);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+.journeyLevelStep strong {
+  color: inherit;
+  font-size: 17px;
+  line-height: 1.2;
+}
+
+.journeyLevelTokenBudget {
+  width: fit-content;
+  border-top: 2px solid currentColor;
+  color: var(--portal-ink);
+  padding-top: 5px;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  line-height: 1.25;
+}
+
+.journeyLevelStep.upcoming .journeyLevelTokenBudget {
+  color: inherit;
+}
+
+.journeyLevelStep p {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 0;
+  color: var(--portal-muted);
+  font-size: 13px;
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.journeyBadgeCatalog {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  border: 1px solid var(--portal-line-strong);
+  border-radius: var(--portal-radius);
+  background: var(--portal-paper);
+  padding: 18px;
+}
+
+.journeyBadgeCatalogHeader {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+  min-width: 0;
+}
+
+.journeySectionHeader {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.journeySectionHeader h3 {
+  font-size: 24px;
+}
+
+.journeyBadgeSummary {
+  display: flex;
+  align-items: end;
+  gap: 14px;
+}
+
+.journeyBadgeFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  border-top: 1px solid var(--portal-line);
+  border-bottom: 1px solid var(--portal-line);
+  padding: 8px 0;
+}
+
+.journeyBadgeFilters button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  background: transparent;
+  color: var(--portal-muted);
+  padding: 0 11px;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.journeyBadgeFilters button:hover,
+.journeyBadgeFilters button:focus-visible {
+  border-color: var(--portal-line);
+  background: var(--portal-paper-soft);
+}
+
+.journeyBadgeFilters button.active {
+  border-color: var(--portal-ink);
+  background: var(--portal-ink);
+  color: var(--portal-paper);
+}
+
+.journeyBadgeFilters em {
+  min-width: 18px;
+  color: inherit;
+  font-size: 11px;
+  font-style: normal;
+  text-align: center;
+}
+
+.journeyBadgeGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  min-width: 0;
+}
+
+.journeyBadgeCard {
+  position: relative;
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  grid-template-rows: minmax(112px, auto) auto;
+  gap: 10px 12px;
+  align-items: start;
+  min-width: 0;
+  border: 1px solid var(--portal-line);
+  border-radius: 2px;
+  background: var(--portal-paper);
+  padding: 12px;
+}
+
+.journeyBadgeCard.earned {
+  box-shadow: inset 0 3px 0 var(--portal-signal);
+}
+
+.journeyBadgeCard.next {
+  border-color: var(--portal-ink);
+  box-shadow: inset 0 3px 0 var(--portal-ink);
+}
+
+.journeyBadgeCard.locked {
+  background: var(--portal-paper-soft);
+}
+
+.journeyBadgeThumb {
+  position: relative;
+  overflow: hidden;
+  width: 112px;
+  height: 112px;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-warm-paper);
+}
+
+.journeyBadgeThumb > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.journeyBadgeVisualState {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  right: 12px;
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--portal-ink);
+  background: var(--portal-paper);
+  color: var(--portal-ink);
+}
+
+.journeyBadgeCard.earned .journeyBadgeVisualState {
+  background: var(--portal-signal);
+}
+
+.journeyBadgeCard.next .journeyBadgeVisualState {
+  background: var(--portal-ink);
+  color: var(--portal-paper);
+}
+
+.journeyBadgeCard.locked .journeyBadgeVisualState {
+  border-color: var(--portal-line-strong);
+  color: var(--portal-soft);
+}
+
+.journeyBadgeRowText {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  min-width: 0;
+  padding-right: 36px;
+}
+
+.journeyBadgeCategory {
+  color: var(--portal-red);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.journeyBadgeRowText > strong {
+  overflow: hidden;
+  color: var(--portal-ink);
+  font-size: 17px;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.journeyBadgeRowText p {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 14px;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.journeyBadgeRowMeta {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 0;
+  border-top: 1px solid var(--portal-line);
+  padding-top: 7px;
+}
+
+.journeyBadgePoints {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--portal-soft);
+  font-size: 12px;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.journeyShowcase.page.compact {
+  grid-template-columns: minmax(260px, 0.45fr) minmax(0, 1fr);
+}
+
+.journeyCompactStatus,
+.journeyActionPanel {
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper);
+  padding: 12px;
+}
+
+.journeyCompactStatus {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 12px;
+}
+
+.journeyCompactStatus .journeyHeroImage {
+  width: 92px;
+  height: 92px;
+}
+
+.journeyActionPanel,
+.journeyActionList {
+  display: grid;
+  gap: 8px;
+}
+
+.journeyActionList {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.journeyActionItem {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 8px;
+  min-width: 0;
+  border: 1px solid var(--portal-line);
+  padding: 8px;
+}
+
+.journeyActionItem img {
+  width: 52px;
+  height: 52px;
+}
+
+@media (max-width: 1080px) {
+  .journeyHero {
+    grid-template-columns: 1fr;
+  }
+
+  .journeyNextLevel {
+    grid-template-columns: 42px minmax(0, 1fr);
+    border-top: 1px solid var(--portal-line);
+    border-left: 0;
+  }
+
+  .journeyNextLevelGlyph {
+    grid-row: 1 / span 3;
+  }
+
+}
+
+@media (max-width: 820px) {
+  .journeyProfileModal {
+    width: 100%;
+  }
+
+  .journeyLevelRail {
+    grid-template-columns: repeat(5, minmax(190px, 1fr));
+    overflow-x: auto;
+  }
+
+  .journeyActionList {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 580px) {
+  .profileModalOverlay {
+    padding: 0;
+  }
+
+  .journeyProfileModal {
+    width: 100%;
+    max-height: 100dvh;
+    border: 0;
+  }
+
+  .journeyProfileModal .profileHero {
+    grid-template-columns: 48px minmax(0, 1fr);
+    min-height: 72px;
+    padding: 10px 54px 10px 14px;
+  }
+
+  .journeyProfileModal .profileAvatarLarge {
+    width: 48px;
+    height: 48px;
+  }
+
+  .journeyProfileModal .profileTabs {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  .journeyProfileModal .profileBody {
+    padding: 12px;
+  }
+
+  .journeyCurrentLevel {
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .journeyHeroImage {
+    width: 96px;
+    height: 96px;
+  }
+
+  .journeyLevelGlyph {
+    right: 5px;
+    bottom: 5px;
+    width: 30px;
+    height: 30px;
+  }
+
+  .journeyLevelGlyph img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .journeyHeroCopy h2 {
+    font-size: 20px;
+  }
+
+  .journeyHeroStats strong {
+    font-size: 14px;
+  }
+
+  .journeyBadgeCatalogHeader {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .journeyBadgeGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .journeyBadgeCard {
+    grid-template-columns: 82px minmax(0, 1fr);
+    grid-template-rows: minmax(82px, auto) auto;
+  }
+
+  .journeyBadgeThumb {
+    width: 82px;
+    height: 82px;
+  }
+}

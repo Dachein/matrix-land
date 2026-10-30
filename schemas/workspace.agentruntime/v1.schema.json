@@ -1,0 +1,796 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.example.invalid/workspace.agentruntime/v1.schema.json",
+  "title": "Workspace Agent Runtime Mate Release Manifest v1",
+  "description": "An immutable release definition for one cloud-hosted Workspace Mate executed by Agent Runtime.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "mate",
+    "release",
+    "resources",
+    "modelPolicy",
+    "channels",
+    "invocationPolicy",
+    "eligibilityPolicy",
+    "preferenceSchema",
+    "taskPolicy",
+    "experiencePolicy"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "workspace.agentruntime/v1"
+    },
+    "mate": {
+      "$ref": "#/$defs/mate"
+    },
+    "release": {
+      "$ref": "#/$defs/release"
+    },
+    "resources": {
+      "$ref": "#/$defs/resources"
+    },
+    "modelPolicy": {
+      "$ref": "#/$defs/modelPolicy"
+    },
+    "channels": {
+      "$ref": "#/$defs/channels"
+    },
+    "invocationPolicy": {
+      "$ref": "#/$defs/invocationPolicy"
+    },
+    "eligibilityPolicy": {
+      "$ref": "#/$defs/eligibilityPolicy"
+    },
+    "preferenceSchema": {
+      "$ref": "#/$defs/preferenceSchema"
+    },
+    "taskPolicy": {
+      "$ref": "#/$defs/taskPolicy"
+    },
+    "memoryPolicy": {
+      "$ref": "#/$defs/memoryPolicy"
+    },
+    "experiencePolicy": {
+      "$ref": "#/$defs/experiencePolicy"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "release": {
+            "type": "object",
+            "properties": {
+              "status": { "const": "published" }
+            },
+            "required": ["status"]
+          }
+        },
+        "required": ["release"]
+      },
+      "then": {
+        "anyOf": [
+          {
+            "properties": {
+              "resources": {
+                "type": "object",
+                "properties": {
+                  "appMcpBindings": { "type": "array", "minItems": 1 }
+                }
+              }
+            }
+          },
+          {
+            "properties": {
+              "resources": {
+                "type": "object",
+                "properties": {
+                  "knowledgeServiceBindings": { "type": "array", "minItems": 1 }
+                }
+              }
+            }
+          },
+          {
+            "properties": {
+              "resources": {
+                "type": "object",
+                "required": ["knowledgeServiceScope"],
+                "properties": {
+                  "knowledgeServiceScope": {
+                    "type": "object",
+                    "properties": {
+                      "mode": { "const": "all_visible_to_invoking_user" }
+                    },
+                    "required": ["mode"]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "properties": {
+              "resources": {
+                "type": "object",
+                "required": ["workspacePassMcpScope"],
+                "properties": {
+                  "workspacePassMcpScope": {
+                    "type": "object",
+                    "properties": {
+                      "mode": { "const": "all_authorized_for_invoking_user" }
+                    },
+                    "required": ["mode"]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "properties": {
+              "resources": {
+                "type": "object",
+                "properties": {
+                  "builtInToolBindings": { "type": "array", "minItems": 1 }
+                }
+              }
+            }
+          },
+          {
+            "properties": {
+              "release": {
+                "type": "object",
+                "properties": {
+                  "skills": { "type": "array", "minItems": 1 }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "$defs": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$",
+      "minLength": 3,
+      "maxLength": 80
+    },
+    "revisionRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "digest"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "version": { "type": "integer", "minimum": 1 },
+        "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+      }
+    },
+    "mate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mateId", "displayName", "jobRole", "ownerUserId"],
+      "properties": {
+        "mateId": { "$ref": "#/$defs/slug" },
+        "displayName": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "jobRole": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "description": { "type": "string", "maxLength": 1000 },
+        "avatarRef": {
+          "type": "string",
+          "maxLength": 1200000,
+          "pattern": "^(?:https?://|data:image/(?:png|jpe?g|webp|gif);base64,)"
+        },
+        "ownerUserId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "addresses": {
+          "type": "array",
+          "maxItems": 16,
+          "items": {
+            "oneOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["type", "address"],
+                "properties": {
+                  "type": { "const": "email" },
+                  "address": { "type": "string", "format": "email", "maxLength": 254 }
+                }
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["type", "tool"],
+                "properties": {
+                  "type": { "const": "pass_mcp" },
+                  "tool": { "const": "mate_call" }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "release": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["releaseId", "version", "status", "soul", "handbooks", "skills"],
+      "properties": {
+        "releaseId": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "version": { "type": "integer", "minimum": 1 },
+        "status": { "enum": ["draft", "candidate", "published", "retired", "revoked"] },
+        "soul": { "$ref": "#/$defs/revisionRef" },
+        "mail": { "$ref": "#/$defs/revisionRef", "description": "Versioned mail.md; absent only in historical releases." },
+        "handbooks": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 32,
+          "items": { "$ref": "#/$defs/revisionRef" }
+        },
+        "skills": {
+          "type": "array",
+          "maxItems": 64,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["skillId", "version", "digest"],
+            "properties": {
+              "skillId": { "type": "string", "minLength": 1, "maxLength": 128 },
+              "version": { "type": "string", "minLength": 1, "maxLength": 64 },
+              "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+            }
+          }
+        }
+      }
+    },
+    "resources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "appMcpBindings",
+        "knowledgeServiceBindings",
+        "builtInToolBindings",
+        "skillDiscoveryPolicy"
+      ],
+      "allOf": [
+        {
+          "not": {
+            "type": "object",
+            "required": ["knowledgeServiceScope", "knowledgeServiceBindings"],
+            "properties": {
+              "knowledgeServiceScope": { "type": "object" },
+              "knowledgeServiceBindings": { "type": "array", "minItems": 1 }
+            }
+          }
+        },
+        {
+          "not": {
+            "type": "object",
+            "required": ["workspacePassMcpScope", "appMcpBindings"],
+            "properties": {
+              "workspacePassMcpScope": { "type": "object" },
+              "appMcpBindings": { "type": "array", "minItems": 1 }
+            }
+          }
+        },
+        {
+          "not": {
+            "type": "object",
+            "required": ["workspacePassMcpScope", "knowledgeServiceBindings"],
+            "properties": {
+              "workspacePassMcpScope": { "type": "object" },
+              "knowledgeServiceBindings": { "type": "array", "minItems": 1 }
+            }
+          }
+        },
+        {
+          "not": {
+            "type": "object",
+            "required": ["workspacePassMcpScope", "folderEditBindings"],
+            "properties": {
+              "workspacePassMcpScope": { "type": "object" },
+              "folderEditBindings": { "type": "array", "minItems": 1 }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "mcpCapacity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["ai_capacity", "forum_hub"],
+          "properties": {
+            "ai_capacity": {
+              "oneOf": [
+                { "type": "object", "additionalProperties": false, "required": ["mode"], "properties": { "mode": { "enum": ["all", "none"] } } },
+                { "type": "object", "additionalProperties": false, "required": ["mode", "children"], "properties": { "mode": { "const": "selected" }, "children": { "type": "array", "uniqueItems": true, "minItems": 1, "maxItems": 5, "items": { "enum": ["models", "web", "image", "video", "audio", "jev"] } } } }
+              ]
+            },
+            "forum_hub": {
+              "oneOf": [
+                { "type": "object", "additionalProperties": false, "required": ["mode"], "properties": { "mode": { "enum": ["all", "none"] } } },
+                { "type": "object", "additionalProperties": false, "required": ["mode", "children"], "properties": { "mode": { "const": "selected" }, "children": { "type": "array", "uniqueItems": true, "minItems": 1, "maxItems": 4, "items": { "enum": ["forum_read", "forum_write", "forum_media", "hub_discovery", "hub_skill"] } } } }
+              ]
+            }
+          }
+        },
+        "workspacePassMcpScope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "domains", "authority", "requiresCurrentUserAuthorization"],
+          "properties": {
+            "mode": { "const": "all_authorized_for_invoking_user" },
+            "domains": {
+              "type": "array",
+              "prefixItems": [
+                { "const": "apps" },
+                { "const": "knowledge" }
+              ],
+              "items": false,
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "authority": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["mode"],
+              "properties": { "mode": { "const": "invoking_user" } }
+            },
+            "requiresCurrentUserAuthorization": { "const": true }
+          }
+        },
+        "appMcpBindings": {
+          "type": "array",
+          "maxItems": 64,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["appId", "manifestVersion", "requiresCurrentUserDelegation"],
+            "properties": {
+              "appId": { "type": "string", "minLength": 1, "maxLength": 128 },
+              "manifestVersion": { "type": "string", "minLength": 1, "maxLength": 64 },
+              "allowedToolNames": {
+                "type": "array",
+                "uniqueItems": true,
+                "maxItems": 256,
+                "items": { "type": "string", "minLength": 1, "maxLength": 128 }
+              },
+              "authority": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["mode"],
+                "properties": { "mode": { "const": "invoking_user" } }
+              },
+              "requiresCurrentUserDelegation": { "const": true }
+            }
+          }
+        },
+        "knowledgeServiceBindings": {
+          "type": "array",
+          "maxItems": 64,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["serviceId", "allowedOperations", "requiresCurrentUserAuthorization"],
+            "properties": {
+              "serviceId": { "type": "string", "minLength": 1, "maxLength": 180 },
+              "allowedOperations": {
+                "type": "array",
+                "uniqueItems": true,
+                "minItems": 1,
+                "items": { "enum": ["search", "read"] }
+              },
+              "authority": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["mode"],
+                "properties": { "mode": { "const": "invoking_user" } }
+              },
+              "requiresCurrentUserAuthorization": { "const": true }
+            }
+          }
+        },
+        "folderEditBindings": {
+          "type": "array",
+          "maxItems": 64,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["folderObjectId", "authority", "requiresCurrentUserAuthorization"],
+            "properties": {
+              "folderObjectId": { "type": "string", "minLength": 1, "maxLength": 180 },
+              "authority": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["mode"],
+                "properties": { "mode": { "const": "invoking_user" } }
+              },
+              "requiresCurrentUserAuthorization": { "const": true }
+            }
+          }
+        },
+        "knowledgeServiceScope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "allowedOperations", "requiresCurrentUserAuthorization"],
+          "properties": {
+            "mode": { "const": "all_visible_to_invoking_user" },
+            "allowedOperations": {
+              "type": "array",
+              "uniqueItems": true,
+              "minItems": 2,
+              "maxItems": 2,
+              "items": { "enum": ["search", "read"] }
+            },
+            "authority": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["mode"],
+              "properties": { "mode": { "const": "invoking_user" } }
+            },
+            "requiresCurrentUserAuthorization": { "const": true }
+          }
+        },
+        "builtInToolBindings": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 32,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["toolId", "requiresCurrentUserContext"],
+            "properties": {
+              "toolId": {
+                "enum": [
+                  "public_web_read",
+                  "public_web_search",
+                  "ocr",
+                  "document_read",
+                  "artifact_create",
+                  "workspace_knowledge_maintain",
+                  "workspace_forum_read",
+                  "workspace_forum_post",
+                  "todo_manage",
+                  "reminder_manage"
+                ]
+              },
+              "requiresCurrentUserContext": { "const": true }
+            }
+          }
+        },
+        "skillDiscoveryPolicy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["discoverAndRecommend", "autoInstall", "installationRequests"],
+          "properties": {
+            "discoverAndRecommend": { "type": "boolean" },
+            "autoInstall": { "const": false },
+            "installationRequests": { "const": false }
+          }
+        }
+      }
+    },
+    "channels": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["standalone", "embedded", "inbox"],
+      "properties": {
+        "standalone": { "$ref": "#/$defs/channelToggle" },
+        "embedded": { "$ref": "#/$defs/channelToggle" },
+        "inbox": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["email", "mateCall", "schedule", "webhook"],
+          "properties": {
+            "email": { "type":"object","additionalProperties":false,"required":["enabled"],"properties":{"enabled":{"type":"boolean"},"inboxPrompt":{"type":"string","maxLength":24000,"description":"Historical releases only; new drafts use release.mail."},"taskAuthority":{"type":"string","enum":["owner","verified_sender"]}} },
+            "mateCall": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["enabled", "transport", "tool"],
+              "properties": {
+                "enabled": { "type": "boolean" },
+                "transport": { "const": "workspace_pass_mcp" },
+                "tool": { "const": "mate_call" }
+              }
+            },
+            "schedule": { "$ref": "#/$defs/channelToggle" },
+            "webhook": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["enabled"],
+              "properties": {
+                "enabled": { "const": false }
+              }
+            }
+          }
+        }
+      }
+    },
+    "modelPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["defaultModel", "allowedModels", "allowUserSelection", "multimodal"],
+      "properties": {
+        "defaultModel": { "type": "string", "minLength": 1, "maxLength": 128 },
+        "allowedModels": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "maxItems": 16,
+          "items": { "type": "string", "minLength": 1, "maxLength": 128 }
+        },
+        "allowUserSelection": { "type": "boolean" },
+        "multimodal": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["imageInput", "documentInput", "audioInput"],
+          "properties": {
+            "imageInput": { "type": "boolean" },
+            "documentInput": { "type": "boolean" },
+            "audioInput": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "channelToggle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled"],
+      "properties": {
+        "enabled": { "type": "boolean" }
+      }
+    },
+    "invocationPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["visibility", "requireAuthenticatedUser", "allowedCallerKinds"],
+      "properties": {
+        "visibility": { "enum": ["private", "targets", "organization"] },
+        "requireAuthenticatedUser": { "const": true },
+        "allowedCallerKinds": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "items": { "enum": ["user", "app", "mate", "email_binding"] }
+        },
+        "targetIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 256,
+          "items": { "type": "string", "minLength": 1, "maxLength": 128 }
+        }
+      }
+    },
+    "eligibilityPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["denyIfRequirementUnknown", "resourceRequirements"],
+      "properties": {
+        "denyIfRequirementUnknown": { "const": true },
+        "resourceRequirements": {
+          "type": "array",
+          "maxItems": 64,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["resourceType", "resourceId", "requiredCapability"],
+            "properties": {
+              "resourceType": { "enum": ["app_mcp", "knowledge_service"] },
+              "resourceId": { "type": "string", "minLength": 1, "maxLength": 180 },
+              "requiredCapability": { "type": "string", "minLength": 1, "maxLength": 128 }
+            }
+          }
+        }
+      }
+    },
+    "preferenceSchema": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "fields"],
+      "properties": {
+        "version": { "type": "integer", "minimum": 1 },
+        "fields": {
+          "type": "array",
+          "maxItems": 128,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["key", "type", "sensitive"],
+            "properties": {
+              "key": { "type": "string", "pattern": "^[a-z][A-Za-z0-9]{0,63}$" },
+              "type": { "enum": ["string", "boolean", "number", "string_list", "enum"] },
+              "sensitive": { "const": false },
+              "allowedValues": {
+                "type": "array",
+                "maxItems": 64,
+                "items": { "type": "string", "maxLength": 128 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "taskPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requireUserOwnership", "conclusionRequired", "defaultTimezone", "scheduledJobs", "approvals", "mateCallLimits"],
+      "properties": {
+        "requireUserOwnership": { "const": true },
+        "conclusionRequired": { "const": true },
+        "defaultExecutor": { "deprecated": true, "description": "Legacy metadata; ignored by the unified Agent.", "enum": ["operations", "knowledge_qa", "app_mcp"] },
+        "defaultTimezone": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "scheduledJobs": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id", "title", "instruction", "cadence"],
+            "properties": {
+              "id": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_-]{7,127}$" },
+              "title": { "type": "string", "minLength": 1, "maxLength": 240 },
+              "instruction": { "type": "string", "minLength": 1, "maxLength": 12000 },
+              "executor": { "deprecated": true, "description": "Legacy metadata; every reminder invokes the same Agent.", "enum": ["operations", "forum_review"] },
+              "cadence": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["kind", "at", "timezone"],
+                "properties": {
+                  "kind": { "const": "daily" },
+                  "at": { "type": "string", "pattern": "^(?:[01]\\d|2[0-3]):[0-5]\\d$" },
+                  "timezone": { "type": "string", "minLength": 1, "maxLength": 80 }
+                }
+              },
+              "delivery": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["channel", "recipient"],
+                "properties": {
+                  "channel": { "const": "email" },
+                  "recipient": { "const": "owner" }
+                }
+              },
+              "forumReview": {
+                "deprecated": true,
+                "description": "Legacy metadata; no fixed Forum review workflow is executed.",
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["cursorKey", "lookbackHours", "maxTopics"],
+                "properties": {
+                  "cursorKey": { "type": "string", "minLength": 1, "maxLength": 160 },
+                  "lookbackHours": { "type": "integer", "minimum": 1, "maximum": 720 },
+                  "maxTopics": { "type": "integer", "minimum": 1, "maximum": 100 }
+                }
+              }
+            }
+          }
+        },
+        "approvals": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["writeRiskLevels", "singleUse", "revalidateDelegation"],
+          "properties": {
+            "writeRiskLevels": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": { "enum": ["medium", "high", "critical"] }
+            },
+            "singleUse": { "const": true },
+            "revalidateDelegation": { "const": true }
+          }
+        },
+        "mateCallLimits": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["maxDepth", "maxChildrenPerTask", "maxTasksPerRoot", "maxRunSeconds"],
+          "properties": {
+            "maxDepth": { "type": "integer", "minimum": 1, "maximum": 8 },
+            "maxChildrenPerTask": { "type": "integer", "minimum": 1, "maximum": 32 },
+            "maxTasksPerRoot": { "type": "integer", "minimum": 1, "maximum": 128 },
+            "maxRunSeconds": { "type": "integer", "minimum": 10, "maximum": 86400 }
+          }
+        }
+      }
+    },
+    "memoryPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["conversationHistory", "userMemory"],
+      "properties": {
+        "conversationHistory": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["enabled", "preserveOriginals", "compaction"],
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "preserveOriginals": { "const": true },
+            "compaction": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "enabled",
+                "strategy",
+                "triggerEstimatedTokens",
+                "protectHeadMessages",
+                "tailTokenBudget",
+                "minTailMessages",
+                "maxSummaryTokens"
+              ],
+              "properties": {
+                "enabled": { "type": "boolean" },
+                "strategy": { "const": "non_destructive_overlay" },
+                "triggerEstimatedTokens": { "type": "integer", "minimum": 8000, "maximum": 1000000 },
+                "protectHeadMessages": { "type": "integer", "minimum": 1, "maximum": 64 },
+                "tailTokenBudget": { "type": "integer", "minimum": 1000, "maximum": 500000 },
+                "minTailMessages": { "type": "integer", "minimum": 1, "maximum": 128 },
+                "maxSummaryTokens": { "type": "integer", "minimum": 256, "maximum": 32000 }
+              }
+            }
+          }
+        },
+        "userMemory": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["storage", "automaticConversationExtraction", "freeformFiles"],
+          "properties": {
+            "storage": { "const": "structured_runtime_api" },
+            "automaticConversationExtraction": { "const": false },
+            "freeformFiles": { "const": false }
+          }
+        }
+      }
+    },
+    "experiencePolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "automaticHandbookMutation",
+        "requiresSanitization",
+        "requiresReview",
+        "conversation",
+        "taskInbox",
+        "ownerTesting"
+      ],
+      "properties": {
+        "automaticHandbookMutation": { "const": false },
+        "requiresSanitization": { "const": true },
+        "requiresReview": { "const": true },
+        "conversation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["enabled", "channels"],
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "channels": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": { "enum": ["web", "sdk"] }
+            }
+          }
+        },
+        "taskInbox": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["enabled", "channels"],
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "channels": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": { "enum": ["mate_call", "email", "schedule"] }
+            }
+          }
+        },
+        "ownerTesting": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["enabled", "candidateReleaseOnly", "isolatedFromLiveData"],
+          "properties": {
+            "enabled": { "type": "boolean" },
+            "candidateReleaseOnly": { "const": true },
+            "isolatedFromLiveData": { "const": true }
+          }
+        }
+      }
+    }
+  }
+}

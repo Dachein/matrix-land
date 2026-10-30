@@ -1,0 +1,11 @@
+{
+  "$schema": "https://frontier-workspace.org/schemas/installation/v1",
+  "schemaVersion": 1,
+  "installationId": "example-prod",
+  "brand": { "name": "Example Workspace", "logoText": "EW", "paletteId": "frontier" },
+  "domains": { "portalHostname": "work.example.com", "serviceRoot": "workspace.example.com" },
+  "cloudflare": { "accountId": "00000000000000000000000000000000", "zoneId": "00000000000000000000000000000000", "apiTokenRef": "env:CLOUDFLARE_API_TOKEN" },
+  "identity": { "allowedEmailDomains": ["example.com"], "senderEmail": "no-reply@example.com", "ownerEmail": "owner@example.com", "entra": { "mode": "disabled" } },
+  "modules": [],
+  "models": { "mode": "disabled" }
+}

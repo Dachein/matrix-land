@@ -1,0 +1,7 @@
+.knowledge-folder-backdrop { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: flex-end; background: rgba(17,17,15,.36); }
+.knowledge-folder-picker { display: flex; flex-direction: column; gap: 20px; width: 100%; max-height: 80vh; min-height: 420px; padding: 24px 28px calc(24px + env(safe-area-inset-bottom)); background: #f7f6f2; }
+.knowledge-folder-picker .create-drawer-header { display: flex; align-items: center; justify-content: space-between; }
+.knowledge-folder-picker .form-title { font-size: 30px; font-weight: 700; }.knowledge-folder-picker .drawer-close { padding: 4px 8px; font-size: 34px; }
+.folder-picker-path { display: block; color: var(--muted); font-size: 22px; line-height: 1.5; }
+.folder-picker-list { flex: 1; min-height: 180px; max-height: 480px; }
+.folder-picker-item { display: flex; justify-content: space-between; padding: 24px 10px; border-bottom: 1px solid var(--line); font-size: 25px; }

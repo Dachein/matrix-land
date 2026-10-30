@@ -1,0 +1,105 @@
+# Frontier Workspace 前端产品标准
+
+2026-10-30。适用：新增界面与逐步迁入新设计系统的现有页面。第一批基础设施已经实现；本文不表示全部现有页面已达标。
+
+## 已确认的方向
+
+- 产品默认名称：Frontier Workspace。企业可以配置名称、Logo 或文字标记。
+- 界面布局、排版与视觉秩序沿用 Okfrontier 官网方向；仅支持浅色。不按系统偏好切换深色。
+- 企业从 **8 组完整配色** 中选择，不提供任意取色器。每组同时指定主色、配套色；系统派生可读前景、浅底和焦点色。
+- 用户提供的钢笔淡彩人物图仅定义**默认配图风格**，不用于推导 UI 配色。配图规范见 [默认插画规范](frontier-workspace-illustration-standard.md)。
+
+## 一、组件边界
+
+| 层次 | 职责与位置 | 限制 |
+|---|---|---|
+| 设计基础 | `src/portal/design-system/tokens.ts`，共享品牌与配色模型在 `src/shared/platformBrand*.ts`、`platformPalette.ts` | 不依赖 React、页面、业务接口或凭据 |
+| 基础控件 | 复用 `src/portal/components/Button.tsx`、`FormField.tsx`、`SegmentedControl.tsx`、`ModalShell.tsx` | 不请求业务数据，不引入业务模块；不能再建第二套同义组件 |
+| 组合组件 | 搜索筛选、空状态、资源卡片、表格工具栏、权限选择器 | 由基础控件组合；通过 props 接收数据和动作，拥有自身布局 |
+| 业务模块 | Knowledge、Apps、Community、组织管理各自的模型、服务、hooks 和组件 | 业务语义留在模块内，不由基础组件猜测角色或权限 |
+| 页面 | 选择数据、组合视图、连接路由与事件 | 不新增大型全能页面，不在路由层重复实现控件 |
+
+`DesignSystemScope` 是渐进迁移边界。仅该范围内启用新组件外观和密度。现有组件 API、CSS 类名与未迁移页面保持兼容。新增组件视觉状态通过 `data-ui`、`data-variant`、`data-size` 表达，不依赖页面名称或 DOM 顺序。
+
+## 二、Token 分层
+
+| 层 | 例子 | 规则 |
+|---|---|---|
+| 基础尺度 | space、字号、行高、圆角、动效、层级、控件高度 | 单一受控尺度；组件不自行发明数值 |
+| 品牌输入 | `paletteId` → 主色、配套色 | 8 个枚举方案；安装导出配置保留方案 ID |
+| 语义颜色 | canvas、surface、text、border、action、accent、focus、success、warning、danger、info | 页面按职责取值，禁止按颜色名字选择业务语义 |
+| 组件状态 | default、hover、focus-visible、pressed、loading、disabled、invalid | 基于语义 Token，不能散落新的色值 |
+
+`tokens.ts` 生成 `tokens.css`，禁止手改生成文件。`npm run design:tokens` 更新；`npm run quality:design-system` 检查是否同步。邮件共享品牌、配色解析和可读前景计算，不依赖浏览器 CSS 自定义属性。
+
+8 组方案：Frontier 橙、海湾蓝、森林绿、石墨黑、梅紫、陶土红、湖青、靛蓝。准确值由 `src/shared/platformBrandPresets.ts` 拥有。主色用于品牌和主要动作；配套色用于辅助强调。错误、成功等状态色独立固定，且必须同时有文字或图标，不能只靠颜色传递信息。
+
+为兼容现有 Workspace 部署，解析器仍接受没有 `paletteId` 的旧显式色值配置。新设置界面只展示 8 组预设；指定方案 ID 与显式颜色冲突时拒绝配置，不静默覆盖。
+
+## 三、交互与可访问性
+
+- 按钮使用 `Button` / `ButtonLink`。加载时禁用重复动作并提供 `aria-busy`；禁用链接移除 href，避免通过新标签打开绕过禁用。
+- 图标按钮必须有可访问名称；纯装饰图标不计入控件名称。
+- 表单使用 `FormField` 和输入组件。标签、必填、说明、错误通过统一上下文关联；错误提供 `aria-invalid` 与 `aria-describedby`。
+- 单选视图切换使用 `SegmentedControl`，提供组名称和 `aria-pressed`。它是按钮组，不冒充缺少方向键行为的 ARIA tabs。
+- 新设计范围内的 `ModalShell` 管理初始焦点、Tab 循环、Escape 和关闭后的焦点恢复；嵌套弹窗只由最上层接管。旧页面保留原行为，也可显式开启 `manageFocus`。
+- **迁移约束**：包含挂到 document.body 的 Listbox、富文本菜单、扩展编辑器的弹窗，必须先统一浮层挂载归属再启用焦点约束，不能让焦点管理阻断子菜单。基础预览目前只验证弹窗内部原生控件。
+- 标准密度与紧凑密度分别服务普通操作和密集数据；粗指针设备控件至少 44 CSS px。减弱动态效果偏好下关闭旋转动画，仍保留加载文字。
+- 以正文 4.5:1 对比度作为实现检查目标。品牌动作前景、品牌链接和焦点颜色自动计算；这不代表已完成全产品 WCAG 审计。
+
+## 四、布局、内容与性能
+
+- 使用 4px 基础间距体系，正文与元数据有独立字号。正文用清晰的无衬线字体，展示标题可用官网的衬线方向。
+- 共享断点 760 / 1100px。移动端表单单列，长名称可换行；数据表允许容器内横向滚动，页面本身不能溢出。
+- 新增字符串进入现有中英文资源；品牌名通过参数注入，业务协议、SDK 导出和历史 ID 不做显示名式替换。
+- 内容必须覆盖加载、空、错误、成功、无权限状态；写操作错误保留用户输入，破坏性动作须明确对象和影响。
+- 路由与重型编辑器维持懒加载。组件预览只在 DEV 条件下加载，不应进入生产制品。禁止仅为预览引入新的 UI 框架。
+
+## 五、自动检查与验收
+
+`quality:design-system` 已接入现有 `test:quality:ci`：
+
+1. 生成的 Token 与源码一致。
+2. 新设计系统样式与组件预览不含固定色值、未定义 Token、任意间距/字号、`!important` 或深色模式。
+3. 基础控件不依赖业务模块或 fetch；预览组合复用现有控件，不直接编写原生动作/表单控件。
+4. 所有预设与极端品牌颜色的对比度、系统状态独立性、配置校验、七类邮件品牌与转义测试。
+
+现有 `quality:frontend-components`、`quality:frontend-css`、`quality:frontend-i18n` 和性能检查继续保留。旧代码统计不是合规证明；新 gate 当前只强制基础层和预览，后续每个迁移模块都要加入检查覆盖范围，不能靠排除文件宣告达标。
+
+每个迁移批次必须有：组件状态检查、键盘检查、窄屏/宽屏预览、中英文、实际业务流程回归、TypeScript 与生产构建。需要测试的重点是行为边界而非组件实现快照。
+
+## 六、迁移顺序
+
+1. 本批：统一品牌/配色模型、基础控件行为、Token 生成、组件预览、邮件、自动检查。
+2. 浮层基础：Listbox、Popover、Tooltip、通知与编辑器浮层统一挂载和层级；补齐组合状态。
+3. 登录/初始化、主框架与导航；完成 metadata、favicon、分享图和登录前品牌加载的一致性。
+4. 常用列表、表单、资源详情；逐业务域迁移，清除已替代样式。
+5. 企业管理、权限与审计等复杂界面；完整业务和可访问性验收后再发布。
+
+当前没有进行全站页面换肤，没有部署生产，也尚未完成一键安装器、组织 Connector handoff 或开源发行清理。
+
+
+## 七、官网细节与成熟产品的参考边界
+
+2026-10-30 补充：以当日 www.okfrontier.com 实际页面及 company-site 的 `site-header.css`、`visual-system.css` 为视觉依据。最新用户方向是减少线条和外显结构，增加适度灵动；线条用于收拢零散内容，而不是装饰每个区块。
+
+- 信息先靠留白、对齐、间距和文字层级组织；不默认给章节、工具栏或侧栏加分隔线，不给每个元素做卡片。
+- 视图切换使用无外框文字和 1px 短下划线；密度等局部选项用安静的浅底选中态；配色组仅保留色样与必要的选中反馈。
+- 表单与下拉触发器默认单底线，箭头细线化；焦点和错误仍清晰可见。`SelectInput` 的 `appearance="line"` 保留原生选择语义，展开菜单由浏览器/系统绘制，不声称已复刻官网自定义浮层。
+- 字体随应用自托管：Inter Variable / Noto Sans SC Variable 用于正文和控件；Iowan Old Style / Noto Serif SC Variable 用于展示标题；Chakra Petch 用于少量编号及注释。字体文件采用 Fontsource 包内 OFL 许可，按 Unicode 字符范围加载；后续迁入正式页面时继续检查字体请求与包体积。
+- 展示标题可用 300 细体，正文保持 400，标签与操作通常为 500，重要信息按需用 600；不把所有文字统一变细，也不用过浅颜色替代层级。
+- 灵动来自短线伸展、动作箭头的小幅位移、切换内容的轻微出现过渡，使用统一时长与缓动。遵循 reduced-motion，不引入自动漂浮、循环闪动或大范围位移。
+
+以下是针对本产品的取舍判断，并非这些系统的官方定位排名：
+
+| 参考 | 借鉴部分 | 边界 |
+| --- | --- | --- |
+| Frontier 官网 | 纸墨感、衬线标题、细线选择、轻量导航 | 官网的大幅标题与长段留白不直接套进密集业务页面 |
+| Linear | 导航退后、内容优先、减少多余分隔、细致状态反馈 | 借鉴产品交互，不搬深色主题或整套工具视觉 |
+| Notion | 内容画布、阅读与编辑关系、适量的人文表达 | 不把所有业务都做成文档块；此处是产品语言参考，不是采用公开组件库 |
+| IBM Carbon | 表单、选择、复杂数据与可访问性的完整行为规范 | 借鉴规范，不照搬其默认外观 |
+| Adobe Spectrum | Token、组件状态与跨场景一致性 | 当前更鲜明、圆润的品牌表达不作为 Frontier 的主视觉方向 |
+
+建议：Frontier 定义品牌表达，Linear 作为日常工作界面的主要交互参考，Carbon 用于核对企业级复杂控件的行为。Notion 与 Spectrum 作为局部参照。保持现有 React 基础组件和 Token 架构，不因视觉参考引入多套 UI 框架。
+
+资料：[Linear 2026 设计更新](https://linear.app/now/behind-the-latest-design-refresh)、[Carbon Dropdown](https://www.carbondesignsystem.com/building-blocks/core/components/dropdown/guidelines)、[Notion 页面样式](https://www.notion.com/help/customize-and-style-your-content)、[Spectrum 介绍](https://spectrum.adobe.com/getting-started/introduction)。

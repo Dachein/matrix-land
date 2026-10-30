@@ -1,0 +1,20 @@
+.appsOwnershipSettings,.appsOwnershipRequest { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 0; border-top:1px solid var(--portal-line); }
+.appsOwnershipSettings p,.appsOwnershipRequest p { margin:6px 0; color:var(--portal-muted); }
+.appsOwnershipInbox { margin:18px 0; padding:20px; background:var(--portal-paper); border:1px solid var(--portal-line); border-radius:0; }
+.appsOwnershipInbox h2,.appsOwnershipAdmin h2 { font-size:18px; }
+.appsOwnershipOverlay { position:fixed; inset:0; z-index:220; display:flex; align-items:center; justify-content:center; padding:24px; background:var(--portal-ink-a34); }
+.appsOwnershipDialog { width:min(100%,560px); max-height:90dvh; overflow:auto; background:var(--portal-paper); color:var(--portal-ink); border-radius:0; box-shadow:0 24px 80px var(--portal-ink-a18); }
+.appsOwnershipDialog h2 { font-size:20px; margin:0; }
+.appsOwnershipBody { padding:24px; display:grid; gap:18px; }
+.appsOwnershipBody p { margin:0; line-height:1.6; }
+.appsOwnershipRetention { display:flex; gap:10px; align-items:center; }
+.appsOwnershipAdmin { margin:24px 0; padding:20px; }
+.appsOwnershipAdmin > p { color:var(--portal-muted); line-height:1.6; }
+.appsOwnershipAdmin > input { width:100%; margin:0 0 16px; }
+@media(max-width:640px) { .appsOwnershipSettings,.appsOwnershipRequest { align-items:flex-start; flex-direction:column; } .appsOwnershipOverlay { padding:12px; } }
+
+.appsOwnershipHeader { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:20px 24px; border-bottom:1px solid var(--portal-line); }
+.appsOwnershipBody .formField { display:grid; gap:8px; }
+.appsOwnershipBody .textArea { width:100%; min-height:100px; padding:10px; box-sizing:border-box; border:1px solid var(--portal-line); color:var(--portal-ink); background:var(--portal-paper); font:inherit; resize:vertical; }
+.appsOwnershipAdmin > .textInput { min-height:40px; padding:10px; box-sizing:border-box; border:1px solid var(--portal-line); color:var(--portal-ink); background:var(--portal-paper); font:inherit; }
+.appsOwnershipBody .formActions,.appsOwnershipRequest .formActions { display:flex; justify-content:flex-end; gap:8px; flex-wrap:wrap; }

@@ -1,0 +1,1180 @@
+.portal-mcp-handbook-workspace {
+  width: min(100%, 1240px);
+}
+
+.mcp-handbook-page {
+  display: grid;
+  gap: var(--portal-space-8);
+  min-width: 0;
+}
+
+.mcp-handbook-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 350px;
+  min-height: 430px;
+  overflow: hidden;
+  border: 1px solid var(--portal-ink);
+  background: var(--portal-ink);
+  box-shadow: var(--portal-shadow-paper);
+  color: var(--portal-white);
+}
+
+.mcp-handbook-hero-copy {
+  display: grid;
+  align-content: center;
+  gap: var(--portal-space-5);
+  padding: clamp(30px, 5vw, 64px);
+}
+
+.mcp-handbook-kicker,
+.mcp-handbook-eyebrow {
+  display: inline-flex;
+  gap: var(--portal-space-2);
+  align-items: center;
+  width: fit-content;
+  color: var(--portal-signal);
+  font-size: var(--portal-type-micro);
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.mcp-handbook-hero h1 {
+  max-width: none;
+  font-size: clamp(48px, 6vw, 76px);
+  letter-spacing: -0.04em;
+  line-height: 0.94;
+}
+
+.mcp-handbook-hero-copy > p {
+  max-width: 760px;
+  color: var(--portal-white-a72);
+  font-size: var(--portal-type-page-subtitle);
+  line-height: 1.6;
+}
+
+.mcp-handbook-endpoint {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--portal-space-3);
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  border: 1px solid var(--portal-white-a20);
+  background: var(--portal-white-a055);
+  padding: 10px 13px;
+}
+
+.mcp-handbook-endpoint span {
+  color: var(--portal-white-a68);
+  font-size: var(--portal-type-micro);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mcp-handbook-endpoint code {
+  overflow-wrap: anywhere;
+  color: var(--portal-white);
+  font-size: 12px;
+}
+
+.mcp-handbook-product-family {
+  display: grid;
+  grid-template-rows: auto repeat(4, 1fr);
+  border-left: 1px solid var(--portal-white-a20);
+  background: var(--portal-ink-soft);
+}
+
+.mcp-handbook-product-family > header {
+  display: flex;
+  gap: var(--portal-space-3);
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--portal-white-a20);
+  padding: var(--portal-space-4) var(--portal-space-5);
+}
+
+.mcp-handbook-product-family > header span {
+  color: var(--portal-white);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mcp-handbook-product-family > header small {
+  color: var(--portal-white-a68);
+  font-size: 8px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.mcp-handbook-product-card {
+  display: grid;
+  align-content: center;
+  gap: 5px;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  border: 0;
+  border-bottom: 1px solid var(--portal-white-a20);
+  border-radius: 0;
+  background: transparent;
+  padding: var(--portal-space-4) var(--portal-space-5);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+  transition: background-color 140ms ease, color 140ms ease;
+}
+
+.mcp-handbook-product-card:last-child {
+  border-bottom: 0;
+}
+
+.mcp-handbook-product-card:hover:not(.is-active) {
+  background: var(--portal-white-a055);
+}
+
+.mcp-handbook-product-card:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 2px solid var(--portal-signal);
+  outline-offset: -3px;
+}
+
+.mcp-handbook-product-card.is-active {
+  background: var(--portal-signal);
+}
+
+.mcp-handbook-product-card > div {
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  color: var(--portal-signal);
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.mcp-handbook-product-card strong {
+  margin-top: 2px;
+  color: var(--portal-white);
+  font-size: 26px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+}
+
+.mcp-handbook-product-card.is-active strong {
+  font-size: 38px;
+}
+
+.mcp-handbook-product-card p {
+  color: var(--portal-white-a68);
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.mcp-handbook-product-card small {
+  margin-top: 2px;
+  color: var(--portal-white-a68);
+  font-size: 9px;
+}
+
+.mcp-handbook-product-card code {
+  color: var(--portal-white-a72);
+  font-size: 9px;
+}
+
+.mcp-handbook-product-card.is-active > div,
+.mcp-handbook-product-card.is-active strong,
+.mcp-handbook-product-card.is-active p,
+.mcp-handbook-product-card.is-active small,
+.mcp-handbook-product-card.is-active code {
+  color: var(--portal-ink);
+}
+
+.mcp-handbook-section {
+  display: grid;
+  gap: var(--portal-space-5);
+}
+
+.mcp-handbook-section-heading {
+  display: flex;
+  gap: var(--portal-space-4);
+  align-items: flex-start;
+}
+
+.mcp-handbook-section-heading-with-action > div {
+  flex: 1 1 auto;
+}
+
+.mcp-handbook-section-heading-with-action > button {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+.mcp-handbook-section-heading > span {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  background: var(--portal-ink);
+  color: var(--portal-signal);
+}
+
+.mcp-handbook-section-heading h2,
+.mcp-handbook-catalog-header h2,
+.mcp-handbook-aside h2 {
+  font-size: var(--portal-type-section);
+}
+
+.mcp-handbook-section-heading p,
+.mcp-handbook-catalog-header p {
+  margin-top: var(--portal-space-1);
+  font-size: 12px;
+}
+
+.mcp-handbook-framework-note {
+  display: flex;
+  gap: var(--portal-space-3);
+  align-items: flex-start;
+  border-left: 3px solid var(--portal-green);
+  background: var(--portal-paper);
+  padding: var(--portal-space-4);
+}
+
+.mcp-handbook-framework-note svg {
+  flex: 0 0 auto;
+  color: var(--portal-green);
+}
+
+.mcp-handbook-framework-note p {
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.mcp-handbook-module-selector {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid var(--portal-line-strong);
+  background: var(--portal-paper);
+}
+
+.mcp-handbook-module-button {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: var(--portal-space-3);
+  align-items: center;
+  min-width: 0;
+  border: 0;
+  border-right: 1px solid var(--portal-line);
+  background: transparent;
+  color: var(--portal-ink);
+  cursor: pointer;
+  padding: var(--portal-space-4);
+  text-align: left;
+}
+
+.mcp-handbook-module-button:last-child {
+  border-right: 0;
+}
+
+.mcp-handbook-module-button:hover:not(.is-active) {
+  background: var(--portal-canvas);
+}
+
+.mcp-handbook-module-button:focus-visible {
+  position: relative;
+  z-index: 1;
+  outline: 3px solid var(--portal-signal);
+  outline-offset: -3px;
+}
+
+.mcp-handbook-module-button.is-active {
+  background: var(--portal-ink);
+  color: var(--portal-white);
+}
+
+.mcp-handbook-module-button > span {
+  color: var(--portal-green);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+}
+
+.mcp-handbook-module-button.is-active > span {
+  color: var(--portal-signal);
+}
+
+.mcp-handbook-module-button > strong {
+  overflow: hidden;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mcp-handbook-module-button > small {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  background: var(--portal-ink);
+  color: var(--portal-white);
+  font-size: 11px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.mcp-handbook-module-button.is-active > small {
+  background: var(--portal-signal);
+  color: var(--portal-ink);
+}
+
+.mcp-handbook-module-detail {
+  display: grid;
+  grid-template-columns: minmax(230px, 0.72fr) minmax(0, 1.28fr);
+  border: 1px solid var(--portal-line-strong);
+  background: var(--portal-paper);
+}
+
+.mcp-handbook-module-detail > header {
+  border-right: 1px solid var(--portal-line);
+  padding: var(--portal-space-6);
+}
+
+.mcp-handbook-module-detail > header > span {
+  color: var(--portal-green);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.mcp-handbook-module-detail h3 {
+  margin-top: var(--portal-space-3);
+  font-size: 28px;
+  letter-spacing: -0.025em;
+}
+
+.mcp-handbook-module-detail header p {
+  margin-top: var(--portal-space-3);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.mcp-handbook-module-detail header .mcp-handbook-module-translation {
+  color: var(--portal-muted);
+  font-size: 13px;
+}
+
+.mcp-handbook-pack-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--portal-space-3);
+  align-content: start;
+  padding: var(--portal-space-5);
+}
+
+.mcp-handbook-pack-list details {
+  min-width: 0;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-canvas);
+}
+
+.mcp-handbook-pack-list details[open] {
+  border-color: var(--portal-ink);
+  background: var(--portal-paper);
+}
+
+.mcp-handbook-pack-list summary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  gap: var(--portal-space-2);
+  align-items: center;
+  cursor: pointer;
+  padding: var(--portal-space-4);
+  list-style: none;
+}
+
+.mcp-handbook-pack-list summary::-webkit-details-marker {
+  display: none;
+}
+
+.mcp-handbook-pack-list summary > span:first-child {
+  color: var(--portal-soft);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+}
+
+.mcp-handbook-pack-title {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.mcp-handbook-pack-title strong,
+.mcp-handbook-pack-title small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mcp-handbook-pack-title strong {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.mcp-handbook-pack-title small {
+  color: var(--portal-muted);
+  font-size: 11px;
+}
+
+.mcp-handbook-pack-list summary > small:last-of-type {
+  color: var(--portal-muted);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.mcp-handbook-pack-list details[open] summary svg {
+  transform: rotate(180deg);
+}
+
+.mcp-handbook-pack-list details > p {
+  padding: 0 var(--portal-space-4);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.mcp-handbook-pack-list details > .mcp-handbook-pack-translation {
+  margin-top: var(--portal-space-2);
+  color: var(--portal-muted);
+  font-size: 12px;
+}
+
+.mcp-handbook-pack-list ul {
+  display: grid;
+  gap: 5px;
+  overflow: hidden;
+  margin-top: var(--portal-space-4);
+  padding: 0 var(--portal-space-4) var(--portal-space-4);
+  list-style: none;
+}
+
+.mcp-handbook-pack-list code {
+  display: block;
+  overflow: hidden;
+  color: var(--portal-ink-soft);
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mcp-handbook-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1px;
+  border: 1px solid var(--portal-line-strong);
+  background: var(--portal-line);
+}
+
+.mcp-handbook-feature {
+  display: grid;
+  align-content: start;
+  gap: var(--portal-space-3);
+  min-height: 210px;
+  background: var(--portal-paper);
+  padding: var(--portal-space-5) var(--portal-space-4);
+}
+
+.mcp-handbook-feature > span {
+  color: var(--portal-green);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.mcp-handbook-feature h3 {
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.mcp-handbook-feature p {
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.mcp-handbook-doc-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 270px;
+  gap: var(--portal-space-6);
+  align-items: start;
+  min-width: 0;
+}
+
+.mcp-handbook-catalog {
+  display: grid;
+  gap: var(--portal-space-5);
+  min-width: 0;
+}
+
+.mcp-handbook-catalog-header {
+  display: flex;
+  gap: var(--portal-space-4);
+  align-items: end;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--portal-line-strong);
+  padding-bottom: var(--portal-space-5);
+}
+
+.mcp-handbook-catalog-header .mcp-handbook-eyebrow,
+.mcp-handbook-aside .mcp-handbook-eyebrow {
+  margin-bottom: var(--portal-space-2);
+  color: var(--portal-green);
+}
+
+.mcp-handbook-result-count {
+  flex: 0 0 auto;
+  color: var(--portal-muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+}
+
+.mcp-handbook-filters {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) 158px 158px;
+  gap: var(--portal-space-2);
+}
+
+.mcp-handbook-search {
+  display: flex;
+  gap: var(--portal-space-2);
+  align-items: center;
+  min-width: 0;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper);
+  padding: 0 var(--portal-space-3);
+}
+
+.mcp-handbook-search:focus-within {
+  border-color: var(--portal-ink);
+  box-shadow: 0 0 0 2px var(--portal-ink-a07);
+}
+
+.mcp-handbook-search svg {
+  flex: 0 0 auto;
+  color: var(--portal-muted);
+}
+
+.mcp-handbook-search input,
+.mcp-handbook-filters select {
+  width: 100%;
+  height: 42px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--portal-ink);
+  font-size: 11px;
+}
+
+.mcp-handbook-filters label:not(.mcp-handbook-search) {
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper);
+  padding: 0 var(--portal-space-2);
+}
+
+.mcp-handbook-tool-group {
+  display: grid;
+  gap: var(--portal-space-3);
+}
+
+.mcp-handbook-tool-group > header {
+  display: flex;
+  gap: var(--portal-space-4);
+  align-items: end;
+  justify-content: space-between;
+  padding-top: var(--portal-space-3);
+}
+
+.mcp-handbook-tool-group > header > div > span {
+  color: var(--portal-green);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+}
+
+.mcp-handbook-tool-group h3 {
+  margin-top: 3px;
+  font-size: 20px;
+}
+
+.mcp-handbook-tool-group header p {
+  max-width: 680px;
+  margin-top: 4px;
+  font-size: 11px;
+}
+
+.mcp-handbook-tool-group > header > strong {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  border: 1px solid var(--portal-line-strong);
+  background: var(--portal-paper);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.mcp-handbook-tools {
+  display: grid;
+  border-top: 1px solid var(--portal-line-strong);
+}
+
+.mcp-handbook-tool {
+  border-right: 1px solid var(--portal-line-strong);
+  border-bottom: 1px solid var(--portal-line-strong);
+  border-left: 1px solid var(--portal-line-strong);
+  background: var(--portal-paper);
+}
+
+.mcp-handbook-tool[open] {
+  box-shadow: var(--portal-shadow-paper);
+}
+
+.mcp-handbook-tool > summary {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr) auto auto;
+  gap: var(--portal-space-3);
+  align-items: center;
+  min-height: 78px;
+  list-style: none;
+  cursor: pointer;
+  padding: var(--portal-space-3) var(--portal-space-4);
+}
+
+.mcp-handbook-tool > summary::-webkit-details-marker {
+  display: none;
+}
+
+.mcp-handbook-tool > summary:hover {
+  background: var(--portal-paper-soft);
+}
+
+.mcp-handbook-tool > summary > div {
+  min-width: 0;
+}
+
+.mcp-handbook-tool > summary code {
+  color: var(--portal-ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.mcp-handbook-tool-description-primary,
+.mcp-handbook-tool-description-secondary {
+  display: -webkit-box;
+  overflow: hidden;
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.mcp-handbook-tool-description-primary {
+  margin-top: 5px;
+  color: var(--portal-ink-soft);
+  font-size: 12px;
+}
+
+.mcp-handbook-tool-description-secondary {
+  margin-top: 3px;
+  color: var(--portal-muted);
+  font-size: 11px;
+}
+
+.mcp-handbook-operation {
+  display: inline-flex;
+  justify-content: center;
+  border: 1px solid var(--portal-line-strong);
+  padding: 5px 6px;
+  color: var(--portal-muted);
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.mcp-handbook-operation.write {
+  border-color: var(--portal-blue-border);
+  background: var(--portal-blue-a06);
+  color: var(--portal-blue);
+}
+
+.mcp-handbook-operation.approval {
+  border-color: var(--portal-rose-a34);
+  background: var(--portal-rose-a06);
+  color: var(--portal-rose);
+}
+
+.mcp-handbook-tool-version {
+  color: var(--portal-soft);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 9px;
+}
+
+.mcp-handbook-chevron {
+  color: var(--portal-muted);
+  transition: transform 140ms ease;
+}
+
+.mcp-handbook-tool[open] .mcp-handbook-chevron {
+  transform: rotate(180deg);
+}
+
+.mcp-handbook-tool-body {
+  display: grid;
+  gap: var(--portal-space-3);
+  border-top: 1px solid var(--portal-line);
+  background: var(--portal-paper-soft);
+  padding: var(--portal-space-4);
+}
+
+.mcp-handbook-tool-body-heading {
+  display: flex;
+  gap: var(--portal-space-3);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mcp-handbook-tool-body-heading > div {
+  display: grid;
+  gap: 2px;
+}
+
+.mcp-handbook-tool-body-heading span {
+  color: var(--portal-soft);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mcp-handbook-tool-body-heading strong {
+  font-size: 12px;
+}
+
+.mcp-handbook-tool-body-heading button {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper);
+  color: var(--portal-ink);
+  padding: 7px 10px;
+  font-size: 9px;
+  font-weight: 800;
+}
+
+.mcp-handbook-parameter-table {
+  display: grid;
+  border-top: 1px solid var(--portal-line);
+  border-left: 1px solid var(--portal-line);
+}
+
+.mcp-handbook-parameter-head,
+.mcp-handbook-parameter-row {
+  display: grid;
+  grid-template-columns: minmax(110px, 0.8fr) minmax(80px, 0.55fr) 80px minmax(180px, 1.6fr);
+}
+
+.mcp-handbook-parameter-head > *,
+.mcp-handbook-parameter-row > * {
+  min-width: 0;
+  border-right: 1px solid var(--portal-line);
+  border-bottom: 1px solid var(--portal-line);
+  padding: 8px 9px;
+}
+
+.mcp-handbook-parameter-head > * {
+  background: var(--portal-shell);
+  color: var(--portal-muted);
+  font-size: 8px;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.mcp-handbook-parameter-row code {
+  overflow-wrap: anywhere;
+  color: var(--portal-ink);
+  font-size: 9px;
+  font-weight: 750;
+}
+
+.mcp-handbook-parameter-row > span,
+.mcp-handbook-parameter-row > p {
+  color: var(--portal-muted);
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.mcp-handbook-no-parameters {
+  border: 1px dashed var(--portal-line);
+  padding: var(--portal-space-4);
+  font-size: 10px;
+}
+
+.mcp-handbook-aside {
+  position: sticky;
+  top: var(--portal-space-5);
+  display: grid;
+  gap: var(--portal-space-3);
+}
+
+.mcp-handbook-aside > section {
+  border: 1px solid var(--portal-line-strong);
+  background: var(--portal-paper);
+  padding: var(--portal-space-4);
+}
+
+.mcp-handbook-aside h2 {
+  font-size: 20px;
+}
+
+.mcp-handbook-release-modal-overlay {
+  position: fixed;
+  z-index: 1200;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--portal-ink-a70);
+  padding: clamp(16px, 4vw, 48px);
+}
+
+.mcp-handbook-release-modal {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  width: min(900px, 100%);
+  max-height: min(860px, calc(100vh - 32px));
+  overflow: hidden;
+  border: 1px solid var(--portal-ink);
+  background: var(--portal-paper);
+  box-shadow: var(--portal-shadow-float);
+}
+
+.mcp-handbook-release-modal-header {
+  display: flex;
+  gap: var(--portal-space-5);
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--portal-line-strong);
+  background: var(--portal-paper);
+  padding: var(--portal-space-5) var(--portal-space-6);
+}
+
+.mcp-handbook-release-modal-header > div:first-child {
+  display: grid;
+  gap: 6px;
+}
+
+.mcp-handbook-release-modal-header h2 {
+  font-size: 28px;
+  letter-spacing: -0.025em;
+}
+
+.mcp-handbook-release-modal-header p {
+  max-width: 620px;
+  color: var(--portal-muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.mcp-handbook-release-modal-body {
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 0 var(--portal-space-6) var(--portal-space-6);
+}
+
+.mcp-handbook-release-entry {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: var(--portal-space-5);
+  border-bottom: 1px solid var(--portal-line);
+  padding: var(--portal-space-6) 0;
+}
+
+.mcp-handbook-release-entry > header {
+  display: grid;
+  align-content: start;
+  gap: 5px;
+}
+
+.mcp-handbook-release-entry > header span {
+  color: var(--portal-green);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  font-weight: 850;
+}
+
+.mcp-handbook-release-entry > header strong {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 20px;
+}
+
+.mcp-handbook-release-entry > header time {
+  color: var(--portal-soft);
+  font-size: 12px;
+}
+
+.mcp-handbook-release-entry ul {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding-left: 20px;
+  color: var(--portal-ink-soft);
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.mcp-handbook-aside .mcp-handbook-dynamic-note {
+  border-color: var(--portal-ink);
+  background: var(--portal-ink);
+  color: var(--portal-white);
+}
+
+.mcp-handbook-dynamic-note svg {
+  color: var(--portal-signal);
+}
+
+.mcp-handbook-dynamic-note h3 {
+  margin-top: var(--portal-space-3);
+  font-size: 14px;
+}
+
+.mcp-handbook-dynamic-note p {
+  margin-top: var(--portal-space-2);
+  color: var(--portal-white-a68);
+  font-size: 9px;
+}
+
+.mcp-handbook-contract-note {
+  display: grid;
+  gap: 4px;
+}
+
+.mcp-handbook-contract-note span,
+.mcp-handbook-contract-note small {
+  color: var(--portal-soft);
+  font-size: 8px;
+}
+
+.mcp-handbook-contract-note code {
+  overflow-wrap: anywhere;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.mcp-handbook-empty,
+.mcp-handbook-state {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: var(--portal-space-4);
+  align-items: center;
+  border: 1px solid var(--portal-line-strong);
+  background: var(--portal-paper);
+  padding: var(--portal-space-6);
+}
+
+.mcp-handbook-empty {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.mcp-handbook-empty h3,
+.mcp-handbook-state h1 {
+  font-size: 18px;
+}
+
+.mcp-handbook-empty p,
+.mcp-handbook-state p {
+  margin-top: 3px;
+  font-size: 11px;
+}
+
+.mcp-handbook-state.error {
+  border-left: 4px solid var(--portal-rose);
+}
+
+.mcp-handbook-spin {
+  animation: mcp-handbook-spin 900ms linear infinite;
+}
+
+@keyframes mcp-handbook-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 1180px) {
+  .mcp-handbook-module-selector {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mcp-handbook-module-button:nth-child(2) {
+    border-right: 0;
+  }
+
+  .mcp-handbook-module-button:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--portal-line);
+  }
+
+  .mcp-handbook-feature-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .mcp-handbook-doc-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .mcp-handbook-aside {
+    position: static;
+    grid-template-columns: minmax(0, 1fr) minmax(230px, 0.6fr);
+  }
+
+  .mcp-handbook-contract-note {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 760px) {
+  .mcp-handbook-page {
+    gap: var(--portal-space-6);
+  }
+
+  .mcp-handbook-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .mcp-handbook-hero-copy {
+    padding: var(--portal-space-6);
+  }
+
+  .mcp-handbook-hero h1 {
+    font-size: 44px;
+  }
+
+  .mcp-handbook-product-family {
+    border-top: 1px solid var(--portal-white-a20);
+    border-left: 0;
+  }
+
+  .mcp-handbook-feature-grid,
+  .mcp-handbook-aside {
+    grid-template-columns: 1fr;
+  }
+
+  .mcp-handbook-section-heading-with-action {
+    flex-wrap: wrap;
+  }
+
+  .mcp-handbook-section-heading-with-action > button {
+    width: calc(100% - 58px);
+    margin-left: 58px;
+  }
+
+  .mcp-handbook-module-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .mcp-handbook-module-detail > header {
+    border-right: 0;
+    border-bottom: 1px solid var(--portal-line);
+  }
+
+  .mcp-handbook-pack-list {
+    grid-template-columns: 1fr;
+  }
+
+  .mcp-handbook-feature {
+    min-height: 0;
+  }
+
+  .mcp-handbook-contract-note {
+    grid-column: auto;
+  }
+
+  .mcp-handbook-catalog-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .mcp-handbook-filters {
+    grid-template-columns: 1fr;
+  }
+
+  .mcp-handbook-tool > summary {
+    grid-template-columns: 66px minmax(0, 1fr) auto;
+  }
+
+  .mcp-handbook-tool-version {
+    display: none;
+  }
+
+  .mcp-handbook-parameter-head {
+    display: none;
+  }
+
+  .mcp-handbook-parameter-row {
+    grid-template-columns: minmax(100px, 0.8fr) minmax(0, 1.2fr);
+  }
+
+  .mcp-handbook-parameter-row > *:nth-child(3),
+  .mcp-handbook-parameter-row > *:nth-child(4) {
+    border-top: 0;
+  }
+
+  .mcp-handbook-empty,
+  .mcp-handbook-state {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .mcp-handbook-empty button,
+  .mcp-handbook-state button {
+    grid-column: 1 / -1;
+  }
+
+  .mcp-handbook-release-modal-overlay {
+    align-items: stretch;
+    padding: 0;
+  }
+
+  .mcp-handbook-release-modal {
+    width: 100%;
+    max-height: 100vh;
+    border: 0;
+  }
+
+  .mcp-handbook-release-modal-header,
+  .mcp-handbook-release-modal-body {
+    padding-right: var(--portal-space-4);
+    padding-left: var(--portal-space-4);
+  }
+
+  .mcp-handbook-release-entry {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mcp-handbook-spin,
+  .mcp-handbook-chevron {
+    animation: none;
+    transition: none;
+  }
+}

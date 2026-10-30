@@ -1,0 +1,14 @@
+import { mkdir, readFile, writeFile, rename, rm, open } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { randomBytes, scryptSync, createCipheriv, createDecipheriv } from 'node:crypto';
+export async function atomicJson(path,value){await mkdir(resolve(path,'..'),{recursive:true,mode:0o700});const tmp=`${path}.${randomBytes(8).toString('hex')}.tmp`;await writeFile(tmp,JSON.stringify(value,null,2)+'\n',{mode:0o600,flag:'wx'});await rename(tmp,path);}
+export async function readJson(path,fallback){try{return JSON.parse(await readFile(path,'utf8'));}catch(e){if(e.code==='ENOENT')return fallback;throw e;}}
+export function seal(value,password){if(!password||password.length<16)throw new Error('vault_password_requires_16_characters');const salt=randomBytes(16),iv=randomBytes(12),key=scryptSync(password,salt,32),cipher=createCipheriv('aes-256-gcm',key,iv);const data=Buffer.concat([cipher.update(JSON.stringify(value)),cipher.final()]);return {version:1,salt:salt.toString('base64'),iv:iv.toString('base64'),tag:cipher.getAuthTag().toString('base64'),data:data.toString('base64')};}
+export function unseal(value,password){try{const key=scryptSync(password,Buffer.from(value.salt,'base64'),32),decipher=createDecipheriv('aes-256-gcm',key,Buffer.from(value.iv,'base64'));decipher.setAuthTag(Buffer.from(value.tag,'base64'));return JSON.parse(Buffer.concat([decipher.update(Buffer.from(value.data,'base64')),decipher.final()]).toString());}catch{throw new Error('vault_unlock_failed');}}
+export async function withLock(directory,fn){await mkdir(directory,{recursive:true,mode:0o700});const path=resolve(directory,'install.lock');let fd;try{fd=await open(path,'wx',0o600);}catch(e){if(e.code==='EEXIST')throw new Error('installation_locked: check the running process; remove the lock only after it has stopped');throw e;}await fd.writeFile(JSON.stringify({pid:process.pid,startedAt:new Date().toISOString()}));try{return await fn();}finally{await fd.close();await rm(path,{force:true});}}
+export async function runSteps(plan,state,save,execute,onProgress=()=>{}){
+ for(const step of plan.steps){if(state.steps[step.id]?.status==='succeeded')continue;const previous=state.steps[step.id];state.steps[step.id]={status:'running',startedAt:new Date().toISOString(),attempts:(previous?.attempts??0)+1};await save();onProgress({step:step.id,status:'running'});
+  try{const result=await execute(step,{resume:Boolean(previous),previous});state.steps[step.id]={...state.steps[step.id],status:'succeeded',result:result??null,finishedAt:new Date().toISOString()};await save();onProgress({step:step.id,status:'succeeded'});}catch(error){state.steps[step.id]={...state.steps[step.id],status:'failed',error:error.safeCode??'step_failed',finishedAt:new Date().toISOString()};await save();onProgress({step:step.id,status:'failed'});throw error;}
+ }
+ return state;
+}

@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "policy": "Legacy numeric border radii above 3px. This list may shrink but must not grow without an explicit design-system review.",
+  "exceptions": [
+    "apps/portal/src/styles/knowledge.css|.portal-knowledge-history-list button|border-radius:10px",
+    "apps/portal/src/styles/knowledge.css|.portal-knowledge-history-detail pre|border-radius:10px",
+    "apps/portal/src/styles/post.css|.forumCodeBlock .forumCodeCopyButton|border-radius:6px",
+    "apps/portal/src/styles/post.css|.markdownEditorPaper|border-radius:6px",
+    "apps/portal/src/styles/post.css|.markdownEditorPaper > .forumBlockNoteEditor.bn-container|border-radius:0 0 6px 6px",
+    "apps/portal/src/styles/post.css|.forumBlockNoteEditor [data-file-block] .bn-file-loading-preview|border-radius:6px",
+    "apps/portal/src/styles/post.css|.forumBlockNoteEditor [data-file-block] .bn-visual-media, .forumMarkdownBody img|border-radius:4px",
+    "apps/portal/src/styles/shell.css|.portal-mobile-notifications > strong|border-radius:10px",
+    "apps/portal/src/styles/shell.css|.portal-live-ping-bubble|border-radius:4px"
+  ]
+}

@@ -1,0 +1,45 @@
+.knowledge-preview-page { display: flex; flex-direction: column; height: 100vh; overflow: hidden; background: #f6f5f1; }
+.knowledge-preview-top { position: relative; display: flex; flex: none; align-items: center; padding: 0 24px; border-bottom: 1px solid #e5e2d9; background: #faf9f6; }
+.knowledge-preview-back { display: flex; flex: none; align-items: center; width: 76px; height: 76px; color: #34342f; font-size: 54px; }
+.knowledge-preview-title { position: absolute; left: 50%; color: #25251f; font-size: 27px; font-weight: 700; white-space: nowrap; transform: translateX(-50%); }
+.knowledge-preview-spacer { margin-left: auto; width: 76px; }
+.knowledge-preview-body { flex: 1; min-height: 0; height: 0; padding: 24px 26px calc(36px + env(safe-area-inset-bottom)); box-sizing: border-box; }
+.knowledge-preview-meta { flex: none; box-sizing: border-box; max-height: 130px; overflow: hidden; padding: 16px 26px 18px; border-bottom: 1px solid #e5e2d9; background: #f6f5f1; opacity: 1; transition: max-height .2s ease, padding .2s ease, opacity .2s ease; }
+.knowledge-preview-meta.is-collapsed { max-height: 0; padding-top: 0; padding-bottom: 0; border-bottom: 0; opacity: 0; }
+.knowledge-preview-file { display: flex; align-items: center; gap: 14px; }
+.knowledge-preview-name { flex: 1; min-width: 0; overflow: hidden; color: #262720; font-size: 27px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.knowledge-preview-kind { flex: none; padding: 7px 11px; background: #e9e7dc; color: #5f6557; font-size: 18px; }
+.knowledge-preview-updated { display: block; margin-top: 8px; color: #817d73; font-size: 19px; }
+.knowledge-preview-status, .knowledge-preview-error { display: block; padding: 48px 12px; color: #817d73; font-size: 21px; text-align: center; }
+.knowledge-preview-error { color: var(--danger); }
+.knowledge-preview-error button { width: 150px; margin-top: 20px; border: 1px solid #d4d0c7; background: #fff; color: #292923; font-size: 21px; }
+.knowledge-preview-note { display: block; margin: 16px 0; color: #817d73; font-size: 18px; line-height: 1.5; }
+.knowledge-preview-html, .knowledge-preview-markdown { overflow-wrap: anywhere; color: #33332d; font-size: 22px; line-height: 1.6; }
+.knowledge-preview-html h1, .knowledge-preview-html h2, .knowledge-preview-html h3 { margin: 18px 0 12px; color: #25251f; }
+.knowledge-preview-html p { margin: 12px 0; }
+.knowledge-preview-html table { border-collapse: collapse; }
+.knowledge-preview-html td, .knowledge-preview-html th { border: 1px solid #dedbd2; padding: 8px; }
+.knowledge-preview-html pre { overflow: auto; padding: 12px; background: #f1f0ec; white-space: pre-wrap; }
+.knowledge-preview-markdown .markdown-message { font-size: 22px; }
+.knowledge-preview-image { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.knowledge-preview-image image { width: 100%; }
+.knowledge-preview-rich { padding: 8px 16px 24px; background: #fff; overflow-wrap: anywhere; color: #33332d; font-size: 28px; line-height: 1.7; }
+.knowledge-preview-rich rich-text { display: block; }
+.knowledge-preview-pdf { display: flex; align-items: center; flex-direction: column; gap: 24px; padding: 56px 24px; }
+.knowledge-preview-pdf image { width: 84px; height: 104px; }
+.knowledge-preview-pdf button { width: 100%; max-width: 440px; height: 76px; margin: 0; border-radius: 4px; background: var(--ink); color: #fff; font-size: 24px; line-height: 76px; }
+.knowledge-preview-pdf .knowledge-preview-share { border: 1px solid #d4d0c7; background: #fff; color: #292923; }
+.knowledge-preview-pdf .knowledge-preview-note { max-width: 440px; margin: 0; text-align: center; }
+.knowledge-preview-csv { background: #fff; }
+.knowledge-preview-csv > .knowledge-preview-note { padding: 0 18px; }
+.knowledge-preview-csv-scroll { width: 100%; }
+.knowledge-preview-csv-table { width: max-content; min-width: 100%; }
+.knowledge-preview-csv-row { display: flex; border-top: 1px solid #e5e2d9; }
+.knowledge-preview-csv-header { background: #eeede7; font-weight: 700; }
+.knowledge-preview-csv-cell { box-sizing: border-box; flex: none; width: 220px; min-height: 52px; overflow: hidden; padding: 12px; border-right: 1px solid #e5e2d9; color: #33332d; font-size: 19px; text-overflow: ellipsis; white-space: nowrap; }
+.knowledge-preview-unsupported { padding: 26px; background: #fff; }
+.knowledge-preview-unsupported-title { display: block; margin-bottom: 10px; color: #272821; font-size: 24px; font-weight: 700; }
+.knowledge-preview-unsupported-help { display: block; margin-bottom: 26px; color: #817d73; font-size: 20px; line-height: 1.5; }
+.knowledge-preview-detail { display: flex; justify-content: space-between; gap: 20px; padding: 14px 0; border-top: 1px solid #e5e2d9; color: #747065; font-size: 20px; }
+.knowledge-preview-detail text:last-child { max-width: 70%; overflow: hidden; color: #33332d; text-overflow: ellipsis; white-space: nowrap; }
+.file-save-footer { flex: none; padding: 16px 24px calc(16px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); }

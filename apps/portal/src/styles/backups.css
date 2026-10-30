@@ -1,0 +1,308 @@
+.portal-backup-admin-page {
+  display: grid;
+  gap: var(--portal-space-5);
+}
+
+.backupAdminMetrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  border: 1px solid var(--portal-line);
+  background: var(--portal-paper);
+}
+
+.backupAdminMetrics > div {
+  display: grid;
+  gap: var(--portal-space-1);
+  min-height: 104px;
+  padding: var(--portal-space-5);
+}
+
+.backupAdminMetrics > div + div {
+  border-left: 1px solid var(--portal-line);
+}
+
+.backupAdminMetrics strong {
+  align-self: end;
+  font-size: var(--portal-type-section);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.backupAdminMetrics span {
+  color: var(--portal-muted);
+  font-size: var(--portal-type-ui);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.backupAdminTabs {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  border-bottom: 1px solid var(--portal-line-strong);
+}
+
+.backupAdminTabs > button:not(.secondaryButton) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--portal-space-2);
+  min-height: 44px;
+  margin-bottom: -1px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  border-radius: var(--portal-radius-structural);
+  background: transparent;
+  padding: 0 var(--portal-space-4);
+  color: var(--portal-muted);
+  font-weight: 800;
+}
+
+.backupAdminTabs > button.active {
+  border-bottom-color: var(--portal-blue);
+  background: transparent;
+  color: var(--portal-blue);
+}
+
+.backupAdminTabs .secondaryButton {
+  margin: 3px 0 3px auto;
+}
+
+.backupAdminPanel,
+.backupNodeRegistry {
+  overflow: hidden;
+  border: 1px solid var(--portal-line);
+  border-radius: var(--portal-radius-structural);
+  background: var(--portal-paper);
+  box-shadow: var(--portal-shadow-paper);
+}
+
+.backupAdminPanel > header,
+.backupNodeRegistry > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 84px;
+  border-bottom: 1px solid var(--portal-line);
+  padding: var(--portal-space-4) var(--portal-space-5);
+}
+
+.backupAdminPanel h2 {
+  margin: 0 0 var(--portal-space-1);
+  font-size: var(--portal-type-title);
+}
+
+.backupAdminPanel header p,
+.backupNodeRegistry small {
+  font-size: var(--portal-type-ui);
+}
+
+.backupAdminTableWrap {
+  overflow-x: auto;
+}
+
+.backupAdminTableWrap table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--portal-type-body);
+}
+
+.backupAdminTableWrap th,
+.backupAdminTableWrap td {
+  border-bottom: 1px solid var(--portal-line);
+  padding: var(--portal-space-3) var(--portal-space-4);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.backupAdminTableWrap th {
+  background: var(--portal-paper-soft);
+  color: var(--portal-muted);
+  font-size: var(--portal-type-micro);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.backupAdminTableWrap tbody tr:hover {
+  background: var(--portal-paper-soft);
+}
+
+.backupAdminTableWrap td strong,
+.backupAdminTableWrap td small {
+  display: block;
+}
+
+.backupAdminTableWrap td small {
+  margin-top: var(--portal-space-1);
+  color: var(--portal-muted);
+}
+
+.backupAdminNodeListbox {
+  min-width: 180px;
+}
+
+.backupAdminNodeListbox .workspaceListboxTrigger {
+  min-height: 36px;
+}
+
+.backupAdminError {
+  display: flex;
+  align-items: center;
+  gap: var(--portal-space-2);
+  border-left: 4px solid var(--portal-rose);
+  border-radius: var(--portal-radius-structural);
+  background: var(--portal-rose-a06);
+  color: var(--portal-rose);
+  padding: var(--portal-space-3) var(--portal-space-4);
+}
+
+.backupNodeRegistry > header > div,
+.backupNodeRegistry article {
+  display: flex;
+  align-items: center;
+  gap: var(--portal-space-3);
+}
+
+.backupNodeRegistry > header span,
+.backupNodeRegistry article > div {
+  display: grid;
+  gap: var(--portal-space-1);
+}
+
+.backupNodeRegistry article {
+  border-bottom: 1px solid var(--portal-line);
+  padding: var(--portal-space-3) var(--portal-space-5);
+}
+
+.backupNodeRegistry article > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.backupNodeRegistry article small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.backupNodeRegistry article em {
+  margin-left: var(--portal-space-2);
+  border-radius: var(--portal-radius-pill);
+  background: var(--portal-blue-a06);
+  color: var(--portal-blue);
+  font-size: var(--portal-type-micro);
+  font-style: normal;
+  padding: 3px 6px;
+}
+
+.backupNodeRegistry article > span.reachable {
+  color: var(--portal-green);
+}
+
+.backupNodeRegistry > p {
+  padding: var(--portal-space-5);
+}
+
+.backupNodeIcon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--portal-line);
+  border-radius: var(--portal-radius-structural);
+  background: var(--portal-paper-soft);
+}
+
+.backupNodeModal {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--portal-image-viewer-counter);
+  padding: var(--portal-space-5);
+}
+
+.backupNodeModal form {
+  max-height: calc(100dvh - 2 * var(--portal-space-5));
+  overflow-y: auto;
+  width: min(640px, 100%);
+  border: 1px solid var(--portal-line-strong);
+  border-radius: var(--portal-radius-control);
+  background: var(--portal-paper);
+  box-shadow: var(--portal-shadow-float);
+  padding: var(--portal-space-6);
+}
+
+.backupNodeModal header,
+.backupNodeModal footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--portal-space-3);
+}
+
+.backupNodeModal header > button {
+  border: 0;
+  background: transparent;
+  color: var(--portal-muted);
+  font-size: 24px;
+}
+
+.backupNodeFormGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--portal-space-3);
+  margin: var(--portal-space-5) 0;
+}
+
+.backupNodeFormGrid label {
+  display: grid;
+  gap: var(--portal-space-2);
+  color: var(--portal-muted);
+  font-size: var(--portal-type-ui);
+  font-weight: 800;
+}
+
+.backupNodeFormGrid input {
+  height: 39px;
+  border: 1px solid var(--portal-line-strong);
+  border-radius: var(--portal-radius-control);
+  background: var(--portal-paper);
+  color: var(--portal-ink);
+  padding: 0 var(--portal-space-3);
+}
+
+.backupNodeDefault {
+  display: flex;
+  align-items: center;
+  gap: var(--portal-space-2);
+  margin-bottom: var(--portal-space-5);
+}
+
+.backupNodeModal footer {
+  justify-content: flex-end;
+}
+
+@media (max-width: 760px) {
+  .backupAdminMetrics {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .backupAdminMetrics > div:nth-child(3) {
+    border-left: 0;
+    border-top: 1px solid var(--portal-line);
+  }
+
+  .backupAdminMetrics > div:nth-child(4) {
+    border-top: 1px solid var(--portal-line);
+  }
+
+  .backupNodeFormGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .backupNodeRegistry article {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+}

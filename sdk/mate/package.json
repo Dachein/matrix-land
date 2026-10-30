@@ -1,0 +1,26 @@
+{
+  "name": "@frontier-workspace/mate",
+  "version": "0.1.0-preview.1",
+  "description": "Workspace Mate Embedded SDK for the shared Agent Runtime.",
+  "type": "module",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "prepare": "npm run build",
+    "pack:sdk": "npm run build && npm pack"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "private": true
+}

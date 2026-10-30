@@ -1,0 +1,13 @@
+/* Only opacity and small transforms. Never animate field dimensions or all properties. */
+.fw-scope [data-ui="presence"] { display: contents; }
+.fw-scope [data-ui="presence"][data-state="entering"] > * { animation: fw-enter var(--fw-motion-enter) var(--fw-ease-standard); }
+.fw-scope [data-ui="presence"][data-state="exiting"] > * { animation: fw-exit var(--fw-motion-exit) var(--fw-ease-standard) forwards; pointer-events: none; }
+.fw-scope [data-ui="presence"] > [data-ui="modal-overlay"] { transform: none; }
+.fw-scope [data-ui="presence"][data-state="entering"] [data-ui="modal"] { animation: fw-panel-enter var(--fw-motion-enter) var(--fw-ease-standard); }
+.fw-scope [data-ui="feedback"] { animation: fw-enter var(--fw-motion-enter) var(--fw-ease-standard); }
+@keyframes fw-enter { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fw-panel-enter { from { opacity: 0; transform: translateY(var(--fw-motion-distance)); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fw-exit { from { opacity: 1; } to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .fw-scope [data-ui="presence"] > *, .fw-scope [data-ui="presence"] [data-ui="modal"], .fw-scope [data-ui="feedback"] { animation: none; }
+}

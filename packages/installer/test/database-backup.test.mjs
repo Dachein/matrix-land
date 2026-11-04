@@ -19,7 +19,7 @@ test('FTS snapshot converts to ordinary import SQL preserving data, index and tr
  const sql=portableFtsBackup(dump),db=new DatabaseSync(':memory:');
  try{
   assert.doesNotMatch(sql,/writable_schema|INSERT INTO "chunks_fts_data"/);
-  db.exec('PRAGMA foreign_keys=ON;BEGIN;'+sql+'COMMIT;');
+  db.exec('PRAGMA foreign_keys=ON;'+sql);
   assert.equal(db.prepare('PRAGMA integrity_check').get().integrity_check,'ok');assert.deepEqual(db.prepare('PRAGMA foreign_key_check').all(),[]);
   const statement=db.prepare('SELECT * FROM chunks');statement.setReadBigInts(true);const row=statement.get();
   assert.equal(row.id,9007199254740993n);assert.equal(row.text,"An owner's acceptance marker");assert.deepEqual(Buffer.from(row.data),Buffer.from([0,1,255]));assert.equal(row.optional,null);

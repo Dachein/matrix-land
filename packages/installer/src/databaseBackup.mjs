@@ -17,7 +17,19 @@ export function portableFtsBackup(dump){
   for(const table of virtual){const sql=schema.find(x=>x.name===table.name)?.sql??'';if(!/\bUSING\s+fts5\s*\(/i.test(sql)||!/\bcontent\s*=\s*'[^']+'/i.test(sql))throw new Error('backup_virtual_table_unsupported');}
   const lines=['PRAGMA defer_foreign_keys=ON;'];
   for(const entry of schema.filter(x=>x.type==='table'&&names.has(x.name)))lines.push(entry.sql+';');
-  for(const table of tables.filter(x=>x.type==='table')){
+  const ordered=[],visited=new Set(),visiting=new Set();
+  function visit(table){
+   if(visited.has(table.name))return;
+   if(visiting.has(table.name))throw new Error('backup_cyclic_table_dependencies');
+   visiting.add(table.name);
+   for(const key of db.prepare(`PRAGMA foreign_key_list(${identifier(table.name)})`).all()){
+    const parent=tables.find(x=>x.name===key.table&&x.type==='table');
+    if(parent&&parent.name!==table.name)visit(parent);
+   }
+   visiting.delete(table.name);visited.add(table.name);ordered.push(table);
+  }
+  for(const table of tables.filter(x=>x.type==='table'))visit(table);
+  for(const table of ordered){
    const columns=db.prepare(`PRAGMA table_xinfo(${identifier(table.name)})`).all().filter(x=>x.hidden===0).map(x=>x.name);
    const statement=db.prepare(`SELECT ${columns.map(identifier).join(',')} FROM ${identifier(table.name)}`);statement.setReadBigInts(true);
    for(const row of statement.iterate())lines.push(`INSERT INTO ${identifier(table.name)}(${columns.map(identifier).join(',')}) VALUES(${columns.map(name=>literal(row[name])).join(',')});`);

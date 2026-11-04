@@ -93,4 +93,6 @@ npm run setup:apply -- /private/path/upgrade-plan.json <计划输出的完整ID>
 
 `.workspace/<实例标识>/state.json`、`vault.json` 和数据库导出应一起安全备份。不要删除状态以绕过冲突。进程异常退出留下锁时，先确认原进程已经终止，再移除该实例的锁文件；保留状态和凭据库。
 
+知识库包含 FTS5 虚拟表，普通 D1 导出不支持它。安装器使用 Cloudflare 的 `sqlite3_cli_only` 快照，将快照转为可导入 D1 的 SQL：普通表按外键依赖写入，虚拟表通过标准 SQL 创建并从内容表重建索引，不修改在线检索表。导出失败会阻止升级。恢复仍须先在隔离数据库中核对数据与外键，SQL 文件不包含 R2 文件正文。
+
 D1 导出文件位于实例的 `backups/<计划ID前缀>/`；PostgreSQL 导出位于服务器安装目录的 `backups/`。数据库恢复属于单独的运维操作，不会因重试部署而自动覆盖当前数据。

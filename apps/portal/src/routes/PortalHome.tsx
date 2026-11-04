@@ -12,6 +12,7 @@ import { WorkspaceListbox } from "../../../../src/portal/components/WorkspaceLis
 import { SegmentedControl } from "../../../../src/portal/components/SegmentedControl";
 import { FORUM_CATEGORY_DEFINITIONS, type ForumCategorySlug } from "../../../../src/portal/forum/config";
 import { useI18n } from "../../../../src/portal/i18n";
+import { useWorkspaceModules } from "../../../../src/portal/brand/PlatformBrandProvider";
 import {
   monthlyBudgetUsdForPortalJourneyLevel,
   portalJourneyLevels
@@ -63,7 +64,8 @@ export function PortalHome({
   onSectionVisible: (section: PortalLandingSection) => void;
 }) {
   const { locale, t } = useI18n();
-  const groupUsage = useGroupUsage(catalog.currentUser.id);
+  const modelsEnabled = useWorkspaceModules().includes("models");
+  const groupUsage = useGroupUsage(catalog.currentUser.id, modelsEnabled);
   const discussionsRef = useRef<HTMLElement>(null);
   const feedRef = useRef<HTMLDivElement>(null);
   const [discussionCategory, setDiscussionCategory] = useState<ForumCategorySlug | "">("");
@@ -140,6 +142,7 @@ export function PortalHome({
       <section className="portal-page portal-home" id="home">
         <div className={`portal-hero-mast${homeOnboardingView === "connect" ? " onboarding-open" : ""}`}>
           <div className="portal-hero-copy">
+            {modelsEnabled ? <>
             <div>
               <div className="portal-hero-kicker-row">
                 <p className="portal-kicker">{t("portal.home.kicker")}</p>
@@ -200,6 +203,11 @@ export function PortalHome({
                 </button>
               </div>
             </div>
+            </> : <div>
+              <p className="portal-kicker">{t("portal.auth.welcome")}</p>
+              <h1>{catalog.currentUser.name}</h1>
+              <p>{t("portal.home.kicker")}</p>
+            </div>}
           </div>
 
           <aside aria-label={t("portal.home.passAria")} className="portal-hero-panel portal-hero-pass-panel">

@@ -139,3 +139,10 @@ test('install, interrupted retry and upgrade preserve data, secrets and resource
  assert.equal(coreDb.prepare("SELECT role FROM users WHERE id='saved-user'").get().role,'admin');
  for(const db of dbs.values())db.close();
 });
+test('fresh core includes every built-in discussion category without user data',async()=>{
+ const db=new DatabaseSync(':memory:');try{
+  for(const file of(await readdir(resolve(repo,'schemas/core'))).sort())db.exec(await readFile(resolve(repo,'schemas/core',file),'utf8'));
+  assert.deepEqual(db.prepare('SELECT slug FROM forum_categories ORDER BY slug').all().map(x=>x.slug),['ai-exploration','ai-investment','off-topic','platform-help']);
+  assert.equal(db.prepare('SELECT count(*) AS n FROM users').get().n,0);
+ }finally{db.close();}
+});

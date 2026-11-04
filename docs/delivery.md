@@ -2,7 +2,7 @@
 
 首次交付：2026-10-30；当前源码本地复核：2026-11-04。此仓库以 **Matrix land** 名义交付，仓库名为 `matrix-land`；内部 Frontier Workspace 包名、CLI 与协议保持兼容。不包含其他企业仓库的历史或生产配置。官网保留独立项目、Git 历史与部署，不纳入本软件仓库。
 
-使用 `npm run release:source` 为当前源码生成 `release/matrix-land-0.1.0-candidate.zip`，同时生成候选版本清单与 SHA-256 校验文件。旧 Frontier Workspace 归档属于历史交付，不代表当前品牌版本。候选版本仍待真实云端安装验收。
+使用 `npm run release:source` 为当前源码生成 `release/matrix-land-0.1.0-candidate.zip`，同时生成候选版本清单与 SHA-256 校验文件。旧 Frontier Workspace 归档属于历史交付，不代表当前品牌版本。当前真实云端试验与剩余验收项见 [安装试验记录](matrixland-installation-pilot.md)。
 
 ## 已实现
 
@@ -21,7 +21,7 @@
 
 | 项目 | 结果 |
 | --- | --- |
-| 完整自动化回归 | 2026-11-04：2,181 项通过，0 失败、0 跳过 |
+| 完整自动化回归 | 2026-11-04：2,192 项通过，0 失败、0 跳过 |
 | TypeScript 与 Portal 构建 | 通过 |
 | 11 个 Worker 部署包 dry-run | 通过 |
 | Pages Functions 编译 | 通过 |
@@ -36,9 +36,9 @@
 
 ## 尚须真实环境验收
 
-本轮没有开通云资源、安装远程主机、签发真实密钥、创建 Microsoft 应用或发送真实验证邮件。上述编译与模拟结果不代表供应商账号权限、网络、证书、邮件送达和真实模型费用已经验收。
+本轮已部署 Matrix land 试用实例，并验证真实邮件登录、管理员认领、知识上传下载、服务健康检查、一次升级和知识数据库隔离恢复。具体证据与未完成项见 [安装试验记录](matrixland-installation-pilot.md)。未安装 LiteLLM 主机、创建 Microsoft 应用或验证模型调用。编译与模拟结果不替代供应商权限、容量和费用验收。
 
-首次部署必须完成：邮箱送达与所有者认领、DNS/TLS、已启用模块的真实业务操作、Entra 登录（如启用）、云端模型调用（如启用）及实际备份恢复演练。记录结果后再判断生产就绪。
+仍须完成所有启用模块的业务验收和容量检查；Entra 登录、模型调用及未启用模块须在配置后单独验收。数据库恢复结果不代表对象存储和整站灾难恢复已完成。记录结果后再判断生产就绪。
 
 当前边界：同一 Cloudflare DNS Zone；Linux 单机 LiteLLM（一个初始模型）；Entra Client Secret；升级为向前迁移，没有一键降级。入站邮件 DNS/MX、企业小程序 AppID 与发布、供应商产品开通属于企业侧配置。新 CLI/SDK 源码未发布 npm，不应使用假定已经存在的公开包版本。
 

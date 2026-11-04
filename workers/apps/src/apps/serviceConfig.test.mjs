@@ -144,6 +144,16 @@ async function decryptWithKeyMaterial(keyMaterial, encrypted) {
 }
 
 describe("APPS app capability config", () => {
+  it("creates a static application without a model service", async () => {
+    const env = createEnv();
+    delete env.LITELLM_URL;
+    const { createAppFromInput } = await serviceModule();
+    const result = await createAppFromInput({ name: "Static acceptance", type: "static_page", llmEnabled: false }, env, principal);
+    assert.equal(result.app.manifest.llm.enabled, false);
+    assert.equal(result.app.manifest.llm.gatewayUrl, "");
+    assert.equal(result.provisioningJob.status, "queued");
+    env.APPS_DB.database.close();
+  });
   it("emails the creator without company recipients or office instructions by default", async () => {
     const env = createEnv();
     env.APPS_AUTH_SERVICE_TOKEN = "test-service-token";

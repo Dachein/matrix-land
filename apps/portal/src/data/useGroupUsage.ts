@@ -32,7 +32,7 @@ export const GROUP_USAGE_REFRESH_MS = 5 * 60 * 1000;
 export const GROUP_USAGE_REQUEST_TIMEOUT_MS = 10 * 1000;
 export const GROUP_USAGE_SESSION_KEY = "workspace-ai:group-usage:v1";
 
-export function useGroupUsage(userId: string): GroupUsageState {
+export function useGroupUsage(userId: string, enabled = true): GroupUsageState {
   const normalizedUserId = userId.trim();
   const initialSnapshot = useMemo(
     () => readCachedGroupUsageSnapshot(normalizedUserId),
@@ -48,6 +48,7 @@ export function useGroupUsage(userId: string): GroupUsageState {
   const lastLoadedAtRef = useRef(initialSnapshot?.cachedAt ?? 0);
 
   const refresh = useCallback(async () => {
+    if (!enabled) return;
     requestRef.current?.abort();
     const controller = new AbortController();
     requestRef.current = controller;
@@ -75,9 +76,10 @@ export function useGroupUsage(userId: string): GroupUsageState {
         }));
       }
     }
-  }, [initialSnapshot?.usage, normalizedUserId]);
+  }, [enabled, initialSnapshot?.usage, normalizedUserId]);
 
   useEffect(() => {
+    if (!enabled) return;
     lastLoadedAtRef.current = initialSnapshot?.cachedAt ?? 0;
     if (isGroupUsageCacheStale(initialSnapshot?.cachedAt)) {
       void refresh();
@@ -98,7 +100,7 @@ export function useGroupUsage(userId: string): GroupUsageState {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       requestRef.current?.abort();
     };
-  }, [initialSnapshot?.cachedAt, refresh]);
+  }, [enabled, initialSnapshot?.cachedAt, refresh]);
 
   return groupUsageStateForUser(state, normalizedUserId, initialSnapshot?.usage);
 }

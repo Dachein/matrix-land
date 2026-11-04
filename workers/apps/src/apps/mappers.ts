@@ -144,7 +144,7 @@ export function runtimeManifest(env: Env, row: AppsAppRow, resources: AppsResour
       enabled: row.llm_enabled === 1,
       defaultModel: readOptionalString(row.llm_default_model),
       endpoint: readOptionalString(row.llm_endpoint),
-      gatewayUrl: llmGatewayUrl(env),
+      gatewayUrl: row.llm_enabled === 1 || env.LITELLM_URL?.trim() ? llmGatewayUrl(env) : "",
       secretName: row.llm_enabled === 1 ? LLM_APP_SECRET_NAME : undefined
     },
     email: {

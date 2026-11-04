@@ -10,6 +10,7 @@ import { renderWorker } from './render.mjs';
 import { command } from './process.mjs';
 import { initializeEntra, initializeLiteLLM } from './integrations.mjs';
 import { deployServer, backupAndRestoreServer } from './server.mjs';
+import { deployWithMetadataRetry } from './deployRetry.mjs';
 
 export async function applyPlan(plan,root,{directory=resolve(root,'.workspace',plan.installationId),env=process.env,fetchImpl=fetch,run=command,onProgress=()=>{}}={}){
  const expected=await buildPlan(plan.config,root,{upgrade:plan.mode==='upgrade'});if(expected.id!==plan.id)throw new Error('reviewed_plan_changed_regenerate_plan');
@@ -71,7 +72,7 @@ export async function applyPlan(plan,root,{directory=resolve(root,'.workspace',p
    if(kind==='stage'||(kind==='deploy'&&name!=='portal')){
     if(kind==='stage'&&state.deployedServices?.includes(name))return {skipped:'existing-service'};
     const cfg=await configFor(name,kind==='stage'),secrets=resolve(generated,`${name}.secrets.json`);await atomicJson(secrets,secretsFor(name));
-    try{await wr(['deploy','--config',cfg,'--secrets-file',secrets,'--no-autoconfig']);}finally{await rm(secrets,{force:true});}return {worker:`${plan.installationId}-${name}`};
+    try{await deployWithMetadataRetry(()=>wr(['deploy','--config',cfg,'--secrets-file',secrets,'--no-autoconfig']),{accountId:plan.config.cloudflare.accountId,workerName:`${plan.installationId}-${name}`,onRetry:({attempt})=>onProgress({step:step.id,status:'retrying',attempt})});}finally{await rm(secrets,{force:true});}return {worker:`${plan.installationId}-${name}`};
    }
    if(step.id==='deploy:portal'){
     const project=`${plan.installationId}-portal`,projectPath=`/pages/projects/${project}`;

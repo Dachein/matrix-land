@@ -24,6 +24,7 @@
     "quality:frontend-i18n": "node scripts/frontend-i18n-health.mjs",
     "portal:artifact:verify": "node scripts/verify-portal-artifact.mjs",
     "sdk:bundle": "node scripts/build-auth-sdk-package.mjs && node scripts/build-mail-sdk-package.mjs",
+    "release:source": "node scripts/package-source.mjs",
     "verify:deployment": "node --experimental-strip-types scripts/verify-deployment.mjs",
     "preview": "vite preview"
   },

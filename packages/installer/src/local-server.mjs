@@ -4,10 +4,11 @@ import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { buildPlan } from './plan.mjs';
 import { applyPlan } from './executor.mjs';
+import { saveSummary,installationBackup,readInstallationSummary } from './summary.mjs';
 const equal=(a,b)=>typeof a==='string'&&typeof b==='string'&&a.length===b.length&&timingSafeEqual(Buffer.from(a),Buffer.from(b));
 async function jsonBody(req){let size=0,parts=[];for await(const part of req){size+=part.length;if(size>128000)throw new Error('request_too_large');parts.push(part);}return JSON.parse(Buffer.concat(parts).toString());}
 export async function serveSetup(root,{port=5194,env=process.env,apply=applyPlan}={}){
- let bootstrap=randomBytes(32).toString('base64url'),session=null,sessionExpires=0,csrf=null,plan=null,credentials={},running=false,progress=[],result=null;
+ let bootstrap=randomBytes(32).toString('base64url'),session=null,sessionExpires=0,csrf=null,plan=null,credentials={},running=false,progress=[],result=null,summary=null;
  const startupToken=bootstrap;
  const server=http.createServer(async(req,res)=>{
   const origin=`http://127.0.0.1:${server.address().port}`;
@@ -29,18 +30,31 @@ export async function serveSetup(root,{port=5194,env=process.env,apply=applyPlan
    }
    if(Date.now()>=sessionExpires){session=null;csrf=null;}
    if(!session||!equal(cookie,session)||!equal(req.headers['x-setup-csrf'],csrf))return send(403,{error:'setup_session_required'});
-   if(req.url==='/api/status')return send(200,{running,progress,result,plan});
+   if(req.url==='/api/status')return send(200,{running,progress,result,plan,summary});
+   if(req.url==='/api/summary')return send(200,await readInstallationSummary(root,body.installationId));
+   if(req.url==='/api/backup'){
+    if(running)return send(409,{error:'installation_not_ready'});
+    const id=plan?.installationId??body.installationId;
+    if(!plan)await readInstallationSummary(root,id);
+    return send(200,await installationBackup(root,{installationId:id}));
+   }
    if(req.url==='/api/plan'){
     if(running)return send(409,{error:'installation_running'});
     const next=await buildPlan(body.config,root,{upgrade:body.upgrade===true});
     const refs=new Set();function scan(value){if(typeof value==='string'&&/^env:[A-Z][A-Z0-9_]*$/.test(value))refs.add(value.slice(4));else if(value&&typeof value==='object')for(const v of Object.values(value))scan(v);}scan(next.config);refs.add('WORKSPACE_VAULT_PASSWORD');
     const supplied=body.credentials??{};for(const [key,value]of Object.entries(supplied))if(!refs.has(key)||typeof value!=='string'||value.length>20000)throw new Error('invalid_credential_field');
-    credentials={...credentials,...supplied};plan=next;progress=[];result=null;return send(200,{plan});
+    credentials={...credentials,...supplied};plan=next;progress=[];result=null;summary=null;return send(200,{plan});
    }
    if(req.url==='/api/apply'){
     if(running)return send(409,{error:'installation_running'});if(!plan||body.planId!==plan.id)return send(409,{error:'reviewed_plan_changed'});
     running=true;result=null;send(202,{started:true});
-    apply(plan,root,{env:{...env,...credentials},onProgress:event=>{progress.push(event);}}).then(value=>{result={ok:true,...value};}).catch(error=>{result={ok:false,error:error.safeCode??error.message?.split('\n')[0]??'installation_failed'};}).finally(()=>{running=false;});return;
+    (async()=>{
+     try{result={ok:true,...await apply(plan,root,{env:{...env,...credentials},onProgress:event=>{progress.push(event);}})};}
+     catch(error){result={ok:false,error:error.safeCode??error.message?.split('\n')[0]??'installation_failed'};}
+     try{summary=await saveSummary(root,plan,result,progress);}
+     catch{summary={status:result.ok?'deployed':'incomplete',saveError:'summary_save_failed'};}
+     finally{running=false;}
+    })();return;
    }
    if(req.url==='/api/claim-token'){
     if(running||!plan)return send(409,{error:'installation_not_ready'});

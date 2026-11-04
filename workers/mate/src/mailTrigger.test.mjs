@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import { ensureMateMailDocument, setMateMailContent } from '../../../src/shared/mateMail.ts';
 import assert from 'node:assert/strict';
 import { readFileSync,readdirSync } from 'node:fs';
@@ -61,18 +62,18 @@ test('mailbox provisioning and the app SDK run in workerd without following cred
     return Response.json({result,envelope});
    }
    if(new URL(request.url).pathname==='/sdk'){
-    try {return Response.json(await new WorkspaceMail({token:'app-test-token'}).mailbox())}
+    try {return Response.json(await new WorkspaceMail({endpoint:env.WORKSPACE_MAIL_URL,token:'app-test-token'}).mailbox())}
     catch(error){return Response.json({error:error.message},{status:error.status||500})}
    }
    return mailFetch(request,env);
-  }};`,resolveDir:new URL('../../../',import.meta.url).pathname},bundle:true,write:false,format:'esm',platform:'neutral',external:['cloudflare:email'],logLevel:'silent'});
+  }};`,resolveDir:fileURLToPath(new URL('../../../',import.meta.url))},bundle:true,write:false,format:'esm',platform:'neutral',external:['cloudflare:email'],logLevel:'silent'});
  let ruleLists=0,ruleWrites=0,sdkCalls=0,unexpectedCalls=0;
  const outboundService=async request=>{
   const url=new URL(request.url);
   if(url.hostname==='api.cloudflare.com'){
    assert.equal(request.headers.get('authorization'),'Bearer synthetic-cloudflare-token');
    if(request.method==='GET' && ++ruleLists===1)return Response.json({success:true,result:[]});
-   if(request.method==='POST'){ruleWrites++;return Response.json({success:true,result:{id:'route-1'}});}
+   if(request.method==='POST'){assert.deepEqual((await request.json()).actions,[{type:'worker',value:['example-prod-mail']}]);ruleWrites++;return Response.json({success:true,result:{id:'route-1'}});}
   }else if(url.hostname==='mail-api.example.invalid'){
    assert.equal(request.headers.get('authorization'),'Bearer app-test-token');
    if(++sdkCalls===1)return Response.json({status:'ready',receive:true,send:true});
@@ -81,7 +82,7 @@ test('mailbox provisioning and the app SDK run in workerd without following cred
  };
  const secret='workerd-mail-test-secret-at-least-32-characters';
  const mf=new Miniflare(convertV4MiniflareOptions({modules:true,script:bundle.outputFiles[0].text,compatibilityDate:'2026-06-30',compatibilityFlags:['nodejs_compat'],outboundService,
-  bindings:{WORKSPACE_MATE_EMAIL_DOMAIN:"mate.example.invalid",WORKSPACE_EMAIL_ROUTING_DOMAIN:"mail.example.invalid",WORKSPACE_MAIL_SECRET:secret,CF_API_TOKEN:'synthetic-cloudflare-token',CF_ZONE_ID:'zone'},d1Databases:['RUNTIME_DB'],r2Buckets:['MAIL_OBJECTS']}));
+  bindings:{WORKSPACE_EMAIL_ROUTER_WORKER:'example-prod-mail',WORKSPACE_MAIL_URL:'https://mail-api.example.invalid',WORKSPACE_MATE_EMAIL_DOMAIN:"mate.example.invalid",WORKSPACE_EMAIL_ROUTING_DOMAIN:"mail.example.invalid",WORKSPACE_MAIL_SECRET:secret,CF_API_TOKEN:'synthetic-cloudflare-token',CF_ZONE_ID:'zone'},d1Databases:['RUNTIME_DB'],r2Buckets:['MAIL_OBJECTS']}));
  try {
   const db=await mf.getD1Database('RUNTIME_DB');
   for(const file of ['0011_default_mailbox.sql','0012_workspace_mail_service.sql']){
@@ -214,12 +215,19 @@ test('send idempotency prevents duplicate delivery and uncertain sends cannot be
  assert.equal((await sendMail(f.env,f.mailbox,{...input,idempotencyKey:'uncertain'})).status,'delivery_unknown');
 });
 
+test('SDK requires an explicit installation endpoint and rejects URL credentials',()=>{
+ assert.throws(()=>new WorkspaceMail({token:'test'}),/workspace_mail_endpoint_required/);
+ for(const endpoint of ['https://user:password@mail.example.com','http://mail.example.com','https://mail.example.com/other','https://mail.example.com/?token=test']){
+  assert.throws(()=>new WorkspaceMail({endpoint,token:'test'}),/workspace_mail_endpoint_invalid/);
+ }
+});
+
 test('SDK app grants cannot see Mate mail, select another mailbox, or use disabled sending',async()=>{
  const f=triggerFixture();await f.ingest();const token=`fmail_${'b'.repeat(64)}`;
  const hash=[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(token)))].map(b=>b.toString(16).padStart(2,'0')).join('');
  f.db.exec("INSERT INTO workspace_mail_mailboxes(mate_id,org_id,user_id,address,display_name,owner_kind,owner_id,status) VALUES('app:x','org-1','user-1','x@mail.example.invalid','X','app','x','ready')");
  f.db.prepare("INSERT INTO workspace_mail_app_grants(app_id,org_id,user_id,token_hash,inbox_id,sender_id,receive_enabled,send_enabled,enabled) VALUES('x','org-1','user-1',?,'app:x','app:x',1,0,1)").run(hash);
- const sdk=new WorkspaceMail({token,fetch:(url,init)=>mailFetch(new Request(url,init),f.env)});
+ const sdk=new WorkspaceMail({endpoint:f.env.WORKSPACE_MAIL_URL,token,fetch:(url,init)=>mailFetch(new Request(url,init),f.env)});
  assert.equal((await sdk.mailbox()).inbox,'x@mail.example.invalid');assert.equal((await sdk.list()).messages.length,0);
  await assert.rejects(sdk.send({to:'x@example.com',subject:'Test',body:'Hello',idempotencyKey:'sdk:1'}),/capability_disabled/);
  const id=f.db.prepare('SELECT id FROM mate_mail_messages LIMIT 1').get().id;await assert.rejects(sdk.get(id),/mail_not_found/);
@@ -264,7 +272,7 @@ test('allocation preserves unrelated routes, app receive and send share one gran
   const token=`fmail_${'c'.repeat(64)}`,authority={userId:'user-1',orgId:'org-1',appId:'app-x',scopes:['mail:app-provision']};
   const configure=async(receive,send)=>mailFetch(new Request('https://mail.test/internal/apps/configure',{method:'POST',headers:{Authorization:`Bearer ${await mailToken(f.env.WORKSPACE_MAIL_SECRET,authority)}`},body:JSON.stringify({appId:'app-x',token,receive,send,inbox:'app-x@mail.example.invalid',sender:'app-x@mail.example.invalid'})}),f.env);
   assert.equal((await configure(true,true)).status,200);assert.equal(mutations.length,1);assert.equal(routes[0].id,'unrelated');
-  const sdk=new WorkspaceMail({token,fetch:(url,init)=>mailFetch(new Request(url,init),f.env)});assert.equal((await sdk.mailbox()).status,'ready');
+  const sdk=new WorkspaceMail({endpoint:f.env.WORKSPACE_MAIL_URL,token,fetch:(url,init)=>mailFetch(new Request(url,init),f.env)});assert.equal((await sdk.mailbox()).status,'ready');
   await configure(true,false);await assert.rejects(sdk.send({to:'a@example.com',subject:'No',body:'No',idempotencyKey:'disabled:1'}),/capability_disabled/);
   await configure(false,false);await assert.rejects(sdk.list(),/unauthorized/);
   assert.equal(f.db.prepare("SELECT receive_enabled FROM workspace_mail_mailboxes WHERE owner_kind='app'").get().receive_enabled,0);
@@ -324,7 +332,7 @@ test('changing a unified app address preserves its inbox identity and historical
   const mailbox={...f.mailbox,mateId:initial.inbox_id,address:'before@mail.example.invalid',ownerKind:'app',ownerId:authority.appId};const message=await storeIncomingMail(f.env,mailbox,'sender@example.com',new TextEncoder().encode(mime('Preserve app history')).buffer);
   await configure('before@mail.example.invalid',false);assert.equal((await configure('after@mail.example.invalid')).status,200);
   const current=f.db.prepare('SELECT inbox_id,sender_id FROM workspace_mail_app_grants WHERE app_id=?').get(authority.appId);assert.equal(current.inbox_id,initial.inbox_id);assert.equal(current.sender_id,initial.inbox_id);
-  const sdk=new WorkspaceMail({token,fetch:(url,init)=>mailFetch(new Request(url,init),f.env)});assert.equal((await sdk.mailbox()).inbox,'after@mail.example.invalid');assert.equal((await sdk.get(message.id)).message.to,'before@mail.example.invalid');
+  const sdk=new WorkspaceMail({endpoint:f.env.WORKSPACE_MAIL_URL,token,fetch:(url,init)=>mailFetch(new Request(url,init),f.env)});assert.equal((await sdk.mailbox()).inbox,'after@mail.example.invalid');assert.equal((await sdk.get(message.id)).message.to,'before@mail.example.invalid');
  }finally{globalThis.fetch=original;}
 });
 

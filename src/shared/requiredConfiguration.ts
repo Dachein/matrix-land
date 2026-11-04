@@ -6,6 +6,13 @@ export function missingConfiguration(name: string): never {
   throw error;
 }
 
+export function configuredWorkerName(value: string | undefined, name: string): string {
+  const worker = value?.trim();
+  if (!worker) return missingConfiguration(name);
+  if (!/^[a-z0-9][a-z0-9_-]{0,62}$/i.test(worker)) throw new Error(`Invalid Worker name: ${name}`);
+  return worker;
+}
+
 export function configuredServiceUrl(value: string | undefined, name: string): string {
   if (!value?.trim()) return missingConfiguration(name);
   const url = new URL(value);

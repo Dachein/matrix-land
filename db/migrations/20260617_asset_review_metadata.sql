@@ -1,7 +1,0 @@
-ALTER TABLE skills ADD COLUMN risk_level TEXT NOT NULL DEFAULT 'low';
-ALTER TABLE skills ADD COLUMN review_notes TEXT NOT NULL DEFAULT '';
-
-ALTER TABLE apps ADD COLUMN review_notes TEXT NOT NULL DEFAULT '';
-
-ALTER TABLE mcp_servers ADD COLUMN risk_level TEXT NOT NULL DEFAULT 'low';
-ALTER TABLE mcp_servers ADD COLUMN review_notes TEXT NOT NULL DEFAULT '';

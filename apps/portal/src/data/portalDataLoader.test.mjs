@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -11,7 +12,7 @@ async function loadDataLoader() {
   const outfile = join(outdir, "portal-data-loader.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("./portalDataLoader.ts", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("./portalDataLoader.ts", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,
@@ -493,7 +494,7 @@ async function loadSummaryCache() {
   const outfile = join(outdir, "current-user-summary-cache.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("./currentUserSummaryCache.ts", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("./currentUserSummaryCache.ts", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,

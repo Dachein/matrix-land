@@ -10,3 +10,22 @@ const entra=z.discriminatedUnion('mode',[z.object({mode:z.literal('disabled')}).
 export const schema=z.object({$schema:z.literal('https://frontier-workspace.org/schemas/installation/v1'),schemaVersion:z.literal(1),installationId:z.string().regex(/^[a-z][a-z0-9-]{2,23}$/),brand:z.record(z.string(),z.unknown()).default({}),domains:z.record(z.string(),z.unknown()),cloudflare:z.object({accountId:z.string().regex(/^[a-f0-9]{32}$/),zoneId:z.string().regex(/^[a-f0-9]{32}$/),apiTokenRef:secret,runtimeTokenRef:secret.optional()}).strict(),identity:z.object({allowedEmailDomains:z.array(z.string().regex(/^[a-z0-9.-]+\.[a-z]{2,}$/)).min(1),senderEmail:z.string().email(),ownerEmail:z.string().email(),entra:entra.default({mode:'disabled'})}).strict(),modules:z.array(z.enum(['models','mate','knowledge','studio','connections','discussions','mail','stream','miniapp','operations'])).default([]),models:models.default({mode:'disabled'})}).strict();
 export function resolveConfig(input){const c=schema.parse(input);c.brand=resolvePlatformBrand(c.brand);c.domains=resolveInstallationDomains(c.domains);c.identity.ownerEmail=c.identity.ownerEmail.toLowerCase();if(!c.identity.allowedEmailDomains.includes(c.identity.ownerEmail.split('@')[1]))throw new Error('owner_email_outside_allowlist');if(c.modules.includes('models')&&c.models.mode==='disabled')throw new Error('models_configuration_required');if(c.models.mode!=='disabled'&&!c.modules.includes('models'))c.modules.push('models');if(c.modules.some(x=>['mate','mail'].includes(x))&&c.models.mode==='disabled')throw new Error('mate_requires_models');if(c.identity.entra.mode!=='disabled'&&Date.parse(c.identity.entra.expiresAt)<=Date.now())throw new Error('entra_credential_expired');if(c.models.mode==='server'&&c.models.models.length!==1)throw new Error('server_mode_requires_one_initial_model');for(const [module,deps] of Object.entries({mate:['studio','models','connections','mail'],mail:['mate','studio','models','connections'],operations:['studio'],stream:['studio'],miniapp:['knowledge']}))if(c.modules.includes(module))c.modules.push(...deps);c.modules=[...new Set(c.modules)].sort();return c;}
 export function resolveSecret(ref,env=process.env){const value=env[ref.slice(4)];if(!value)throw new Error(`missing_secret_reference:${ref}`);return value;}
+// Check every configured credential before creating local state or cloud resources.
+// Repeat this on resume too: a successful preflight from a prior process does not
+// guarantee that credentials are still present in the new process environment.
+export function validateCredentials(config,env=process.env){
+ if(config.modules.some(x=>['studio','mate','mail','stream','operations'].includes(x))&&!config.cloudflare.runtimeTokenRef)throw new Error('cloudflare_runtime_token_reference_required');
+ function visit(value){
+  if(typeof value==='string'&&/^env:[A-Z][A-Z0-9_]*$/.test(value))resolveSecret(value,env);
+  else if(value&&typeof value==='object')for(const child of Object.values(value))visit(child);
+ }
+ visit(config);
+}
+export function installationCredentials(config,env){
+ const values={};
+ function visit(value){
+  if(typeof value==='string'&&/^env:[A-Z][A-Z0-9_]*$/.test(value))values[value.slice(4)]=resolveSecret(value,env);
+  else if(value&&typeof value==='object')for(const child of Object.values(value))visit(child);
+ }
+ visit(config);return values;
+}

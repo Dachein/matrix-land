@@ -1,4 +1,6 @@
-# Frontier Workspace
+# Matrix Land SI
+
+官网：https://matrixland.si。原项目名 Frontier Workspace；内部包名、协议与安装器标识保持兼容。
 
 企业独立部署的 AI 工作区。企业使用自己的 Cloudflare 账号、域名、身份目录和模型服务；品牌、Logo、8 组配色和模块在安装时配置。
 
@@ -18,6 +20,21 @@ npm run setup
 安装器只监听 `127.0.0.1`，默认端口 5194。凭据在本机内存中使用，持久化密钥以密码加密保存到 `.workspace/<实例标识>/vault.json`。不要将 `.workspace`、实例配置或计划文件加入公共仓库。
 
 首次部署前，请按[安装与升级手册](docs/installation.md)准备 Cloudflare 邮件能力、令牌和 DNS。首次登录后使用指定管理员邮箱领取工作区所有权，在管理页完成集成验收。
+
+## 品牌与官网
+
+- [Matrix Land SI 品牌升级规划](docs/matrixland-brand-plan.md)
+- [官网与 Blog](https://matrixland.si/) 是独立项目，单独维护源码、Git 历史与部署；不包含在本软件仓库或源码交付包中。
+
+## 源码交付
+
+软件仓库使用名称 `matrix-land-si`，对外名称为 **Matrix Land SI**。内部包名、CLI 和协议标识继续保持兼容。
+
+```sh
+npm run release:source
+```
+
+在本地 `release/` 生成 `matrix-land-si-0.1.0-candidate.zip`、`candidate.json` 和 `CANDIDATE-SHA256SUMS`。归档排除凭据、实例状态、依赖、构建产物与独立官网；仍为真实云端验收前的候选版本。`release/` 不提交到 Git。
 
 ## 产品
 

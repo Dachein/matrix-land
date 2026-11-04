@@ -1,6 +1,10 @@
 const BASIC_UPLOAD_BYTES = 200_000_000;
 const MAX_UPLOAD_BYTES = 30_000_000_000 - 1;
-const UPLOAD_TTL_MS = 24 * 60 * 60 * 1000;
+const MAX_UPLOAD_DURATION_SECONDS = 36_000;
+// The native basic-POST API rejects expiry >= 6 hours. TUS accepts a longer
+// window so large uploads can still resume on the following day.
+const POST_UPLOAD_TTL_MS = 60 * 60 * 1000;
+const TUS_UPLOAD_TTL_MS = 24 * 60 * 60 * 1000;
 
 type VideoDetails = {
   duration?: number;
@@ -119,7 +123,7 @@ async function beginUpload(request: Request, env: StreamEnv, app: Authority) {
   const mimeType = requiredText(body.mimeType, 100);
   if (!["video/mp4", "video/webm", "video/quicktime"].includes(mimeType)) throw new StreamError(400, "unsupported_video_type");
   const sizeBytes = boundedInteger(body.sizeBytes, MAX_UPLOAD_BYTES);
-  const maxDurationSeconds = boundedInteger(body.maxDurationSeconds ?? 43_200, 43_200);
+  const maxDurationSeconds = boundedInteger(body.maxDurationSeconds ?? MAX_UPLOAD_DURATION_SECONDS, MAX_UPLOAD_DURATION_SECONDS);
   const protocol = sizeBytes > BASIC_UPLOAD_BYTES ? "tus" : "post";
   if (protocol === "tus" && (!env.CF_ACCOUNT_ID || !env.CF_STREAM_API_TOKEN)) {
     throw new StreamError(503, "stream_tus_not_configured");
@@ -128,7 +132,7 @@ async function beginUpload(request: Request, env: StreamEnv, app: Authority) {
     .bind(app.app_id).first<{ hostname: string }>();
   if (!origin?.hostname) throw new StreamError(409, "stream_app_origin_not_configured");
   const now = new Date().toISOString();
-  const expiresAt = new Date(Date.now() + UPLOAD_TTL_MS).toISOString();
+  const expiresAt = new Date(Date.now() + (protocol === "post" ? POST_UPLOAD_TTL_MS : TUS_UPLOAD_TTL_MS)).toISOString();
   const id = `sv_${crypto.randomUUID().replaceAll("-", "")}`;
   const claimed = await env.APPS_DB.prepare(`INSERT INTO apps_stream_videos
     (id, app_id, org_id, object_id, uploaded_by, file_name, mime_type, size_bytes,
@@ -173,11 +177,15 @@ async function createTusUpload(env: StreamEnv, input: {
   sizeBytes: number; maxDurationSeconds: number; expiresAt: string; origin: string; meta: Record<string, string>; appId: string;
 }) {
   const metadata = { ...input.meta, maxDurationSeconds: String(input.maxDurationSeconds), expiry: input.expiresAt,
-    allowedorigins: JSON.stringify([input.origin]) };
+    // TUS metadata is a base64-encoded string, not a JSON array. Stream treats
+    // JSON syntax as part of the hostname, which breaks Referer-based playback.
+    allowedorigins: input.origin };
   const encoded = Object.entries(metadata).map(([key, value]) => `${key} ${base64(value)}`);
   encoded.push("requiresignedurls");
   const response = await fetch(`https://api.cloudflare.com/client/v4/accounts/${encodeURIComponent(env.CF_ACCOUNT_ID!)}/stream?direct_user=true`, {
-    method: "POST", redirect: "error", signal: AbortSignal.timeout(30_000),
+    // Workers rejects redirect: "error" before sending the request. Return 3xx
+    // responses unchanged so the status check below rejects them without forwarding credentials.
+    method: "POST", redirect: "manual", signal: AbortSignal.timeout(30_000),
     headers: { Authorization: `Bearer ${env.CF_STREAM_API_TOKEN}`, "Tus-Resumable": "1.0.0",
       "Upload-Length": String(input.sizeBytes), "Upload-Creator": input.appId, "Upload-Metadata": encoded.join(",") },
   });

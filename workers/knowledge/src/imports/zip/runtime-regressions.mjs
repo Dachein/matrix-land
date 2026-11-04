@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
@@ -6,7 +7,7 @@ import { zipSync } from "fflate";
 import { Miniflare, convertV4MiniflareOptions } from "miniflare";
 
 const bundle = await build({
-  entryPoints: [new URL("../../index.ts", import.meta.url).pathname],
+  entryPoints: [fileURLToPath(new URL("../../index.ts", import.meta.url))],
   bundle: true,
   format: "esm",
   platform: "browser",

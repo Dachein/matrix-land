@@ -44,7 +44,7 @@ async function prepareHome(page: Parameters<typeof mockPortalApis>[0], catalog: 
     hubListings: catalog.hubListings,
     publicationListings: catalog.publicationListings
   });
-  await page.goto("/#/home");
+  await page.goto("/home");
 }
 
 test("shows all accessible Apps as fixed cards in a draggable single-row rail", async ({ page }) => {
@@ -211,9 +211,9 @@ test("hides the application entries section when no accessible Apps exist", asyn
 
 test("separates public and exclusive apps and expands hidden apps without global Home controls", async ({ page }) => {
   const listings: PublicationListing[] = [
-    { ...appListing(1, "listed"), name: "ByeOA" },
-    { ...appListing(2, "listed"), name: "Frontier Workspace Cookbook" },
-    { ...appListing(3, "listed"), name: "Workspace Academy" },
+    { ...appListing(1, "listed"), homeDisplay: "recommended", name: "Team Calendar" },
+    { ...appListing(2, "listed"), homeDisplay: "recommended", name: "Frontier Workspace Cookbook" },
+    { ...appListing(3, "listed"), homeDisplay: "recommended", name: "Workspace Academy" },
     { ...appListing(4, "listed"), name: "普通应用" },
     { ...appListing(5, "listed"), name: "隐藏应用", homeDisplay: "hidden" },
     { ...appListing(6, "listed"), name: "私人应用", visibility: "private" },
@@ -223,7 +223,7 @@ test("separates public and exclusive apps and expands hidden apps without global
   await prepareHome(page, catalog, []);
   const publicRail = page.getByRole("region", { name: "公共应用", exact: true });
   const exclusiveRail = page.getByRole("region", { name: "我的专属应用", exact: true });
-  await expect(publicRail.locator(".portal-quick-copy strong")).toHaveText(["Workspace Academy", "Frontier Workspace Cookbook", "ByeOA", "普通应用"]);
+  await expect(publicRail.locator(".portal-quick-copy strong")).toHaveText(["Workspace Academy", "Frontier Workspace Cookbook", "Team Calendar", "普通应用"]);
   await expect(exclusiveRail.locator(".portal-quick-copy strong")).toHaveText(["定向应用", "私人应用"]);
   await expect(page.getByRole("button", { name: "隐藏应用", exact: true })).toHaveCount(0);
   await page.getByRole("button", { name: "显示隐藏应用（1）" }).click();
@@ -241,11 +241,11 @@ test("separates public and exclusive apps and expands hidden apps without global
   await page.locator(".portal-home-applications").screenshot({ animations: "disabled", path: "output/playwright/home-application-groups-mobile.png" });
   await page.reload();
   await expect(page.getByRole("button", { name: "显示隐藏应用（1）" })).toBeVisible();
-  await expect(page.getByRole("region", { name: "公共应用", exact: true }).getByRole("button", { name: "ByeOA", exact: true })).toBeVisible();
+  await expect(page.getByRole("region", { name: "公共应用", exact: true }).getByRole("button", { name: "Team Calendar", exact: true })).toBeVisible();
 });
 
 test("allows members to restore personally hidden public apps while keeping admin controls unavailable", async ({ page }) => {
-  const catalog = homeCatalog([{ ...appListing(1, "listed"), name: "ByeOA" }]);
+  const catalog = homeCatalog([{ ...appListing(1, "listed"), homeDisplay: "recommended", name: "Team Calendar" }]);
   catalog.currentUser.role = "member";
   await page.addInitScript((userId) => {
     if (window.localStorage.getItem(`workspace.homePinDismissals.v1:${userId}`) === null) {
@@ -255,10 +255,10 @@ test("allows members to restore personally hidden public apps while keeping admi
   await prepareHome(page, catalog, []);
   await expect(page.getByRole("button", { name: "管理公共应用" })).toHaveCount(0);
   await page.getByRole("button", { name: "显示隐藏应用（1）" }).click();
-  await page.getByRole("button", { name: "恢复 ByeOA" }).click();
-  await expect(page.getByRole("region", { name: "公共应用", exact: true }).getByRole("button", { name: "ByeOA", exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "恢复 Team Calendar" }).click();
+  await expect(page.getByRole("region", { name: "公共应用", exact: true }).getByRole("button", { name: "Team Calendar", exact: true })).toBeVisible();
   await page.reload();
-  await expect(page.getByRole("region", { name: "公共应用", exact: true }).getByRole("button", { name: "ByeOA", exact: true })).toBeVisible();
+  await expect(page.getByRole("region", { name: "公共应用", exact: true }).getByRole("button", { name: "Team Calendar", exact: true })).toBeVisible();
 });
 
 for (const labels of [
@@ -267,7 +267,7 @@ for (const labels of [
 ] as const) {
   test(`uses consistent application section names in ${labels.locale}`, async ({ page }) => {
     const catalog = homeCatalog([
-      { ...appListing(1, "listed"), name: "ByeOA" },
+      { ...appListing(1, "listed"), homeDisplay: "recommended", name: "Team Calendar" },
       { ...appListing(2, "listed"), visibility: "private" }
     ]);
     await prepareHome(page, catalog, [], labels.locale);

@@ -13,12 +13,12 @@
   min-height: var(--fw-control-height); padding: var(--fw-space-2) var(--fw-space-4);
   border: var(--fw-border-width) solid var(--fw-color-border); border-radius: var(--fw-radius-control);
   background: var(--fw-color-surface); color: var(--fw-color-text);
-  font: var(--fw-weight-medium) var(--fw-text-body)/var(--fw-line-control) var(--fw-font-body);
+  font: var(--fw-weight-strong) var(--fw-text-body)/var(--fw-line-control) var(--fw-font-body);
   text-decoration: none; cursor: pointer;
-  transition: background var(--fw-motion-normal) var(--fw-ease-standard), color var(--fw-motion-normal) var(--fw-ease-standard);
+  transition: background var(--fw-motion-normal) var(--fw-ease-standard), color var(--fw-motion-normal) var(--fw-ease-standard), transform var(--fw-motion-fast) var(--fw-ease-standard), box-shadow var(--fw-motion-fast) var(--fw-ease-standard);
 }
 .fw-scope [data-ui="button"][data-variant="primary"] {
-  background: var(--fw-color-action); color: var(--fw-color-on-action); border-color: var(--fw-color-action-ink);
+  background: var(--fw-color-action); color: var(--fw-color-on-action); border-color: var(--fw-color-text);
 }
 .fw-scope [data-ui="button"][data-variant="danger"] {
   background: var(--fw-color-danger); color: var(--fw-color-on-danger); border-color: var(--fw-color-danger);
@@ -94,4 +94,15 @@
 @media (prefers-reduced-motion: reduce) {
   .fw-scope [data-ui="button-icon"] { transform: none; }
   .fw-scope [data-ui="button"][data-variant="primary"]:not(:disabled):hover [data-ui="button-icon"] { transform: none; }
+}
+
+/* The primary action carries the stronger visual signature; fields stay calm. */
+.fw-scope [data-ui="button"][data-variant="primary"]:not(:disabled):not([aria-disabled="true"]):hover {
+  box-shadow: var(--fw-shadow-action); transform: translate(calc(-1 * var(--fw-motion-nudge)), calc(-1 * var(--fw-motion-nudge)));
+}
+.fw-scope [data-ui="button"][data-variant="primary"]:not(:disabled):active { transform: none; box-shadow: none; }
+.fw-scope [data-ui="segmented-control"] > button[aria-pressed="true"] { font-weight: var(--fw-weight-strong); }
+.fw-scope [data-ui="segmented-control"][data-appearance="underline"] > button[aria-pressed="true"]::after { height: var(--fw-focus-width); }
+@media (prefers-reduced-motion: reduce) {
+  .fw-scope [data-ui="button"][data-variant="primary"]:not(:disabled):not([aria-disabled="true"]):hover { transform: none; }
 }

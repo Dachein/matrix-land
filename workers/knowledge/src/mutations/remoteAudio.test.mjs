@@ -17,7 +17,7 @@ function audio(parent, url = 'https://audio.plaud.test/recording?signature=priva
 test('streams audio to selected authorized folder, records a real immutable version and replays without downloading again', async t => {
   const env = fixture(t); let calls = 0;
   const bytes = new Uint8Array(6 * 1024 * 1024 + 100).fill(45);
-  t.mock.method(globalThis, 'fetch', async (url, init) => { calls++; assert.equal(init.redirect, 'error'); return new Response(bytes, { headers: { 'Content-Type': 'audio/mp4' } }); });
+  t.mock.method(globalThis, 'fetch', async (url, init) => { calls++; assert.equal(init.redirect, 'manual'); return new Response(bytes, { headers: { 'Content-Type': 'audio/mp4' } }); });
   const root = (await (await req(env, '/api/folders', { name: 'Research meetings' }, 'alice', 'folder')).json()).item.id;
   const response = await req(env, '/api/files/upload', audio(root)); assert.equal(response.status, 201, await response.clone().text());
   const payload = await response.json(); assert.equal(payload.item.path, 'Research meetings/original.m4a'); assert.equal(payload.version.sizeBytes, bytes.length);
@@ -46,4 +46,17 @@ test('streamed binary cannot bypass scanning by its filename, and quota failure 
   const rejected = await req(env, '/api/files/upload', audio(root), 'alice', 'quota-check'); assert.equal(rejected.status, 413);
   assert.equal(env.KNOWLEDGE_OBJECTS.objects.size, 1);
   assert.equal(env.KNOWLEDGE_DB.database.prepare("SELECT COUNT(*) AS n FROM knowledge_objects WHERE object_kind='file'").get().n, 1);
+});
+
+test('audio downloads reject redirects without contacting another host or starting storage',async t=>{
+ const env=fixture(t),calls=[];
+ t.mock.method(globalThis,'fetch',async(url,init)=>{
+  assert.equal(init.redirect,'manual');calls.push(String(url));
+  return new Response(null,{status:307,headers:{location:'https://unapproved.test/private'}});
+ });
+ const root=(await(await req(env,'/api/folders',{name:'Redirect checks'},'alice','folder')).json()).item.id;
+ assert.equal((await req(env,'/api/files/upload',audio(root))).status,502);
+ assert.deepEqual(calls,['https://audio.plaud.test/recording?signature=private']);
+ assert.equal(env.KNOWLEDGE_OBJECTS.objects.size,0);
+ assert.equal(env.KNOWLEDGE_OBJECTS.uploads.length,0);
 });

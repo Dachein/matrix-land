@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { mkdtemp, rm } from "node:fs/promises";
@@ -16,7 +17,7 @@ async function loadWorkerModule() {
   const outfile = join(outdir, "worker.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("./worker.ts", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("./worker.ts", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,
@@ -39,7 +40,7 @@ async function hubAccessModule() {
       const outfile = join(outdir, "hubAccess.mjs");
       await build({
         bundle: true,
-        entryPoints: [new URL("./hubAccess.ts", import.meta.url).pathname],
+        entryPoints: [fileURLToPath(new URL("./hubAccess.ts", import.meta.url))],
         format: "esm",
         logLevel: "silent",
         outfile,

@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { createHash, createHmac } from "node:crypto";
 import { mkdtemp, rm } from "node:fs/promises";
@@ -16,7 +17,7 @@ async function loadServiceModule() {
   const outfile = join(outdir, "service.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("./service.ts", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("./service.ts", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,
@@ -37,7 +38,7 @@ async function loadWorkerModule() {
   const outfile = join(outdir, "worker.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("../worker.ts", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("../worker.ts", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,

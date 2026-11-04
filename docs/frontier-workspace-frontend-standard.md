@@ -1,10 +1,10 @@
-# Frontier Workspace 前端产品标准
+# Matrix Land SI 前端产品标准
 
 2026-10-30。适用：新增界面与逐步迁入新设计系统的现有页面。第一批基础设施已经实现；本文不表示全部现有页面已达标。
 
 ## 已确认的方向
 
-- 产品默认名称：Frontier Workspace。企业可以配置名称、Logo 或文字标记。
+- 产品默认名称：Matrix Land SI。企业可以配置名称、Logo 或文字标记。
 - 界面布局、排版与视觉秩序沿用 Okfrontier 官网方向；仅支持浅色。不按系统偏好切换深色。
 - 企业从 **8 组完整配色** 中选择，不提供任意取色器。每组同时指定主色、配套色；系统派生可读前景、浅底和焦点色。
 - 用户提供的钢笔淡彩人物图仅定义**默认配图风格**，不用于推导 UI 配色。配图规范见 [默认插画规范](frontier-workspace-illustration-standard.md)。
@@ -64,7 +64,7 @@
 3. 基础控件不依赖业务模块或 fetch；预览组合复用现有控件，不直接编写原生动作/表单控件。
 4. 所有预设与极端品牌颜色的对比度、系统状态独立性、配置校验、七类邮件品牌与转义测试。
 
-现有 `quality:frontend-components`、`quality:frontend-css`、`quality:frontend-i18n` 和性能检查继续保留。旧代码统计不是合规证明；新 gate 当前只强制基础层和预览，后续每个迁移模块都要加入检查覆盖范围，不能靠排除文件宣告达标。
+现有 `quality:frontend-css`、`quality:frontend-i18n` 报告，以及 `scripts/frontend-component-health.mjs` 和性能检查脚本继续保留。旧代码统计不是合规证明；新 gate 当前只强制基础层和预览，后续每个迁移模块都要加入检查覆盖范围，不能靠排除文件宣告达标。
 
 每个迁移批次必须有：组件状态检查、键盘检查、窄屏/宽屏预览、中英文、实际业务流程回归、TypeScript 与生产构建。需要测试的重点是行为边界而非组件实现快照。
 
@@ -76,7 +76,7 @@
 4. 常用列表、表单、资源详情；逐业务域迁移，清除已替代样式。
 5. 企业管理、权限与审计等复杂界面；完整业务和可访问性验收后再发布。
 
-当前没有进行全站页面换肤，没有部署生产，也尚未完成一键安装器、组织 Connector handoff 或开源发行清理。
+此处描述前端逐模块迁移顺序，不代表所有页面已完成视觉验收。0.1.0 已实现本机安装执行器并完成首次源码交付；真实企业部署、组织连接器及全站业务与可访问性验收的支持范围见[交付状态](delivery.md)。
 
 
 ## 七、官网细节与成熟产品的参考边界
@@ -103,3 +103,14 @@
 建议：Frontier 定义品牌表达，Linear 作为日常工作界面的主要交互参考，Carbon 用于核对企业级复杂控件的行为。Notion 与 Spectrum 作为局部参照。保持现有 React 基础组件和 Token 架构，不因视觉参考引入多套 UI 框架。
 
 资料：[Linear 2026 设计更新](https://linear.app/now/behind-the-latest-design-refresh)、[Carbon Dropdown](https://www.carbondesignsystem.com/building-blocks/core/components/dropdown/guidelines)、[Notion 页面样式](https://www.notion.com/help/customize-and-style-your-content)、[Spectrum 介绍](https://spectrum.adobe.com/getting-started/introduction)。
+
+
+## 八、2026-11-03 视觉方向更新
+
+用户要求保留配色，将官网与软件整体表达调整得更先锋。本节取代前文关于轻柔展示标题的取向；可访问性、组件复用和业务行为约束继续有效。
+
+- 现有八组品牌色及状态色保持原值。通过字号、字重、构图和色块面积建立更鲜明的视觉层级。
+- 展示标题采用无衬线粗体与紧凑字距；正文和密集数据维持原字号与可读性，不把营销首页的巨型标题套进表格。
+- 主动作使用直角、明确边界和短促的实色投影反馈；选中导航使用墨色实底，辅以原有品牌标记。
+- 登录页使用可随配色变化的矢量轨道与立体结构，手绘笔触限于注释与局部线条。
+- 本批覆盖官网、共享设计 Token、基础动作与切换控件、登录页、主导航和通用页面标题。业务数据、权限和流程不变；不代表所有历史业务页面已逐页完成视觉验收。

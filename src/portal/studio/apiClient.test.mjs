@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -20,7 +21,7 @@ function loadApi() {
     await build({
       bundle: true,
       define: { "import.meta.env.VITE_APPS_WORKER_URL": '"/api/apps"' },
-      entryPoints: [new URL("./apiClient.ts", import.meta.url).pathname],
+      entryPoints: [fileURLToPath(new URL("./apiClient.ts", import.meta.url))],
       format: "esm",
       logLevel: "silent",
       outfile,

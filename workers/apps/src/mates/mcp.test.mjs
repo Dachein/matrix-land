@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import { testInstallation } from "../../../../tests/helpers/installation.mjs";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -14,7 +15,7 @@ async function handlerModule() {
   modulePromise ??= (async () => {
     const outdir = await mkdtemp(join(tmpdir(), "mate-mcp-test-"));
     const outfile = join(outdir, "handler.mjs");
-    await build({ bundle: true, entryPoints: [new URL("../mcp/handler.ts", import.meta.url).pathname], format: "esm", logLevel: "silent", outfile, platform: "neutral" });
+    await build({ bundle: true, entryPoints: [fileURLToPath(new URL("../mcp/handler.ts", import.meta.url))], format: "esm", logLevel: "silent", outfile, platform: "neutral" });
     const mod = await import(`${pathToFileURL(outfile).href}?t=${Date.now()}`);
     await rm(outdir, { force: true, recursive: true });
     return mod;

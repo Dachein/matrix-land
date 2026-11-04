@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
@@ -13,7 +14,7 @@ async function authSdkModule() {
   const outfile = join(outdir, "authSdk.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("./authSdk.ts", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("./authSdk.ts", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,
@@ -29,7 +30,7 @@ async function developerContextModule() {
   const outfile = join(outdir, "appsAgentHandoff.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("../../../../src/shared/appsAgentHandoff.ts", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("../../../../src/shared/appsAgentHandoff.ts", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,
@@ -197,9 +198,9 @@ describe("Auth SDK handoff", () => {
     const outdir = await mkdtemp(join(tmpdir(), "apps-mail-sdk-package-test-"));
     try {
       const outfile = join(outdir, "mailSdkPackage.mjs");
-      await build({ bundle: true, entryPoints: [new URL("./mailSdkPackage.ts", import.meta.url).pathname], format: "esm", logLevel: "silent", outfile, platform: "neutral" });
+      await build({ bundle: true, entryPoints: [fileURLToPath(new URL("./mailSdkPackage.ts", import.meta.url))], format: "esm", logLevel: "silent", outfile, platform: "neutral" });
       const { mailSdkPackageResponse } = await import(pathToFileURL(outfile).href);
-      for (const version of [sdk.version]) {
+      for (const version of ["0.1.0", sdk.version]) {
         const archive = JSON.parse(readFileSync(new URL(`../../../../sdk/mail/releases/${version}.json`, import.meta.url), "utf8"));
         const response = mailSdkPackageResponse(version);
         assert.equal(response.status, 200);
@@ -419,5 +420,5 @@ describe("Auth SDK handoff", () => {
 
 async function loadMailSdkModule() {
  const outdir=await mkdtemp(join(tmpdir(),"apps-mail-handoff-"));
- try {const outfile=join(outdir,"mail.mjs");await build({bundle:true,entryPoints:[new URL("./mailSdk.ts",import.meta.url).pathname],format:"esm",logLevel:"silent",outfile,platform:"neutral"});return await import(pathToFileURL(outfile).href);}finally{await rm(outdir,{recursive:true,force:true});}
+ try {const outfile=join(outdir,"mail.mjs");await build({bundle:true,entryPoints:[fileURLToPath(new URL("./mailSdk.ts",import.meta.url))],format:"esm",logLevel:"silent",outfile,platform:"neutral"});return await import(pathToFileURL(outfile).href);}finally{await rm(outdir,{recursive:true,force:true});}
 }

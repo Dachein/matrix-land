@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 import { DatabaseSync } from "node:sqlite";
 import { test } from "node:test";
 import { build } from "esbuild";
+import { Miniflare, convertV4MiniflareOptions, Response as RuntimeResponse } from "miniflare";
 
 async function load(path) {
   const result = await build({ entryPoints: [path], bundle: true, write: false, format: "esm", platform: "neutral" });
@@ -29,10 +30,17 @@ function fixture() {
   const database = new DatabaseSync(":memory:");
   database.exec(readFileSync("workers/apps/db/schema.sql", "utf8"));
   const calls = [];
-  const env = { ...testInstallation,  APPS_DB: new D1(database), CF_ACCOUNT_ID: "account-1", CF_STREAM_API_TOKEN: "platform-only-secret",
+  const env = { ...testInstallation, APPS_DB: new D1(database), CF_ACCOUNT_ID: "account-1", CF_STREAM_API_TOKEN: "platform-only-secret",
     APPS_SECRET_ENCRYPTION_KEY: "0123456789abcdef0123456789abcdef",
     STREAM: {
-      async createDirectUpload(options) { calls.push({ type: "create", options }); return { id: `uid${calls.length}`, uploadURL: "https://upload.videodelivery.net/temporary" }; },
+      async createDirectUpload(options) {
+        calls.push({ type: "create", options });
+        // Enforce the provider's native POST constraint, not just our own types.
+        if (Date.parse(options.expiry) >= Date.now() + 6 * 60 * 60 * 1000) {
+          throw new Error("BadRequestError: expiry must be less than 6h0m0s in the future.");
+        }
+        return { id: `uid${calls.length}`, uploadURL: "https://upload.videodelivery.net/temporary" };
+      },
       video(uid) { return {
         async details() { calls.push({ type: "details", uid }); return { readyToStream: true, duration: 12, hlsPlaybackUrl: `https://customer-test.cloudflarestream.com/${uid}/manifest/video.m3u8` }; },
         async generateToken() { calls.push({ type: "token", uid }); return "signed-playback-token"; },
@@ -63,6 +71,12 @@ function fixture() {
   return { env, database, calls, app, request };
 }
 const input = { objectId: "course-1", userId: "employee-1", fileName: "视频.mp4", mimeType: "video/mp4", sizeBytes: 100 };
+function decodeTusMetadata(header) {
+  return Object.fromEntries(header.split(",").map(entry => {
+    const [key, value = ""] = entry.split(" ");
+    return [key, Buffer.from(value, "base64").toString("utf8")];
+  }));
+}
 
 test("opening Stream creates a stable App-scoped grant; upstream credentials stay platform-only", async t => {
   const f = fixture(); t.after(() => f.database.close());
@@ -74,7 +88,7 @@ test("opening Stream creates a stable App-scoped grant; upstream credentials sta
   assert.equal(await secrets.ensureManagedAppSecret(f.env, a.row, { name: "WORKSPACE_STREAM_TOKEN", description: "Stream" }), a.token);
   const resource = f.database.prepare("SELECT * FROM apps_app_resources WHERE app_id='app-a'").get();
   assert.equal(resource.provider, "workspace-stream"); assert.equal(resource.binding_name, "WORKSPACE_STREAM");
-  assert.equal(resource.resource_id, "workspace-stream-worker:app-a"); assert.equal(resource.status, "ready");
+  assert.equal(resource.resource_id, "example-prod-stream:app-a"); assert.equal(resource.status, "ready");
   assert.equal(f.database.prepare("SELECT count(*) n FROM apps_app_secrets WHERE name LIKE '%CLOUDFLARE%' OR name LIKE 'CF_%'").get().n, 0);
   const grant = f.database.prepare("SELECT * FROM apps_stream_app_grants WHERE app_id='app-a'").get();
   assert.equal(grant.token_sha256, await worker.tokenHash(a.token)); assert.ok(!JSON.stringify(grant).includes(a.token));
@@ -87,6 +101,7 @@ test("upload scope and origin come from the grant; App B cannot read, play or de
   assert.equal(response.status, 201); const upload = await response.json();
   assert.equal(upload.protocol, "post"); assert.equal(upload.provider, "media");
   assert.equal(f.calls[0].options.meta.workspaceAppId, "app-a"); assert.equal(f.calls[0].options.creator, "app-a");
+  assert.equal(f.calls[0].options.maxDurationSeconds, 36_000);
   assert.deepEqual(f.calls[0].options.allowedOrigins, ["app-a.example.test"]); assert.equal(f.calls[0].options.requireSignedURLs, true);
   for (const [path, method] of [[`/v1/videos/${upload.streamUid}`, "GET"], [`/v1/videos/${upload.streamUid}/playback`, "POST"], [`/v1/videos/${upload.streamUid}`, "DELETE"]]) {
     for (const other of [b, c]) assert.equal((await f.request(other.token, path, method)).status, 404);
@@ -99,13 +114,38 @@ test("upload scope and origin come from the grant; App B cannot read, play or de
   assert.equal((await f.request(a.token, `/v1/videos/${upload.streamUid}`)).status, 404);
 });
 
-test("TUS grants use central credentials, preserve ownership metadata and reuse an identical request", async t => {
+test("POST reservations stay below the native six-hour expiry limit and reuse the stored deadline", async t => {
+  const f = fixture(); t.after(() => f.database.close()); const a = await f.app("app-a");
+  for (const sizeBytes of [336_418, 200_000_000]) {
+    const body = { ...input, objectId: `post-${sizeBytes}`, sizeBytes };
+    const before = Date.now();
+    const response = await f.request(a.token, "/v1/uploads", "POST", body);
+    assert.equal(response.status, 201, await response.clone().text());
+    const upload = await response.json();
+    assert.equal(upload.protocol, "post");
+    const expiry = Date.parse(upload.expiresAt);
+    assert.ok(expiry >= before + 60 * 60 * 1000 && expiry <= Date.now() + 60 * 60 * 1000);
+    const row = f.database.prepare("SELECT * FROM apps_stream_videos WHERE object_id = ?").get(body.objectId);
+    assert.equal(row.state, "uploading");
+    assert.equal(row.expires_at, upload.expiresAt);
+    assert.equal(f.calls.at(-1).options.expiry, upload.expiresAt);
+    assert.equal(row.stream_uid, upload.streamUid);
+    assert.deepEqual(await (await f.request(a.token, "/v1/uploads", "POST", body)).json(), upload);
+    f.database.prepare("UPDATE apps_stream_videos SET expires_at = ? WHERE id = ?")
+      .run(new Date(Date.now() - 1000).toISOString(), row.id);
+    assert.equal((await f.request(a.token, "/v1/uploads", "POST", body)).status, 409);
+  }
+  assert.equal(f.calls.length, 2, "retries and expiry must not allocate another upstream video");
+});
+
+test("TUS grants encode the App hostname as plain metadata and preserve the resumable deadline", async t => {
   const f = fixture(); t.after(() => f.database.close()); const a = await f.app("app-a");
   const upstream = []; const original = globalThis.fetch;
   globalThis.fetch = async (url, init) => { upstream.push({ url, init }); return new Response(null, {
     status: 201, headers: { Location: "https://upload.videodelivery.net/tus-temporary", "stream-media-id": "largeuid" },
   }); }; t.after(() => { globalThis.fetch = original; });
-  const large = { ...input, sizeBytes: 200_000_001 };
+  const large = { ...input, sizeBytes: 200_000_001, allowedOrigins: ["evil.test"] };
+  const before = Date.now();
   const one = await (await f.request(a.token, "/v1/uploads", "POST", large)).json();
   const two = await (await f.request(a.token, "/v1/uploads", "POST", large)).json();
   assert.deepEqual(one, two); assert.equal(one.protocol, "tus"); assert.equal(upstream.length, 1);
@@ -114,9 +154,100 @@ test("TUS grants use central credentials, preserve ownership metadata and reuse 
   assert.equal(upstream[0].init.headers["Upload-Creator"], "app-a");
   assert.match(upstream[0].init.headers["Upload-Metadata"], /workspaceAppId /);
   assert.match(upstream[0].init.headers["Upload-Metadata"], /requiresignedurls/);
+  assert.match(upstream[0].init.headers["Upload-Metadata"], /(?:^|,)maxDurationSeconds MzYwMDA=(?:,|$)/);
+  const metadata = decodeTusMetadata(upstream[0].init.headers["Upload-Metadata"]);
+  assert.equal(metadata.allowedorigins, "app-a.example.test");
+  // Stream splits the decoded string into hostnames; JSON quotes/brackets become literal domain characters.
+  assert.deepEqual(metadata.allowedorigins.split(","), ["app-a.example.test"]);
+  assert.equal(metadata.requiresignedurls, "");
+  assert.equal(metadata.name, input.fileName);
+  assert.equal(metadata.expiry, one.expiresAt);
+  assert.ok(Date.parse(one.expiresAt) >= before + 24 * 60 * 60 * 1000);
+  assert.ok(Date.parse(one.expiresAt) <= Date.now() + 24 * 60 * 60 * 1000);
+  assert.equal(f.database.prepare("SELECT expires_at FROM apps_stream_videos").get().expires_at, one.expiresAt);
   assert.ok(!JSON.stringify(one).includes("platform-only-secret"));
   assert.equal((await f.request(a.token, "/v1/uploads", "POST", { ...large, sizeBytes: 200_000_002 })).status, 409);
   assert.equal(upstream.length, 1);
+});
+
+test("upload durations above Cloudflare's limit are rejected before reserving an object", async t => {
+  const f = fixture(); t.after(() => f.database.close()); const a = await f.app("app-a");
+  const originalFetch = globalThis.fetch; let tusCalls = 0;
+  globalThis.fetch = async () => { tusCalls++; return new Response(null, { status: 400 }); };
+  t.after(() => { globalThis.fetch = originalFetch; });
+  for (const maxDurationSeconds of [36_001, 43_200]) {
+    for (const sizeBytes of [100, 200_000_001]) {
+      const response = await f.request(a.token, "/v1/uploads", "POST", { ...input, sizeBytes, maxDurationSeconds });
+      assert.equal(response.status, 400);
+      assert.deepEqual(await response.json(), { error: "invalid_upload_parameter" });
+    }
+  }
+  assert.equal(f.database.prepare("SELECT count(*) n FROM apps_stream_videos").get().n, 0);
+  assert.equal(f.calls.length, 0);
+  assert.equal(tusCalls, 0);
+  const allowed = await f.request(a.token, "/v1/uploads", "POST", { ...input, maxDurationSeconds: 36_000 });
+  assert.equal(allowed.status, 201);
+  assert.equal(f.calls[0].options.maxDurationSeconds, 36_000);
+});
+
+test("TUS preparation reaches the upstream in Workers and rejects redirects without following them", async t => {
+  const bundle = await build({ entryPoints: ["workers/stream/src/index.ts"],
+    bundle: true, write: false, format: "esm", platform: "neutral" });
+  const requests = [];
+  let redirect = false;
+  const mf = new Miniflare(convertV4MiniflareOptions({ modules: true, script: bundle.outputFiles[0].text,
+    // The installed workerd supports this date. Unlike Node fetch, Workers only accepts manual/follow redirect modes.
+    compatibilityDate: "2026-07-07", d1Databases: ["APPS_DB"],
+    bindings: { STREAM: {}, CF_ACCOUNT_ID: "account-1", CF_STREAM_API_TOKEN: "synthetic-stream-credential" },
+    outboundService: async request => {
+      requests.push(request.url);
+      assert.equal(request.url, "https://api.cloudflare.com/client/v4/accounts/account-1/stream?direct_user=true");
+      assert.equal(request.method, "POST");
+      assert.equal(request.headers.get("Authorization"), "Bearer synthetic-stream-credential");
+      assert.equal(request.headers.get("Tus-Resumable"), "1.0.0");
+      assert.equal(request.headers.get("Upload-Length"), "5747638675");
+      assert.match(request.headers.get("Upload-Metadata"), /(?:^|,)maxDurationSeconds MzYwMDA=(?:,|$)/);
+      assert.equal(decodeTusMetadata(request.headers.get("Upload-Metadata")).allowedorigins, "app-a.example.test");
+      assert.equal(await request.text(), "", "the preparation request must not proxy video bytes");
+      return redirect
+        ? new RuntimeResponse(null, { status: 307, headers: { Location: "https://unapproved.test/credentials" } })
+        : new RuntimeResponse(null, { status: 201,
+          headers: { Location: "https://upload.videodelivery.net/tus-temporary", "stream-media-id": "runtimeuid" } });
+    },
+  }));
+  t.after(() => mf.dispose());
+  const db = await mf.getD1Database("APPS_DB");
+  const schema = [
+    "CREATE TABLE apps_apps (id TEXT PRIMARY KEY, org_id TEXT NOT NULL, status TEXT NOT NULL)",
+    "CREATE TABLE apps_app_resources (app_id TEXT, type TEXT, environment TEXT, status TEXT)",
+    "CREATE TABLE apps_domains (app_id TEXT, type TEXT, hostname TEXT)",
+    ...readFileSync("schemas/apps/0001_initial.sql", "utf8")
+      .match(/CREATE TABLE apps_stream_[\s\S]*?;/g),
+  ];
+  for (const sql of schema) await db.prepare(sql).run();
+  const token = `fstream_${"b".repeat(64)}`;
+  await db.prepare("INSERT INTO apps_apps VALUES ('app-a', 'org-1', 'published')").run();
+  await db.prepare("INSERT INTO apps_app_resources VALUES ('app-a', 'media', 'prod', 'ready')").run();
+  await db.prepare("INSERT INTO apps_domains VALUES ('app-a', 'production', 'app-a.example.test')").run();
+  await db.prepare("INSERT INTO apps_stream_app_grants VALUES ('app-a', 'org-1', ?, '2026-10-30', '2026-10-30')")
+    .bind(await worker.tokenHash(token)).run();
+  const request = objectId => mf.dispatchFetch("https://workspace-stream.internal/v1/uploads", {
+    method: "POST", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ ...input, objectId, sizeBytes: 5_747_638_675 }),
+  });
+  const response = await request("runtime-success");
+  assert.equal(response.status, 201, await response.clone().text());
+  const upload = await response.json();
+  assert.equal(upload.streamUid, "runtimeuid");
+  assert.equal(upload.uploadUrl, "https://upload.videodelivery.net/tus-temporary");
+  assert.equal(upload.protocol, "tus");
+  assert.equal((await db.prepare("SELECT state FROM apps_stream_videos WHERE object_id = 'runtime-success'").first()).state, "uploading");
+  redirect = true;
+  const denied = await request("runtime-redirect");
+  assert.equal(denied.status, 502);
+  assert.deepEqual(await denied.json(), { error: "stream_upload_creation_failed" });
+  assert.equal((await db.prepare("SELECT state FROM apps_stream_videos WHERE object_id = 'runtime-redirect'").first()).state, "failed");
+  assert.deepEqual(requests, Array(2).fill("https://api.cloudflare.com/client/v4/accounts/account-1/stream?direct_user=true"));
 });
 
 test("revocation, archived Apps, unsupported files and absent platform configuration fail closed", async t => {
@@ -128,6 +259,10 @@ test("revocation, archived Apps, unsupported files and absent platform configura
   f.env.CF_STREAM_API_TOKEN = undefined;
   assert.equal((await f.request(a.token, "/v1/uploads", "POST", { ...input, sizeBytes: 200_000_001 })).status, 503);
   assert.equal(f.calls.length, 0);
+  const streamWorker = f.env.WORKSPACE_STREAM_WORKER_NAME;
+  delete f.env.WORKSPACE_STREAM_WORKER_NAME;
+  await assert.rejects(provisioning.provisionResourceTypes(f.env, a.row, ["media"], new Date().toISOString()), /WORKSPACE_STREAM_WORKER_NAME/);
+  f.env.WORKSPACE_STREAM_WORKER_NAME = streamWorker;
   await assert.rejects(provisioning.provisionResourceTypes(f.env, a.row, ["media"], new Date().toISOString()), /workspace_stream_service_not_ready/);
   assert.equal(f.database.prepare("SELECT status FROM apps_app_resources WHERE app_id='app-a'").get().status, "failed");
   f.database.prepare("UPDATE apps_app_resources SET status='ready' WHERE app_id='app-a'").run();
@@ -172,7 +307,7 @@ test("enabling Stream updates an existing Worker with an App grant and service b
   await patchApp(new Request("https://apps.internal/apps/app-a", { method: "PATCH", headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ addResourceTypes: ["media"] }) }), f.env,
     { sub: "owner", orgId: "org-1", orgSlug: "org-1", scopes: ["apps:write"] }, a.row.id);
-  assert.deepEqual(bindings.find(b => b.name === "WORKSPACE_STREAM"), { name: "WORKSPACE_STREAM", type: "service", service: "workspace-stream-worker" });
+  assert.deepEqual(bindings.find(b => b.name === "WORKSPACE_STREAM"), { name: "WORKSPACE_STREAM", type: "service", service: "example-prod-stream" });
   assert.equal(bindings.find(b => b.name === "WORKSPACE_STREAM_TOKEN").text, a.token);
   assert.ok(!bindings.some(b => b.type === "stream" || b.name === "CLOUDFLARE_STREAM_API_TOKEN"));
   assert.deepEqual(bindings.find(b => b.name === "BUSINESS_SECRET"), { name: "BUSINESS_SECRET", type: "inherit" });

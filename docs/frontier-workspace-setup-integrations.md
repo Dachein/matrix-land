@@ -127,7 +127,7 @@ LiteLLM 不一定为每个端点提供幂等 Key，因此适配器必须针对�
 
 浏览器访问 Workspace 入口的同源 `/auth/entra/start`，回调固定为 `https://{portalHostname}/auth/entra/callback`。Portal 受控代理给 Auth Service，服务端完成 Authorization Code + PKCE，浏览器不持有应用 Secret。Entra 注册的平台类型为 Web；不把此服务端回调注册为 SPA。[Redirect URI 配置](https://learn.microsoft.com/en-us/entra/identity-platform/how-to-add-redirect-uri)
 
-目标回调路径与当前旧实现不同，必须在新代码库一次性实现并测试。安装器依据实际发布契约生成回调地址，不能仅根据 auth 子域名猜测。CLI、MCP OAuth 和 Entra 回调是不同契约，不能混用。
+0.1.0 已按此回调路径实现并覆盖本地测试。安装器依据实际发布契约生成回调地址，不能仅根据 auth 子域名猜测。CLI、MCP OAuth 和 Entra 回调是不同契约，不能混用；真实 Entra 登录仍需企业环境验收。
 
 ### 两条初始化路径
 
@@ -237,4 +237,4 @@ Entra 已有应用原则上复用，改回调或轮换凭据都显示精确差�
 | 部署 | DNS 未生效、证书待签发、Cloudflare 到服务器不通 | 保持验证中/失败，不显示完成 |
 | 恢复 | 单机重启、数据库恢复、升级中断 | 数据保留，按实际状态续跑，记录可追溯 |
 
-当前可运行内容仍限于品牌/域名配置与计划导出。以上接口、模式、步骤和验收矩阵是下一阶段实现要求，不代表已执行真实安装或已获得外部系统授权。
+0.1.0 已支持配置、计划审阅、资源执行、集成初始化与升级编排，并有本地模拟和部署包编译验证。本文的完整验收矩阵仍是企业测试实例的验收要求；未执行真实安装或获得外部系统授权的项目不能标为通过。实际输入格式与执行步骤以[安装手册](installation.md)为准。

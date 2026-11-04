@@ -19,6 +19,7 @@ import {
 } from "./mailbox.ts";
 import { MailError, type MailEnv, type MailboxIdentity } from "./types.ts";
 import { installationHostname } from "../../../src/shared/installationDomains.ts";
+import { configuredWorkerName } from "../../../src/shared/requiredConfiguration.ts";
 
 export async function mailFetch(
   request: Request,
@@ -287,6 +288,7 @@ export async function provisionMailbox(
     }
     if (!env.CF_API_TOKEN || !env.CF_ZONE_ID)
       throw new MailError(503, "mail_routing_not_configured");
+    const routerWorker = configuredWorkerName(env.WORKSPACE_EMAIL_ROUTER_WORKER, "WORKSPACE_EMAIL_ROUTER_WORKER");
     const rules: any[] = [];
     for (let page = 1; page <= 100; page++) {
       const part = await cf(
@@ -317,11 +319,7 @@ export async function provisionMailbox(
       existing.actions?.some(
         (action: any) =>
           action.type !== "worker" ||
-          ![
-            "workspace-mail-worker",
-            "workspace-mate-runtime",
-            "workspace-email-router",
-          ].includes(action.value?.[0]) ||
+          action.value?.[0] !== routerWorker ||
           action.value?.length !== 1,
       )
     )
@@ -330,11 +328,11 @@ export async function provisionMailbox(
       name: `Agent mailbox ${input.mateId}`,
       enabled: true,
       matchers: [{ type: "literal", field: "to", value: address }],
-      actions: [{ type: "worker", value: ["workspace-mail-worker"] }],
+      actions: [{ type: "worker", value: [routerWorker] }],
     };
     const rule =
       existing?.enabled &&
-      existing.actions?.[0]?.value?.[0] === "workspace-mail-worker"
+      existing.actions?.[0]?.value?.[0] === routerWorker
         ? existing
         : await cf(
             env,

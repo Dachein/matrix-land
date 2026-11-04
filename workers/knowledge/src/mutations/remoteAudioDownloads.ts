@@ -15,7 +15,7 @@ export function allowedAudioDownloadUrl(raw: string, hostsValue: string) {
 }
 
 export async function storeRemoteAudio(env: Env, namespace: NamespaceRow, object: ObjectRow, rawUrl: string, mimeType: string, hostsValue: string, maximum = 512 * 1024 * 1024): Promise<StoredKnowledgeBinary & { mimeType: string }> {
-  const response = await fetch(allowedAudioDownloadUrl(rawUrl, hostsValue), { redirect: "error", signal: AbortSignal.timeout(120000) });
+  const response = await fetch(allowedAudioDownloadUrl(rawUrl, hostsValue), { redirect: "manual", signal: AbortSignal.timeout(120000) });
   if (!response.ok || !response.body) throw new HttpError(502, "knowledge_audio_download_failed");
   const responseType = response.headers.get("content-type")?.split(";")[0]?.trim().toLowerCase();
   if (responseType && !responseType.startsWith('audio/') && responseType !== 'application/octet-stream') {

@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -11,7 +12,7 @@ async function loadHomePinsModule() {
   const outfile = join(outdir, "homePins.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("./homePins.ts", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("./homePins.ts", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,

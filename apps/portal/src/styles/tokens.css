@@ -99,7 +99,7 @@
   --portal-violet-a10: rgba(91, 44, 200, 0.1);
   --portal-shell-glass: rgba(233, 232, 226, 0.96);
   --portal-radius-structural: 0;
-  --portal-radius-control: 3px;
+  --portal-radius-control: 0;
   --portal-radius-pill: 999px;
   --portal-radius-round: 50%;
   --portal-radius: var(--portal-radius-control);
@@ -151,11 +151,14 @@
   --portal-type-body: 14px;
   --portal-type-page-subtitle: 16px;
   --portal-type-page-subtitle-mobile: 14px;
-  --portal-type-page-title: 42px;
-  --portal-type-page-title-mobile: 34px;
+  --portal-type-page-title: 48px;
+  --portal-type-page-title-mobile: 36px;
   --portal-type-title: 18px;
   --portal-type-section: 28px;
-  --portal-type-hero: 52px;
+  --portal-type-hero: 56px;
+  --portal-font-display: "Inter Variable", "Noto Sans SC Variable", "PingFang SC", system-ui, sans-serif;
+  --portal-weight-display: 800;
+  --portal-tracking-display: -0.045em;
   --portal-left-width: 256px;
   --portal-live-width: 320px;
   --portal-utility-width: var(--portal-live-width);

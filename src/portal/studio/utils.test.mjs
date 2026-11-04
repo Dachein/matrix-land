@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -11,7 +12,7 @@ async function loadUtilsModule(entryPoint = "./utils.ts") {
   const outfile = join(outdir, "utils.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL(entryPoint, import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL(entryPoint, import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,
@@ -27,7 +28,7 @@ async function loadMateModule() {
   const outfile = join(outdir, "mate.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("../../shared/mate.ts", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("../../shared/mate.ts", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,
@@ -43,7 +44,7 @@ async function loadProductDetailModelsModule() {
   const outfile = join(outdir, "productDetailModels.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("./productDetailModels.ts", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("./productDetailModels.ts", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,
@@ -59,7 +60,7 @@ async function loadProductModelsModule() {
   const outfile = join(outdir, "productModels.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("./productModels.ts", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("./productModels.ts", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,
@@ -75,7 +76,7 @@ async function loadAccessTargetPickerModule() {
   const outfile = join(outdir, "AccessTargetPicker.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("../components/AccessTargetPicker.tsx", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("../components/AccessTargetPicker.tsx", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,

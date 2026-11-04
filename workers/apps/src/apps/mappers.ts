@@ -24,7 +24,6 @@ const EMAIL_FROM_ENV = "WORKSPACE_EMAIL_FROM";
 const EMAIL_INBOUND_ADDRESS_ENV = "WORKSPACE_EMAIL_INBOUND_ADDRESS";
 const EMAIL_ROUTER_WORKER_ENV = "WORKSPACE_EMAIL_ROUTER_WORKER";
 const EMAIL_ROUTING_MODE_ENV = "WORKSPACE_EMAIL_ROUTING_MODE";
-const DEFAULT_EMAIL_ROUTER_WORKER = "workspace-mail-worker";
 
 export function resourceFromRow(row: AppsResourceRow): AppsResource {
   return {
@@ -161,7 +160,7 @@ export function runtimeManifest(env: Env, row: AppsAppRow, resources: AppsResour
         triggerEnabled: Boolean(emailRoutingResource) && envVars.some(item => item.name === "WORKSPACE_MAIL_TRIGGER_ENABLED" && item.value === "1"),
         handler: "email",
         mode: "process",
-        routerWorker: readOptionalString(env.WORKSPACE_EMAIL_ROUTER_WORKER) || DEFAULT_EMAIL_ROUTER_WORKER,
+        routerWorker: readOptionalString(env.WORKSPACE_EMAIL_ROUTER_WORKER) ?? "",
         env: {
           WORKSPACE_EMAIL_INBOUND_ADDRESS: EMAIL_INBOUND_ADDRESS_ENV,
           WORKSPACE_EMAIL_ROUTER_WORKER: EMAIL_ROUTER_WORKER_ENV,

@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
@@ -88,7 +89,7 @@ async function loadModule() {
   const outfile = join(outdir, "deployments.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("./deployments.ts", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("./deployments.ts", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,
@@ -180,6 +181,7 @@ function createEnv({ appCode = "request-app" } = {}) {
     VALUES ('res-pages', 'app-1', 'ds-1', 'pages_project', 'cloudflare-pages', 'apps-request-app-pages', 'pages-real-1', '', 'prod', 'ready', '2026-07-01T00:00:00.000Z')
   `).run();
   return {
+    WORKSPACE_AUTH_WORKER_NAME: 'example-prod-auth',
     AUTH_ISSUER: "https://auth.example.test",
     AUTH_SERVICE_TOKEN: "auth-service-token",
     AUTH_WORKER_URL: "https://auth.example.test",
@@ -1012,7 +1014,7 @@ describe("APPS MCP app deployment helpers", () => {
       assert.ok(metadata.compatibility_flags.includes("nodejs_compat"));
       assert.deepEqual(metadata.bindings.find((binding) => binding.name === "AUTH_SERVICE"), {
         name: "AUTH_SERVICE",
-        service: "workspace-auth-worker",
+        service: "example-prod-auth",
         type: "service"
       });
       assert.deepEqual(metadata.bindings.find((binding) => binding.name === "WORKER_TOKEN"), {

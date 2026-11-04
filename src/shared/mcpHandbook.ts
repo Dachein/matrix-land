@@ -186,8 +186,8 @@ const PRE_V1_CAPABILITY_PACKS: Array<
     group: "apps",
     title: "Entry",
     titleZh: "入口",
-    description: "Inspect existing assets or bootstrap App / Skill workflows. App creation emails its creator office domain allowlist application instructions and copies ai-adoption@example.invalid.",
-    descriptionZh: "查看已有资产，或启动 App / Skill 创作流程。创建应用后向创建者发送办公室域名访问白名单申请指引，并抄送 ai-adoption@example.invalid。",
+    description: "Inspect existing assets or start App / Skill workflows. App creation notifies the authenticated creator; optional access instructions and recipients are installation settings.",
+    descriptionZh: "查看已有资产，或启动 App / Skill 创作流程。创建通知发送给已认证的创建者；可选访问指引与收件人由安装配置决定。",
     toolNames: [
       "apps_list_inventory",
       "apps_list_apps",
@@ -732,8 +732,8 @@ export const WORKSPACE_MCP_RELEASES: McpHandbookRelease[] = [
   {
     version: "3.7.0",
     releasedAt: "2026-10-05",
-    changes: ["APPS app creation emails now copy ai-adoption@example.invalid while retaining the authenticated creator as the primary recipient."],
-    changesZh: ["APPS 应用创建通知保持已认证的创建者为主收件人，并统一抄送 ai-adoption@example.invalid。"]
+    changes: ["App creation notifications use the authenticated creator and the installation’s explicitly configured recipients."],
+    changesZh: ["应用创建通知发送给已认证的创建者及实例显式配置的收件人。"]
   },
   {
     version: "3.6.1",

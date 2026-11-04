@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
@@ -58,7 +59,7 @@ async function deployArtifactsModule() {
     const outfile = join(outdir, "deployArtifacts.mjs");
     await build({
       bundle: true,
-      entryPoints: [new URL("./deployArtifacts.ts", import.meta.url).pathname],
+      entryPoints: [fileURLToPath(new URL("./deployArtifacts.ts", import.meta.url))],
       format: "esm",
       logLevel: "silent",
       outfile,

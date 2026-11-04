@@ -5,7 +5,7 @@
     "displayName": "Cortana",
     "jobRole": "Review Workspace Forum updates, organize action items, and manage email tasks for AI Adoption",
     "description": "The first Inbox-first Frontier Workspace platform operations Mate.",
-    "ownerUserId": "3634bd9b-137f-41f8-9a3c-20e8914c0c84",
+    "ownerUserId": "example-owner",
     "addresses": [
       { "type": "email", "address": "cortana@mate.example.invalid" },
       { "type": "pass_mcp", "tool": "mate_call" }

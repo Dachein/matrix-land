@@ -3,9 +3,9 @@ import { readFileSync } from "node:fs";
 import { it } from "node:test";
 import { DatabaseSync } from "node:sqlite";
 
-const platformEmail = "ai-adoption@example.invalid";
+const platformEmail = "person@example.test";
 
-it("creates the OTP challenge schema and upserts the platform mailbox idempotently", () => {
+it("creates the OTP challenge schema idempotently without provisioning accounts", () => {
   const database = new DatabaseSync(":memory:");
   const schema = readFileSync("workers/auth/db/schema.sql", "utf8");
   const migration = readFileSync(
@@ -49,39 +49,24 @@ it("creates the OTP challenge schema and upserts the platform mailbox idempotent
   assert.ok(indexes.includes("idx_auth_email_otp_ip_created"));
   assert.ok(indexes.includes("idx_auth_email_otp_expires"));
 
-  const platformUser = readPlatformUser(database);
-  assert.equal(platformUser.status, "active");
-  assert.equal(platformUser.role, "member");
-  assert.equal(platformUser.provider, "microsoft_entra_id");
-  assert.equal(platformUser.provider_subject, "3634bd9b-137f-41f8-9a3c-20e8914c0c84");
-  assert.equal(
-    database.prepare("SELECT count(*) AS total FROM auth_users WHERE lower(email) = lower(?)").get(platformEmail).total,
-    1
-  );
-  assert.equal(
-    database.prepare(`
-      SELECT count(*) AS total
-      FROM auth_user_memberships
-      WHERE user_id = ? AND target_type = 'department' AND target_id = 'dept-ai-adoption-zwlqiw'
-    `).get(platformUser.id).total,
-    1
-  );
+  assert.equal(database.prepare("SELECT count(*) AS total FROM auth_users").get().total, 0);
+  assert.equal(database.prepare("SELECT count(*) AS total FROM auth_user_memberships").get().total, 0);
 });
 
-it("does not revive a suspended platform mailbox or overwrite its canonical role", () => {
+it("does not change existing account identity, status or role", () => {
   const database = new DatabaseSync(":memory:");
   database.exec(readFileSync("workers/auth/db/schema.sql", "utf8"));
   const migration = readFileSync(
     "workers/auth/db/migrations/20260715_email_otp.sql",
     "utf8"
   );
-  database.exec(migration);
-  database.prepare("UPDATE auth_users SET role = 'admin', status = 'suspended' WHERE email = ?").run(platformEmail);
+  database.prepare("INSERT INTO auth_users (id,email,name,role,status) VALUES ('example-person',?,'Example Person','admin','suspended')").run(platformEmail);
   database.exec(migration);
 
   const platformUser = readPlatformUser(database);
   assert.equal(platformUser.status, "suspended");
   assert.equal(platformUser.role, "admin");
+  assert.equal(platformUser.id, "example-person");
 });
 
 it("adds an optional authorize return target to existing OTP challenges", () => {

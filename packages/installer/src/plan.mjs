@@ -22,6 +22,6 @@ export async function buildPlan(input,root,{upgrade=false}={}){
  for(const name of services.filter(n=>n!=='portal'))steps.push({id:`stage:${name}`,action:`Stage ${name} without public routes`});
  for(const name of services.filter(n=>n!=='portal'))steps.push({id:`deploy:${name}`,action:`Bind and publish ${name}`});
  steps.push({id:'deploy:portal',action:'Publish Portal and attach its domain'},{id:'verify',action:'Check deployed services and record business acceptance requirements'});
- const plan={schemaVersion:1,installationId:config.installationId,mode:upgrade?'upgrade':'install',release,fingerprint,configHash:digest(config),config,services,resources,steps,externalRequirements:['Cloudflare account with Workers paid plan, owned DNS zone and email sending enabled','For optional services: supplier credentials and supported Cloudflare capabilities','Owner must complete a real email login and one-time claim after deployment']};
+ const plan={schemaVersion:1,installationId:config.installationId,mode:upgrade?'upgrade':'install',release,fingerprint,configHash:digest(config),config,services,resources,steps,externalRequirements:['Cloudflare account with an owned DNS zone and email sending enabled; verify Free plan limits for selected services before considering Paid','For optional services: supplier credentials and supported Cloudflare capabilities; separate products may incur charges','Owner must complete a real email login and one-time claim after deployment']};
  return {...plan,id:digest(plan)};
 }

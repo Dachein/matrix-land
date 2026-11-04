@@ -27,3 +27,7 @@ installation.json
 *.key
 release/
 *.tgz
+
+# Local verification output and the independently versioned marketing website
+/output/
+/sites/

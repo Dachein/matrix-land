@@ -1,5 +1,7 @@
 import { expect, type Page } from "@playwright/test";
 import { fallbackPortal } from "../../../src/shared/fallbackPortal";
+import { defaultPlatformBrand } from "../../../src/shared/platformBrand";
+import { workspaceModuleNames, type WorkspaceModule } from "../../../src/shared/workspaceModules";
 import type { PortalCatalog } from "../../../src/shared/types";
 
 type RuntimeErrorOptions = {
@@ -8,6 +10,7 @@ type RuntimeErrorOptions = {
 };
 
 type PortalApiMockOptions = {
+  modules?: WorkspaceModule[];
   apps?: PortalCatalog["apps"];
   authSession?: Record<string, unknown>;
   catalog?: {
@@ -81,6 +84,14 @@ export async function mockPortalApis(page: Page, options: PortalApiMockOptions =
       status: 404,
       json: { error: "home_bootstrap_not_mocked" }
     });
+  });
+
+  await page.route("**/api/public/brand", async (route) => {
+    await route.fulfill({ json: {
+      schemaVersion: 1,
+      brand: defaultPlatformBrand,
+      modules: options.modules ?? [...workspaceModuleNames]
+    } });
   });
 
   await page.route("**/api/auth/session", async (route) => {

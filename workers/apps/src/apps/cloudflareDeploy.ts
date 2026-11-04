@@ -8,7 +8,8 @@ import { provisionResourceTypes } from "../provisioning/cloudflareResources";
 import type { AppsAppRow, AppsAppSecretRow, AppsResourceRow } from "../db/rows";
 import { authIssuer, fallbackRuntimeUrls } from "../runtime/urls";
 import type { DeployArtifactWorkerAssets } from "./deployArtifacts";
-import { WORKSPACE_STREAM_BINDING, WORKSPACE_STREAM_WORKER } from "./streamService";
+import { WORKSPACE_STREAM_BINDING, workspaceStreamWorkerName } from "./streamService";
+import { configuredWorkerName } from "../../../../src/shared/requiredConfiguration";
 
 export type CloudflareSourceFile = {
   content: string;
@@ -60,7 +61,6 @@ type RuntimeProjection = {
 };
 
 const CLOUDFLARE_COMPATIBILITY_DATE = "2026-06-16";
-const WORKSPACE_AUTH_SERVICE_NAME = "workspace-auth-worker";
 const WORKSPACE_APP_MCP_MANIFEST_PATH = ".well-known/workspace-mcp-manifest.json";
 export const CLOUDFLARE_WORKER_UPLOAD_MODE = "versions-post-v1";
 
@@ -153,7 +153,7 @@ export async function deployWorkerSourceToCloudflare(input: CloudflareDeployInpu
     : undefined;
   const form = new FormData();
   form.append("metadata", new Blob([JSON.stringify({
-    bindings: workerMetadataBindings(projection, input.app, input.assets?.binding),
+    bindings: workerMetadataBindings(env, projection, input.app, input.assets?.binding),
     compatibility_date: CLOUDFLARE_COMPATIBILITY_DATE,
     ...(projection.bindings.some((binding) => binding.type === "hyperdrive_config")
       ? { compatibility_flags: ["nodejs_compat"] }
@@ -403,7 +403,7 @@ async function syncWorkerRuntimeConfig(env: Env, app: AppsAppRow, scriptName: st
   const managedNames = new Set(capability === "stream"
     ? ["STREAM", "WORKSPACE_STREAM", "WORKSPACE_STREAM_TOKEN", "CLOUDFLARE_STREAM_API_TOKEN"]
     : ["EMAIL", "WORKSPACE_EMAIL_FROM", "WORKSPACE_MAIL_TOKEN", "WORKSPACE_MAIL_ENDPOINT", "WORKSPACE_EMAIL_INBOUND_ADDRESS", "WORKSPACE_EMAIL_ROUTER_WORKER", "WORKSPACE_EMAIL_ROUTING_MODE", "WORKSPACE_MAIL_LEGACY_NATIVE_EMAIL", "WORKSPACE_MAIL_TRIGGER_ENABLED", "WORKSPACE_APP_ID"]);
-  const desiredBindings = workerMetadataBindings(projection, app)
+  const desiredBindings = workerMetadataBindings(env, projection, app)
     .filter((binding) => managedNames.has(readString(binding.name).trim()));
   const bindings = [
     ...existingBindings
@@ -572,7 +572,7 @@ async function syncPagesProjectConfig(env: Env, app: AppsAppRow, projectName: st
     service_bindings: {
       ...asRecord(productionConfig.service_bindings),
       ...(projection.bindings.some(binding => binding.type === "media")
-        ? { WORKSPACE_STREAM: { service: WORKSPACE_STREAM_WORKER, environment: "production" } } : {})
+        ? { WORKSPACE_STREAM: { service: workspaceStreamWorkerName(env), environment: "production" } } : {})
     }
   };
   const wranglerConfigHash = readString(productionConfig.wrangler_config_hash).trim();
@@ -805,7 +805,7 @@ async function configuredSecrets(env: Env, appId: string) {
   return configured;
 }
 
-function workerMetadataBindings(projection: RuntimeProjection, app: AppsAppRow, assetsBinding?: string) {
+function workerMetadataBindings(env: Env, projection: RuntimeProjection, app: AppsAppRow, assetsBinding?: string) {
   const bindings: Array<Record<string, unknown>> = [];
   for (const item of projection.envVars) {
     bindings.push({ name: item.name, text: item.value, type: "plain_text" });
@@ -833,13 +833,13 @@ function workerMetadataBindings(projection: RuntimeProjection, app: AppsAppRow, 
       bindings.push({ name: resource.bindingName, queue_name: resource.resourceName, type: "queue" });
     }
     if (resource.type === "media") {
-      bindings.push({ name: WORKSPACE_STREAM_BINDING, type: "service", service: WORKSPACE_STREAM_WORKER });
+      bindings.push({ name: WORKSPACE_STREAM_BINDING, type: "service", service: workspaceStreamWorkerName(env) });
     }
   }
   if (app.login_required === 1) {
     bindings.push({
       name: "AUTH_SERVICE",
-      service: WORKSPACE_AUTH_SERVICE_NAME,
+      service: configuredWorkerName(env.WORKSPACE_AUTH_WORKER_NAME, "WORKSPACE_AUTH_WORKER_NAME"),
       type: "service"
     });
   }

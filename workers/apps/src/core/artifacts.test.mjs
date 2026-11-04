@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from 'node:assert/strict';
 import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
@@ -8,7 +9,7 @@ import { build } from 'esbuild';
 
 const directory = await mkdtemp(join(tmpdir(), 'apps-artifact-cleanup-'));
 const output = join(directory, 'artifacts.mjs');
-await build({ entryPoints: [new URL('./artifacts.ts', import.meta.url).pathname], bundle: true, format: 'esm', platform: 'neutral', outfile: output, logLevel: 'silent' });
+await build({ entryPoints: [fileURLToPath(new URL('./artifacts.ts', import.meta.url))], bundle: true, format: 'esm', platform: 'neutral', outfile: output, logLevel: 'silent' });
 const { deleteR2ArtifactKeys } = await import(pathToFileURL(output).href);
 await rm(directory, { force: true, recursive: true });
 

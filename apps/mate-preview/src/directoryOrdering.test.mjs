@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -35,7 +36,7 @@ describe("conversation pin ordering and summary groups", () => {
         import { renderToStaticMarkup } from 'react-dom/server';
         import { StandaloneNavigation } from './components/StandaloneNavigation';
         export function render(props) { return renderToStaticMarkup(createElement(StandaloneNavigation, props)); }`,
-        loader: "tsx", resolveDir: new URL(".", import.meta.url).pathname },
+        loader: "tsx", resolveDir: fileURLToPath(new URL(".", import.meta.url)) },
       bundle: true, format: "esm", platform: "node", target: "node20", outfile, logLevel: "silent",
       banner: { js: "import { createRequire } from 'node:module'; const require = createRequire(import.meta.url);" }
     });

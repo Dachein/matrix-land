@@ -57,7 +57,7 @@ test("upload completion refreshes its folder without replacing a folder opened m
     await route.fulfill({ json: { item: uploaded } });
   });
 
-  await page.goto("/#/knowledge");
+  await page.goto("/knowledge");
   await openFolder(page, "A");
   await expect(page.locator('[data-knowledge-item-id="A-A.md"]')).toBeVisible();
   await page.locator('input[type="file"]').first().setInputFiles({ name: "uploaded.md", mimeType: "text/markdown", buffer: Buffer.from("# Uploaded") });
@@ -92,7 +92,7 @@ test("a directory refresh that completes after navigation keeps the new director
     uploadComplete = true;
     await route.fulfill({ json: { item: uploaded } });
   });
-  await page.goto("/#/knowledge");
+  await page.goto("/knowledge");
   await openFolder(page, "A");
   await expect(page.locator('[data-knowledge-item-id="A-A.md"]')).toBeVisible();
   await page.locator('input[type="file"]').first().setInputFiles({ name: "uploaded.md", mimeType: "text/markdown", buffer: Buffer.from("# Uploaded") });

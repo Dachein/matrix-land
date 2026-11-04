@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -11,7 +12,7 @@ async function loadActions() {
   const outfile = join(outdir, "actions.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("./actions.ts", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("./actions.ts", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,

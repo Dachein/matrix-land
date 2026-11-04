@@ -2,8 +2,11 @@ import type { Env } from "../core/types";
 import { HttpError } from "../core/types";
 import type { AppsAppRow } from "../db/rows";
 import { ensureManagedAppSecret } from "./appAuthSecrets";
+import { configuredWorkerName } from "../../../../src/shared/requiredConfiguration";
 
-export const WORKSPACE_STREAM_WORKER = "workspace-stream-worker";
+export function workspaceStreamWorkerName(env: Env) {
+  return configuredWorkerName(env.WORKSPACE_STREAM_WORKER_NAME, "WORKSPACE_STREAM_WORKER_NAME");
+}
 export const WORKSPACE_STREAM_BINDING = "WORKSPACE_STREAM";
 
 /** Grants App-local access; no Cloudflare account credential reaches the App. */
@@ -17,6 +20,7 @@ export async function provisionAppStream(env: Env, app: AppsAppRow) {
 }
 
 async function registerAppStream(env: Env, app: AppsAppRow) {
+  const worker = workspaceStreamWorkerName(env);
   if (!env.WORKSPACE_STREAM) throw new HttpError(503, "workspace_stream_service_not_configured");
   const health = await env.WORKSPACE_STREAM.fetch(new Request("https://workspace-stream.internal/health", { signal: AbortSignal.timeout(10_000) }));
   const status = await health.json() as { ok?: boolean; capabilities?: string[] };
@@ -34,5 +38,5 @@ async function registerAppStream(env: Env, app: AppsAppRow) {
     VALUES (?, ?, ?, ?, ?) ON CONFLICT(app_id) DO UPDATE SET org_id = excluded.org_id,
       token_sha256 = excluded.token_sha256, updated_at = excluded.updated_at`)
     .bind(app.id, app.org_id, hash, now, now).run();
-  return { name: WORKSPACE_STREAM_WORKER, provider: "workspace-stream", resourceId: `${WORKSPACE_STREAM_WORKER}:${app.id}` };
+  return { name: worker, provider: "workspace-stream", resourceId: `${worker}:${app.id}` };
 }

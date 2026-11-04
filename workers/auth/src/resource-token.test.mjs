@@ -360,7 +360,8 @@ describe("resource token endpoints", () => {
       ...createEnv(),
       AUTH_PUBLIC_URL: "https://ai.example.invalid",
       MCP_ACCESS_TOKEN_TTL_SECONDS: "3600",
-      MCP_IDLE_TTL_SECONDS: "604800"
+      MCP_IDLE_TTL_SECONDS: "604800",
+      PLATFORM_BRAND_JSON: JSON.stringify({ name: "Example Workspace", logoText: "EW", paletteId: "frontier" })
     };
     const user = await insertAuthUser(env, {
       id: "user-oauth",
@@ -507,7 +508,9 @@ describe("resource token endpoints", () => {
     assert.doesNotMatch(consentPolicy, /attacker\.example/);
 
     const consentHtml = await consentResponse.text();
-    assert.match(consentHtml, /Frontier Workspace Playground/);
+    assert.match(consentHtml, /Example Workspace/);
+    assert.match(consentHtml, />EW<\/span>/);
+    assert.doesNotMatch(consentHtml, /Playground|Workspace Wealth/);
     assert.match(consentHtml, /统一能力范围/);
     assert.match(consentHtml, /Forum/);
     assert.match(consentHtml, /Hub/);

@@ -5,10 +5,10 @@
 ## 安装前准备
 
 - Node.js 22.18+；执行 `npm ci` 安装锁定依赖。macOS/Linux 是本轮验证环境，SSH 服务器目标为 Linux。
-- 企业自己的 Cloudflare 账号、已激活 DNS Zone、Workers 付费计划及所选模块需要的产品能力。
+- 企业自己的 Cloudflare 账号、已激活 DNS Zone，以及所选模块需要的产品能力。Workers Paid 并非所有安装的统一前置条件；可以先评估 Free 计划，但本项目完整产品的免费计划兼容性尚未通过云端验收。Free 的 HTTP 请求 CPU 时间限额为 10 ms，完整功能与较重任务建议评估 Paid。计划额度与费用以 [Cloudflare 官方说明](https://developers.cloudflare.com/workers/platform/limits/) 为准；R2、邮件、模型等能力需分别核对。
 - 一个员工入口域名与一个服务根域名，例如 `work.example.com` 和 `workspace.example.com`。当前安装器要求它们都属于同一账号、同一 DNS Zone。支持多级根域名，不填写 `*.` 或 URL 协议。
-- 安装 API Token：账号读取、Zone 读取、DNS 编辑、Workers/Pages 部署，以及所选 D1、R2、Queues 等产品的管理权限。令牌权限随模块而变；使用专门的企业令牌，在 Cloudflare 内核对具体权限名称和资源范围。
-- 工作室、邮件、Stream、备份使用单独的运行令牌。只授予这些模块需要的资源权限，不把个人全局 API Key 当作运行凭据。
+- 平台运维 Token（配置字段 `apiTokenRef`）：账号读取、Zone 读取、DNS 编辑、Workers/Pages 部署，以及所选 D1、R2、Queues 等产品的管理权限。令牌权限随模块而变；使用专门的企业令牌，在 Cloudflare 内核对具体权限名称和资源范围。
+- 工作室、邮件、Stream、备份使用单独的后台执行令牌（配置字段 `runtimeTokenRef`）。只授予这些模块需要的资源权限，不把个人全局 API Key 当作运行凭据。
 - Cloudflare 邮件发送能力及可用的系统发件地址。部署 `send_email` 绑定不等于自动开通发送权限；发件域验证、相关产品开通及必要的邮件路由应事先完成。安装后实际收取验证码是必做验收。
 - 入站邮件如需由 Mail Worker 接收，还需在 Cloudflare 配置邮件域的 DNS/MX 与路由。安装器不会覆盖企业已有邮箱域的 MX。
 - 小程序需要企业自己的 AppID、微信平台配置和发布流程；仅部署 Miniapp API 不等于发布小程序。
@@ -18,7 +18,7 @@
 执行 `npm run setup`，打开终端给出的链接。不要把链接分享给别人。
 
 1. 填写名称、Logo 或品牌简写、配色、域名与实例标识。
-2. 配置 Cloudflare、邮箱白名单、首位管理员邮箱和可选 Entra。
+2. 配置 Cloudflare、邮箱白名单、首位管理员邮箱和可选 Entra。填写 Account ID 和 Zone ID 后，可以点击对应 Token 输入框旁的 **Generate**，打开限定账号和 Zone 的 Cloudflare 权限预填页。核对权限并在 Cloudflare 确认创建，再把令牌复制回对应输入框；本机随机字符串不能替代 Cloudflare 签发的 API Token。
 3. 选择模块和 LiteLLM 接入方式。
 4. 设置至少 16 字符的本地凭据库密码。
 5. 生成计划并审阅；确认后执行。
@@ -27,7 +27,17 @@
 
 首位所有者必须使用配置中的邮箱。普通邮箱注册不自动成为管理员；不能直接停用或删除现有所有者，应先移交给有效账号。
 
+安装器按实例标识生成 Worker 名称，并注入 `WORKSPACE_AUTH_WORKER_NAME`、`WORKSPACE_STREAM_WORKER_NAME` 和 `WORKSPACE_EMAIL_ROUTER_WORKER`。手工部署也必须使用当前实例的真实服务名；缺少配置会阻止对应的应用部署或邮件路由操作。
+
+Cloudflare 配置区的“如何创建？需要哪些权限？”包含创建步骤及第一阶段权限用途。平台运维令牌（Platform Operations Token）由机构运维人员管理，用于平台部署、初始化与升级；用户资源执行令牌（User Resource Execution Token）由后台服务保管，用于工作室执行用户已获授权的资源创建和应用发布。图形安装流程分别配置两枚令牌，便于独立更换和撤销。执行令牌不是每个用户的登录身份或个人 Token；已有应用访问、普通内容操作和模型对话不一定调用 Cloudflare 管理 API。当前两类令牌仍有账号级权限重叠，不能据此声称实现了每用户的 Cloudflare 权限隔离。账号、Zone 范围需在 Cloudflare 确认。旧配置的同一凭据引用仍可读取，但不再提供共用的图形配置入口。
+
 本机会话有效期两小时。刷新可继续当前会话、计划和执行进度；停止安装服务后，应使用同一实例配置、目录和凭据库密码重新生成/执行计划，已成功的步骤会通过状态记录恢复。密码不会自动上传或找回。
+
+执行结束后进入 **Summary**，自动保存部署结果到 `.workspace/<实例标识>/summary.json`。部署完成与真实登录、业务验收分别显示；失败的安装也会留下未完成记录。普通表单草稿保存在当前标签页，未提交的密码和 Token 不写入浏览器存储。
+
+安装器把配置引用的外部凭据一起加密保存在 `vault.json`，凭据库密码不保存。Summary 提供“下载安装备份”，导出包含 `installation.json`、`state.json`、加密 `vault.json` 和 `summary.json` 的 JSON 文件；把备份放到受控位置，密码另存密码管理器。该文件不包含云端业务数据库或对象存储内容。
+
+重新打开安装器并填写同一实例标识时，可从磁盘读取 Summary；“编辑配置 / 恢复升级”可继续配置。完整恢复时，将备份 `files` 中的四个 JSON 文件写回原 `.workspace/<实例标识>/`，输入原凭据库密码。保存的凭据仍有效时可用于重试或升级；凭据已撤销或过期时，应提供替代凭据。
 
 ## 命令行
 

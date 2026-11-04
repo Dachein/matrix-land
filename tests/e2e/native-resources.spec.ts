@@ -2062,7 +2062,7 @@ test("runs User Management and Skills Review as native Portal administration mod
   await onboardingActionButton.click();
   const reviewDialog = page.getByRole("dialog", { name: "Workspace Onboarding review detail" });
   await reviewDialog.locator("summary").filter({ hasText: "Submission and security details" }).click();
-  await expect(reviewDialog.getByRole("link", { name: "https://workspace-onboarding.vercel.app/login" })).toHaveAttribute("href", "https://workspace-onboarding.vercel.app/login");
+  await expect(reviewDialog.getByRole("link", { name: "https://onboarding.example.invalid/login" })).toHaveAttribute("href", "https://onboarding.example.invalid/login");
   await reviewDialog.getByRole("button", { exact: true, name: "Publication decision" }).click();
   await page.getByRole("option", { exact: true, name: "Listed" }).click();
   await reviewDialog.getByRole("button", { exact: true, name: "Category" }).click();

@@ -6,7 +6,7 @@ import {tmpdir} from 'node:os';
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {DatabaseSync} from 'node:sqlite';
-import {resolveConfig} from '../src/config.mjs';
+import {resolveConfig,validateCredentials} from '../src/config.mjs';
 import {buildPlan} from '../src/plan.mjs';
 import {seal,unseal,atomicJson,withLock,runSteps} from '../src/state.mjs';
 import {Cloudflare} from '../src/cloudflare.mjs';
@@ -27,6 +27,35 @@ test('plan selects only needed resources and fingerprints deployable source',asy
  const root=await fixture(t),plan=await buildPlan(example,root);assert.deepEqual(plan.services,['auth','portal']);assert.equal(plan.resources.length,3);assert.equal(plan.steps.at(-1).id,'verify');
  await writeFile(resolve(root,'src/change.ts'),'export const release=2');assert.notEqual((await buildPlan(example,root)).id,plan.id);
  const expanded=await buildPlan({...example,modules:['knowledge','studio','operations']},root);assert(expanded.resources.some(x=>x.kind==='queue'));assert(expanded.services.includes('backup'));assert(!expanded.services.includes('mate'));
+});
+
+test('missing runtime credentials stop installation before creating state or calling Cloudflare',async t=>{
+ const root=await fixture(t),input={...example,modules:['studio'],cloudflare:{...example.cloudflare,runtimeTokenRef:'env:WORKSPACE_RUNTIME_CF_TOKEN'}};
+ const plan=await buildPlan(input,root),env={CLOUDFLARE_API_TOKEN:'private-deployment',WORKSPACE_VAULT_PASSWORD:'local-test-password-long'};
+ let calls=0;
+ await assert.rejects(applyPlan(plan,root,{env,fetchImpl:async()=>{calls++;throw new Error('unexpected_network');},run:async()=>{calls++;}}),/missing_secret_reference:env:WORKSPACE_RUNTIME_CF_TOKEN/);
+ assert.equal(calls,0);
+ await assert.rejects(stat(resolve(root,'.workspace',plan.installationId)),{code:'ENOENT'});
+ assert.throws(()=>validateCredentials(resolveConfig({...input,cloudflare:example.cloudflare}),env),/runtime_token_reference_required/);
+ assert.doesNotThrow(()=>validateCredentials(plan.config,{...env,WORKSPACE_RUNTIME_CF_TOKEN:'private-runtime'}));
+});
+
+test('credential validation covers model provisioning and runtime keys without exposing values',()=>{
+ const config=resolveConfig({...example,modules:['mate'],cloudflare:{...example.cloudflare,runtimeTokenRef:'env:WORKSPACE_RUNTIME_CF_TOKEN'},models:{mode:'existing',baseUrl:'https://models.example.com',teamId:'test',models:['test'],maxBudget:1,provisioningSecretRef:'env:TEST_ADMIN',serviceSecretRef:'env:TEST_SERVICE'}});
+ const env={CLOUDFLARE_API_TOKEN:'private-deployment',WORKSPACE_RUNTIME_CF_TOKEN:'private-runtime',TEST_ADMIN:'private-model-admin'};
+ assert.throws(()=>validateCredentials(config,env),{message:'missing_secret_reference:env:TEST_SERVICE'});
+ assert.doesNotThrow(()=>validateCredentials(config,{...env,TEST_SERVICE:'private-model-runtime'}));
+});
+
+test('generated service bindings and runtime Worker names belong to the selected installation',async t=>{
+ const root=await fixture(t),plan=await buildPlan({...example,modules:['studio','stream','mail'],models:{mode:'existing',baseUrl:'https://models.example.com',teamId:'test',models:['test'],maxBudget:100,provisioningSecretRef:'env:TEST_ADMIN',serviceSecretRef:'env:TEST_SERVICE'}},root);
+ const state={resources:Object.fromEntries(plan.resources.map(r=>[`${r.kind}:${r.key}`,{name:r.name,id:`test-${r.key}`}]))};
+ const apps=renderWorker('apps',plan,state,root),mail=renderWorker('mail',plan,state,root);
+ assert.equal(apps.vars.WORKSPACE_AUTH_WORKER_NAME,'example-prod-auth');
+ assert.equal(apps.vars.WORKSPACE_STREAM_WORKER_NAME,'example-prod-stream');
+ assert.equal(mail.vars.WORKSPACE_EMAIL_ROUTER_WORKER,mail.name);
+ assert.equal(apps.services.find(s=>s.binding==='AUTH_SERVICE').service,apps.vars.WORKSPACE_AUTH_WORKER_NAME);
+ assert.equal(apps.services.find(s=>s.binding==='WORKSPACE_STREAM').service,apps.vars.WORKSPACE_STREAM_WORKER_NAME);
 });
 test('vault uses authenticated encryption and state is private on disk',async t=>{
  const root=await fixture(t),secret={key:'sk-very-secret'},value=seal(secret,'sixteen-characters-or-more');assert(!JSON.stringify(value).includes(secret.key));assert.deepEqual(unseal(value,'sixteen-characters-or-more'),secret);assert.throws(()=>unseal(value,'different-password-long'),/vault_unlock_failed/);const corrupted={...value,data:Buffer.from('altered').toString('base64')};assert.throws(()=>unseal(corrupted,'sixteen-characters-or-more'));await atomicJson(resolve(root,'state.json'),{status:'ready'});assert.equal((await stat(resolve(root,'state.json'))).mode&0o777,0o600);
@@ -79,9 +108,11 @@ test('install, interrupted retry and upgrade preserve data, secrets and resource
  const plan=await buildPlan(example,root);await assert.rejects(applyPlan(plan,root,{env,fetchImpl,run}),/simulated_lost_response/);
  const installed=await applyPlan(plan,root,{env,fetchImpl,run});assert.equal(installed.acceptance.status,'pending');assert.equal(remote.databases.length,2);assert.equal(remote.buckets.length,1);
  const before=JSON.parse(await readFile(resolve(directory,'state.json'),'utf8')),vaultBefore=unseal(JSON.parse(await readFile(resolve(directory,'vault.json'),'utf8')),env.WORKSPACE_VAULT_PASSWORD);
+ assert.equal(vaultBefore.INSTALLER_CREDENTIALS.CLOUDFLARE_API_TOKEN,env.CLOUDFLARE_API_TOKEN);
+ assert(!JSON.stringify(vaultBefore.INSTALLER_CREDENTIALS).includes(env.WORKSPACE_VAULT_PASSWORD));
  assert(!JSON.stringify(before).includes(vaultBefore.AUTH_JWT_SECRET));const authDb=dbs.get(before.resources['d1:auth'].id);authDb.exec("INSERT INTO auth_users (id,email,name,status) VALUES('saved-user','person@example.com','Person','active')");
  await writeFile(resolve(root,'package.json'),JSON.stringify({version:'0.2.0'}));await writeFile(resolve(root,'schemas/auth/0003_upgrade_test.sql'),'CREATE TABLE upgrade_marker (id TEXT PRIMARY KEY);');
- const upgrade=await buildPlan(example,root,{upgrade:true});await applyPlan(upgrade,root,{env,fetchImpl,run});assert.equal(authDb.prepare("SELECT email FROM auth_users WHERE id='saved-user'").get().email,'person@example.com');assert(authDb.prepare("SELECT name FROM sqlite_master WHERE name='upgrade_marker'").get());
+ const upgrade=await buildPlan(example,root,{upgrade:true});await applyPlan(upgrade,root,{env:{WORKSPACE_VAULT_PASSWORD:env.WORKSPACE_VAULT_PASSWORD},fetchImpl,run});assert.equal(authDb.prepare("SELECT email FROM auth_users WHERE id='saved-user'").get().email,'person@example.com');assert(authDb.prepare("SELECT name FROM sqlite_master WHERE name='upgrade_marker'").get());
  const after=JSON.parse(await readFile(resolve(directory,'state.json'),'utf8'));assert.equal(after.deployedRelease,'0.2.0');assert.deepEqual(after.resources,before.resources);assert.equal(unseal(JSON.parse(await readFile(resolve(directory,'vault.json'),'utf8')),env.WORKSPACE_VAULT_PASSWORD).AUTH_JWT_SECRET,vaultBefore.AUTH_JWT_SECRET);assert(after.backupDirectory);assert.equal(remote.databases.length,2);assert.equal(deployments.length,3);
  for(const db of dbs.values())db.close();
 });

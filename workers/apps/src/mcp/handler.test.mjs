@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { mkdtemp, rm } from "node:fs/promises";
@@ -17,7 +18,7 @@ async function handlerModule() {
       const outfile = join(outdir, "handler.mjs");
       await build({
         bundle: true,
-        entryPoints: [new URL("./handler.ts", import.meta.url).pathname],
+        entryPoints: [fileURLToPath(new URL("./handler.ts", import.meta.url))],
         format: "esm",
         logLevel: "silent",
         outfile,

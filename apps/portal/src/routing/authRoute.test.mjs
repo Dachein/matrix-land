@@ -3,7 +3,7 @@ import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, it } from "node:test";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { build } from "esbuild";
 
 async function loadAuthRoute() {
@@ -19,7 +19,7 @@ async function loadModule(entryPoint, name) {
   const outfile = join(outdir, `${name}.mjs`);
   await build({
     bundle: true,
-    entryPoints: [entryPoint.pathname],
+    entryPoints: [fileURLToPath(entryPoint)],
     format: "esm",
     logLevel: "silent",
     outfile,

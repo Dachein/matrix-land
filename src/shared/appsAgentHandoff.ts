@@ -391,7 +391,7 @@ export function buildAppDeveloperContext(app: AppsApp, generatedAt = new Date().
       enabled: hasEmailRouting,
       inboundAddressEnv: "WORKSPACE_EMAIL_INBOUND_ADDRESS",
       modeEnv: "WORKSPACE_EMAIL_ROUTING_MODE",
-      routerWorker: app.manifest.email?.routing.routerWorker || "workspace-mail-worker",
+      routerWorker: app.manifest.email?.routing.routerWorker,
       routerWorkerEnv: "WORKSPACE_EMAIL_ROUTER_WORKER"
     },
     customDatabase: {

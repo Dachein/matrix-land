@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -11,7 +12,7 @@ async function loadResourcesModule() {
   const outfile = join(outdir, "resources.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("./resources.ts", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("./resources.ts", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,
@@ -27,7 +28,7 @@ async function loadResourceCatalogModule() {
   const outfile = join(outdir, "appsResourceCatalog.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("../../../../src/shared/appsResourceCatalog.ts", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("../../../../src/shared/appsResourceCatalog.ts", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,

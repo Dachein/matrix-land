@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { mkdtemp, rm } from "node:fs/promises";
 import { join } from "node:path";
@@ -13,7 +14,7 @@ async function loadComponent() {
   try {
     await build({
       bundle: true,
-      entryPoints: [new URL("./PublicationAuthors.tsx", import.meta.url).pathname],
+      entryPoints: [fileURLToPath(new URL("./PublicationAuthors.tsx", import.meta.url))],
       external: ["lucide-react", "react", "react-dom"],
       format: "esm",
       logLevel: "silent",

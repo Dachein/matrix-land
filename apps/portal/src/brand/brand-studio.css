@@ -6,11 +6,11 @@
 .brand-studio .studio-main { min-width: 0; padding: var(--fw-space-10) var(--fw-space-8); }
 .brand-studio .studio-intro { padding-bottom: var(--fw-space-10); }
 .brand-studio .studio-kicker, .brand-studio .studio-number { font: var(--fw-weight-regular) var(--fw-text-caption)/var(--fw-line-body) var(--fw-font-mono); color: var(--fw-color-action-ink); }
-.brand-studio .studio-intro h1 { font: var(--fw-weight-light) var(--fw-text-title)/var(--fw-line-heading) var(--fw-font-display); white-space: pre-line; margin: var(--fw-space-5) 0; }
+.brand-studio .studio-intro h1 { font: var(--fw-weight-display) var(--fw-text-title)/var(--fw-line-heading) var(--fw-font-display); white-space: pre-line; margin: var(--fw-space-5) 0; }
 .brand-studio .studio-intro p { color: var(--fw-color-text-muted); max-width: var(--fw-reading-max); }
 .brand-studio .studio-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--fw-space-4); }
 .brand-studio .studio-section { display: grid; grid-template-columns: var(--fw-space-8) minmax(0, 1fr); gap: var(--fw-space-4); padding: var(--fw-space-8) 0; }
-.brand-studio .studio-section h2 { font: var(--fw-weight-light) var(--fw-text-section)/var(--fw-line-heading) var(--fw-font-display); margin-bottom: var(--fw-space-3); }
+.brand-studio .studio-section h2 { font: var(--fw-weight-display) var(--fw-text-section)/var(--fw-line-heading) var(--fw-font-display); margin-bottom: var(--fw-space-3); }
 .brand-studio .studio-section p { color: var(--fw-color-text-muted); margin-bottom: var(--fw-space-5); }
 .brand-studio .studio-actions { display: flex; flex-wrap: wrap; gap: var(--fw-space-3); margin-top: var(--fw-space-5); }
 .brand-studio .studio-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--fw-space-5); }

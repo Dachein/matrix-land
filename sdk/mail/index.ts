@@ -78,15 +78,14 @@ export class WorkspaceMail {
   constructor(
     options:
       | { transport: WorkspaceMailTransport }
-      | { endpoint?: string; token: string; fetch?: typeof fetch },
+      | { endpoint: string; token: string; fetch?: typeof fetch },
   ) {
     if ("transport" in options) {
       this.call = options.transport;
       return;
     }
-    const origin = new URL(
-      options.endpoint || "https://mail-api.example.invalid",
-    );
+    if (!options.endpoint?.trim()) throw new Error("workspace_mail_endpoint_required");
+    const origin = new URL(options.endpoint);
     if (
       origin.protocol !== "https:" ||
       origin.username ||

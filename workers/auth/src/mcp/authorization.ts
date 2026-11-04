@@ -1,4 +1,5 @@
 import { authPublicUrl } from "../configuration.ts";
+import { defaultPlatformBrand, platformBrandFromEnv, type PlatformBrand } from "../../../../src/shared/platformBrand.ts";
 import { resolveAuthorizeUser } from "../identity/users.ts";
 import { createMcpOAuthAuthorizationCode } from "../repositories/mcp/oauthCredentials.ts";
 import { createMcpOAuthConnection } from "../repositories/mcp/connections.ts";
@@ -67,7 +68,7 @@ export async function authorizeMcpOAuthClient(request: Request, env: Env, reques
     exp: Math.floor(Date.now() / 1000) + 10 * 60
   });
 
-  return mcpOAuthConsentPage({ clientName: client.clientName, redirectUri, requestToken, scopes, user });
+  return mcpOAuthConsentPage({ clientName: client.clientName, redirectUri, requestToken, scopes, user, brand: platformBrandFromEnv(env) });
 }
 
 async function completeMcpOAuthAuthorization(request: Request, env: Env, requestId: string) {
@@ -134,7 +135,8 @@ async function completeMcpOAuthAuthorization(request: Request, env: Env, request
   return deliverMcpOAuthCallback(callback);
 }
 
-export function mcpOAuthConsentPage(input: { clientName: string; redirectUri: string; requestToken: string; scopes: string[]; user: WorkspaceUser }) {
+export function mcpOAuthConsentPage(input: { clientName: string; redirectUri: string; requestToken: string; scopes: string[]; user: WorkspaceUser; brand?: PlatformBrand }) {
+  const brand = input.brand ?? defaultPlatformBrand;
   const userName = input.user.name || input.user.email || input.user.id;
   const userInitial = Array.from(userName.trim())[0]?.toUpperCase() || "F";
   const domains = mcpOAuthConsentDomains();
@@ -163,14 +165,14 @@ export function mcpOAuthConsentPage(input: { clientName: string; redirectUri: st
 <body>
   <main class="page">
     <header class="header">
-      <div class="brand"><span class="brand-mark" aria-hidden="true">AI</span><span class="brand-copy"><strong>Frontier Workspace Playground</strong><small>Workspace Wealth 工作空间</small></span></div>
+      <div class="brand"><span class="brand-mark" aria-hidden="true">${escapeHtml(brand.logoText)}</span><span class="brand-copy"><strong>${escapeHtml(brand.name)}</strong><small>工作空间</small></span></div>
       <div class="user"><span class="avatar" aria-hidden="true">${escapeHtml(userInitial)}</span><span class="user-copy"><small>当前登录</small><strong>${escapeHtml(userName)}</strong></span></div>
     </header>
     <section class="paper">
       <div class="intro">
         <span class="kicker"><span class="shield" aria-hidden="true">✓</span>安全连接</span>
         <h1>授权 Workspace MCP</h1>
-        <p><strong>${escapeHtml(input.clientName)}</strong> 希望连接你的 Frontier Workspace 工作空间。</p>
+        <p><strong>${escapeHtml(input.clientName)}</strong> 希望连接你的 ${escapeHtml(brand.name)} 工作空间。</p>
       </div>
       <div class="connection">
         <div class="row"><span class="row-label">连接方式</span><span class="row-value">统一 MCP 工具连接</span></div>

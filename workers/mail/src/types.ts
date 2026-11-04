@@ -13,6 +13,7 @@ export type MailboxIdentity = {
 export type MailEnv = {
   WORKSPACE_MATE_EMAIL_DOMAIN?: string;
   WORKSPACE_EMAIL_ROUTING_DOMAIN?: string;
+  WORKSPACE_EMAIL_ROUTER_WORKER?: string;
   WORKSPACE_MAIL_URL?: string;
   RUNTIME_DB: D1Database;
   MAIL_OBJECTS: R2Bucket;

@@ -11,7 +11,7 @@ export async function probeModel(env: Pick<Env, 'LITELLM_URL' | 'LITELLM_PROVISI
  if (!Array.isArray(models) || typeof models[0] !== 'string') throw new HttpError(503, 'model_acceptance_not_configured');
  const model = models[0];
  const call = async (path: string, key: string, body: unknown) => {
-  const response = await fetchImpl(new URL(path, base), {method:'POST', redirect:'error', signal:AbortSignal.timeout(25000), headers:{authorization:`Bearer ${key}`,'content-type':'application/json'}, body:JSON.stringify(body)});
+  const response = await fetchImpl(new URL(path, base), {method:'POST', redirect:'manual', signal:AbortSignal.timeout(25000), headers:{authorization:`Bearer ${key}`,'content-type':'application/json'}, body:JSON.stringify(body)});
   if (!response.ok) throw new HttpError(502, 'model_acceptance_upstream_failed');
   return await response.json() as Record<string, unknown>;
  };

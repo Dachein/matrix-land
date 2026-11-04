@@ -1,25 +1,8 @@
 import type { HomeAppDisplay, PublicationListing, PortalApp } from "./types.ts";
 
-const recommendedNames = [
-  ["ByeOA", "Bye!OA"],
-  ["Frontier Workspace Cookbook"],
-  ["Workspace Academy"],
-  ["Workspace Onboarding"],
-  ["Workspace Ontology Design"],
-  ["香港公寓预定", "香港公寓预订"],
-  ["WorkBuddy 申请", "WorkBuddy申请", "Workbuddy 使用申请"]
-];
-
-function normalizedName(value: string) {
-  return value.trim().toLowerCase().replace(/[\s_-]+/g, "");
-}
-
 export function homeAppPresentation(listing: PublicationListing): { display: HomeAppDisplay } {
-  const recommended = recommendedNames.some((names) => names.some((name) => (
-    normalizedName(name) === normalizedName(listing.name)
-  )));
   return {
-    display: listing.homeDisplay ?? (recommended ? "recommended" : "normal")
+    display: listing.homeDisplay ?? "normal"
   };
 }
 

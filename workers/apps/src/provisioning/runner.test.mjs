@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import { testInstallation } from "../../../../tests/helpers/installation.mjs";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -17,7 +18,7 @@ async function loadTsModule(entryPoint) {
   const outfile = join(outdir, `${entryPoint.replace(/[^a-z0-9]+/gi, "-")}.mjs`);
   await build({
     bundle: true,
-    entryPoints: [new URL(entryPoint, import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL(entryPoint, import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,

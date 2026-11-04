@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import { installationOptions } from "../src/installation.mjs";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
@@ -933,7 +934,7 @@ describe("workspace-cli", () => {
     assert.equal(config.mcpServers.existing.command, "existing-server");
     assert.equal(config.mcpServers["workspace-ai"].command, "legacy-server");
     assert.equal(config.mcpServers[fixtureServer].command, process.execPath);
-    assert.deepEqual(config.mcpServers[fixtureServer].args, [new URL("../bin/frontier-workspace.mjs",import.meta.url).pathname, "mcp", "serve"]);
+    assert.deepEqual(config.mcpServers[fixtureServer].args, [fileURLToPath(new URL("../bin/frontier-workspace.mjs",import.meta.url)), "mcp", "serve"]);
     assert.equal(config.mcpServers[fixtureServer].env.WORKSPACE_CREDENTIAL_STORE, "file");
     assert.equal(config.mcpServers[fixtureServer].env.WORKSPACE_CREDENTIAL_PATH, join(directory, ".frontier-workspace", "instances", fixtureKey, "credentials.json"));
     assert.equal(config.mcpServers[fixtureServer].env.WORKSPACE_REFRESH_LOCK_PATH, join(directory, ".frontier-workspace", "instances", fixtureKey, "oauth-refresh.lock"));
@@ -967,7 +968,7 @@ describe("workspace-cli", () => {
     assert.equal(config.custom, true);
     assert.equal(config.mcpServers.existing.command, "existing-server");
     assert.equal(config.mcpServers[fixtureServer].command, process.execPath);
-    assert.deepEqual(config.mcpServers[fixtureServer].args, [new URL("../bin/frontier-workspace.mjs",import.meta.url).pathname, "mcp", "serve"]);
+    assert.deepEqual(config.mcpServers[fixtureServer].args, [fileURLToPath(new URL("../bin/frontier-workspace.mjs",import.meta.url)), "mcp", "serve"]);
     assert.equal(config.mcpServers[fixtureServer].env.WORKSPACE_CREDENTIAL_STORE, "file");
     assert.equal(config.mcpServers[fixtureServer].type, undefined);
     assert.deepEqual(JSON.parse(output.value()), {
@@ -1022,7 +1023,7 @@ describe("workspace-cli", () => {
     ]);
     for (const { args } of commands.filter(({ args }) => args[1] === "add")) {
       assert.ok(args.includes(fixtureServer));
-      assert.ok(args.includes(new URL("../bin/frontier-workspace.mjs",import.meta.url).pathname));
+      assert.ok(args.includes(fileURLToPath(new URL("../bin/frontier-workspace.mjs",import.meta.url))));
       assert.ok(args.includes("serve"));
       assert.equal(args.some((value) => String(value).startsWith("http")), false);
     }

@@ -1,6 +1,7 @@
 // Test fixtures declare their installation explicitly; production has no vendor defaults.
 export const testInstallation = Object.freeze({
   WORKSPACE_MATE_EMAIL_DOMAIN:'mate.example.invalid',WORKSPACE_EMAIL_ROUTING_DOMAIN:'mail.example.invalid',WORKSPACE_MAIL_URL:'https://mail-api.example.invalid',WORKSPACE_EMAIL_ROUTER_WORKER:'workspace-mail-worker',
+  WORKSPACE_AUTH_WORKER_NAME: 'example-prod-auth', WORKSPACE_STREAM_WORKER_NAME: 'example-prod-stream',
   AUTH_ISSUER: 'https://auth.example.invalid', AUTH_WORKER_URL: 'https://auth.example.invalid',
   AUTH_PUBLIC_URL: 'https://ai.example.invalid', PORTAL_URL: 'https://ai.example.invalid',
   LITELLM_URL: 'https://token.example.invalid', APPS_BASE_DOMAIN: 'example.invalid',

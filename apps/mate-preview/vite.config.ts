@@ -1,13 +1,14 @@
+import { fileURLToPath } from "node:url";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  root: new URL(".", import.meta.url).pathname,
-  publicDir: new URL("../../public", import.meta.url).pathname,
+  root: fileURLToPath(new URL(".", import.meta.url)),
+  publicDir: fileURLToPath(new URL("../../public", import.meta.url)),
   plugins: [react()],
   resolve: {
     alias: {
-      "@frontier-workspace/mate": new URL("../../sdk/mate/dist/index.js", import.meta.url).pathname
+      "@frontier-workspace/mate": fileURLToPath(new URL("../../sdk/mate/dist/index.js", import.meta.url))
     }
   },
   build: {

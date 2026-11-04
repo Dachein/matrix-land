@@ -485,10 +485,10 @@
 }
 
 .portal-nav-item.active {
-  border-color: var(--portal-line-strong);
-  background: var(--portal-paper);
-  color: var(--portal-ink);
-  font-weight: 880;
+  border-color: var(--portal-ink);
+  background: var(--portal-ink);
+  color: var(--portal-paper);
+  font-weight: 800;
 }
 
 .portal-nav-item.active::before {
@@ -536,8 +536,8 @@
 }
 
 .portal-nav-item.active .portal-nav-icon {
-  border-radius: 2px;
-  background: var(--portal-ink);
+  border-radius: 0;
+  background: transparent;
   color: var(--portal-signal);
   box-shadow: none;
 }

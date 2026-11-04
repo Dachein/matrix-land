@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { mkdtemp, rm } from "node:fs/promises";
@@ -57,7 +58,7 @@ async function loadModule() {
   const outfile = join(outdir, "storage.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("./storage.ts", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("./storage.ts", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,

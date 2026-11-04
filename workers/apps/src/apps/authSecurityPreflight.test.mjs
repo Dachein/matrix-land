@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { mkdtemp, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -13,7 +14,7 @@ async function loadModule() {
   const outfile = join(outdir, "authSecurityPreflight.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("./authSecurityPreflight.ts", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("./authSecurityPreflight.ts", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,

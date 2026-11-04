@@ -213,7 +213,7 @@ export const fallbackPortal: PortalCatalog = {
       ],
       sdkStatus: "pending",
       scopes: ["profile:read"],
-      launchUrl: "https://workspace-onboarding.vercel.app/login",
+      launchUrl: "https://onboarding.example.invalid/login",
       callbackUrl: "",
       category: "Workflow",
       tags: ["app", "onboarding", "hr", "vercel"],

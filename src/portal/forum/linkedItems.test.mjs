@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -11,7 +12,7 @@ async function loadLinkedItems() {
   const outfile = join(outdir, "linked-items.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("./linkedItems.ts", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("./linkedItems.ts", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,

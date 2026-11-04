@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -11,7 +12,7 @@ async function loadViewModels() {
   const outfile = join(outdir, "view-models.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("./viewModels.ts", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("./viewModels.ts", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,
@@ -80,7 +81,7 @@ describe("Portal home application entries", () => {
       ]
     }));
 
-    assert.deepEqual(shortcuts.map((shortcut) => shortcut.id), ["academy", "user-app", "workbuddy-request"]);
+    assert.deepEqual(shortcuts.map((shortcut) => shortcut.id), ["user-app", "workbuddy-request", "academy"]);
   });
 
   it("honors a per-user dismissal of an accessible App", async () => {
@@ -116,8 +117,8 @@ describe("Portal home application entries", () => {
 
     assert.equal(shortcuts.length, 7);
     assert.equal(shortcuts.filter((shortcut) => shortcut.status === "pending_review").length, 6);
-    assert.equal(shortcuts[0].name, "WorkBuddy 申请");
-    assert.equal(shortcuts[1].launchTarget.launchUrl, "https://pending-1.example.test");
+    assert.equal(shortcuts[0].launchTarget.launchUrl, "https://pending-1.example.test");
+    assert.equal(shortcuts[6].name, "WorkBuddy 申请");
     assert.equal(shortcuts.some((shortcut) => shortcut.id === "workbuddy-request"), true);
   });
 
@@ -138,10 +139,10 @@ describe("Portal home application entries", () => {
 });
 
 describe("Home public and exclusive application groups", () => {
-  it("pins the seven public recommendations and sorts each group by latest update", async () => {
+  it("sorts explicitly recommended applications before ordinary applications", async () => {
     const { buildPortalHomeApplications } = await loadViewModels();
-    const names = ["Bye!OA", "Frontier Workspace cookbook", "Workspace Academy", "Workspace Onboarding", "Workspace Ontology Design", "香港公寓预订", "Workbuddy 使用申请"];
-    const recommended = names.map((name, index) => ({ ...appListing({ id: `rec-${index}`, name, launchUrl: "https://app.test" }), visibility: "org", updatedAt: `2026-10-${String(index + 1).padStart(2, "0")}` }));
+    const names = ["Team Calendar", "Example Cookbook", "Learning Library"];
+    const recommended = names.map((name, index) => ({ ...appListing({ id: `rec-${index}`, name, launchUrl: "https://app.test" }), visibility: "org", homeDisplay: "recommended", updatedAt: `2026-10-${String(index + 1).padStart(2, "0")}` }));
     const ordinary = [
       { ...appListing({ id: "old", launchUrl: "https://old.test" }), updatedAt: "2026-10-01" },
       { ...appListing({ id: "new", launchUrl: "https://new.test" }), updatedAt: "2026-10-21" }
@@ -167,16 +168,16 @@ describe("Home public and exclusive application groups", () => {
     assert.deepEqual(new Set(result.hiddenApps.map((app) => app.id)), new Set(["hidden", "dismissed"]));
   });
 
-  it("lets explicit normal override the default recommendation and sorts recommendations by updates", async () => {
+  it("uses explicit recommendation metadata without inferring it from application names", async () => {
     const { buildPortalHomeApplications } = await loadViewModels();
     setHomePins([]);
     const listings = [
-      { ...appListing({ id: "byeoa", name: "ByeOA", launchUrl: "https://byeoa.test" }), homeDisplay: "normal", updatedAt: "2026-10-21" },
+      { ...appListing({ id: "calendar", name: "Team Calendar", launchUrl: "https://calendar.test" }), homeDisplay: "normal", updatedAt: "2026-10-21" },
       { ...appListing({ id: "academy", name: "Workspace Academy", launchUrl: "https://academy.test" }), updatedAt: "2026-10-01" },
       { ...appListing({ id: "custom", launchUrl: "https://custom.test" }), homeDisplay: "recommended", updatedAt: "2026-10-20" }
     ];
     const result = buildPortalHomeApplications(catalog({ listings }));
-    assert.deepEqual(result.publicApps.map((app) => app.id), ["custom", "academy", "byeoa"]);
+    assert.deepEqual(result.publicApps.map((app) => app.id), ["custom", "calendar", "academy"]);
   });
 });
 

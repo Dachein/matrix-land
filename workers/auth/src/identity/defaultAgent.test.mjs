@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import { testInstallation } from "../../../../tests/helpers/installation.mjs";
 import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
@@ -18,7 +19,7 @@ function appsWorker() {
   return appsWorkerPromise ??= (async () => {
     const directory = await mkdtemp(join(tmpdir(), "default-agent-test-"));
     const outfile = join(directory, "apps.mjs");
-    await build({ entryPoints: [new URL("../../../apps/src/worker.ts", import.meta.url).pathname],
+    await build({ entryPoints: [fileURLToPath(new URL("../../../apps/src/worker.ts", import.meta.url))],
       bundle: true, format: "esm", platform: "neutral", outfile, logLevel: "silent" });
     const mod = await import(pathToFileURL(outfile).href);
     await rm(directory, { recursive: true, force: true });

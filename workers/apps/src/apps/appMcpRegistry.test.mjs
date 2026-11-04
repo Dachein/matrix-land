@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -14,7 +15,7 @@ async function registryModule() {
     const outfile = join(outdir, "registry.mjs");
     await build({
       bundle: true,
-      entryPoints: [new URL("./appMcpRegistry.ts", import.meta.url).pathname],
+      entryPoints: [fileURLToPath(new URL("./appMcpRegistry.ts", import.meta.url))],
       format: "esm",
       logLevel: "silent",
       outfile,

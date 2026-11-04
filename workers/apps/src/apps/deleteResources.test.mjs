@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import assert from "node:assert/strict";
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -13,7 +14,7 @@ async function loadModule() {
   const outfile = join(outdir, "deleteResources.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("./deleteResources.ts", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("./deleteResources.ts", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,

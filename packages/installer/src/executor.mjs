@@ -4,7 +4,7 @@ import { createHash, randomBytes } from 'node:crypto';
 import { buildPlan } from './plan.mjs';
 import { registry } from './registry.mjs';
 import { atomicJson, readJson, seal, unseal, withLock, runSteps } from './state.mjs';
-import { resolveSecret } from './config.mjs';
+import { resolveSecret, validateCredentials, installationCredentials } from './config.mjs';
 import { Cloudflare } from './cloudflare.mjs';
 import { renderWorker } from './render.mjs';
 import { command } from './process.mjs';
@@ -13,6 +13,10 @@ import { deployServer, backupAndRestoreServer } from './server.mjs';
 
 export async function applyPlan(plan,root,{directory=resolve(root,'.workspace',plan.installationId),env=process.env,fetchImpl=fetch,run=command,onProgress=()=>{}}={}){
  const expected=await buildPlan(plan.config,root,{upgrade:plan.mode==='upgrade'});if(expected.id!==plan.id)throw new Error('reviewed_plan_changed_regenerate_plan');
+ const previousEncrypted=await readJson(resolve(directory,'vault.json'),null);
+ const previousVault=previousEncrypted?unseal(previousEncrypted,env.WORKSPACE_VAULT_PASSWORD):null;
+ env={...previousVault?.INSTALLER_CREDENTIALS,...env};
+ validateCredentials(plan.config,env);
  return withLock(directory,async()=>{
   const statePath=resolve(directory,'state.json'),vaultPath=resolve(directory,'vault.json');
   let state=await readJson(statePath,{installationId:plan.installationId,resources:{},steps:{}});
@@ -22,7 +26,8 @@ export async function applyPlan(plan,root,{directory=resolve(root,'.workspace',p
   state.planId=plan.id;state.configHash=plan.configHash;
   const save=()=>atomicJson(statePath,state),password=env.WORKSPACE_VAULT_PASSWORD;
   if(!password||password.length<16)throw new Error('set_WORKSPACE_VAULT_PASSWORD_minimum_16_characters');
-  const encrypted=await readJson(vaultPath,null),vault=encrypted?unseal(encrypted,password):{};
+  const vault=previousVault??{};
+  vault.INSTALLER_CREDENTIALS=installationCredentials(plan.config,env);
   const saveVault=()=>atomicJson(vaultPath,seal(vault,password));
   for(const name of new Set(plan.services.flatMap(s=>registry[s].secrets??[]).filter(k=>!k.startsWith('LITELLM_'))))vault[name]??=randomBytes(32).toString('base64url');
   // The caller and verifier use the same secret under their boundary-specific names.

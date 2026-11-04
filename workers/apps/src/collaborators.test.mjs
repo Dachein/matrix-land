@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import { testInstallation } from "../../../tests/helpers/installation.mjs";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -33,7 +34,7 @@ async function loadWorkerModule() {
   const outfile = join(outdir, "worker.mjs");
   await build({
     bundle: true,
-    entryPoints: [new URL("./worker.ts", import.meta.url).pathname],
+    entryPoints: [fileURLToPath(new URL("./worker.ts", import.meta.url))],
     format: "esm",
     logLevel: "silent",
     outfile,
@@ -56,7 +57,7 @@ async function publicationAuthorsModule() {
       const outfile = join(outdir, "publicationAuthors.mjs");
       await build({
         bundle: true,
-        entryPoints: [new URL("./publicationAuthors.ts", import.meta.url).pathname],
+        entryPoints: [fileURLToPath(new URL("./publicationAuthors.ts", import.meta.url))],
         format: "esm",
         logLevel: "silent",
         outfile,

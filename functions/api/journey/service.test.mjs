@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { DatabaseSync } from "node:sqlite";
 import { describe, it } from "node:test";
-import { evaluatePortalBadgeEvidence, normalizeAgentPreference, readPortalJourney, readPortalJourneySnapshot, recomputePortalUserJourney } from "./service.ts";
+import { createJourneyApi, evaluatePortalBadgeEvidence, normalizeAgentPreference, readPortalJourney, readPortalJourneySnapshot, recomputePortalUserJourney } from "./service.ts";
 import {
   monthlyBudgetUsdForPortalJourneyLevel,
   normalizePortalJourneyLevelKey,
@@ -24,6 +24,18 @@ const currentUser = {
 };
 
 describe("journey service", () => {
+  it("reads a user's profile without provisioning model budgets when models are disabled", async () => {
+    const db = createJourneyActivityDb({});
+    let synced = false;
+    const api = createJourneyApi({
+      requireDb: value => value,
+      resolveCurrentUser: async () => currentUser,
+      syncMonthlyBudget: async () => { synced = true; throw new Error("model service unavailable"); }
+    });
+    const overview = await api.readCurrentUserOverview({ env: { DB: db, WORKSPACE_MODULES_JSON: '["discussions"]' } });
+    assert.equal(overview.currentUser.id, currentUser.id);
+    assert.equal(synced, false);
+  });
   it("maps L1-L5 monthly budgets and falls back unknown levels to L1", () => {
     assert.deepEqual([
       monthlyBudgetUsdForPortalJourneyLevel("newcomer"),

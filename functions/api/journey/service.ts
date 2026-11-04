@@ -16,6 +16,7 @@ import type {
   PortalJourneyUserBadge
 } from "../../../src/shared/types.ts";
 import { cacheableUserAvatarUrl } from "../users/avatar.ts";
+import { workspaceModulesFromEnv } from "../../../src/shared/workspaceModules.ts";
 import type {
   PortalLiveDeferredContext,
   PortalLivePublisherEnv
@@ -26,6 +27,7 @@ import { normalizeIdentityProvider, normalizeRole } from "../values.ts";
 type CurrentUser = PortalCatalog["currentUser"];
 
 type JourneyEnv = PortalLivePublisherEnv & {
+  WORKSPACE_MODULES_JSON?: string;
   AUTH_WORKER_URL?: string;
   DB?: D1Database;
   LITELLM_MASTER_KEY?: string;
@@ -117,7 +119,7 @@ export function createJourneyApi<TEnv extends JourneyEnv>(deps: JourneyDeps<TEnv
         ? (activityDb, input) => deps.emitActivityEvent!(activityDb, input, context)
         : undefined,
       appsAuthorIndex,
-      syncMonthlyBudget: deps.syncMonthlyBudget
+      syncMonthlyBudget: deps.syncMonthlyBudget && workspaceModulesFromEnv(context.env).includes("models")
         ? (levelKey) => deps.syncMonthlyBudget!(context, currentUser, levelKey)
         : undefined
     });
@@ -196,7 +198,7 @@ export function createJourneyApi<TEnv extends JourneyEnv>(deps: JourneyDeps<TEnv
           ? (activityDb, input) => deps.emitActivityEvent!(activityDb, input, context)
           : undefined,
         appsAuthorIndex,
-        syncMonthlyBudget: deps.syncMonthlyBudget
+        syncMonthlyBudget: deps.syncMonthlyBudget && workspaceModulesFromEnv(context.env).includes("models")
           ? (levelKey) => deps.syncMonthlyBudget!(context, currentUser, levelKey)
           : undefined
       });

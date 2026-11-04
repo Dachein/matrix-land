@@ -1,4 +1,4 @@
-import { mkdir, writeFile, readFile, rm, symlink, readdir } from 'node:fs/promises';
+import { mkdir, writeFile, readFile, rm, cp, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { createHash, randomBytes } from 'node:crypto';
 import { buildPlan } from './plan.mjs';
@@ -79,9 +79,17 @@ export async function applyPlan(plan,root,{directory=resolve(root,'.workspace',p
     const existing=await cf.request(projectPath,{missing:true});if(existing&&!state.portalProject)throw new Error('pages_project_not_owned');
     if(!existing){state.portalProject={name:project,status:'creating'};await save();await cf.request('/pages/projects',{method:'POST',body:{name:project,production_branch:'main'}});}
     const cwd=resolve(generated,'portal');await mkdir(cwd,{recursive:true,mode:0o700});await atomicJson(resolve(cwd,'wrangler.json'),renderWorker('portal',plan,state,root));
-    try{await symlink(resolve(root,'functions'),resolve(cwd,'functions'));}catch(e){if(e.code!=='EEXIST')throw e;}
+    // Publish a complete artifact instead of relying on Pages' temporary build
+    // beside a symlinked functions directory. All file-based routes and
+    // middleware are compiled into the stable advanced-mode Worker first.
+    await rm(resolve(cwd,'functions'),{force:true});
+    const artifact=resolve(cwd,'artifact'),bundle=resolve(cwd,'functions-bundle');
+    await rm(artifact,{recursive:true,force:true});await rm(bundle,{recursive:true,force:true});
+    await cp(resolve(root,'dist'),artifact,{recursive:true});
+    await wr(['pages','functions','build',resolve(root,'functions'),'--outdir',bundle,'--compatibility-date','2026-10-01','--compatibility-flags','nodejs_compat','global_fetch_strictly_public'],{cwd});
+    await cp(resolve(bundle,'index.js'),resolve(artifact,'_worker.js'));
     await wr(['pages','secret','bulk','--project-name',project],{cwd,input:JSON.stringify(secretsFor('portal'))});
-    await wr(['pages','deploy',resolve(root,'dist'),'--project-name',project,'--branch','main'],{cwd});
+    await wr(['pages','deploy',artifact,'--project-name',project,'--branch','main','--no-bundle'],{cwd});
     const domain=plan.config.domains.portalHostname;const domains=await cf.request(`${projectPath}/domains`);
     if(!domains.some(x=>x.name===domain))await cf.request(`${projectPath}/domains`,{method:'POST',body:{name:domain}});
     const records=await cf.request(`/zones/${plan.config.cloudflare.zoneId}/dns_records?name=${encodeURIComponent(domain)}`,{global:true});

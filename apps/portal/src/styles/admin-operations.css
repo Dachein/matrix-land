@@ -7,7 +7,7 @@
 
 .portal-admin-model-field > legend {
   font-size: var(--portal-type-ui);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
   margin-bottom: var(--portal-space-3);
 }
 
@@ -63,7 +63,7 @@
 }
 
 .portal-hub-review-filter .workspaceListboxTrigger {
-  min-height: 38px;
+  min-height: var(--fw-control-height);
 }
 
 .portal-hub-review-filter .workspaceListboxValue strong {
@@ -77,17 +77,17 @@
 
 .portal-admin-policy-options {
   display: grid;
-  gap: 12px;
-  padding: 20px 24px 8px;
+  gap: var(--fw-space-3);
+  padding: var(--fw-space-5) var(--fw-space-6) var(--fw-space-2);
 }
 
 .portal-admin-policy-option {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
-  padding: 16px;
+  gap: var(--fw-space-3);
+  padding: var(--fw-space-4);
   border: 1px solid var(--portal-line);
-  border-radius: 3px;
+  border-radius: var(--fw-radius-control);
   cursor: pointer;
 }
 
@@ -110,7 +110,7 @@
 }
 
 .portal-admin-policy-domains {
-  padding: 16px 24px 8px;
+  padding: var(--fw-space-4) var(--fw-space-6) var(--fw-space-2);
 }
 
 .portal-admin-policy-domains textarea {
@@ -118,8 +118,8 @@
   min-height: 160px;
   resize: vertical;
   border: 1px solid var(--portal-line);
-  border-radius: 3px;
-  padding: 12px;
+  border-radius: var(--fw-radius-control);
+  padding: var(--fw-space-3);
   color: inherit;
   background: var(--portal-paper-soft);
   font: inherit;
@@ -132,7 +132,7 @@
 
 .portal-admin-policy-updated {
   display: block;
-  padding: 0 24px 20px;
+  padding: 0 var(--fw-space-6) var(--fw-space-5);
 }
 
 .portal-admin-user-filters {
@@ -159,7 +159,7 @@
 }
 
 .portal-admin-user-filter .workspaceListboxTrigger {
-  min-height: 38px;
+  min-height: var(--fw-control-height);
 }
 
 .portal-admin-user-filter .workspaceListboxValue strong {
@@ -177,7 +177,7 @@
 }
 
 .portal-admin-mcp-status-filter .workspaceListboxTrigger {
-  min-height: 38px;
+  min-height: var(--fw-control-height);
 }
 
 .portal-admin-mcp-table {
@@ -290,7 +290,7 @@
 
 .portal-admin-inline-error > span {
   flex: 1;
-  font-weight: 700;
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-admin-inline-error .secondaryButton {
@@ -305,7 +305,7 @@
 .portal-admin-dialog-body .formFieldLabel {
   color: var(--portal-muted);
   font-size: var(--portal-type-ui);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-admin-dialog-body .selectInput,
@@ -330,9 +330,9 @@
   border: 1px solid color-mix(in srgb, var(--portal-green) 28%, transparent);
   border-radius: 999px;
   color: var(--portal-green);
-  font-size: 11px;
-  font-weight: 800;
-  padding: 3px 8px;
+  font-size: var(--fw-text-meta);
+  font-weight: var(--fw-weight-strong);
+  padding: 3px var(--fw-space-2);
   white-space: nowrap;
 }
 
@@ -486,7 +486,7 @@
 .portal-review-cover-editor .appCoverFieldHeader {
   color: var(--portal-muted);
   font-size: var(--portal-type-ui);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
   justify-content: space-between;
 }
 
@@ -595,7 +595,7 @@
   color: var(--portal-warning);
   display: inline-flex;
   font-size: var(--portal-type-ui);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
   gap: var(--portal-space-1);
   margin-top: var(--portal-space-3);
 }
@@ -655,7 +655,7 @@
   align-items: center;
   color: var(--portal-ink);
   display: inline-flex;
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
   gap: var(--portal-space-1);
   max-width: 100%;
   text-decoration-color: var(--portal-line-strong);
@@ -825,7 +825,7 @@
 .portal-admin-disclosure > summary {
   cursor: pointer;
   font-size: var(--portal-type-ui);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
   min-height: 28px;
 }
 

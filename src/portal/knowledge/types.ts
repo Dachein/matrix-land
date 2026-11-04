@@ -1,6 +1,8 @@
 import type { useI18n } from "../i18n";
 
 export type KnowledgeTranslate = ReturnType<typeof useI18n>["t"];
+export type KnowledgeNoticeTone = "info" | "success" | "warning" | "error";
+export type KnowledgeMessageSetter = (message: string, tone?: KnowledgeNoticeTone) => void;
 export type KnowledgeSection = "my" | "services" | "recent";
 export type KnowledgeViewMode = "list" | "grid";
 export type KnowledgeKind = "folder" | "html" | "markdown" | "image" | "pdf" | "text" | "binary";

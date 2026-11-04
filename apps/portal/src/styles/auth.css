@@ -70,7 +70,7 @@
 .portal-auth-experience .portal-auth-panel h1 {
   max-width: 11.8ch;
   color: var(--portal-white);
-  font-size: clamp(42px, 4.2vw, 66px);
+  font-size: clamp(var(--fw-text-title), 4.2vw, 66px);
   line-height: 0.95;
   text-shadow: var(--portal-auth-title-shadow);
 }
@@ -88,7 +88,7 @@
   background: var(--portal-white);
   color: var(--portal-ink);
   padding: 0 22px;
-  font-size: 14px;
+  font-size: var(--fw-text-body);
   box-shadow: var(--portal-auth-button-shadow);
 }
 
@@ -99,8 +99,8 @@
 
 .portal-auth-experience .portal-auth-switch {
   color: var(--portal-white-a72);
-  font-size: 10px;
-  font-weight: 400;
+  font-size: var(--fw-text-micro);
+  font-weight: var(--fw-weight-regular);
   line-height: 1.4;
   text-decoration-color: var(--portal-auth-link-line);
   text-decoration-thickness: 1px;
@@ -212,7 +212,7 @@
   }
 
   .portal-auth-experience .portal-auth-panel h1 {
-    font-size: clamp(36px, 10vw, 48px);
+    font-size: clamp(var(--fw-text-display), 10vw, var(--fw-text-title));
   }
 
   .portal-auth-scene img {

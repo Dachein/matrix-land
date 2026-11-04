@@ -1,5 +1,7 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
 import type { EChartsCoreOption } from "echarts/core";
+import { usePlatformBrand } from "../../../../../src/portal/brand/PlatformBrandProvider";
+import { platformChartPalette } from "../../../../../src/shared/platformPalette";
 import { useI18n } from "../../../../../src/portal/i18n";
 import { RelativeTime, timestampMs } from "../../../../../src/portal/components/shared/time";
 import {
@@ -23,7 +25,6 @@ const CALENDAR_RIGHT = 12;
 const CALENDAR_TOP = 40;
 const CALENDAR_CELL_HEIGHT = 15;
 const CALENDAR_MIN_CELL_WIDTH = 10;
-const HEAT_COLORS = ["#ebe9e3", "#dce9f7", "#a9c9eb", "#659bd4", "#245cab"];
 
 export function PortalTokenEarlyTotal({
   cumulativeTokens,
@@ -231,6 +232,9 @@ function DailyUsageHeatmap({
   points: DailyUsagePoint[];
 }) {
   const { locale, t } = useI18n();
+  const brand = usePlatformBrand();
+  const palette = useMemo(() => platformChartPalette(brand), [brand]);
+  const HEAT_COLORS = palette.heat;
   const viewportRef = useRef<HTMLDivElement>(null);
   const [chartEnabled, setChartEnabled] = useState(false);
   const [viewportWidth, setViewportWidth] = useState(0);
@@ -269,8 +273,8 @@ function DailyUsageHeatmap({
     start: formatDateKey(firstDate, locale)
   });
   const option = useMemo(
-    () => buildHeatmapOption(cells, firstDate, lastDate, locale, ariaLabel),
-    [ariaLabel, cells, firstDate, lastDate, locale]
+    () => buildHeatmapOption(cells, firstDate, lastDate, locale, ariaLabel, palette),
+    [ariaLabel, cells, firstDate, lastDate, locale, palette]
   );
   const overlayStyle = { "--portal-token-week-columns": weekColumns } as CSSProperties;
 
@@ -374,8 +378,10 @@ function buildHeatmapOption(
   firstDate: string,
   lastDate: string,
   locale: string,
-  ariaDescription: string
+  ariaDescription: string,
+  palette: ReturnType<typeof platformChartPalette>
 ): EChartsCoreOption {
+  const HEAT_COLORS = palette.heat;
   const monthNames = Array.from({ length: 12 }, (_, month) => new Intl.DateTimeFormat(locale, {
     month: "short",
     timeZone: "UTC"
@@ -397,21 +403,21 @@ function buildHeatmapOption(
     calendar: {
       cellSize: ["auto", CALENDAR_CELL_HEIGHT],
       dayLabel: {
-        color: "#817b71",
+        color: palette.muted,
         firstDay: 1,
         fontSize: 9,
         margin: 8,
         nameMap: dayNames
       },
       itemStyle: {
-        borderColor: "#ffffff",
+        borderColor: palette.surface,
         borderWidth: 2,
         color: HEAT_COLORS[0]
       },
       height: CALENDAR_CELL_HEIGHT * 7,
       left: CALENDAR_LEFT,
       monthLabel: {
-        color: "#5e5a52",
+        color: palette.muted,
         fontSize: 10,
         margin: 11,
         nameMap: monthNames
@@ -427,7 +433,7 @@ function buildHeatmapOption(
       data: cells.map((cell) => [cell.date, cell.summary.billableUnits, cell.level]),
       emphasis: {
         itemStyle: {
-          borderColor: "#11110f",
+          borderColor: palette.text,
           borderWidth: 2
         }
       },

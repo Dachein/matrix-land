@@ -1,3 +1,5 @@
+import { SearchField } from "../../../../src/portal/components/SearchField";
+import { PageHeading } from "../../../../src/portal/components/PageHeading";
 import { FeedbackNotice } from "../../../../src/portal/components/FeedbackNotice";
 import { AppsOwnershipAdmin } from '../../../../src/portal/studio/components/AppsOwnership';
 import { Boxes, CheckCircle2, Clock3, Download, ExternalLink, Search, ShieldAlert, ShieldCheck, X } from "lucide-react";
@@ -99,10 +101,12 @@ export function PortalHubReview({ catalog, onRefresh, unavailable = false }: { c
   return (
     <div className="portal-workspace-inner portal-admin-workspace">
       <section className="portal-page portal-admin-operations-page" aria-labelledby="portal-hub-review-title">
-        <header className="portal-page-heading portal-admin-heading">
-          <div className="portal-page-heading-copy"><h1 id="portal-hub-review-title">{t("portal.hubReview.title")}</h1><p>{t("portal.hubReview.subtitle")}</p></div>
-          <div className="portal-admin-source"><span><ShieldCheck size={15} /> {t("portal.hubReview.source")}</span></div>
-        </header>
+        <PageHeading
+          id="portal-hub-review-title"
+          className="portal-admin-heading"
+          title={t("portal.hubReview.title")}
+          actions={<><div className="portal-admin-source"><span><ShieldCheck size={15} /> {t("portal.hubReview.source")}</span></div></>}
+        ><p>{t("portal.hubReview.subtitle")}</p></PageHeading>
         <p className="portal-admin-scope">{t("portal.admin.scopeGlobal")}</p>
         <AppsOwnershipAdmin catalog={catalog} />
         <section className="portal-admin-metrics">
@@ -115,7 +119,13 @@ export function PortalHubReview({ catalog, onRefresh, unavailable = false }: { c
         <section className="portal-admin-panel">
           <header className="portal-admin-panel-heading"><div><p className="portal-kicker">{t("portal.hubReview.queueKicker")}</p><h2>{t("portal.hubReview.queue")}</h2></div><span>{t("portal.admin.filteredCount", { shown: filtered.length, total: assets.length })}</span></header>
           <div className="portal-admin-toolbar">
-            <label className="portal-admin-search"><Search size={15} /><TextInput aria-label={t("admin.assets.searchPlaceholder")} onChange={(event) => setQuery(event.target.value)} placeholder={t("admin.assets.searchPlaceholder")} value={query} /></label>
+            <SearchField
+              className="portal-admin-search"
+              label={t("admin.assets.searchPlaceholder")}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder={t("admin.assets.searchPlaceholder")}
+              value={query}
+            />
             <WorkspaceListbox<"all" | ManagedAssetType>
               ariaLabel={t("admin.assets.allTypes")}
               className="portal-hub-review-filter"

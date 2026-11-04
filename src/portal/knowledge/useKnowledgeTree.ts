@@ -1,3 +1,4 @@
+import type { KnowledgeMessageSetter } from "./types";
 import { useEffect, useLayoutEffect, useRef, useState, type Dispatch, type SetStateAction } from "react";
 import type { KnowledgeItem, KnowledgeSection, KnowledgeTranslate } from "./types";
 import {
@@ -18,7 +19,7 @@ export function useKnowledgeTree({ userId, section, onSectionChange, setMessage,
   userId: string;
   section: KnowledgeSection;
   onSectionChange: (section: KnowledgeSection) => void;
-  setMessage: Dispatch<SetStateAction<string>>;
+  setMessage: KnowledgeMessageSetter;
   t: KnowledgeTranslate;
 }) {
   const treeCache = knowledgeTreeCacheForUser(userId);
@@ -116,7 +117,7 @@ export function useKnowledgeTree({ userId, section, onSectionChange, setMessage,
           setItems([]);
           setSelectedId("");
         }
-        setMessage(errorMessage(error, t("knowledge.loadFailed")));
+        setMessage(errorMessage(error, t("knowledge.loadFailed")), "error");
       })
       .finally(() => {
         if (read.latest() && isCurrentView()) setIsLoading(false);

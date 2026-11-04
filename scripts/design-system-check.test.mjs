@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { inspectDesignCss, inspectFocusCss, inspectPrimitive } from "./design-system-check.mjs";
+import { inspectDesignCss, inspectFocusCss, inspectPrimitive, inspectSemanticCss } from "./design-system-check.mjs";
 
 test("new UI rejects literal palette, undefined tokens and ad hoc design scales", () => {
   const violations = inspectDesignCss('.fw-scope .x { color: #f00; padding: 13px; margin: var(--fw-space-missing); }');
@@ -15,6 +15,12 @@ test("visual exceptions cannot silently add dark mode or arbitrary breakpoints",
 test("primitives cannot depend on routes or perform business requests", () => {
   assert.equal(inspectPrimitive('import { User } from "../users/api"; fetch("/api/users");', 'Example.tsx').length, 2);
   assert.deepEqual(inspectPrimitive('import { useState } from "react"; export function Field() { return <input />; }', 'Field.tsx'), []);
+});
+
+test("business and embedded assistant styles reject literal colors and missing tokens", () => {
+  assert.equal(inspectSemanticCss('.tm-card { background: #b8f06a; color: var(--fw-color-missing); }').length, 2);
+  assert.equal(inspectSemanticCss('.legacy { box-shadow: 0 4px 8px rgba(0, 0, 0, .2); }').length, 1);
+  assert.deepEqual(inspectSemanticCss('.tm-card { background: color-mix(in srgb, var(--fw-color-action) 10%, transparent); color: var(--fw-color-text); padding: 13px; }'), []);
 });
 
 test("focus frames cannot return through primitives, dropdowns or composite fields", () => {

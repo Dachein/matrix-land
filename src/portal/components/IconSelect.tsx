@@ -156,7 +156,7 @@ export function IconSelect({
         right: "auto",
         top: popoverPosition.top,
         width: popoverPosition.width,
-        zIndex: 10000
+        zIndex: "var(--fw-z-dropdown)"
       }
     : undefined;
 

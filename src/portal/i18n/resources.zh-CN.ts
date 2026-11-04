@@ -1,4 +1,9 @@
 export const zhCN = {
+  "design.patternsTitle": "业务页面与浮层",
+  "design.patternsBody": "标题、搜索、筛选和空状态使用全站同一套组件。切换右侧配色，检查真实控件与浮层的颜色。",
+  "design.sampleData": "组件示例数据",
+  "design.openPicker": "测试弹窗内的筛选器",
+  "design.pickerHelp": "展开下拉框并输入搜索。Escape 先关闭下拉框，再关闭弹窗；关闭后焦点返回触发按钮。",
   "design.feedbackTitle": "状态与恢复",
   "design.feedbackBody": "一套反馈组件。说明发生了什么，保留上下文，并提供可执行的下一步。",
   "design.feedbackKind": "反馈类型",

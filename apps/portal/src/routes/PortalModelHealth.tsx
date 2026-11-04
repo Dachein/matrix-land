@@ -1,3 +1,4 @@
+import { SearchField } from "../../../../src/portal/components/SearchField";
 import { Activity, CalendarClock, Clock3, RefreshCw, Search, ShieldAlert, X } from "lucide-react";
 import { useEffect, useState, type FocusEvent, type MouseEvent } from "react";
 import { Button } from "../../../../src/portal/components/Button";
@@ -106,11 +107,13 @@ export function PortalModelHealth({ onClose }: { onClose: () => void }) {
                   <h2>{t("portal.modelHealth.gridTitle")}</h2>
                   <small>{t("portal.modelHealth.fixedRange")}</small>
                 </div>
-                <label className="portal-model-health-search">
-                  <Search size={15} />
-                  <span className="visuallyHidden">{t("portal.modelHealth.search")}</span>
-                  <TextInput onChange={(event) => controller.setQuery(event.target.value)} placeholder={t("portal.modelHealth.search")} value={controller.query} />
-                </label>
+                <SearchField
+              className="portal-model-health-search"
+              label={t("portal.modelHealth.search")}
+              onChange={(event) => controller.setQuery(event.target.value)}
+              placeholder={t("portal.modelHealth.search")}
+              value={controller.query}
+            />
               </header>
 
               <div className="portal-model-health-legend">

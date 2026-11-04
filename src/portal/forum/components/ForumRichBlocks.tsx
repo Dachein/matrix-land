@@ -1,3 +1,4 @@
+import { personPalette } from "../../components/shared/visualIdentity";
 import {
   AlertCircle,
   AppWindow,
@@ -399,18 +400,7 @@ function forumPluginInitials(name: string) {
 }
 
 function forumPluginPalette(hash: number) {
-  const palettes = [
-    { a: "#eff97f", b: "#b5d657", ink: "#0f1710" },
-    { a: "#ff7a3d", b: "#ef4d2f", ink: "#ffffff" },
-    { a: "#8fd0ff", b: "#6baee6", ink: "#10233a" },
-    { a: "#7447ff", b: "#5c2ee8", ink: "#ffffff" },
-    { a: "#111513", b: "#030605", ink: "#ffffff" },
-    { a: "#e8f5ff", b: "#d6ecff", ink: "#1686c7" },
-    { a: "#ffdf8a", b: "#ffc95c", ink: "#402800" },
-    { a: "#34d7a8", b: "#12a982", ink: "#06261e" }
-  ];
-
-  return palettes[hash % palettes.length];
+  return personPalette(hash);
 }
 
 function hashText(value: string) {

@@ -65,7 +65,7 @@
   color: var(--portal-green);
   display: inline-flex;
   font-size: var(--portal-type-body);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
   gap: var(--portal-space-2);
 }
 
@@ -90,7 +90,7 @@
   color: var(--portal-green);
   display: inline-flex;
   font-size: var(--portal-type-body);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
   gap: var(--portal-space-2);
 }
 
@@ -151,7 +151,7 @@
 .portal-model-health-banner > span {
   font-size: var(--portal-type-title);
   font-variant-numeric: tabular-nums;
-  font-weight: 850;
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-model-health-metrics {
@@ -175,7 +175,7 @@
 .portal-model-health-metrics span {
   color: var(--portal-muted);
   font-size: var(--portal-type-ui);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
   text-transform: uppercase;
 }
 
@@ -257,7 +257,7 @@
 .portal-model-health-grid td > span,
 .portal-model-health-grid td > button {
   border: 0;
-  border-radius: 2px;
+  border-radius: var(--fw-radius-control);
   display: block;
   height: 14px;
   width: 14px;
@@ -281,18 +281,18 @@
   box-shadow: 0 8px 24px color-mix(in srgb, var(--portal-ink) 24%, transparent);
   color: white;
   display: grid;
-  font-size: 11px;
-  font-weight: 500;
+  font-size: var(--fw-text-meta);
+  font-weight: var(--fw-weight-medium);
   gap: 5px;
   line-height: 1.35;
   min-width: 286px;
-  padding: 12px;
+  padding: var(--fw-space-3);
   pointer-events: none;
   position: fixed;
   text-align: left;
   transform: translateX(-50%);
   white-space: normal;
-  z-index: 100;
+  z-index: var(--fw-z-dropdown);
 }
 
 .portal-model-health-tooltip::after {
@@ -322,7 +322,7 @@
 
 .portal-model-health-tooltip > strong {
   border-bottom: 1px solid color-mix(in srgb, white 20%, transparent);
-  font-size: 12px;
+  font-size: var(--fw-text-caption);
   margin-bottom: 3px;
   overflow: hidden;
   padding-bottom: 7px;
@@ -331,13 +331,13 @@
 
 .portal-model-health-tooltip > span {
   display: grid;
-  gap: 8px;
+  gap: var(--fw-space-2);
   grid-template-columns: 72px minmax(0, 1fr);
 }
 
 .portal-model-health-tooltip b {
   color: color-mix(in srgb, white 62%, transparent);
-  font-weight: 650;
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-model-health-tooltip code {
@@ -388,8 +388,8 @@
 .portal-model-health-grid thead th {
   background: var(--portal-paper);
   color: var(--portal-soft);
-  font-size: 10px;
-  font-weight: 750;
+  font-size: var(--fw-text-micro);
+  font-weight: var(--fw-weight-strong);
   height: 58px;
   line-height: 1.1;
   position: sticky;
@@ -404,7 +404,7 @@
 }
 
 .portal-model-health-grid thead th small {
-  margin-top: 4px;
+  margin-top: var(--fw-space-1);
 }
 
 .portal-model-health-grid th:first-child {
@@ -434,7 +434,7 @@
 
 .portal-model-health-grid tbody th small {
   color: var(--portal-soft);
-  font-weight: 600;
+  font-weight: var(--fw-weight-strong);
   margin-top: 3px;
 }
 
@@ -497,11 +497,11 @@
   }
 
   .portal-model-health-modal-title h2 {
-    font-size: 22px;
+    font-size: var(--fw-text-section);
   }
 
   .portal-model-health-modal-title p {
-    font-size: 12px;
+    font-size: var(--fw-text-caption);
   }
 
   .portal-model-health-modal-body {

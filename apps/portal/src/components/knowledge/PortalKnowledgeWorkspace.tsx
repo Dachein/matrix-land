@@ -5,7 +5,9 @@ import { useI18n } from "../../../../../src/portal/i18n";
 import { useKnowledgeWorkspace } from "../../../../../src/portal/knowledge/useKnowledgeWorkspace";
 import { useEffect } from "react";
 import { Button } from "../../../../../src/portal/components/Button";
-import { FolderPlus, Upload, Search, List, Grid2X2, X, ArrowLeft, FolderOpen } from "lucide-react";
+import { FeedbackNotice } from "../../../../../src/portal/components/FeedbackNotice";
+import { SearchField } from "../../../../../src/portal/components/SearchField";
+import { FolderPlus, Upload, RefreshCw, List, Grid2X2, X, ArrowLeft, FolderOpen } from "lucide-react";
 import { SegmentedControl } from "../../../../../src/portal/components/SegmentedControl";
 import { PortalKnowledgeUnifiedList, PortalKnowledgeEmpty, PortalKnowledgeGrid, PortalKnowledgeList } from "./KnowledgeListViews";
 import { CopyForAgentButton } from "../../../../../src/portal/components/WorkspaceAgentHandoff";
@@ -73,16 +75,9 @@ export function PortalKnowledgeWorkspace({
           </div>
 
           <div className="portal-knowledge-toolbar-controls">
-            <label className="portal-search-field">
-              <Search size={16} />
-              <input
-                aria-label={t("knowledge.searchAria")}
-                onChange={(event) => controller.setQuery(event.target.value)}
-                placeholder={t("knowledge.searchPlaceholder")}
-                type="search"
-                value={controller.query}
-              />
-            </label>
+            <SearchField className="portal-search-field" label={t("knowledge.searchAria")}
+              onChange={(event) => controller.setQuery(event.target.value)}
+              placeholder={t("knowledge.searchPlaceholder")} value={controller.query} />
             {section === "my" && !controller.currentFolderId && (
               <SegmentedControl
                 ariaLabel={t("knowledge.relationFilterAria")}
@@ -110,10 +105,14 @@ export function PortalKnowledgeWorkspace({
         </header>
 
         {controller.message && (
-          <div className="portal-knowledge-notice" role="status">
-            <span>{controller.message}</span>
-            <Button aria-label={t("common.close")} iconBefore={<X size={15} />} onClick={() => controller.setMessage("")} variant="icon" />
-          </div>
+          <FeedbackNotice className="portal-knowledge-notice" tone={controller.messageTone}
+            actions={<>
+              {controller.messageTone === "error" && <Button iconBefore={<RefreshCw size={15} />} isLoading={controller.isLoading}
+                onClick={() => void controller.refreshCurrentFolder()} size="compact">{t("common.refresh")}</Button>}
+              <Button aria-label={t("common.close")} iconBefore={<X size={15} />} onClick={() => controller.setMessage("")} variant="icon" />
+            </>}>
+            {controller.message}
+          </FeedbackNotice>
         )}
 
         {section === "my" && (

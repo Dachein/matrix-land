@@ -38,6 +38,23 @@ export function inspectPrimitive(source, file) {
   return problems;
 }
 
+/** The color contract covers every business stylesheet, including the embedded Mate. */
+export function inspectSemanticCss(source, file = "styles.css") {
+  const problems = [];
+  const root = postcss.parse(source, { from: file });
+  root.walkDecls(decl => {
+    const where = `${file}:${decl.source.start.line}`;
+    if (/#[\da-f]{3,8}\b|\b(?:rgba?|hsla?|oklch|lab|color)\(/i.test(decl.value)) problems.push(`${where}: use a color token`);
+    for (const match of decl.value.matchAll(/var\(\s*--fw-([\w-]+)/g)) {
+      if (!(match[1] in designTokens)) problems.push(`${where}: undefined token --fw-${match[1]}`);
+    }
+  });
+  root.walkAtRules("media", rule => {
+    if (/prefers-color-scheme\s*:\s*dark/.test(rule.params)) problems.push(`${file}: dark mode is outside the product contract`);
+  });
+  return problems;
+}
+
 // Covers legacy pages as well as primitives: no focus frames may return through
 // a route-specific stylesheet or a composite field's focus-within state.
 export function inspectFocusCss(source, file = "styles.css") {
@@ -57,19 +74,26 @@ export function inspectFocusCss(source, file = "styles.css") {
 }
 
 export function checkDesignSystem(root = process.cwd()) {
-  const files = ["src/portal/design-system/components.css", "src/portal/design-system/motion.css", "src/portal/components/feedback.css", "apps/portal/src/brand/brand-studio.css", "apps/portal/src/styles/workspace-login.css"];
+  const files = ["src/portal/design-system/components.css", "src/portal/design-system/patterns.css", "src/portal/design-system/motion.css", "src/portal/components/feedback.css", "apps/portal/src/brand/brand-studio.css", "apps/portal/src/styles/workspace-login.css"];
   const problems = files.flatMap(file => inspectDesignCss(readFileSync(resolve(root, file), "utf8"), file));
   function inspectFocusDirectory(directory) {
     for (const entry of readdirSync(resolve(root, directory), { withFileTypes: true })) {
       const file = `${directory}/${entry.name}`;
       if (entry.isDirectory()) inspectFocusDirectory(file);
-      else if (file.endsWith(".css")) problems.push(...inspectFocusCss(readFileSync(resolve(root, file), "utf8"), file));
+      else if (file.endsWith(".css")) {
+        const source = readFileSync(resolve(root, file), "utf8");
+        problems.push(...inspectFocusCss(source, file));
+        if (!["src/portal/design-system/tokens.css", "apps/portal/src/styles/tokens.css"].includes(file)) {
+          problems.push(...inspectSemanticCss(source, file));
+        }
+      }
     }
   }
   inspectFocusDirectory("src/portal");
   inspectFocusDirectory("apps/portal/src");
+  inspectFocusDirectory("apps/mate-preview/src");
   problems.push(...inspectFocusCss(readFileSync(resolve(root, "packages/installer/ui/style.css"), "utf8"), "packages/installer/ui/style.css"));
-  for (const name of ["Button", "FormField", "SegmentedControl", "ModalShell", "FeedbackNotice", "Presence"]) {
+  for (const name of ["Button", "FormField", "SegmentedControl", "ModalShell", "FeedbackNotice", "Presence", "PageHeading", "SearchField", "EmptyState", "ResourceMark"]) {
     const file = `src/portal/components/${name}.tsx`;
     problems.push(...inspectPrimitive(readFileSync(resolve(root, file), "utf8"), file));
   }

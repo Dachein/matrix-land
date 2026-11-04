@@ -1,3 +1,5 @@
+import { SearchField } from "../../../../src/portal/components/SearchField";
+import { PageHeading } from "../../../../src/portal/components/PageHeading";
 import { FeedbackNotice } from "../../../../src/portal/components/FeedbackNotice";
 import { Award, Building2, Clock3, Search, ShieldAlert, ShieldCheck, X } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -86,13 +88,12 @@ function PortalAdminUsersAuthenticated({ catalog }: { catalog: PortalCatalog }) 
   return (
     <div className="portal-workspace-inner portal-admin-workspace">
       <section className="portal-page portal-admin-operations-page portal-admin-users-page" aria-labelledby="portal-admin-users-title">
-        <header className="portal-page-heading portal-admin-heading">
-          <div className="portal-page-heading-copy">
-            <h1 id="portal-admin-users-title">{t("portal.adminUsers.title")}</h1>
-            <p>{t("portal.adminUsers.subtitle")}</p>
-          </div>
-          <div className="portal-admin-source"><span><ShieldCheck size={15} /> {t("portal.adminUsers.source")}</span></div>
-        </header>
+        <PageHeading
+          id="portal-admin-users-title"
+          className="portal-admin-heading"
+          title={t("portal.adminUsers.title")}
+          actions={<><div className="portal-admin-source"><span><ShieldCheck size={15} /> {t("portal.adminUsers.source")}</span></div></>}
+        ><p>{t("portal.adminUsers.subtitle")}</p></PageHeading>
 
         <p className="portal-admin-scope">{t("portal.admin.scopeGlobal")}</p>
         <section className="portal-admin-metrics portal-admin-user-metrics" aria-label={t("admin.users.summaryAria")}>
@@ -106,10 +107,13 @@ function PortalAdminUsersAuthenticated({ catalog }: { catalog: PortalCatalog }) 
             <span>{t("portal.admin.filteredCount", { shown: state === "ready" ? filtered.length : "-", total: state === "ready" ? users.length : "-" })}</span>
           </header>
           <div className="portal-admin-toolbar">
-            <label className="portal-admin-search">
-              <Search size={15} />
-              <TextInput aria-label={t("admin.users.searchAria")} onChange={(event) => setQuery(event.target.value)} placeholder={t("admin.users.searchPlaceholder")} value={query} />
-            </label>
+            <SearchField
+              className="portal-admin-search"
+              label={t("admin.users.searchAria")}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder={t("admin.users.searchPlaceholder")}
+              value={query}
+            />
             <div className="portal-admin-user-filters">
               <WorkspaceListbox
                 ariaLabel={t("admin.users.teamFilterAria")}

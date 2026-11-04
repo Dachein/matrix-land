@@ -1,6 +1,7 @@
 import { readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 import { analyzeCssSelectorReuse } from "./frontend-css-reuse.mjs";
+import { platformCssVariables } from "../src/shared/platformPalette.ts";
 
 const rootDir = process.cwd();
 const jsonOutput = process.argv.includes("--json");
@@ -13,7 +14,7 @@ const rootBlocks = readRootBlocks(sourceWithoutComments);
 const cssOutsideRoot = removeRootBlocks(sourceWithoutComments, rootBlocks);
 
 const rootTokens = rootBlocks.flatMap((block) => parseRootTokens(block.body));
-const rootTokenNames = rootTokens.map((token) => token.name);
+const rootTokenNames = [...rootTokens.map((token) => token.name), ...Object.keys(platformCssVariables())];
 const rootTokenNameSet = new Set(rootTokenNames);
 const semanticTokenCount = rootTokens.filter((token) => isSemanticToken(token.name)).length;
 const aliasTokenNames = [
@@ -155,12 +156,16 @@ function removeRootBlocks(css, blocks) {
 }
 
 function readCssEntryFiles() {
-  const portalStyleDirectory = path.join(rootDir, "apps", "portal", "src", "styles");
-  const entries = readdirSync(portalStyleDirectory, { withFileTypes: true })
-    .filter((entry) => entry.isFile() && entry.name.endsWith(".css"))
-    .map((entry) => path.join(portalStyleDirectory, entry.name));
-
-  return entries.map(readCssFile);
+  const files = [];
+  function visit(directory) {
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      const file = path.join(directory, entry.name);
+      if (entry.isDirectory()) visit(file);
+      else if (entry.name.endsWith(".css")) files.push(readCssFile(file));
+    }
+  }
+  for (const directory of ["apps/portal/src", "src/portal", "apps/mate-preview/src"]) visit(path.join(rootDir, directory));
+  return files;
 }
 
 function readCssFile(absolutePath) {
@@ -254,14 +259,19 @@ function inspectRadiusPolicy(files, tokens, baselineExceptions) {
   const tokenValues = new Map(tokens.map((token) => [token.name, normalizeCssFragment(token.value)]));
   const requiredTokens = new Map([
     ["--portal-radius-structural", "0"],
-    ["--portal-radius-control", "3px"],
+    ["--portal-radius-control", "0"],
     ["--portal-radius-pill", "999px"],
     ["--portal-radius-round", "50%"],
-    ["--portal-radius", "var(--portal-radius-control)"]
+    ["--portal-radius", "0"]
   ]);
 
   for (const [token, expected] of requiredTokens) {
-    const actual = tokenValues.get(token);
+    let actual = tokenValues.get(token);
+    const visited = new Set();
+    while (actual?.startsWith("var(") && !visited.has(actual)) {
+      visited.add(actual);
+      actual = tokenValues.get(actual.slice(4, -1).trim());
+    }
     if (actual !== expected) {
       violations.push({
         actual: actual ?? "missing",
@@ -298,14 +308,25 @@ function isKeyframeStep(selector) {
 }
 
 function isSemanticToken(tokenName) {
-  return /^(--portal-|--color|--brand|--accent|--focus|--surface|--border|--state|--shadow|--ease|--duration|--space|--text|--font|--radius|--control)/.test(tokenName);
+  return /^(--fw-|--portal-|--color|--brand|--accent|--focus|--surface|--border|--state|--shadow|--ease|--duration|--space|--text|--font|--radius|--control)/.test(tokenName);
 }
 
 function collectUndefinedCustomProperties(css, definedTokens) {
   const usedTokens = [...new Set([...css.matchAll(/var\((--[a-zA-Z0-9-]+)/g)].map((match) => match[1]))].sort();
+  const declared = new Set([...definedTokens, ...[...css.matchAll(/(--[\w-]+)\s*:/g)].map(match => match[1])]);
+  function visit(directory) {
+    for (const entry of readdirSync(directory, { withFileTypes: true })) {
+      const file = path.join(directory, entry.name);
+      if (entry.isDirectory()) visit(file);
+      else if (/\.(?:tsx|ts)$/.test(entry.name)) {
+        for (const match of readFileSync(file, "utf8").matchAll(/["'](--[\w-]+)["']\s*:/g)) declared.add(match[1]);
+      }
+    }
+  }
+  for (const directory of ["apps/portal/src", "src/portal", "apps/mate-preview/src"]) visit(path.join(rootDir, directory));
 
   return usedTokens
-    .filter((token) => !definedTokens.has(token))
+    .filter((token) => !declared.has(token))
     .map((token) => ({
       kind: classifyCustomProperty(token),
       token

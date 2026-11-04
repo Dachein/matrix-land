@@ -29,61 +29,61 @@
   outline: 0;
   box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
-.pass-learning-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 64px; padding: 10px 28px; }
-.pass-learning-header > strong { color: var(--portal-muted); font-size: 12px; font-weight: 800; letter-spacing: .13em; }
+.pass-learning-header { display: flex; align-items: center; justify-content: space-between; gap: var(--fw-space-5); min-height: 64px; padding: 10px 28px; }
+.pass-learning-header > strong { color: var(--portal-muted); font-size: var(--fw-text-caption); font-weight: var(--fw-weight-strong); letter-spacing: .13em; }
 .pass-learning-close { display: grid; place-items: center; flex-shrink: 0; width: 42px; height: 42px; background: transparent; border: 1px solid var(--portal-line); }
-.pass-learning-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; padding: 0 28px; border-bottom: 1px solid var(--portal-line); }
-.pass-learning-tabs button { display: flex; align-items: center; justify-content: center; gap: 11px; min-height: 66px; padding: 16px 22px; border: 0; border-bottom: 3px solid transparent; background: transparent; color: var(--portal-muted); font-size: 17px; font-weight: 800; }
+.pass-learning-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--fw-space-1); padding: 0 28px; border-bottom: 1px solid var(--portal-line); }
+.pass-learning-tabs button { display: flex; align-items: center; justify-content: center; gap: 11px; min-height: 66px; padding: var(--fw-space-4) 22px; border: 0; border-bottom: 3px solid transparent; background: transparent; color: var(--portal-muted); font-size: var(--fw-text-lead); font-weight: var(--fw-weight-strong); }
 .pass-learning-tabs button[aria-pressed="true"] { border-bottom-color: var(--portal-onboarding-focus); background: var(--portal-signal-a12); color: var(--portal-ink); }
-.pass-learning-tabs small { font-size: 10px; font-weight: 600; }
+.pass-learning-tabs small { font-size: var(--fw-text-micro); font-weight: var(--fw-weight-strong); }
 .pass-learning-content { min-height: 0; overflow: auto; }
 .pass-learning-overview { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.4fr); min-height: 100%; }
 .pass-learning-intro { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: clamp(28px, 4vw, 60px); gap: 18px; }
 .pass-learning-intro > .pass-learning-primary { align-self: flex-end; }
 .pass-learning-mark { display: grid; place-items: center; width: 68px; height: 68px; background: var(--portal-signal-a12); border: 1px solid var(--portal-line-strong); color: var(--portal-onboarding-focus); }
-.pass-learning-intro > small, .pass-learning-story > small { font-size: 12px; font-weight: 800; letter-spacing: .06em; color: var(--portal-muted); }
-.pass-learning h3 { font-size: clamp(28px, 3vw, 46px); line-height: 1.15; letter-spacing: -.035em; margin: 0; }
-.pass-learning-intro p, .pass-learning-story p, .pass-learning-complete p { font-size: 17px; line-height: 1.7; color: var(--portal-muted); margin: 0; }
-.pass-learning-intro .pass-learning-muted { font-size: 14px; }
-.pass-learning button.pass-learning-primary { display: inline-flex; align-items: center; justify-content: center; gap: 18px; min-height: 48px; padding: 12px 24px; border: 1px solid var(--portal-learning-action-border); background: var(--portal-signal); color: var(--portal-ink); font-weight: 850; }
-.pass-learning-map { display: flex; flex-direction: column; justify-content: center; gap: 24px; min-width: 0; background: var(--portal-paper-soft); padding: 32px; border-left: 1px solid var(--portal-line); }
+.pass-learning-intro > small, .pass-learning-story > small { font-size: var(--fw-text-caption); font-weight: var(--fw-weight-strong); letter-spacing: .06em; color: var(--portal-muted); }
+.pass-learning h3 { font-size: clamp(var(--fw-text-section), 3vw, var(--fw-text-title)); line-height: 1.15; letter-spacing: -.035em; margin: 0; }
+.pass-learning-intro p, .pass-learning-story p, .pass-learning-complete p { font-size: var(--fw-text-lead); line-height: 1.7; color: var(--portal-muted); margin: 0; }
+.pass-learning-intro .pass-learning-muted { font-size: var(--fw-text-body); }
+.pass-learning button.pass-learning-primary { display: inline-flex; align-items: center; justify-content: center; gap: 18px; min-height: 48px; padding: var(--fw-space-3) var(--fw-space-6); border: 1px solid var(--portal-learning-action-border); background: var(--portal-signal); color: var(--fw-color-on-action); font-weight: var(--fw-weight-strong); }
+.pass-learning-map { display: flex; flex-direction: column; justify-content: center; gap: var(--fw-space-6); min-width: 0; background: var(--portal-paper-soft); padding: var(--fw-space-8); border-left: 1px solid var(--portal-line); }
 .pass-learning-map > img { width: 100%; max-height: 340px; object-fit: contain; }
 .pass-learning-coming-icon { width: 180px; height: 180px; align-self: center; color: var(--portal-muted); }
 .pass-learning-roadmap { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--portal-line); }
 .pass-learning-roadmap.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.pass-learning-roadmap li { position: relative; padding: 20px 20px 0 0; display: grid; gap: 9px; align-content: start; }
-.pass-learning-roadmap small { font-size: 11px; letter-spacing: .08em; font-weight: 850; }
-.pass-learning-roadmap strong { font-size: 14px; line-height: 1.5; }
+.pass-learning-roadmap li { position: relative; padding: var(--fw-space-5) var(--fw-space-5) 0 0; display: grid; gap: 9px; align-content: start; }
+.pass-learning-roadmap small { font-size: var(--fw-text-meta); letter-spacing: .08em; font-weight: var(--fw-weight-strong); }
+.pass-learning-roadmap strong { font-size: var(--fw-text-body); line-height: 1.5; }
 .pass-learning-roadmap svg { position: absolute; right: 6px; top: 18px; }
 .pass-learning-preview { min-height: 265px; pointer-events: none; }
 .pass-learning-step { display: grid; grid-template-columns: minmax(0, 2.4fr) minmax(250px, 1fr); min-height: 100%; }
-.pass-learning-canvas { display: flex; flex-direction: column; min-width: 0; padding: 24px; background: var(--portal-paper-soft); }
-.pass-learning-demo-label { font-size: 11px; letter-spacing: .07em; color: var(--portal-muted); margin-bottom: 20px; }
+.pass-learning-canvas { display: flex; flex-direction: column; min-width: 0; padding: var(--fw-space-6); background: var(--portal-paper-soft); }
+.pass-learning-demo-label { font-size: var(--fw-text-meta); letter-spacing: .07em; color: var(--portal-muted); margin-bottom: var(--fw-space-5); }
 .pass-learning-stage { display: flex; flex: 1; align-items: center; min-width: 0; }
 .pass-learning-stage > img { width: 100%; max-height: 490px; object-fit: contain; }
 .pass-learning-stage > .knowledge-folder,
 .pass-learning-stage > .knowledge-action { width: min(100%, 860px); margin-inline: auto; }
-.pass-learning-story { display: flex; flex-direction: column; justify-content: center; gap: 24px; padding: 32px; border-left: 1px solid var(--portal-line); }
-.pass-learning-story h3 { font-size: clamp(24px, 2.4vw, 36px); }
-.pass-learning-story > button { display: flex; align-items: center; gap: 8px; align-self: flex-start; border: 0; background: transparent; padding: 8px 0; color: var(--portal-muted); }
+.pass-learning-story { display: flex; flex-direction: column; justify-content: center; gap: var(--fw-space-6); padding: var(--fw-space-8); border-left: 1px solid var(--portal-line); }
+.pass-learning-story h3 { font-size: clamp(var(--fw-text-section), 2.4vw, var(--fw-text-display)); }
+.pass-learning-story > button { display: flex; align-items: center; gap: var(--fw-space-2); align-self: flex-start; border: 0; background: transparent; padding: var(--fw-space-2) 0; color: var(--portal-muted); }
 .pass-learning-footer { display: flex; justify-content: space-between; align-items: stretch; min-height: 78px; border-top: 1px solid var(--portal-line); }
-.pass-learning-footer > span { align-self: center; padding: 20px 28px; color: var(--portal-muted); font-size: 13px; }
-.pass-learning-footer > button { display: flex; align-items: center; gap: 12px; padding: 20px 28px; background: transparent; border: 0; border-left: 1px solid var(--portal-line); font-weight: 800; }
+.pass-learning-footer > span { align-self: center; padding: var(--fw-space-5) 28px; color: var(--portal-muted); font-size: var(--fw-text-label); }
+.pass-learning-footer > button { display: flex; align-items: center; gap: var(--fw-space-3); padding: var(--fw-space-5) 28px; background: transparent; border: 0; border-left: 1px solid var(--portal-line); font-weight: var(--fw-weight-strong); }
 .pass-learning-footer nav { display: flex; flex: 1; min-width: 0; }
-.pass-learning-footer nav button { display: flex; flex: 1; flex-direction: column; align-items: flex-start; justify-content: center; gap: 6px; min-width: 0; border: 0; border-right: 1px solid var(--portal-line); background: transparent; padding: 12px 20px; color: var(--portal-muted); text-align: left; }
+.pass-learning-footer nav button { display: flex; flex: 1; flex-direction: column; align-items: flex-start; justify-content: center; gap: 6px; min-width: 0; border: 0; border-right: 1px solid var(--portal-line); background: transparent; padding: var(--fw-space-3) var(--fw-space-5); color: var(--portal-muted); text-align: left; }
 .pass-learning-footer nav button[aria-current="step"] { box-shadow: inset 0 3px var(--portal-onboarding-focus); background: var(--portal-paper-soft); color: var(--portal-ink); }
-.pass-learning-footer nav small { font-size: 10px; font-weight: 850; }
-.pass-learning-footer nav span { font-size: 12px; font-weight: 750; line-height: 1.4; }
+.pass-learning-footer nav small { font-size: var(--fw-text-micro); font-weight: var(--fw-weight-strong); }
+.pass-learning-footer nav span { font-size: var(--fw-text-caption); font-weight: var(--fw-weight-strong); line-height: 1.4; }
 .pass-learning-paging { display: flex; }
-.pass-learning-paging > button { display: flex; align-items: center; gap: 8px; padding: 16px; border: 0; background: transparent; }
+.pass-learning-paging > button { display: flex; align-items: center; gap: var(--fw-space-2); padding: var(--fw-space-4); border: 0; background: transparent; }
 .pass-learning-paging > button:disabled { opacity: .4; cursor: default; }
-.pass-learning-complete { display: flex; min-height: 100%; flex-direction: column; align-items: center; justify-content: center; gap: 22px; padding: 32px; text-align: center; }
+.pass-learning-complete { display: flex; min-height: 100%; flex-direction: column; align-items: center; justify-content: center; gap: 22px; padding: var(--fw-space-8); text-align: center; }
 .pass-learning-complete > div { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
-.pass-learning-complete > div > button:not(.pass-learning-primary) { background: transparent; border: 1px solid var(--portal-line); padding: 12px 20px; }
+.pass-learning-complete > div > button:not(.pass-learning-primary) { background: transparent; border: 1px solid var(--portal-line); padding: var(--fw-space-3) var(--fw-space-5); }
 
 /* Existing HTML demos get readable, responsive dimensions in the learning canvas. */
-.pass-learning .portal-home-demo-workspace { height: auto; min-height: 320px; padding: 20px; gap: 16px; }
-.pass-learning .portal-home-demo-workspace strong { font-size: 16px; line-height: 1.4; white-space: normal; }
+.pass-learning .portal-home-demo-workspace { height: auto; min-height: 320px; padding: var(--fw-space-5); gap: var(--fw-space-4); }
+.pass-learning .portal-home-demo-workspace strong { font-size: var(--fw-text-lead); line-height: 1.4; white-space: normal; }
 .pass-learning .portal-home-demo-workspace small,
 .pass-learning .portal-home-demo-copy > span,
 .pass-learning .portal-home-demo-agent-status li,
@@ -92,10 +92,10 @@
 .pass-learning .portal-home-demo-skill-download,
 .pass-learning .portal-home-demo-permission-option,
 .pass-learning .portal-home-demo-permission-branch > span,
-.pass-learning .portal-home-demo-permission-collapsed { font-size: 12px; line-height: 1.5; white-space: normal; }
-.pass-learning .portal-home-demo-resource-field { padding: 12px; }
+.pass-learning .portal-home-demo-permission-collapsed { font-size: var(--fw-text-caption); line-height: 1.5; white-space: normal; }
+.pass-learning .portal-home-demo-resource-field { padding: var(--fw-space-3); }
 .pass-learning .portal-home-demo-resource-field.resource-type-list li { display: block; }
-.pass-learning .portal-home-demo-resource-field label { display: flex; align-items: baseline; gap: 8px; cursor: pointer; }
+.pass-learning .portal-home-demo-resource-field label { display: flex; align-items: baseline; gap: var(--fw-space-2); cursor: pointer; }
 .pass-learning .portal-home-demo-resource-field input { accent-color: var(--portal-ink); flex-shrink: 0; }
 .pass-learning .portal-home-demo-resource-field.resource-options ul,
 .pass-learning .portal-home-demo-resource-field.resource-type-list ul { gap: 6px; }
@@ -104,15 +104,15 @@
   min-height: 42px;
   border: 1px solid var(--portal-line);
   background: var(--portal-paper);
-  padding: 8px 10px;
+  padding: var(--fw-space-2) 10px;
   color: var(--portal-ink-soft);
 }
 .pass-learning .portal-home-demo-resource-field.resource-options label,
 .pass-learning .portal-home-demo-resource-field.resource-type-list label { width: 100%; align-items: center; }
 .pass-learning .portal-home-demo-resource-field.resource-options strong,
 .pass-learning .portal-home-demo-resource-field.resource-type-list strong {
-  font-size: 14px;
-  font-weight: 680;
+  font-size: var(--fw-text-body);
+  font-weight: var(--fw-weight-strong);
   line-height: 1.35;
 }
 .pass-learning .portal-home-demo-resource-field.resource-type-list li.selected {
@@ -122,18 +122,18 @@
 }
 .pass-learning .portal-home-demo-resource-field input:disabled + strong { color: var(--portal-soft); }
 .pass-learning .portal-home-demo-resource-field label:has(input:disabled) { cursor: not-allowed; }
-.pass-learning .portal-home-demo-resource-field summary { font-size: 12px; cursor: pointer; padding: 4px 0; }
-.pass-learning .portal-home-demo-permission-branch details > ul { padding-left: 12px; }
-.pass-learning .portal-home-demo-primary { min-height: 42px; font-size: 12px; padding: 10px 14px; white-space: normal; }
+.pass-learning .portal-home-demo-resource-field summary { font-size: var(--fw-text-caption); cursor: pointer; padding: var(--fw-space-1) 0; }
+.pass-learning .portal-home-demo-permission-branch details > ul { padding-left: var(--fw-space-3); }
+.pass-learning .portal-home-demo-primary { min-height: 42px; font-size: var(--fw-text-caption); padding: 10px 14px; white-space: normal; }
 .pass-learning .portal-home-demo-permission-option { min-height: 36px; align-items: center; padding-block: 6px; }
-.pass-learning .portal-home-demo-permission-line { font-size: 11px; }
+.pass-learning .portal-home-demo-permission-line { font-size: var(--fw-text-meta); }
 .pass-learning .portal-home-demo-agent-prompt { min-width: 135px; max-width: 170px; }
 .pass-learning .portal-home-demo-performance-chart { min-height: 100px; }
-.pass-learning .portal-home-demo-portfolio-kpis strong { font-size: 24px; }
+.pass-learning .portal-home-demo-portfolio-kpis strong { font-size: var(--fw-text-section); }
 .pass-learning .portal-home-demo-skill-structure > span { overflow: visible; }
-.pass-learning-preview .portal-home-demo-workspace { min-height: 280px; padding: 12px; }
-.pass-learning-preview .portal-home-demo-workspace strong { font-size: 13px; }
-.pass-learning-preview .portal-home-demo-workspace small { font-size: 10px; }
+.pass-learning-preview .portal-home-demo-workspace { min-height: 280px; padding: var(--fw-space-3); }
+.pass-learning-preview .portal-home-demo-workspace strong { font-size: var(--fw-text-label); }
+.pass-learning-preview .portal-home-demo-workspace small { font-size: var(--fw-text-micro); }
 .pass-learning-preview .portal-home-demo-agent-prompt { display: none; }
 .pass-learning-preview .portal-home-demo-workspace.app-preview { grid-template-columns: 1fr; }
 
@@ -145,11 +145,11 @@
 }
 .pass-learning-ui > header {
   display: flex;
-  gap: 12px;
+  gap: var(--fw-space-3);
   align-items: center;
   min-height: 70px;
   border-bottom: 1px solid var(--portal-line);
-  padding: 14px 16px;
+  padding: 14px var(--fw-space-4);
 }
 .pass-learning-ui > header > span {
   display: grid;
@@ -157,14 +157,14 @@
   width: 42px;
   height: 42px;
   background: var(--portal-signal);
-  color: var(--portal-ink);
+  color: var(--fw-color-on-action);
 }
 .pass-learning-ui > header > span svg { width: 22px; height: 22px; }
-.pass-learning-ui > header > div { display: grid; gap: 4px; min-width: 0; margin-right: auto; }
+.pass-learning-ui > header > div { display: grid; gap: var(--fw-space-1); min-width: 0; margin-right: auto; }
 .pass-learning-ui > header small,
 .pass-learning-ui > aside > small,
-.pass-learning-ui > footer small { color: var(--portal-muted); font-size: 10px; font-weight: 800; letter-spacing: .06em; }
-.pass-learning-ui > header strong { font-size: 17px; line-height: 1.3; }
+.pass-learning-ui > footer small { color: var(--portal-muted); font-size: var(--fw-text-micro); font-weight: var(--fw-weight-strong); letter-spacing: .06em; }
+.pass-learning-ui > header strong { font-size: var(--fw-text-lead); line-height: 1.3; }
 .pass-learning-ui > header button {
   display: inline-flex;
   gap: 7px;
@@ -172,16 +172,16 @@
   min-height: 38px;
   border: 1px solid var(--portal-line-strong);
   background: var(--portal-paper-soft);
-  padding: 8px 12px;
+  padding: var(--fw-space-2) var(--fw-space-3);
   color: var(--portal-ink);
-  font-size: 12px;
-  font-weight: 760;
+  font-size: var(--fw-text-caption);
+  font-weight: var(--fw-weight-strong);
 }
 .pass-learning-ui > header button svg { width: 16px; height: 16px; }
 .knowledge-folder { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(180px, .75fr); }
 .knowledge-folder > header { grid-column: 1 / -1; }
-.pass-learning-folder-tree { display: grid; gap: 8px; padding: 20px; }
-.pass-learning-folder-tree > strong { margin-bottom: 4px; font-size: 12px; }
+.pass-learning-folder-tree { display: grid; gap: var(--fw-space-2); padding: var(--fw-space-5); }
+.pass-learning-folder-tree > strong { margin-bottom: var(--fw-space-1); font-size: var(--fw-text-caption); }
 .pass-learning-folder-tree > span {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
@@ -190,94 +190,94 @@
   min-height: 46px;
   border: 1px solid var(--portal-line);
   background: var(--portal-paper-soft);
-  padding: 9px 12px;
-  font-size: 13px;
-  font-weight: 720;
+  padding: 9px var(--fw-space-3);
+  font-size: var(--fw-text-label);
+  font-weight: var(--fw-weight-strong);
 }
 .pass-learning-folder-tree svg { width: 17px; height: 17px; color: var(--portal-onboarding-focus); }
-.pass-learning-folder-tree small { color: var(--portal-muted); font-size: 10px; font-weight: 600; }
-.knowledge-folder > aside { display: grid; gap: 10px; align-content: start; border-left: 1px solid var(--portal-line); padding: 20px; }
+.pass-learning-folder-tree small { color: var(--portal-muted); font-size: var(--fw-text-micro); font-weight: var(--fw-weight-strong); }
+.knowledge-folder > aside { display: grid; gap: 10px; align-content: start; border-left: 1px solid var(--portal-line); padding: var(--fw-space-5); }
 .knowledge-folder > aside > span { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 9px; align-items: center; min-height: 38px; }
-.knowledge-folder > aside i { display: grid; place-items: center; width: 30px; height: 30px; background: var(--portal-signal-a12); color: var(--portal-onboarding-focus); font-size: 11px; font-style: normal; font-weight: 850; }
-.knowledge-folder > aside strong { font-size: 12px; }
+.knowledge-folder > aside i { display: grid; place-items: center; width: 30px; height: 30px; background: var(--portal-signal-a12); color: var(--portal-onboarding-focus); font-size: var(--fw-text-meta); font-style: normal; font-weight: var(--fw-weight-strong); }
+.knowledge-folder > aside strong { font-size: var(--fw-text-caption); }
 .knowledge-folder > aside svg { width: 15px; height: 15px; color: var(--portal-onboarding-focus); }
 .knowledge-action { display: flex; flex-direction: column; }
-.knowledge-action > header em { margin-left: auto; color: var(--portal-onboarding-focus); font-size: 11px; font-style: normal; font-weight: 800; }
+.knowledge-action > header em { margin-left: auto; color: var(--portal-onboarding-focus); font-size: var(--fw-text-meta); font-style: normal; font-weight: var(--fw-weight-strong); }
 .pass-learning-knowledge-body { display: grid; gap: 14px; padding: 22px; }
-.pass-learning-knowledge-body > small { color: var(--portal-muted); font-size: 10px; font-weight: 800; letter-spacing: .06em; }
-.pass-learning-scope-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.pass-learning-scope-list > span { position: relative; display: grid; gap: 9px; min-height: 132px; border: 1px solid var(--portal-line); background: var(--portal-paper-soft); padding: 16px; }
+.pass-learning-knowledge-body > small { color: var(--portal-muted); font-size: var(--fw-text-micro); font-weight: var(--fw-weight-strong); letter-spacing: .06em; }
+.pass-learning-scope-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--fw-space-3); }
+.pass-learning-scope-list > span { position: relative; display: grid; gap: 9px; min-height: 132px; border: 1px solid var(--portal-line); background: var(--portal-paper-soft); padding: var(--fw-space-4); }
 .pass-learning-scope-list i { display: grid; place-items: center; width: 36px; height: 36px; background: var(--portal-signal-a12); color: var(--portal-onboarding-focus); }
 .pass-learning-scope-list i svg { width: 18px; height: 18px; }
-.pass-learning-scope-list strong { align-self: end; font-size: 13px; }
-.pass-learning-scope-list small { color: var(--portal-muted); font-size: 10px; }
+.pass-learning-scope-list strong { align-self: end; font-size: var(--fw-text-label); }
+.pass-learning-scope-list small { color: var(--portal-muted); font-size: var(--fw-text-micro); }
 .pass-learning-scope-list > span > svg { position: absolute; top: 16px; right: 16px; width: 16px; color: var(--portal-onboarding-focus); }
-.pass-learning-agent-update { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 16px; align-items: center; padding: 28px 22px; }
-.pass-learning-agent-update > div { display: grid; gap: 12px; min-height: 130px; align-content: center; border: 1px solid var(--portal-line); padding: 18px; }
+.pass-learning-agent-update { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: var(--fw-space-4); align-items: center; padding: 28px 22px; }
+.pass-learning-agent-update > div { display: grid; gap: var(--fw-space-3); min-height: 130px; align-content: center; border: 1px solid var(--portal-line); padding: 18px; }
 .pass-learning-agent-update > div:first-child { background: var(--portal-onboarding-panel); color: var(--portal-white); }
 .pass-learning-agent-update > div:last-child { background: var(--portal-signal-a12); }
-.pass-learning-agent-update small { color: var(--portal-muted); font-size: 10px; font-weight: 800; letter-spacing: .06em; }
-.pass-learning-agent-update > div:first-child small { color: var(--portal-signal); }
-.pass-learning-agent-update strong { font-size: 13px; line-height: 1.55; }
-.pass-learning-channel-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding: 24px 22px; }
-.pass-learning-channel-list article { position: relative; display: grid; gap: 10px; min-height: 132px; border: 1px solid var(--portal-line); background: var(--portal-paper-soft); padding: 16px; }
+.pass-learning-agent-update small { color: var(--portal-muted); font-size: var(--fw-text-micro); font-weight: var(--fw-weight-strong); letter-spacing: .06em; }
+.pass-learning-agent-update > div:first-child small { color: var(--fw-color-action-on-inverse); }
+.pass-learning-agent-update strong { font-size: var(--fw-text-label); line-height: 1.55; }
+.pass-learning-channel-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--fw-space-3); padding: var(--fw-space-6) 22px; }
+.pass-learning-channel-list article { position: relative; display: grid; gap: 10px; min-height: 132px; border: 1px solid var(--portal-line); background: var(--portal-paper-soft); padding: var(--fw-space-4); }
 .pass-learning-channel-list article > span { display: grid; place-items: center; width: 38px; height: 38px; background: var(--portal-signal-a12); color: var(--portal-onboarding-focus); }
 .pass-learning-channel-list article > span svg { width: 19px; height: 19px; }
-.pass-learning-channel-list article > strong { align-self: end; font-size: 14px; }
-.pass-learning-channel-list article > small { color: var(--portal-muted); font-size: 10px; }
+.pass-learning-channel-list article > strong { align-self: end; font-size: var(--fw-text-body); }
+.pass-learning-channel-list article > small { color: var(--portal-muted); font-size: var(--fw-text-micro); }
 .pass-learning-channel-list article > svg { position: absolute; right: 16px; bottom: 16px; width: 15px; }
-.knowledge-action > footer { display: flex; gap: 9px; align-items: center; margin-top: auto; border-top: 1px solid var(--portal-line); padding: 13px 16px; color: var(--portal-muted); font-size: 11px; font-weight: 700; }
+.knowledge-action > footer { display: flex; gap: 9px; align-items: center; margin-top: auto; border-top: 1px solid var(--portal-line); padding: 13px var(--fw-space-4); color: var(--portal-muted); font-size: var(--fw-text-meta); font-weight: var(--fw-weight-strong); }
 .knowledge-action > footer svg { width: 16px; color: var(--portal-onboarding-focus); }
-.pass-learning-ui.mate { padding-bottom: 16px; }
-.pass-learning-ui.mate > header em { display: inline-flex; gap: 6px; align-items: center; color: var(--portal-onboarding-focus); font-size: 11px; font-style: normal; font-weight: 800; }
+.pass-learning-ui.mate { padding-bottom: var(--fw-space-4); }
+.pass-learning-ui.mate > header em { display: inline-flex; gap: 6px; align-items: center; color: var(--portal-onboarding-focus); font-size: var(--fw-text-meta); font-style: normal; font-weight: var(--fw-weight-strong); }
 .pass-learning-ui.mate > header em i { width: 7px; height: 7px; border-radius: 50%; background: var(--portal-onboarding-focus); }
-.pass-learning-mate-flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding: 24px 20px; }
-.pass-learning-mate-flow article { position: relative; display: grid; gap: 12px; min-height: 150px; border: 1px solid var(--portal-line); background: var(--portal-paper-soft); padding: 18px; }
+.pass-learning-mate-flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--fw-space-3); padding: var(--fw-space-6) var(--fw-space-5); }
+.pass-learning-mate-flow article { position: relative; display: grid; gap: var(--fw-space-3); min-height: 150px; border: 1px solid var(--portal-line); background: var(--portal-paper-soft); padding: 18px; }
 .pass-learning-mate-flow article > span { display: grid; place-items: center; width: 40px; height: 40px; background: var(--portal-signal-a12); color: var(--portal-onboarding-focus); }
 .pass-learning-mate-flow article > span svg { width: 20px; height: 20px; }
-.pass-learning-mate-flow article > strong { align-self: end; font-size: 14px; line-height: 1.4; }
-.pass-learning-mate-flow article > small { position: absolute; top: 18px; right: 18px; color: var(--portal-muted); font-size: 10px; }
+.pass-learning-mate-flow article > strong { align-self: end; font-size: var(--fw-text-body); line-height: 1.4; }
+.pass-learning-mate-flow article > small { position: absolute; top: 18px; right: 18px; color: var(--portal-muted); font-size: var(--fw-text-micro); }
 .pass-learning-mate-flow article > svg { position: absolute; right: 18px; bottom: 18px; width: 15px; height: 15px; color: var(--portal-onboarding-focus); }
-.pass-learning-ui.mate > footer { display: flex; gap: 10px; align-items: center; margin: 0 20px; border: 1px solid var(--portal-line); background: var(--portal-signal-a12); padding: 12px 14px; }
+.pass-learning-ui.mate > footer { display: flex; gap: 10px; align-items: center; margin: 0 var(--fw-space-5); border: 1px solid var(--portal-line); background: var(--portal-signal-a12); padding: var(--fw-space-3) 14px; }
 .pass-learning-ui.mate > footer > svg:first-child { color: var(--portal-onboarding-focus); }
-.pass-learning-ui.mate > footer > div { display: grid; gap: 2px; margin-right: auto; }
-.pass-learning-ui.mate > footer strong { font-size: 12px; }
-.pass-learning-ui.compact > header { min-height: 58px; padding: 10px 12px; }
-.pass-learning-ui.compact > header strong { font-size: 13px; }
+.pass-learning-ui.mate > footer > div { display: grid; gap: var(--fw-space-half); margin-right: auto; }
+.pass-learning-ui.mate > footer strong { font-size: var(--fw-text-caption); }
+.pass-learning-ui.compact > header { min-height: 58px; padding: 10px var(--fw-space-3); }
+.pass-learning-ui.compact > header strong { font-size: var(--fw-text-label); }
 .pass-learning-ui.compact .pass-learning-folder-tree,
-.pass-learning-ui.compact > aside { padding: 12px; }
+.pass-learning-ui.compact > aside { padding: var(--fw-space-3); }
 .pass-learning-ui.compact .pass-learning-folder-tree > span { min-height: 36px; }
-.pass-learning-ui.compact .pass-learning-mate-flow { padding: 14px 12px; }
-.pass-learning-ui.compact .pass-learning-mate-flow article { min-height: 105px; padding: 12px; }
-.pass-learning-ui.compact.mate > footer { margin: 0 12px; }
+.pass-learning-ui.compact .pass-learning-mate-flow { padding: 14px var(--fw-space-3); }
+.pass-learning-ui.compact .pass-learning-mate-flow article { min-height: 105px; padding: var(--fw-space-3); }
+.pass-learning-ui.compact.mate > footer { margin: 0 var(--fw-space-3); }
 @media (max-width: 1050px) {
   .pass-learning-overview, .pass-learning-step { grid-template-columns: 1fr; }
   .pass-learning-intro { padding: 28px; }
   .pass-learning-map, .pass-learning-story { border-left: 0; border-top: 1px solid var(--portal-line); }
-  .pass-learning-story { gap: 14px; padding: 24px; }
-  .pass-learning-tabs { padding: 0 12px; }
-  .pass-learning-tabs button { min-height: 60px; padding: 13px; font-size: 15px; }
+  .pass-learning-story { gap: 14px; padding: var(--fw-space-6); }
+  .pass-learning-tabs { padding: 0 var(--fw-space-3); }
+  .pass-learning-tabs button { min-height: 60px; padding: 13px; font-size: var(--fw-text-body); }
 }
 @media (max-width: 680px) {
   .pass-learning { width: 100vw; height: 100dvh; border: 0; }
-  .pass-learning-header { min-height: 56px; padding: 8px 16px; }
+  .pass-learning-header { min-height: 56px; padding: var(--fw-space-2) var(--fw-space-4); }
   .pass-learning-tabs { grid-auto-columns: minmax(126px, auto); grid-auto-flow: column; grid-template-columns: none; overflow-x: auto; padding: 0; gap: 0; }
-  .pass-learning-tabs button { min-height: 58px; padding: 12px 14px; gap: 8px; font-size: 15px; }
+  .pass-learning-tabs button { min-height: 58px; padding: var(--fw-space-3) 14px; gap: var(--fw-space-2); font-size: var(--fw-text-body); }
   .pass-learning-tabs button > svg { width: 20px; height: 20px; }
   .pass-learning-tabs small { display: none; }
-  .pass-learning-map, .pass-learning-canvas { padding: 16px; }
+  .pass-learning-map, .pass-learning-canvas { padding: var(--fw-space-4); }
   .pass-learning-roadmap { grid-template-columns: 1fr; }
   .pass-learning-roadmap.four { grid-template-columns: 1fr; }
-  .pass-learning-roadmap li { padding: 12px 0; }
+  .pass-learning-roadmap li { padding: var(--fw-space-3) 0; }
   .pass-learning-roadmap svg { display: none; }
   .pass-learning-footer { flex-wrap: wrap; min-height: 64px; }
   .pass-learning-footer nav { flex-basis: 100%; }
-  .pass-learning-footer nav button { padding: 12px; }
-  .pass-learning-footer nav span { font-size: 10px; }
+  .pass-learning-footer nav button { padding: var(--fw-space-3); }
+  .pass-learning-footer nav span { font-size: var(--fw-text-micro); }
   .pass-learning-paging { width: 100%; justify-content: space-between; }
   .pass-learning-footer > span { display: none; }
   .pass-learning-footer > button { width: 100%; justify-content: center; }
-  .pass-learning .portal-home-demo-workspace { padding: 12px; gap: 12px; }
+  .pass-learning .portal-home-demo-workspace { padding: var(--fw-space-3); gap: var(--fw-space-3); }
   .pass-learning .portal-home-demo-workspace.resource-setup,
   .pass-learning .portal-home-demo-workspace.agent-handoff,
   .pass-learning .portal-home-demo-workspace.skill-create,

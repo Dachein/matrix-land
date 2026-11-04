@@ -1,7 +1,7 @@
 .portal-diagnostics-overlay {
   position: fixed;
   inset: 0;
-  z-index: 120;
+  z-index: var(--fw-z-modal);
   display: grid;
   place-items: center;
   overflow-y: auto;
@@ -37,7 +37,7 @@
 .portal-diagnostics-summary span {
   color: var(--portal-soft);
   font-size: var(--portal-type-micro);
-  font-weight: 850;
+  font-weight: var(--fw-weight-display);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -107,7 +107,7 @@
 .portal-diagnostics-section h3 {
   margin: 0 0 var(--portal-space-2);
   font-size: var(--portal-type-ui);
-  font-weight: 900;
+  font-weight: var(--fw-weight-display);
   letter-spacing: 0.04em;
 }
 
@@ -127,7 +127,7 @@
 .portal-diagnostics-section dt {
   color: var(--portal-soft);
   font-size: var(--portal-type-ui);
-  font-weight: 750;
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-diagnostics-section dd {

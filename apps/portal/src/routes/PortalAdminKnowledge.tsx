@@ -1,3 +1,5 @@
+import { SearchField } from "../../../../src/portal/components/SearchField";
+import { PageHeading } from "../../../../src/portal/components/PageHeading";
 import {
   BookOpen,
   Building2,
@@ -99,13 +101,12 @@ function PortalAdminKnowledgeAuthenticated({ catalog }: { catalog: PortalCatalog
   return (
     <div className="portal-workspace-inner portal-admin-workspace">
       <section className="portal-page portal-admin-operations-page portal-admin-knowledge-page" aria-labelledby="portal-admin-knowledge-title">
-        <header className="portal-page-heading portal-admin-heading">
-          <div className="portal-page-heading-copy">
-            <h1 id="portal-admin-knowledge-title">{t("portal.adminKnowledge.title")}</h1>
-            <p>{t("portal.adminKnowledge.subtitle")}</p>
-          </div>
-          <div className="portal-admin-source"><span><ShieldCheck size={15} /> {t("portal.adminKnowledge.source")}</span></div>
-        </header>
+        <PageHeading
+          id="portal-admin-knowledge-title"
+          className="portal-admin-heading"
+          title={t("portal.adminKnowledge.title")}
+          actions={<><div className="portal-admin-source"><span><ShieldCheck size={15} /> {t("portal.adminKnowledge.source")}</span></div></>}
+        ><p>{t("portal.adminKnowledge.subtitle")}</p></PageHeading>
 
         <p className="portal-admin-scope">{t("portal.admin.scopeGlobal")}</p>
         <section className="portal-admin-metrics portal-admin-knowledge-metrics" aria-label={t("admin.knowledge.summaryAria")}>
@@ -121,15 +122,13 @@ function PortalAdminKnowledgeAuthenticated({ catalog }: { catalog: PortalCatalog
             <span>{t("portal.admin.filteredCount", { shown: loading || error ? "-" : filtered.length, total: loading || error ? "-" : data.services.length })}</span>
           </header>
           <div className="portal-admin-toolbar">
-            <label className="portal-admin-search">
-              <Search size={15} />
-              <TextInput
-                aria-label={t("admin.knowledge.searchAria")}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder={t("admin.knowledge.searchPlaceholder")}
-                value={query}
-              />
-            </label>
+            <SearchField
+              className="portal-admin-search"
+              label={t("admin.knowledge.searchAria")}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder={t("admin.knowledge.searchPlaceholder")}
+              value={query}
+            />
             <WorkspaceListbox<PermissionFilter>
               ariaLabel={t("admin.knowledge.permissionFilterAria")}
               className="portal-admin-knowledge-filter"

@@ -95,7 +95,7 @@ for (const width of [1280, 390]) {
     await expect(dialog.locator("img, .personAvatar, .avatarStack")).toHaveCount(0);
     expect((await dialog.boundingBox())?.width).toBeLessThanOrEqual(width);
     await dialog.locator(".portal-admin-dialog-header").getByRole("button", { name: "关闭", exact: true }).click();
-    await page.getByRole("textbox", { name: "搜索知识库服务" }).fill("no-match-ui-test");
+    await page.getByRole("searchbox", { name: "搜索知识库服务" }).fill("no-match-ui-test");
     await expect(table.locator("tbody tr")).toHaveCount(1);
     await expect(table.locator("tbody")).not.toContainText("PB Partner");
   });
@@ -316,12 +316,12 @@ test("MCP actions remain visible while status and empty searches update the tabl
   await page.getByRole("option", { name: "无效授权", exact: true }).click();
   await expect(table.locator(".portal-admin-status").first()).toHaveText("无效授权");
   await expect(table.getByRole("button", { name: "停用连接", exact: true })).toHaveCount(0);
-  await page.getByRole("textbox", { name: "搜索 MCP 连接用户", exact: true }).fill("no-match-ui-test");
+  await page.getByRole("searchbox", { name: "搜索 MCP 连接用户", exact: true }).fill("no-match-ui-test");
   await expect(table).toContainText("没有匹配的 MCP 连接");
   await expect(page.locator(".portal-admin-mcp-metrics")).toContainText("全部连接2");
   await expect(page.getByText("当前结果 0 / 全部 2", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: "清空筛选", exact: true }).click();
-  await expect(page.getByRole("textbox", { name: "搜索 MCP 连接用户", exact: true })).toHaveValue("");
+  await expect(page.getByRole("searchbox", { name: "搜索 MCP 连接用户", exact: true })).toHaveValue("");
   await expect(page.getByRole("button", { name: "按 MCP 连接状态筛选", exact: true })).toContainText("全部状态");
 });
 
@@ -354,7 +354,7 @@ test("user status remains visible and permission dialogs cancel without a role c
   await row.getByRole("button", { name: "管理 Bob Chen 的权限", exact: true }).click();
   await expect(page.getByRole("dialog")).toBeVisible();
   await page.getByRole("dialog").getByRole("button", { name: "取消", exact: true }).click();
-  await page.getByRole("textbox", { name: "搜索用户", exact: true }).fill("no-match-ui-test");
+  await page.getByRole("searchbox", { name: "搜索用户", exact: true }).fill("no-match-ui-test");
   await expect(table.locator("tbody")).not.toContainText("Bob Chen");
   expect(changes).toEqual([]);
 });

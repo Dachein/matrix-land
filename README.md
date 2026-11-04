@@ -1,10 +1,12 @@
 # Matrix land
 
+[MIT License](LICENSE) · [贡献指南](CONTRIBUTING.md) · [安全披露](SECURITY.md)
+
 官网：[matrixland.si](https://matrixland.si/)。原项目名 Frontier Workspace；内部包名、协议与安装器标识保持兼容。
 
 企业独立部署的 AI 工作区。企业使用自己的 Cloudflare 账号、域名、身份目录和模型服务；品牌、Logo、8 组配色和模块在安装时配置。
 
-**版本：0.1.0，首次独立源码交付。** 本版已通过本地自动化、构建、部署包编译与安装器模拟验证；尚未在真实企业账号完成首次部署验收。请先在测试实例验证，再投入生产。
+**版本：0.1.0，早期源码版本。** 本版已通过本地自动化、构建、部署包编译与安装器模拟验证；真实云端验收按已启用模块逐项记录，范围与结果见[交付说明](docs/delivery.md)和[安装试验记录](docs/matrixland-installation-pilot.md)。请先在测试实例验证，再投入生产。
 
 ## 开始
 
@@ -84,6 +86,8 @@ npm run dev
 - [贡献说明](CONTRIBUTING.md)、[安全说明](SECURITY.md)
 
 项目代码采用 [MIT License](LICENSE)。第三方依赖保留各自许可证；产品名称不表示关联服务提供方的授权或背书。
+
+欢迎通过 [Issues](https://github.com/Dachein/matrix-land/issues) 反馈问题，通过 Pull Request 贡献改进。提交前请阅读[贡献指南](CONTRIBUTING.md)；涉及漏洞或敏感日志的问题，请按[安全披露说明](SECURITY.md)私下报告。
 
 ## 本地 CLI
 

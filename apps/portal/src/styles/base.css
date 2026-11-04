@@ -72,9 +72,31 @@ button {
 
 button:focus-visible,
 a:focus-visible,
-select:focus-visible {
-  outline: 3px solid var(--portal-focus-ring);
-  outline-offset: 2px;
+summary:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible,
+[contenteditable="true"]:focus-visible {
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
+}
+
+/* Focus is a single brand-colored baseline, never a surrounding frame. */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 0;
+  border-bottom-color: var(--portal-focus-ring);
+}
+
+/* Composite search and picker fields own the baseline for their inputs. */
+:is(.searchControl, .selectControl, .portal-search-field, .portal-select-field,
+    .peopleMentionInputSurface, .portal-market-search, .portal-community-search,
+    .portal-admin-search, .mcp-handbook-search, .portal-model-health-search,
+    .accessTargetPickerLine):focus-within :is(input, textarea, select) {
+  outline: 0;
+  box-shadow: none;
 }
 
 a {
@@ -357,8 +379,8 @@ p {
 }
 
 :is(.portal-admin-dialog-body, .portal-admin-usage-filters, .portal-admin-domain-add) :is(.textInput, .textArea, .selectInput):focus-visible {
-  border-color: var(--portal-blue);
-  box-shadow: 0 0 0 3px var(--portal-focus-ring);
+  border-bottom-color: var(--portal-focus-ring);
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
   outline: 0;
 }
 
@@ -394,14 +416,14 @@ p {
 
 .publication-author-profile:hover,
 .publication-author-profile:focus-visible {
-  border-color: var(--portal-blue-border);
+  border-bottom-color: var(--portal-focus-ring);
   background: var(--portal-paper);
-  box-shadow: 0 0 0 2px var(--portal-blue-a06);
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .publication-author-profile:focus-visible {
-  outline: 2px solid var(--portal-focus-ring);
-  outline-offset: 2px;
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .publication-author-profile.avatar-only {
@@ -471,9 +493,9 @@ p {
 }
 
 .peopleMentionPicker:not(.readOnly, .disabled) .peopleMentionInputSurface:focus-within {
-  border-color: var(--portal-ink);
+  border-bottom-color: var(--portal-focus-ring);
   outline: 0;
-  box-shadow: 0 0 0 3px var(--portal-focus-ring);
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .peopleMentionPicker.readOnly .peopleMentionInputSurface {
@@ -532,9 +554,9 @@ p {
 
 button.peopleMentionTag:hover,
 button.peopleMentionTag:focus-visible {
-  border-color: var(--portal-ink);
+  border-bottom-color: var(--portal-focus-ring);
   outline: 0;
-  box-shadow: 0 0 0 2px var(--portal-focus-ring);
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .peopleMentionTag.readOnly {
@@ -741,10 +763,9 @@ button.peopleMentionTag:focus-visible {
 }
 
 .workspaceListboxTrigger:focus-visible {
-  border-color: var(--portal-ink);
-  outline: 2px solid var(--portal-ink);
-  outline-offset: 2px;
-  box-shadow: none;
+  border-bottom-color: var(--portal-focus-ring);
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .workspaceListboxTrigger:disabled {
@@ -828,8 +849,8 @@ button.peopleMentionTag:focus-visible {
 }
 
 .workspaceListboxSearch input:focus {
-  border-color: var(--portal-ink);
-  box-shadow: inset 0 0 0 1px var(--portal-ink);
+  border-bottom-color: var(--portal-focus-ring);
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .workspaceListboxOption {
@@ -849,7 +870,7 @@ button.peopleMentionTag:focus-visible {
 
 .workspaceListboxOption:hover,
 .workspaceListboxOption:focus-visible {
-  border-color: var(--portal-line);
+  border-bottom-color: var(--portal-focus-ring);
   outline: 0;
   background: var(--portal-paper-soft);
 }
@@ -959,8 +980,8 @@ button.peopleMentionTag:focus-visible {
 }
 
 .accessTargetPickerLine:focus-within {
-  border-color: var(--portal-blue);
-  box-shadow: 0 0 0 3px var(--portal-focus-ring);
+  border-bottom-color: var(--portal-focus-ring);
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .accessTargetPickerExpandButton,
@@ -1106,10 +1127,10 @@ button.peopleMentionTag:focus-visible {
 
 .accessTargetSelectedTag:hover,
 .accessTargetSelectedTag:focus-visible {
-  border-color: var(--portal-ink);
+  border-bottom-color: var(--portal-focus-ring);
   border-left-color: var(--portal-green);
   outline: 0;
-  box-shadow: 0 0 0 3px var(--portal-focus-ring);
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .accessTargetSelectedTag.user:hover,
@@ -1208,8 +1229,8 @@ button.peopleMentionTag:focus-visible {
 }
 
 .segmentedControl button:focus-visible {
-  outline: 2px solid var(--portal-ink);
-  outline-offset: 1px;
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .segmentedControl.compact {
@@ -1293,8 +1314,8 @@ button.peopleMentionTag:focus-visible {
 }
 
 .portal-email-auth-form .textInput:focus {
-  border-color: var(--portal-ink);
-  box-shadow: 0 0 0 3px var(--portal-focus-ring);
+  border-bottom-color: var(--portal-focus-ring);
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .portal-email-auth-form .textInput:disabled {

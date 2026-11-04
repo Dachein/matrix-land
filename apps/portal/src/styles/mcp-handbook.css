@@ -141,8 +141,8 @@
 .mcp-handbook-product-card:focus-visible {
   position: relative;
   z-index: 1;
-  outline: 2px solid var(--portal-signal);
-  outline-offset: -3px;
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .mcp-handbook-product-card.is-active {
@@ -291,8 +291,8 @@
 .mcp-handbook-module-button:focus-visible {
   position: relative;
   z-index: 1;
-  outline: 3px solid var(--portal-signal);
-  outline-offset: -3px;
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .mcp-handbook-module-button.is-active {
@@ -563,8 +563,8 @@
 }
 
 .mcp-handbook-search:focus-within {
-  border-color: var(--portal-ink);
-  box-shadow: 0 0 0 2px var(--portal-ink-a07);
+  border-bottom-color: var(--portal-focus-ring);
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .mcp-handbook-search svg {

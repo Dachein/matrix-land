@@ -32,7 +32,7 @@ body:has(.portal-mate-page) .portal-live-rail { display: none; }
 .portal-mate-modal-body .mateAvatarChoice { width: 64px; height: 64px; overflow: hidden; border: 1px solid var(--portal-line); border-radius: 0; background: var(--portal-paper-soft); padding: 0; cursor: pointer; }
 .portal-mate-modal-body .mateAvatarChoice:hover,
 .portal-mate-modal-body .mateAvatarChoice:focus-visible,
-.portal-mate-modal-body .mateAvatarChoice.selected { border-color: var(--portal-red); outline: 2px solid var(--portal-red); outline-offset: 1px; }
+.portal-mate-modal-body .mateAvatarChoice.selected { border-bottom-color: var(--portal-focus-ring); outline: 0; box-shadow: inset 0 -2px 0 var(--portal-focus-ring); }
 .portal-mate-modal-body .mateAvatarChoice img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .portal-mate-modal-body > .primaryButton:last-child { justify-self: start; }
 .portal-mate-success-icon { display: grid; place-items: center; width: 52px; height: 52px; background: var(--portal-signal-a12); color: var(--portal-green); }
@@ -42,7 +42,7 @@ body:has(.portal-mate-page) .portal-live-rail { display: none; }
 .portal-mate-setup-field { min-width: 0; }
 .portal-mate-setup-name input { min-height: 52px; border-color: var(--portal-line-strong); background: var(--portal-paper); font-size: 16px; font-weight: 500; text-align: center; }
 .portal-mate-setup-name input::placeholder { color: var(--portal-soft); opacity: 1; }
-.portal-mate-setup-name input:focus { border-color: var(--portal-ink); outline: 0; box-shadow: 0 0 0 3px var(--portal-ink-a08); }
+.portal-mate-setup-name input:focus { border-bottom-color: var(--portal-focus-ring); outline: 0; box-shadow: inset 0 -2px 0 var(--portal-focus-ring); }
 .portal-mate-setup-actions { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); gap: 10px; border-top: 1px solid var(--portal-line); padding-top: 20px; }
 .portal-mate-setup-actions > button,
 .portal-mate-setup-actions > .portal-mate-setup-start { width: 100%; min-width: 0; min-height: 48px; }
@@ -164,7 +164,7 @@ body:has(.portal-mate-page) .portal-live-rail { display: none; }
 .portal-mate-new-conversation-slot { margin: 18px 0 22px; }
 .portal-mate-new-conversation { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 42px; border: 1px solid var(--portal-ink); border-radius: 3px; background: transparent; padding: 0 12px; color: var(--portal-ink); font: inherit; font-size: 12px; font-weight: 650; text-align: left; cursor: pointer; }
 .portal-mate-new-conversation:hover:not(:disabled) { background: var(--portal-rail-hover); }
-.portal-mate-new-conversation:focus-visible { outline: 2px solid var(--portal-green); outline-offset: 2px; }
+.portal-mate-new-conversation:focus-visible { outline: 0; box-shadow: inset 0 -2px 0 var(--portal-focus-ring); }
 .portal-mate-new-conversation:disabled { cursor: wait; opacity: .55; }
 .portal-mate-identity > button:hover { background: transparent; }
 .portal-mate-nav-slot .tm-preview-directory-list { max-height: none; overflow: visible; padding: 0; }
@@ -240,7 +240,7 @@ body:has(.portal-mate-page) .portal-live-rail { display: none; }
 .portal-mate-artifact-actions { display: flex; flex: none; align-items: center; gap: 4px; }
 .portal-mate-artifact-actions > button,.portal-mate-artifact-actions > a { display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-width: 32px; min-height: 32px; border: 0; background: transparent; padding: 0 6px; color: var(--portal-muted); font: inherit; font-size: 11px; cursor: pointer; }
 .portal-mate-artifact-actions > :is(button,a):hover { background: var(--portal-rail-hover); color: var(--portal-ink); }
-.portal-mate-artifact-actions > :is(button,a):focus-visible { outline: 2px solid var(--portal-green); outline-offset: 2px; }
+.portal-mate-artifact-actions > :is(button,a):focus-visible { outline: 0; box-shadow: inset 0 -2px 0 var(--portal-focus-ring); }
 .portal-mate-artifact-actions > .portal-mate-artifact-back { margin-left: 4px; border-left: 1px solid var(--portal-line); padding-left: 12px; color: var(--portal-ink); font-weight: 650; white-space: nowrap; }
 .portal-mate-artifact-body { flex: 1; min-height: 0; overflow: auto; }
 .portal-mate-artifact-body iframe { width: 100%; height: 100%; border: 0; background: white; }

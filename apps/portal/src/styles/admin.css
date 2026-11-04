@@ -130,8 +130,8 @@
 }
 
 .portal-admin-search:focus-within {
-  border-color: var(--portal-blue);
-  box-shadow: 0 0 0 3px var(--portal-focus-ring);
+  border-bottom-color: var(--portal-focus-ring);
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .portal-admin-search input {

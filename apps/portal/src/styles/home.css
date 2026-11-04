@@ -251,8 +251,8 @@
 
 .portal-level-token-benefit button:focus-visible {
   color: var(--portal-red);
-  outline: 1px solid currentColor;
-  outline-offset: 2px;
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .portal-hero-panel {
@@ -332,8 +332,8 @@
 .portal-hero-pass-primary:focus-visible,
 .portal-hero-pass-secondary:hover,
 .portal-hero-pass-secondary:focus-visible {
-  outline: 2px solid var(--portal-signal);
-  outline-offset: 2px;
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .portal-quick-access {
@@ -389,8 +389,8 @@
 }
 
 .portal-quick-grid:focus-visible {
-  outline: 3px solid var(--portal-focus-ring);
-  outline-offset: 2px;
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .portal-quick-grid.dragging {
@@ -480,14 +480,14 @@
 
 .portal-quick-item:hover,
 .portal-quick-item:focus-within {
-  border-color: var(--portal-line-strong);
+  border-bottom-color: var(--portal-focus-ring);
   box-shadow: 0 1px 0 var(--portal-ink-a10), 0 16px 34px var(--portal-ink-a08);
   transform: translateY(-2px);
 }
 
 .portal-quick-item:focus-within {
-  outline: 3px solid var(--portal-focus-ring);
-  outline-offset: 2px;
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .portal-quick-open {
@@ -545,8 +545,8 @@
 }
 
 .portal-quick-remove:focus-visible {
-  outline: 3px solid var(--portal-focus-ring);
-  outline-offset: 2px;
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .portal-quick-copy {
@@ -744,8 +744,8 @@
 }
 
 .portal-community-search:focus-within {
-  border-color: var(--portal-ink);
-  box-shadow: inset 0 0 0 1px var(--portal-ink);
+  border-bottom-color: var(--portal-focus-ring);
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .segmentedControl.portal-community-owner {
@@ -991,7 +991,6 @@
 }
 
 .portal-feed-open:focus-visible {
-  outline-offset: 3px;
 }
 
 .portal-feed-avatar {
@@ -1246,7 +1245,7 @@
 
 .portal-home-onboarding-back:hover,
 .portal-home-onboarding-back:focus-visible {
-  border-color: var(--portal-signal);
+  border-bottom-color: var(--portal-focus-ring);
   color: var(--portal-signal);
 }
 
@@ -1361,7 +1360,7 @@
 .portal-home-onboarding-path:hover,
 .portal-home-onboarding-path:focus-visible {
   outline: 0;
-  box-shadow: inset 0 0 0 2px var(--portal-signal);
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .portal-home-onboarding-path > span {

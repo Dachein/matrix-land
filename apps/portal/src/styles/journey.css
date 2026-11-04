@@ -422,7 +422,7 @@
 
 .journeyBadgeFilters button:hover,
 .journeyBadgeFilters button:focus-visible {
-  border-color: var(--portal-line);
+  border-bottom-color: var(--portal-focus-ring);
   background: var(--portal-paper-soft);
 }
 

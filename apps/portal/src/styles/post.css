@@ -586,9 +586,9 @@
 .forumPlainTextArea:focus,
 .textInput:focus,
 .selectInput:focus {
-  border-color: var(--portal-ink);
+  border-bottom-color: var(--portal-focus-ring);
   outline: 0;
-  box-shadow: inset 0 0 0 1px var(--portal-ink);
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .markdownComposerToolbar {
@@ -623,9 +623,9 @@
 }
 
 .markdownExpandButton:focus-visible {
-  border-color: var(--portal-ink);
-  outline: 2px solid var(--portal-ink);
-  outline-offset: 2px;
+  border-bottom-color: var(--portal-focus-ring);
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .forumMentionNode {
@@ -1405,8 +1405,8 @@
 }
 
 .forumAnonymousPersonaRefresh:focus-visible {
-  outline: 2px solid var(--portal-ink);
-  outline-offset: -2px;
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .forumAnonymousLockedHint {
@@ -1687,8 +1687,8 @@
 
 .portal-forum-image-thumbnail:hover,
 .portal-forum-image-thumbnail:focus-visible {
-  border-color: var(--portal-line-strong);
-  box-shadow: inset 0 0 0 1px var(--portal-ink-a16);
+  border-bottom-color: var(--portal-focus-ring);
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .portal-forum-image-thumbnail img {
@@ -1925,8 +1925,8 @@
 
 .forumProductCard.compact.interactive:hover,
 .forumProductCard.compact.interactive:focus-visible {
-  border-color: var(--portal-line-strong);
-  box-shadow: inset 0 0 0 1px var(--portal-ink-a16);
+  border-bottom-color: var(--portal-focus-ring);
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
   outline: 0;
 }
 

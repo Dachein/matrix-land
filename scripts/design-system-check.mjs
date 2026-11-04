@@ -38,9 +38,37 @@ export function inspectPrimitive(source, file) {
   return problems;
 }
 
+// Covers legacy pages as well as primitives: no focus frames may return through
+// a route-specific stylesheet or a composite field's focus-within state.
+export function inspectFocusCss(source, file = "styles.css") {
+  const problems = [];
+  postcss.parse(source, { from: file }).walkRules(rule => {
+    if (!/:focus(?:-visible|-within)?\b/.test(rule.selector)) return;
+    rule.walkDecls(decl => {
+      if (decl.prop === "outline" && !/^(?:none|0(?:px)?)$/.test(decl.value)) {
+        problems.push(`${file}:${decl.source.start.line}: focus uses an enclosing outline; use a baseline`);
+      }
+      if (decl.prop === "box-shadow" && /(?:^|,)\s*(?:inset\s+)?0(?:px)?\s+0(?:px)?\s+0(?:px)?\s+(?!0(?:px)?(?:\s|$))[^\s,]+/.test(decl.value)) {
+        problems.push(`${file}:${decl.source.start.line}: focus uses a surrounding shadow; use a baseline`);
+      }
+    });
+  });
+  return problems;
+}
+
 export function checkDesignSystem(root = process.cwd()) {
   const files = ["src/portal/design-system/components.css", "src/portal/design-system/motion.css", "src/portal/components/feedback.css", "apps/portal/src/brand/brand-studio.css", "apps/portal/src/styles/workspace-login.css"];
   const problems = files.flatMap(file => inspectDesignCss(readFileSync(resolve(root, file), "utf8"), file));
+  function inspectFocusDirectory(directory) {
+    for (const entry of readdirSync(resolve(root, directory), { withFileTypes: true })) {
+      const file = `${directory}/${entry.name}`;
+      if (entry.isDirectory()) inspectFocusDirectory(file);
+      else if (file.endsWith(".css")) problems.push(...inspectFocusCss(readFileSync(resolve(root, file), "utf8"), file));
+    }
+  }
+  inspectFocusDirectory("src/portal");
+  inspectFocusDirectory("apps/portal/src");
+  problems.push(...inspectFocusCss(readFileSync(resolve(root, "packages/installer/ui/style.css"), "utf8"), "packages/installer/ui/style.css"));
   for (const name of ["Button", "FormField", "SegmentedControl", "ModalShell", "FeedbackNotice", "Presence"]) {
     const file = `src/portal/components/${name}.tsx`;
     problems.push(...inspectPrimitive(readFileSync(resolve(root, file), "utf8"), file));

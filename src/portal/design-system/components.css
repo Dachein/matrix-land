@@ -5,8 +5,8 @@
 }
 .fw-scope[data-density="compact"] { --fw-control-height: var(--fw-control-height-compact); }
 .fw-scope :is(button, input, select, textarea, a):focus-visible {
-  outline: var(--fw-focus-width) solid var(--fw-color-focus);
-  outline-offset: var(--fw-focus-offset);
+  outline: 0;
+  box-shadow: inset 0 calc(-1 * var(--fw-focus-width)) 0 var(--fw-color-focus);
 }
 .fw-scope [data-ui="button"] {
   display: inline-flex; align-items: center; justify-content: center; gap: var(--fw-space-2);
@@ -39,7 +39,7 @@
   transition: border-color var(--fw-motion-normal) var(--fw-ease-standard), background var(--fw-motion-normal) var(--fw-ease-standard);
 }
 .fw-scope :is([data-ui="input"], [data-ui="textarea"], [data-ui="select"]):not(:disabled):hover { border-bottom-color: var(--fw-color-text-muted); }
-.fw-scope :is([data-ui="input"], [data-ui="textarea"], [data-ui="select"]):focus { border-bottom-color: var(--fw-color-action-ink); box-shadow: none; }
+.fw-scope :is([data-ui="input"], [data-ui="textarea"], [data-ui="select"]):not(:disabled):focus { outline: 0; border-bottom-color: var(--fw-color-focus); box-shadow: none; }
 .fw-scope [data-ui="textarea"] { min-height: calc(var(--fw-control-height) * 3); resize: vertical; }
 .fw-scope :is([data-ui="input"], [data-ui="textarea"], [data-ui="select"]):disabled { opacity: var(--fw-opacity-disabled); cursor: not-allowed; }
 .fw-scope [data-ui="select-shell"] { display: block; position: relative; min-width: 0; }
@@ -48,6 +48,7 @@
 .fw-scope [data-ui="field"] .formFieldDescription { color: var(--fw-color-text-muted); font-size: var(--fw-text-caption); }
 .fw-scope [data-ui="field"] :is(.formFieldRequired, .formFieldMessage) { color: var(--fw-color-danger); font-size: var(--fw-text-caption); }
 .fw-scope [data-ui="field"] [aria-invalid="true"] { border-bottom-color: var(--fw-color-danger); }
+.fw-scope [data-ui="field"] [aria-invalid="true"]:is(:hover, :focus) { border-bottom-color: var(--fw-color-danger); }
 /* Short navigation marks; no surrounding frame or full-width rule. */
 .fw-scope [data-ui="segmented-control"] { display: flex; flex-wrap: wrap; gap: var(--fw-space-6); min-height: 0; padding: 0; border: 0; border-radius: 0; background: transparent; }
 .fw-scope [data-ui="segmented-control"] > button {
@@ -68,7 +69,7 @@
 .fw-scope [data-ui="segmented-control"][data-appearance="quiet"] > button { padding: var(--fw-space-1) var(--fw-space-3); min-height: var(--fw-control-height-compact); font-size: var(--fw-text-caption); }
 .fw-scope [data-ui="segmented-control"][data-appearance="quiet"] > button[aria-pressed="true"] { background: var(--fw-color-hover); }
 .fw-scope [data-ui="segmented-control"] > button:disabled { opacity: var(--fw-opacity-disabled); cursor: not-allowed; }
-.fw-scope [data-ui="segmented-control"] > button:focus-visible { outline: var(--fw-focus-width) solid var(--fw-color-focus); outline-offset: var(--fw-focus-offset); }
+.fw-scope [data-ui="segmented-control"] > button:focus-visible { outline: 0; box-shadow: inset 0 calc(-1 * var(--fw-focus-width)) 0 var(--fw-color-focus); }
 .fw-scope [data-ui="button"][data-variant="secondary"] { border-color: transparent; border-bottom-color: var(--fw-color-border); background: transparent; padding-inline: 0; }
 .fw-scope [data-ui="button"][data-variant="icon"] { border-color: transparent; background: transparent; }
 .fw-scope [data-ui="button"]:not(:disabled):not([aria-disabled="true"]):hover { text-decoration: none; filter: brightness(0.96); }
@@ -101,6 +102,7 @@
   box-shadow: var(--fw-shadow-action); transform: translate(calc(-1 * var(--fw-motion-nudge)), calc(-1 * var(--fw-motion-nudge)));
 }
 .fw-scope [data-ui="button"][data-variant="primary"]:not(:disabled):active { transform: none; box-shadow: none; }
+.fw-scope [data-ui="button"][data-variant]:not(:disabled):not([aria-disabled="true"]):focus-visible { outline: 0; box-shadow: inset 0 calc(-1 * var(--fw-focus-width)) 0 var(--fw-color-focus); }
 .fw-scope [data-ui="segmented-control"] > button[aria-pressed="true"] { font-weight: var(--fw-weight-strong); }
 .fw-scope [data-ui="segmented-control"][data-appearance="underline"] > button[aria-pressed="true"]::after { height: var(--fw-focus-width); }
 @media (prefers-reduced-motion: reduce) {

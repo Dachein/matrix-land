@@ -26,7 +26,8 @@
 .pass-learning::backdrop { background: var(--portal-learning-backdrop); backdrop-filter: blur(5px); }
 .pass-learning button { cursor: pointer; }
 .pass-learning button:focus-visible, .pass-learning a:focus-visible, .pass-learning summary:focus-visible {
-  outline: 2px solid var(--portal-onboarding-focus); outline-offset: -2px;
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 .pass-learning-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; min-height: 64px; padding: 10px 28px; }
 .pass-learning-header > strong { color: var(--portal-muted); font-size: 12px; font-weight: 800; letter-spacing: .13em; }

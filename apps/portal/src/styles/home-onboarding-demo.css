@@ -72,8 +72,8 @@
 }
 
 .portal-home-demo-scene-list > button:focus-visible {
-  outline: 2px solid var(--portal-signal);
-  outline-offset: -2px;
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .portal-home-demo-scene-list > button.active {
@@ -219,8 +219,8 @@
 .portal-home-demo-steps button:focus-visible,
 .portal-home-demo-footer button:focus-visible,
 .portal-home-demo-workspace button:focus-visible {
-  outline: 2px solid var(--portal-signal);
-  outline-offset: -2px;
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .portal-home-demo-steps button.active {
@@ -908,8 +908,8 @@
 }
 
 .portal-home-demo-agent-prompt:focus-visible {
-  outline: 2px solid var(--portal-signal);
-  outline-offset: 2px;
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .portal-home-demo-agent-prompt-label {

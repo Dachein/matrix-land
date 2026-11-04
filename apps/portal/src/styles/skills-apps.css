@@ -123,9 +123,9 @@
 }
 
 .portal-market-search:focus-within {
-  border-color: var(--portal-blue);
-  outline: 3px solid var(--portal-focus-ring);
-  outline-offset: 1px;
+  border-bottom-color: var(--portal-focus-ring);
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .portal-market-search input {
@@ -218,15 +218,15 @@
 .portal-market-card:focus-within,
 .portal-market-create-card:hover,
 .portal-market-create-card:focus-visible {
-  border-color: var(--portal-line-strong);
+  border-bottom-color: var(--portal-focus-ring);
   box-shadow: var(--portal-shadow-float);
   transform: translateY(-3px);
 }
 
 .portal-market-card:focus-within,
 .portal-market-create-card:focus-visible {
-  outline: 3px solid var(--portal-focus-ring);
-  outline-offset: 2px;
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .portal-market-mark.card {
@@ -380,7 +380,7 @@
 
 .portal-market-create-card:hover,
 .portal-market-create-card:focus-visible {
-  border-color: var(--portal-blue);
+  border-bottom-color: var(--portal-focus-ring);
   background: var(--portal-paper);
 }
 

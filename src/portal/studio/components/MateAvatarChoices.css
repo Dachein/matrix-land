@@ -129,7 +129,7 @@
 .portal-apps-surface .mateAvatarChoice:hover,
 .portal-apps-surface .mateAvatarChoice:focus-visible,
 .portal-apps-surface .mateAvatarChoice.selected {
-  border-color: var(--portal-red, #dd6a38);
+  border-bottom-color: var(--portal-focus-ring);
   outline: none;
   background: transparent;
   box-shadow: none;

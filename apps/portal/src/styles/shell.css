@@ -328,8 +328,8 @@
 }
 
 .portal-rail-toggle:focus-visible {
-  border-color: var(--portal-line-strong);
-  box-shadow: 0 0 0 2px var(--portal-ink-a055);
+  border-bottom-color: var(--portal-focus-ring);
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
   color: var(--portal-ink);
   outline: 0;
 }
@@ -342,7 +342,7 @@
 
 .admin-mode .portal-rail-toggle:hover,
 .admin-mode .portal-rail-toggle:focus-visible {
-  border-color: var(--portal-white-a48);
+  border-bottom-color: var(--portal-focus-ring);
   background: var(--portal-white-a20);
   color: var(--portal-white);
 }
@@ -653,8 +653,8 @@
 
 .portal-account-profile:hover,
 .portal-account-profile:focus-visible {
-  border-color: var(--portal-line-strong);
-  box-shadow: inset 0 0 0 1px var(--portal-ink-a10);
+  border-bottom-color: var(--portal-focus-ring);
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .portal-account-row strong,
@@ -973,10 +973,10 @@
 
 .agentHandoffButton:hover:not(:disabled),
 .agentHandoffButton:focus-visible {
-  border-color: var(--portal-ink-soft);
+  border-bottom-color: var(--portal-focus-ring);
   background: var(--portal-ink-soft);
   outline: 0;
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--portal-signal) 48%, transparent);
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .agentHandoffButton.copied {
@@ -1551,8 +1551,8 @@
 }
 
 .avatarCropSlider input[type="range"]:focus-visible {
-  outline: 3px solid var(--portal-focus-ring);
-  outline-offset: 5px;
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .avatarCropSlider input[type="range"]::-webkit-slider-runnable-track {
@@ -3343,7 +3343,7 @@ button.portal-live-ping-bubble:hover .portal-live-ping-bubble-copy {
 /* Shared visual primitives for community, notifications and Mate context. */
 .portal-context-rail { overscroll-behavior: contain; }
 .portal-context-rail .portal-rail-label { color: var(--portal-soft); font-size: var(--portal-rail-label-size); font-weight: 850; }
-.portal-context-rail button:focus-visible { outline: 2px solid var(--portal-green); outline-offset: 2px; }
+.portal-context-rail button:focus-visible { outline: 0; box-shadow: inset 0 -2px 0 var(--portal-focus-ring); }
 .portal-context-rail :is(.portal-agent-connection,.portal-live-notification-item,.portal-mate-agent-row,.tm-preview-directory-item > button:first-child,.tm-preview-weixin-button):hover { background: var(--portal-rail-hover); }
 .portal-context-rail .portal-live-section { gap: var(--portal-rail-item-gap); }
 .portal-context-rail .portal-live-body { gap: var(--portal-rail-section-gap); }

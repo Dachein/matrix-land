@@ -37,8 +37,8 @@
 }
 
 .portal-knowledge-mate-banner:focus-visible {
-  outline: 2px solid var(--portal-ink-soft);
-  outline-offset: 3px;
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .portal-knowledge-mate-icon {
@@ -282,9 +282,9 @@
 }
 
 .portal-search-field:focus-within {
-  border-color: var(--portal-blue);
-  outline: 3px solid var(--portal-focus-ring);
-  outline-offset: 1px;
+  border-bottom-color: var(--portal-focus-ring);
+  outline: 0;
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .portal-search-field input {
@@ -425,11 +425,11 @@
 
 .portal-knowledge-breadcrumbs .agentHandoffButton:hover:not(:disabled),
 .portal-knowledge-breadcrumbs .agentHandoffButton:focus-visible {
-  border-color: var(--portal-blue);
+  border-bottom-color: var(--portal-focus-ring);
   background: var(--portal-paper-soft);
   color: var(--portal-blue);
   outline: 0;
-  box-shadow: 0 0 0 2px var(--portal-focus-ring);
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .portal-knowledge-breadcrumbs .agentHandoffButton.copied {
@@ -445,7 +445,7 @@
 
 .portal-knowledge-breadcrumbs .portal-knowledge-back-button:hover,
 .portal-knowledge-breadcrumbs .portal-knowledge-back-button:focus-visible {
-  border-color: var(--portal-blue);
+  border-bottom-color: var(--portal-focus-ring);
   color: var(--portal-blue);
 }
 
@@ -615,10 +615,10 @@
 
 .portal-knowledge-agent-link:hover,
 .portal-knowledge-agent-link:focus-visible {
-  border-color: var(--portal-ink-soft);
+  border-bottom-color: var(--portal-focus-ring);
   background: var(--portal-ink-soft);
   outline: 0;
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--portal-blue) 24%, transparent);
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
 
 .portal-knowledge-agent-link img {
@@ -786,7 +786,7 @@
 
 .portal-knowledge-more:hover,
 .portal-knowledge-more:focus-visible {
-  border-color: var(--portal-line);
+  border-bottom-color: var(--portal-focus-ring);
   background: var(--portal-paper);
   color: var(--portal-ink);
 }
@@ -2083,7 +2083,7 @@
 }
 
 .portal-knowledge-history-search:focus-within {
-  border-color: var(--portal-blue);
+  border-bottom-color: var(--portal-focus-ring);
 }
 
 .portal-knowledge-history-search input {

@@ -149,7 +149,7 @@
 .knowledgeFolderPickerDialog button:disabled { cursor: default; opacity: .55; }
 .knowledgeFolderPickerDialog button:not(:disabled) { cursor: pointer; }
 .knowledgeFolderPickerDialog button:focus-visible,
-.knowledgeFolderPickerDialog input:focus-visible { outline: 3px solid var(--picker-focus); outline-offset: 2px; }
+.knowledgeFolderPickerDialog input:focus-visible { outline: 0; box-shadow: inset 0 -2px 0 var(--portal-focus-ring); }
 
 .knowledgeFolderPickerCreate { display: grid; gap: 8px; }
 .knowledgeFolderPickerCreate label { color: var(--picker-muted); font-size: 10px; font-weight: 850; }

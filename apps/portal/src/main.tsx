@@ -1,6 +1,6 @@
 import { OwnerClaim } from "./components/OwnerClaim";
 import { lazy, StrictMode, Suspense } from "react";
-import { createRoot } from "react-dom/client";
+import { createRoot, type Root } from "react-dom/client";
 import { PlatformBrandProvider } from "../../../src/portal/brand/PlatformBrandProvider";
 import { I18nProvider } from "../../../src/portal/i18n";
 import { PortalApp } from "./PortalApp";
@@ -13,6 +13,7 @@ import "./styles/base.css";
 import "./styles/auth.css";
 import "./styles/shell.css";
 import "./styles/home.css";
+import "../../../src/portal/design-system/styles";
 
 
 const LocalLoginPreview = import.meta.env.DEV ? lazy(() => import("./brand/LoginPreview").then(module => ({ default: module.LoginPreview }))) : () => null;
@@ -107,7 +108,10 @@ function LocalKnowledgeTourPreview() {
   );
 }
 
-createRoot(document.getElementById("root") as HTMLElement).render(
+const portalRoot = (import.meta.hot?.data.portalRoot as Root | undefined)
+  ?? createRoot(document.getElementById("root") as HTMLElement);
+if (import.meta.hot) import.meta.hot.data.portalRoot = portalRoot;
+portalRoot.render(
   <StrictMode>
     <PlatformBrandProvider>
     {isOwnerClaim ? (<I18nProvider><OwnerClaim /></I18nProvider>) : isLocalLoginPreview ? (

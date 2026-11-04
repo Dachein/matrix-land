@@ -9,6 +9,7 @@ import { platformPalette } from "../../../../src/shared/platformPalette";
 import { BrandControls } from "./BrandControls";
 import { FeedbackExamples } from "./FeedbackExamples";
 import { PrimitiveExamples } from "./PrimitiveExamples";
+import { PatternExamples } from "./PatternExamples";
 import { EmailExamples } from "./EmailExamples";
 import "./brand-studio.css";
 
@@ -25,7 +26,7 @@ export function BrandStudio() {
     <div className="studio-body"><main className="studio-main">
       <div className="studio-intro"><span className="studio-kicker">{t("design.eyebrow")}</span><h1>{t("design.heading")}</h1><p>{t("design.intro")}</p></div>
       <div className="studio-toolbar"><SegmentedControl ariaLabel={t("design.preview")} value={view} onChange={setView} options={[{ value: "components", label: t("design.preview") }, { value: "emails", label: t("design.emails") }]} /><SegmentedControl appearance="quiet" compact ariaLabel={t("design.density")} value={density} onChange={setDensity} options={[{value:"comfortable",label:t("design.comfortable")},{value:"compact",label:t("design.compact")}]} /></div>
-      {view === "components" ? <><PrimitiveExamples /><FeedbackExamples /><section className="studio-section"><span className="studio-number">05</span><div><h2>{t("design.colorsTitle")}</h2><p>{t("design.colorsBody")}</p><div className="studio-swatches">{colors.map((color, index) => <div key={color}><i style={{ background: values[index] } as CSSProperties} /><strong>{t(`design.${color}`)}</strong><code>{values[index]}</code></div>)}</div></div></section></> : <EmailExamples brand={brand} />}
+      {view === "components" ? <><PrimitiveExamples /><FeedbackExamples /><PatternExamples /><section className="studio-section"><span className="studio-number">06</span><div><h2>{t("design.colorsTitle")}</h2><p>{t("design.colorsBody")}</p><div className="studio-swatches">{colors.map((color, index) => <div key={color}><i style={{ background: values[index] } as CSSProperties} /><strong>{t(`design.${color}`)}</strong><code>{values[index]}</code></div>)}</div></div></section></> : <EmailExamples brand={brand} />}
       <footer className="studio-caption">{t("design.footer")}</footer>
     </main><BrandControls brand={brand} onChange={setBrand} /></div>
   </DesignSystemScope></PlatformBrandProvider>;

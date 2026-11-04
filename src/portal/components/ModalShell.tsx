@@ -39,6 +39,9 @@ export function ModalShell({
     const previous = document.activeElement instanceof HTMLElement ? document.activeElement : undefined;
     activeDialogs.push(dialog);
     const isTop = () => activeDialogs.at(-1) === dialog;
+    const ownedPopover = (target: EventTarget | null) => target instanceof Node
+      && Array.from(dialog.querySelectorAll<HTMLElement>("[aria-controls]")).some(trigger =>
+        trigger.getAttribute("aria-controls")?.split(/\s+/).some(id => document.getElementById(id)?.contains(target)));
     const focusable = () => Array.from(dialog.querySelectorAll<HTMLElement>(
       'button:not(:disabled), [href], input:not(:disabled), select:not(:disabled), textarea:not(:disabled), [tabindex]:not([tabindex="-1"])'
     )).filter(element => element.tabIndex >= 0 && element.getClientRects().length > 0 && !element.closest('[inert], [aria-hidden="true"]'));
@@ -46,7 +49,10 @@ export function ModalShell({
     focusFirst();
     const onKey = (event: KeyboardEvent) => {
       if (!isTop()) return;
-      if (event.key === "Escape") { event.preventDefault(); event.stopImmediatePropagation(); closeRef.current(); }
+      if (event.key === "Escape") {
+        if (ownedPopover(event.target)) return;
+        event.preventDefault(); event.stopImmediatePropagation(); closeRef.current();
+      }
       if (event.key === "Tab") {
         const elements = focusable();
         const first = elements[0];
@@ -56,7 +62,7 @@ export function ModalShell({
         else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
       }
     };
-    const onFocus = (event: FocusEvent) => { if (isTop() && !dialog.contains(event.target as Node)) focusFirst(); };
+    const onFocus = (event: FocusEvent) => { if (isTop() && !dialog.contains(event.target as Node) && !ownedPopover(event.target)) focusFirst(); };
     document.addEventListener("keydown", onKey, true);
     document.addEventListener("focusin", onFocus);
     return () => {

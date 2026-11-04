@@ -1,3 +1,4 @@
+import type { KnowledgeMessageSetter } from "./types";
 import { useState } from "react";
 import type { KnowledgeItem, KnowledgeTranslate } from "./types";
 import type { useKnowledgeTree } from "./useKnowledgeTree";
@@ -9,7 +10,7 @@ export function useKnowledgeFileEditing({ userId, tree, t, setMessage, onSaved }
   userId: string;
   tree: Pick<ReturnType<typeof useKnowledgeTree>, "setSelectedId" | "refreshCurrentFolder">;
   t: KnowledgeTranslate;
-  setMessage: (message: string) => void;
+  setMessage: KnowledgeMessageSetter;
   onSaved: (objectId: string, versionId: string) => void;
 }) {
   const [editTarget, setEditTarget] = useState<KnowledgeItem>();
@@ -37,7 +38,7 @@ export function useKnowledgeFileEditing({ userId, tree, t, setMessage, onSaved }
     } catch (error) {
       if (!session.isCurrent(ticket)) return;
       closeEditDialog();
-      setMessage(errorMessage(error, t("knowledge.editLoadFailed")));
+      setMessage(errorMessage(error, t("knowledge.editLoadFailed")), "error");
     } finally {
       if (session.isCurrent(ticket)) setIsEditLoading(false);
     }
@@ -67,7 +68,7 @@ export function useKnowledgeFileEditing({ userId, tree, t, setMessage, onSaved }
       if (!session.isCurrent(ticket)) return;
       onSaved(target.id, result.versionAfterId);
       closeEditDialog();
-      setMessage(t("knowledge.edited"));
+      setMessage(t("knowledge.edited"), "success");
       // The write is already committed. A list refresh must not delay the
       // preview or turn a successful save into an apparent write failure.
       void tree.refreshCurrentFolder().catch(() => {});

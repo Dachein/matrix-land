@@ -222,7 +222,7 @@ export function WorkspaceListbox<TValue extends string>({
         position: "fixed",
         top: popoverPosition.top,
         width: popoverPosition.width,
-        zIndex: 10000
+        zIndex: "var(--fw-z-dropdown)"
       }
     : {
         left: 0,
@@ -230,7 +230,7 @@ export function WorkspaceListbox<TValue extends string>({
         top: 0,
         visibility: "hidden",
         width: 0,
-        zIndex: 10000
+        zIndex: "var(--fw-z-dropdown)"
       };
 
   const popover = open ? (

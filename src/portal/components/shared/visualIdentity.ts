@@ -37,27 +37,19 @@ export function deriveCoverMarkers(title: string, description: string, category:
   return Array.from(new Set(words)).slice(0, 3);
 }
 
+// Identity decoration is deterministic and uses semantic colors, including enterprise branding.
+const identityTones = ["action", "accent", "info", "success", "warning", "data-violet"] as const;
 export function coverPalette(hash: number) {
-  const palettes = [
-    { a: "var(--brand-primary-soft)", b: "var(--brand-primary-200)", c: "var(--brand-primary)", ink: "var(--brand-primary-ink)" },
-    { a: "#f5fff0", b: "#e6ffd4", c: "#6fb300", ink: "#17220f" },
-    { a: "#fff6ed", b: "#ffe1c4", c: "#ff8a2a", ink: "#2f1907" },
-    { a: "#f6f3ff", b: "#e7dfff", c: "#7c5cff", ink: "#1d1638" },
-    { a: "#ecfbff", b: "#d0f3f8", c: "#18b7c8", ink: "#082c32" },
-    { a: "#fff2f0", b: "#ffd9d3", c: "#d84a3a", ink: "#351512" }
-  ];
-
-  return palettes[hash % palettes.length];
+  const tone = identityTones[hash % identityTones.length];
+  return {
+    a: `color-mix(in srgb, var(--fw-color-${tone}) 7%, var(--fw-color-raised))`,
+    b: `color-mix(in srgb, var(--fw-color-${tone}) 18%, var(--fw-color-raised))`,
+    c: `var(--fw-color-${tone})`,
+    ink: "var(--fw-color-text)"
+  };
 }
 
 export function personPalette(hash: number) {
-  const palettes = [
-    { a: "var(--brand-primary)", b: "var(--brand-primary-strong)", ink: "#ffffff" },
-    { a: "#b8ff3d", b: "#18b7c8", ink: "#111318" },
-    { a: "#ff8a2a", b: "#ffcf5a", ink: "#111318" },
-    { a: "#7c5cff", b: "var(--brand-primary)", ink: "#ffffff" },
-    { a: "#111318", b: "#626a78", ink: "#ffffff" }
-  ];
-
-  return palettes[hash % palettes.length];
+  const palette = coverPalette(hash);
+  return { a: palette.a, b: palette.b, ink: palette.ink };
 }

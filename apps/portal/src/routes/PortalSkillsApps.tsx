@@ -1,3 +1,6 @@
+import { EmptyState } from "../../../../src/portal/components/EmptyState";
+import { SearchField } from "../../../../src/portal/components/SearchField";
+import { PageHeading } from "../../../../src/portal/components/PageHeading";
 import {
   ChevronRight,
   Download,
@@ -120,19 +123,15 @@ export function PortalSkillsApps({
   return (
     <div className="portal-workspace-inner portal-market-workspace">
       <section className="portal-page portal-market-page" aria-labelledby="portal-market-title">
-        <header className="portal-page-heading portal-editorial-heading portal-market-heading">
-          <div className="portal-page-heading-copy">
-            <div className="portal-editorial-kicker">
+        <PageHeading
+          id="portal-market-title"
+          className="portal-editorial-heading portal-market-heading"
+          title={t("portal.skillsApps.title")}
+          eyebrow={<><div className="portal-editorial-kicker">
               <span aria-hidden="true" className="portal-editorial-mark"><i /></span>
               <span>{t("portal.skillsApps.kicker")}</span>
-            </div>
-            <h1 id="portal-market-title">{t("portal.skillsApps.title")}</h1>
-            <blockquote className="portal-editorial-quote">
-              <p>{t("portal.skillsApps.editorialQuote")}</p>
-              <cite>{t("portal.skillsApps.editorialSource")}</cite>
-            </blockquote>
-          </div>
-          <dl className="portal-market-counts" aria-label={t("portal.skillsApps.inventoryAria")}>
+            </div></>}
+          actions={<><dl className="portal-market-counts" aria-label={t("portal.skillsApps.inventoryAria")}>
             <div>
               <dt>{t("market.apps")}</dt>
               <dd>{String(counts.app).padStart(2, "0")}</dd>
@@ -141,8 +140,11 @@ export function PortalSkillsApps({
               <dt>{t("market.skills")}</dt>
               <dd>{String(counts.skill).padStart(2, "0")}</dd>
             </div>
-          </dl>
-        </header>
+          </dl></>}
+        ><blockquote className="portal-editorial-quote">
+              <p>{t("portal.skillsApps.editorialQuote")}</p>
+              <cite>{t("portal.skillsApps.editorialSource")}</cite>
+            </blockquote></PageHeading>
 
         <div className="portal-market-toolbar">
           <SegmentedControl
@@ -157,16 +159,13 @@ export function PortalSkillsApps({
             value={filter}
           />
           <div className="portal-market-query-controls">
-            <label className="portal-market-search">
-              <span className="visuallyHidden">{t("portal.skillsApps.searchLabel")}</span>
-              <Search aria-hidden="true" size={16} />
-              <input
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder={t("portal.skillsApps.searchPlaceholder")}
-                type="search"
-                value={query}
-              />
-            </label>
+            <SearchField
+              className="portal-market-search"
+              label={t("portal.skillsApps.searchLabel")}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder={t("portal.skillsApps.searchPlaceholder")}
+              value={query}
+            />
             <WorkspaceListbox<MarketCategoryFilter>
               ariaLabel={t("market.categoryFilter")}
               className="portal-market-category"
@@ -306,18 +305,13 @@ function MarketEmptyState({ hasFilters, onReset }: { hasFilters: boolean; onRese
   const { t } = useI18n();
 
   return (
-    <section className="portal-market-empty" aria-live="polite">
-      <Search aria-hidden="true" size={26} />
-      <div>
-        <h2>{t(hasFilters ? "market.emptyFilteredTitle" : "market.emptyAllTitle")}</h2>
-        <p>{t(hasFilters ? "market.emptyFilteredBody" : "market.emptyAllBody")}</p>
-      </div>
-      {hasFilters && (
-        <Button iconBefore={<RotateCcw size={15} />} onClick={onReset}>
-          {t("market.emptyReset")}
-        </Button>
-      )}
-    </section>
+    <EmptyState
+      className="portal-market-empty"
+      icon={<Search aria-hidden="true" size={26} />}
+      title={t(hasFilters ? "market.emptyFilteredTitle" : "market.emptyAllTitle")}
+      description={t(hasFilters ? "market.emptyFilteredBody" : "market.emptyAllBody")}
+      actions={hasFilters && <Button iconBefore={<RotateCcw size={15} />} onClick={onReset}>{t("market.emptyReset")}</Button>}
+    />
   );
 }
 

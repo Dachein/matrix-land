@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { platformPalette, colorContrast, platformCssVariables } from "./platformPalette.ts";
+import { platformPalette, colorContrast, platformCssVariables, platformChartPalette } from "./platformPalette.ts";
 import { resolvePlatformBrand } from "./platformBrand.ts";
 
 test("arbitrary enterprise colors preserve readable controls and links on light surfaces", () => {
@@ -11,6 +11,18 @@ test("arbitrary enterprise colors preserve readable controls and links on light 
     assert.ok(colorContrast(p.primaryInk, p.canvas) >= 4.5, color);
     assert.ok(colorContrast(p.accentInk, p.canvas) >= 4.5, color);
     assert.ok(colorContrast(p.focus, p.canvas) >= 3, color);
+    assert.ok(colorContrast(p.primaryOnInverse, p.ink) >= 4.5, color);
+  }
+});
+
+test("resolved chart colors track every configured palette without CSS variable strings", async () => {
+  const { platformBrandPresets } = await import("./platformBrandPresets.ts");
+  for (const preset of platformBrandPresets) {
+    const palette = platformChartPalette(resolvePlatformBrand({ paletteId: preset.id }));
+    assert.equal(palette.heat.length, 5);
+    assert.equal(palette.heat.at(-1), preset.primaryColor);
+    assert.equal(new Set(palette.heat).size, 5);
+    assert.ok(palette.heat.every(color => /^#[\da-f]{6}$/i.test(color)));
   }
 });
 

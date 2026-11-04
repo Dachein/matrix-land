@@ -77,28 +77,28 @@
 }
 
 .portal-token-model-health-copy strong {
-  font-size: 17px;
+  font-size: var(--fw-text-lead);
   line-height: 1.2;
 }
 
 .portal-token-model-health-meta {
   align-items: end;
   display: grid;
-  gap: 2px;
+  gap: var(--fw-space-half);
   min-width: 170px;
   text-align: right;
 }
 
 .portal-token-model-health-meta small {
   color: var(--portal-soft);
-  font-size: 9px;
-  font-weight: 780;
+  font-size: var(--fw-text-micro);
+  font-weight: var(--fw-weight-strong);
   text-transform: uppercase;
 }
 
 .portal-token-model-health-meta span {
   color: var(--portal-muted);
-  font-size: 11px;
+  font-size: var(--fw-text-meta);
 }
 
 .portal-token-model-health-open {
@@ -110,9 +110,9 @@
 }
 
 .portal-token-model-health-open strong {
-  font-size: 16px;
+  font-size: var(--fw-text-lead);
   font-variant-numeric: tabular-nums;
-  font-weight: 850;
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-model-health-entry.is-degraded .portal-token-model-health-open,
@@ -154,13 +154,13 @@
 
 .portal-token-state h2,
 .portal-token-empty h2 {
-  font-size: 18px;
+  font-size: var(--fw-text-subheading);
 }
 
 .portal-token-state p,
 .portal-token-empty p {
-  margin-top: 4px;
-  font-size: 11px;
+  margin-top: var(--fw-space-1);
+  font-size: var(--fw-text-meta);
 }
 
 .portal-token-overview {
@@ -207,22 +207,22 @@
 }
 
 .portal-token-metric small {
-  margin-top: 8px;
+  margin-top: var(--fw-space-2);
   color: var(--portal-muted);
-  font-size: 12px;
-  font-weight: 720;
+  font-size: var(--fw-text-caption);
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-metric strong {
-  font-size: 24px;
-  font-weight: 760;
+  font-size: var(--fw-text-section);
+  font-weight: var(--fw-weight-bold);
   line-height: 1;
 }
 
 .portal-token-metric em {
-  margin-top: 4px;
+  margin-top: var(--fw-space-1);
   color: var(--portal-soft);
-  font-size: 9px;
+  font-size: var(--fw-text-micro);
   font-style: normal;
   line-height: 1.35;
 }
@@ -239,7 +239,7 @@
 }
 
 .portal-token-metric-detail-link:focus-visible {
-  border-radius: 1px;
+  border-radius: var(--fw-radius-control);
   outline: 0;
   box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
 }
@@ -264,20 +264,20 @@
 .portal-token-usage-band h2,
 .portal-token-ledger-title h2 {
   margin-top: 5px;
-  font-size: 18px;
+  font-size: var(--fw-text-subheading);
 }
 
 .portal-token-usage-band > header > span,
 .portal-token-ledger-title > span {
   color: var(--portal-soft);
-  font-size: 9px;
-  font-weight: 780;
+  font-size: var(--fw-text-micro);
+  font-weight: var(--fw-weight-strong);
   text-transform: uppercase;
 }
 
 .portal-token-snapshot-time {
   display: grid;
-  gap: 2px;
+  gap: var(--fw-space-half);
   max-width: 48%;
   line-height: 1.5;
   text-align: right;
@@ -285,7 +285,7 @@
 
 .portal-token-snapshot-schedule {
   color: var(--portal-soft);
-  font-weight: 650;
+  font-weight: var(--fw-weight-strong);
   text-transform: none;
 }
 
@@ -341,7 +341,7 @@
   min-width: 0;
   min-height: 0;
   border: 1px solid transparent;
-  border-radius: 2px;
+  border-radius: var(--fw-radius-control);
   background: transparent;
   cursor: default;
   pointer-events: auto;
@@ -382,9 +382,9 @@
   background: var(--portal-ink);
   box-shadow: var(--portal-shadow-paper);
   color: var(--portal-white);
-  padding: 6px 8px;
-  font-size: 10px;
-  font-weight: 700;
+  padding: 6px var(--fw-space-2);
+  font-size: var(--fw-text-micro);
+  font-weight: var(--fw-weight-strong);
   line-height: 1.35;
   opacity: 0;
   pointer-events: none;
@@ -422,10 +422,10 @@
 .portal-token-heatmap-legend {
   display: flex;
   justify-content: flex-end;
-  gap: 4px;
+  gap: var(--fw-space-1);
   align-items: center;
   color: var(--portal-soft);
-  font-size: 9px;
+  font-size: var(--fw-text-micro);
 }
 
 .portal-token-heatmap-legend i {
@@ -433,7 +433,7 @@
   width: 11px;
   height: 11px;
   border: 1px solid var(--portal-white);
-  border-radius: 2px;
+  border-radius: var(--fw-radius-control);
 }
 
 .portal-token-notice {
@@ -442,8 +442,8 @@
   background: var(--portal-paper);
   color: var(--portal-green);
   padding: var(--portal-space-3);
-  font-size: 10px;
-  font-weight: 800;
+  font-size: var(--fw-text-micro);
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-notice.error {
@@ -476,8 +476,8 @@
   background: var(--portal-paper-soft);
   color: var(--portal-soft);
   padding: 0 var(--portal-space-4);
-  font-size: 9px;
-  font-weight: 820;
+  font-size: var(--fw-text-micro);
+  font-weight: var(--fw-weight-strong);
   text-transform: uppercase;
 }
 
@@ -536,13 +536,13 @@
 
 .portal-token-row-identity strong {
   font-size: var(--portal-type-body);
-  font-weight: 900;
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-row-identity code {
-  margin-top: 4px;
+  margin-top: var(--fw-space-1);
   color: var(--portal-muted);
-  font-size: 11px;
+  font-size: var(--fw-text-meta);
 }
 
 .portal-token-row-identity small {
@@ -551,9 +551,9 @@
   margin-top: 5px;
   border: 1px solid var(--portal-line);
   color: var(--portal-soft);
-  padding: 2px 5px;
+  padding: var(--fw-space-half) 5px;
   font-size: 8px;
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
   text-transform: uppercase;
 }
 
@@ -563,8 +563,8 @@
 }
 
 .portal-token-row > span:not(.portal-token-row-identity):not(.portal-token-row-open) strong {
-  font-size: 10px;
-  font-weight: 820;
+  font-size: var(--fw-text-micro);
+  font-weight: var(--fw-weight-strong);
   line-height: 1.4;
 }
 
@@ -602,14 +602,14 @@
 
 .portal-token-inspector h2 {
   margin-top: 6px;
-  font-size: 22px;
+  font-size: var(--fw-text-section);
 }
 
 .portal-token-inspector header code {
   display: block;
   margin-top: 7px;
   color: var(--portal-soft);
-  font-size: 9px;
+  font-size: var(--fw-text-micro);
 }
 
 .portal-token-inspector-stats {
@@ -637,14 +637,14 @@
 .portal-token-inspector-stats dt {
   color: var(--portal-soft);
   font-size: 8px;
-  font-weight: 750;
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-inspector-stats dd {
   overflow-wrap: anywhere;
   margin: 6px 0 0;
-  font-size: 10px;
-  font-weight: 850;
+  font-size: var(--fw-text-micro);
+  font-weight: var(--fw-weight-strong);
   line-height: 1.35;
 }
 
@@ -666,8 +666,8 @@
 .portal-token-create-form .formFieldLabel,
 .portal-token-how-grid .formFieldLabel {
   color: var(--portal-muted);
-  font-size: 9px;
-  font-weight: 850;
+  font-size: var(--fw-text-micro);
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-inspector .textInput,
@@ -695,7 +695,7 @@
 .portal-token-detail-modal .formFieldDescription,
 .portal-token-create-form .formFieldDescription {
   color: var(--portal-soft);
-  font-size: 9px;
+  font-size: var(--fw-text-micro);
 }
 
 .portal-token-access-reason,
@@ -704,7 +704,7 @@
   background: var(--portal-paper-soft);
   color: var(--portal-rose);
   padding: var(--portal-space-3);
-  font-size: 10px;
+  font-size: var(--fw-text-micro);
 }
 
 .portal-token-inspector > footer,
@@ -757,7 +757,7 @@
 
 .portal-token-modal-header h2 {
   margin-top: 6px;
-  font-size: 24px;
+  font-size: var(--fw-text-section);
 }
 
 .portal-token-create-form {
@@ -824,16 +824,16 @@
 
 .portal-token-detail-header h2 {
   margin-top: 5px;
-  font-size: 26px;
+  font-size: var(--fw-text-section);
   line-height: 1.15;
 }
 
 .portal-token-created-title {
   margin-top: var(--portal-space-2);
   color: var(--portal-green);
-  font-size: 20px;
+  font-size: var(--fw-text-subtitle);
   line-height: 1.2;
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-secret-recovery {
@@ -918,7 +918,7 @@
 
 .portal-token-inline-how h3 {
   margin-top: 5px;
-  font-size: 22px;
+  font-size: var(--fw-text-section);
 }
 
 .portal-token-inline-how > header > span {
@@ -927,7 +927,7 @@
   color: var(--portal-soft);
   padding: 5px 7px;
   font-size: var(--portal-type-micro);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-copy-list {
@@ -953,7 +953,7 @@
 .portal-token-copy-row > span {
   color: var(--portal-soft);
   font-size: var(--portal-type-micro);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-copy-row > code {
@@ -972,7 +972,7 @@
   grid-column: 2 / -1;
   margin-top: -5px;
   color: var(--portal-soft);
-  font-size: 9px;
+  font-size: var(--fw-text-micro);
   line-height: 1.4;
 }
 
@@ -983,7 +983,7 @@
   cursor: pointer;
   padding: 0;
   font: inherit;
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -1004,7 +1004,7 @@
 
 .portal-token-model-copy-row .workspaceListboxTrigger {
   min-width: 0;
-  min-height: 34px;
+  min-height: var(--fw-control-height);
 }
 
 .portal-token-model-label {
@@ -1017,7 +1017,7 @@
 .portal-token-model-label > span {
   color: var(--portal-soft);
   font-size: var(--portal-type-micro);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-model-label > button {
@@ -1027,8 +1027,8 @@
   cursor: pointer;
   padding: 0;
   font: inherit;
-  font-size: 10px;
-  font-weight: 800;
+  font-size: var(--fw-text-micro);
+  font-weight: var(--fw-weight-strong);
   text-align: left;
   text-decoration: underline;
   text-underline-offset: 2px;
@@ -1065,7 +1065,7 @@
 
 .portal-token-model-pricing dl > div {
   display: inline-flex;
-  gap: 4px;
+  gap: var(--fw-space-1);
 }
 
 .portal-token-model-pricing dt,
@@ -1075,12 +1075,12 @@
 
 .portal-token-model-pricing dd {
   color: var(--portal-ink);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-model-pricing > small {
   color: var(--portal-muted);
-  font-size: 9px;
+  font-size: var(--fw-text-micro);
 }
 
 .portal-token-model-pricing-empty {
@@ -1093,14 +1093,14 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 5px;
-  margin-top: -4px;
+  margin-top: calc(-1 * var(--fw-space-1));
   color: var(--portal-ink);
-  font-size: 10px;
+  font-size: var(--fw-text-micro);
 }
 
 .portal-token-capability-summary > span:first-child {
   color: var(--portal-ink);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-capability-chip {
@@ -1108,7 +1108,7 @@
   border: 1px solid var(--portal-line);
   border-radius: 999px;
   color: var(--portal-ink);
-  font-weight: 700;
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-capability-chip.is-supported {
@@ -1163,7 +1163,7 @@
   top: 0;
   background: var(--portal-paper-soft);
   color: var(--portal-soft);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-capability-table tbody th strong,
@@ -1174,15 +1174,15 @@
 .portal-token-capability-table tbody th code {
   margin-top: 3px;
   color: var(--portal-muted);
-  font-size: 9px;
-  font-weight: 500;
+  font-size: var(--fw-text-micro);
+  font-weight: var(--fw-weight-medium);
 }
 
 .portal-token-capability-status {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  font-weight: 800;
+  gap: var(--fw-space-1);
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-capability-status.is-passed { color: var(--portal-green); }
@@ -1195,13 +1195,13 @@
   gap: var(--portal-space-3);
   padding: var(--portal-space-3) var(--portal-space-4);
   color: var(--portal-muted);
-  font-size: 10px;
+  font-size: var(--fw-text-micro);
 }
 
 .portal-token-capability-legend span {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--fw-space-1);
 }
 
 .portal-token-pricing-panel {
@@ -1252,17 +1252,12 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   width: 100%;
-  min-height: 52px;
-  gap: 4px;
-  padding: 4px;
+  gap: var(--fw-space-1);
 }
 
 .segmentedControl.portal-token-comparison-tabs > button {
   width: 100%;
   min-width: 0;
-  min-height: 42px;
-  padding: 0 12px;
-  font-size: var(--portal-type-ui);
 }
 
 .portal-token-comparison-panel {
@@ -1307,7 +1302,7 @@
   top: 0;
   background: var(--portal-paper-soft);
   color: var(--portal-soft);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-pricing-panel th:first-child {
@@ -1321,10 +1316,10 @@
 }
 
 .portal-token-pricing-panel tbody th code {
-  margin-top: 2px;
+  margin-top: var(--fw-space-half);
   color: var(--portal-muted);
-  font-size: 9px;
-  font-weight: 500;
+  font-size: var(--fw-text-micro);
+  font-weight: var(--fw-weight-medium);
 }
 
 .portal-token-pricing-panel tbody tr.selected {
@@ -1384,7 +1379,7 @@
 
 .portal-token-agent-copy p,
 .portal-token-agent-copy > small {
-  margin-top: 4px;
+  margin-top: var(--fw-space-1);
   color: var(--portal-soft);
   font-size: var(--portal-type-micro);
   line-height: 1.45;
@@ -1446,7 +1441,7 @@
 
 .portal-token-side-panel h3 {
   margin-top: 5px;
-  font-size: 22px;
+  font-size: var(--fw-text-section);
 }
 
 .portal-token-side-panel > header code {
@@ -1534,7 +1529,7 @@
   margin-top: 5px;
   color: var(--portal-green);
   font-size: var(--portal-type-micro);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-test-output-body {
@@ -1608,13 +1603,13 @@
 }
 
 .portal-token-how-grid section > header strong {
-  font-size: 13px;
-  font-weight: 900;
+  font-size: var(--fw-text-label);
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-how-grid section > header p {
   margin-top: 6px;
-  font-size: 10px;
+  font-size: var(--fw-text-micro);
 }
 
 .portal-token-config-list {
@@ -1637,13 +1632,13 @@
 .portal-token-config-row span {
   color: var(--portal-soft);
   font-size: 8px;
-  font-weight: 780;
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-config-row code {
   overflow-wrap: anywhere;
   color: var(--portal-ink);
-  font-size: 9px;
+  font-size: var(--fw-text-micro);
   line-height: 1.45;
 }
 
@@ -1654,7 +1649,7 @@
   background: var(--portal-ink);
   color: var(--portal-paper);
   padding: var(--portal-space-3);
-  font-size: 9px;
+  font-size: var(--fw-text-micro);
   line-height: 1.55;
 }
 
@@ -1682,12 +1677,12 @@
 
 .portal-token-delete-modal h2 {
   margin-top: 6px;
-  font-size: 24px;
+  font-size: var(--fw-text-section);
 }
 
 .portal-token-delete-modal > p {
   color: var(--portal-ink-soft);
-  font-size: 12px;
+  font-size: var(--fw-text-caption);
 }
 
 @media (max-width: 1240px) {
@@ -1774,7 +1769,7 @@
   .portal-token-row > span:not(.portal-token-row-identity):not(.portal-token-row-open)::before {
     color: var(--portal-soft);
     font-size: 8px;
-    font-weight: 750;
+    font-weight: var(--fw-weight-strong);
     content: attr(data-label);
   }
 
@@ -1921,8 +1916,8 @@
 
 .portal-token-breakdown-filters .formFieldLabel {
   color: var(--portal-muted);
-  font-size: 9px;
-  font-weight: 850;
+  font-size: var(--fw-text-micro);
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-breakdown-scope {
@@ -1934,8 +1929,8 @@
   gap: var(--portal-space-2);
   align-items: center;
   color: var(--portal-muted);
-  font-size: 11px;
-  font-weight: 720;
+  font-size: var(--fw-text-meta);
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-breakdown-date input {
@@ -1944,14 +1939,14 @@
   border-radius: var(--portal-radius);
   background: var(--portal-paper-soft);
   color: var(--portal-ink);
-  padding: 0 8px;
+  padding: 0 var(--fw-space-2);
   font: inherit;
 }
 
 .portal-token-breakdown-range {
   color: var(--portal-soft);
-  font-size: 9px;
-  font-weight: 780;
+  font-size: var(--fw-text-micro);
+  font-weight: var(--fw-weight-strong);
   letter-spacing: 0.02em;
   text-transform: uppercase;
 }
@@ -1964,7 +1959,7 @@
   min-height: 120px;
   border: 1px dashed var(--portal-line);
   color: var(--portal-muted);
-  font-size: 12px;
+  font-size: var(--fw-text-caption);
   text-align: center;
 }
 
@@ -1987,7 +1982,7 @@
 .portal-token-breakdown-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 12px;
+  font-size: var(--fw-text-caption);
   text-align: right;
   white-space: nowrap;
 }
@@ -2001,24 +1996,24 @@
 .portal-token-breakdown-table thead th {
   background: var(--portal-paper-soft);
   color: var(--portal-soft);
-  font-size: 9px;
-  font-weight: 780;
+  font-size: var(--fw-text-micro);
+  font-weight: var(--fw-weight-strong);
   letter-spacing: 0.02em;
   text-transform: uppercase;
 }
 
 .portal-token-breakdown-table tbody th[scope="row"] {
   color: var(--portal-ink);
-  font-weight: 720;
+  font-weight: var(--fw-weight-strong);
   text-align: left;
 }
 
 .portal-token-breakdown-table tbody th[scope="row"] small {
   display: block;
-  margin-top: 2px;
+  margin-top: var(--fw-space-half);
   color: var(--portal-soft);
-  font-size: 9px;
-  font-weight: 650;
+  font-size: var(--fw-text-micro);
+  font-weight: var(--fw-weight-strong);
 }
 
 .portal-token-breakdown-table td[data-numeric] {
@@ -2037,5 +2032,5 @@
   border-bottom: 0;
   background: var(--portal-paper-soft);
   color: var(--portal-ink);
-  font-weight: 780;
+  font-weight: var(--fw-weight-strong);
 }

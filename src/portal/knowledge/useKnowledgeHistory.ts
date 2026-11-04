@@ -1,3 +1,4 @@
+import type { KnowledgeMessageSetter } from "./types";
 import { useLayoutEffect, useRef, useState } from "react";
 import type { KnowledgeItem, KnowledgeTranslate } from "./types";
 import type {
@@ -13,7 +14,7 @@ import { errorMessage, knowledgeFetch } from "./utils";
 // Own audit list pagination, selected change details and stored diffs.
 export function useKnowledgeHistory({ t, setMessage, userId }: {
   t: KnowledgeTranslate;
-  setMessage: (message: string) => void;
+  setMessage: KnowledgeMessageSetter;
   userId: string;
 }) {
   const [historyTarget, setHistoryTarget] = useState<KnowledgeItem>();
@@ -100,7 +101,7 @@ export function useKnowledgeHistory({ t, setMessage, userId }: {
         await selectHistoryChange(first.id);
       }
     } catch (error) {
-      if (requests.current.page === pageRequest) setMessage(errorMessage(error, t("knowledge.historyLoadFailed")));
+      if (requests.current.page === pageRequest) setMessage(errorMessage(error, t("knowledge.historyLoadFailed")), "error");
     } finally {
       // A selected detail owns the loading indicator once the list has loaded.
       if (requests.current.page === pageRequest && requests.current.detail === detailRequest) setIsHistoryLoading(false);
@@ -173,7 +174,7 @@ export function useKnowledgeHistory({ t, setMessage, userId }: {
         if (isCurrent()) setHistoryDiff(diff);
       }
     } catch (error) {
-      if (isCurrent()) setMessage(errorMessage(error, t("knowledge.historyLoadFailed")));
+      if (isCurrent()) setMessage(errorMessage(error, t("knowledge.historyLoadFailed")), "error");
     } finally {
       if (isCurrent()) setIsHistoryLoading(false);
     }

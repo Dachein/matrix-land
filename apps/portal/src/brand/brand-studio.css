@@ -47,6 +47,15 @@
 .brand-studio .studio-kicker { letter-spacing: var(--fw-tracking-label); }
 .brand-studio .studio-section { padding-block: var(--fw-space-10); }
 .brand-studio .studio-settings { gap: var(--fw-space-6); }
+.brand-studio .studio-pattern-controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(var(--fw-space-16), 1fr); gap: var(--fw-space-6); margin-block: var(--fw-space-4); }
+.brand-studio .studio-pattern-results { display: grid; gap: var(--fw-space-3); }
+.brand-studio .studio-pattern-results > div { display: flex; align-items: center; justify-content: space-between; gap: var(--fw-space-4); padding: var(--fw-space-4); background: var(--fw-color-surface); }
+.brand-studio .studio-pattern-results span { color: var(--fw-color-text-muted); font-size: var(--fw-text-caption); }
+.brand-studio .studio-settings { position: sticky; top: 0; max-height: 100dvh; overflow-y: auto; }
+@media (max-width: 760px) {
+  .brand-studio .studio-pattern-controls { grid-template-columns: minmax(0, 1fr); }
+  .brand-studio .studio-settings { position: static; max-height: none; }
+}
 .brand-studio .studio-palette-options > button:not(:disabled):hover { background: var(--fw-color-hover); }
 .brand-studio .studio-palette-options > button[aria-pressed="true"] { background: var(--fw-color-action-soft); }
 

@@ -32,7 +32,7 @@
 .backupAdminMetrics span {
   color: var(--portal-muted);
   font-size: var(--portal-type-ui);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
   text-transform: uppercase;
 }
 
@@ -55,7 +55,7 @@
   background: transparent;
   padding: 0 var(--portal-space-4);
   color: var(--portal-muted);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
 }
 
 .backupAdminTabs > button.active {
@@ -119,7 +119,7 @@
   background: var(--portal-paper-soft);
   color: var(--portal-muted);
   font-size: var(--portal-type-micro);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
   text-transform: uppercase;
 }
 
@@ -142,7 +142,7 @@
 }
 
 .backupAdminNodeListbox .workspaceListboxTrigger {
-  min-height: 36px;
+  min-height: var(--fw-control-height);
 }
 
 .backupAdminError {
@@ -214,7 +214,7 @@
 
 .backupNodeModal {
   position: fixed;
-  z-index: 1000;
+  z-index: var(--fw-z-modal);
   inset: 0;
   display: grid;
   place-items: center;
@@ -245,7 +245,7 @@
   border: 0;
   background: transparent;
   color: var(--portal-muted);
-  font-size: 24px;
+  font-size: var(--fw-text-section);
 }
 
 .backupNodeFormGrid {
@@ -260,7 +260,7 @@
   gap: var(--portal-space-2);
   color: var(--portal-muted);
   font-size: var(--portal-type-ui);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
 }
 
 .backupNodeFormGrid input {

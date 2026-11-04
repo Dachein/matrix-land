@@ -15,11 +15,11 @@ export const FORUM_CATEGORY_DEFINITIONS = [
 ] as const satisfies ReadonlyArray<{ slug: string; labelKey: TranslationKey }>;
 
 export const FORUM_REACTION_DEFINITIONS = [
-  { value: "thumbsup", iconSrc: "/assets/reactions/fluent-flat/thumbs-up.svg", labelKey: "forum.reaction.thumbsup", color: "#b25a19", background: "#fff4e6" },
-  { value: "eyes", iconSrc: "/assets/reactions/fluent-flat/eyes.svg", labelKey: "forum.reaction.eyes", color: "#2563eb", background: "#eef6ff" },
-  { value: "tada", iconSrc: "/assets/reactions/fluent-flat/party-popper.svg", labelKey: "forum.reaction.tada", color: "#8b5cf6", background: "#f4f0ff" },
-  { value: "heart", iconSrc: "/assets/reactions/fluent-flat/red-heart.svg", labelKey: "forum.reaction.heart", color: "#be185d", background: "#fdf2f8" },
-  { value: "bulb", iconSrc: "/assets/reactions/fluent-flat/light-bulb.svg", labelKey: "forum.reaction.bulb", color: "#ca8a04", background: "#fff8db" }
+  { value: "thumbsup", iconSrc: "/assets/reactions/fluent-flat/thumbs-up.svg", labelKey: "forum.reaction.thumbsup", color: "var(--fw-color-warning)", background: "var(--fw-color-warning-soft)" },
+  { value: "eyes", iconSrc: "/assets/reactions/fluent-flat/eyes.svg", labelKey: "forum.reaction.eyes", color: "var(--fw-color-info)", background: "var(--fw-color-info-soft)" },
+  { value: "tada", iconSrc: "/assets/reactions/fluent-flat/party-popper.svg", labelKey: "forum.reaction.tada", color: "var(--fw-color-data-violet)", background: "var(--fw-color-accent-soft)" },
+  { value: "heart", iconSrc: "/assets/reactions/fluent-flat/red-heart.svg", labelKey: "forum.reaction.heart", color: "var(--fw-color-danger)", background: "var(--fw-color-danger-soft)" },
+  { value: "bulb", iconSrc: "/assets/reactions/fluent-flat/light-bulb.svg", labelKey: "forum.reaction.bulb", color: "var(--fw-color-warning)", background: "var(--fw-color-warning-soft)" }
 ] as const satisfies ReadonlyArray<{
   background: string;
   color: string;

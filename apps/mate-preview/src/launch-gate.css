@@ -21,9 +21,9 @@ body:has(> #root > .tm-launch-gate) {
   gap: 10px;
   padding: 28px;
   overflow: hidden;
-  background: #edece5;
-  color: #18231d;
-  font-family: Inter, "Noto Sans SC", ui-sans-serif, system-ui, sans-serif;
+  background: var(--fw-color-border);
+  color: var(--fw-color-text);
+  font-family: var(--fw-font-body);
   font-synthesis: none;
   text-align: center;
 }
@@ -32,14 +32,14 @@ body:has(> #root > .tm-launch-gate) {
 .portal-mate-page .tm-launch-gate {
   position: fixed;
   inset: 0;
-  z-index: 1000;
+  z-index: var(--fw-z-sticky);
 }
 
 .tm-launch-gate-spinner {
   width: 34px;
   height: 34px;
-  border: 3px solid #d3d8d0;
-  border-top-color: #277a4b;
+  border: 3px solid var(--fw-color-border-strong);
+  border-top-color: var(--fw-color-action);
   border-radius: 50%;
   animation: tm-launch-gate-spin .8s linear infinite;
 }
@@ -68,10 +68,10 @@ body:has(> #root > .tm-launch-gate) {
 }
 
 .tm-launch-gate-eyebrow {
-  margin: 2px 0 0;
-  color: #67736c;
-  font-size: 11px;
-  font-weight: 800;
+  margin: var(--fw-space-half) 0 0;
+  color: var(--fw-color-text-muted);
+  font-size: var(--fw-text-meta);
+  font-weight: var(--fw-weight-strong);
   letter-spacing: .18em;
   text-transform: uppercase;
 }
@@ -85,7 +85,7 @@ body:has(> #root > .tm-launch-gate) {
 .tm-launch-gate > p:not(.tm-launch-gate-eyebrow) {
   max-width: 540px;
   margin: 0;
-  color: #67736c;
+  color: var(--fw-color-text-muted);
   line-height: 1.6;
 }
 

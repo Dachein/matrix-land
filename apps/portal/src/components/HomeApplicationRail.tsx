@@ -2,6 +2,7 @@ import { X } from "lucide-react";
 import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent,
   type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent } from "react";
 import { launchPortalApp } from "../../../../src/portal/lib/launchPortalApp";
+import { ResourceMark } from "../../../../src/portal/components/ResourceMark";
 import type { PortalShortcut } from "../lib/viewModels";
 
 type RailDrag = {
@@ -255,8 +256,7 @@ function ShortcutMark({ shortcut }: { shortcut: PortalShortcut }) {
     .join("");
 
   return (
-    <span className={`portal-object-mark ${shortcut.kind}`}>
-      {shortcut.coverImageUrl ? <img alt="" draggable={false} src={shortcut.coverImageUrl} /> : initials}
-    </span>
+    <ResourceMark aria-hidden="true" className={`portal-object-mark ${shortcut.kind}`}
+      imageUrl={shortcut.coverImageUrl} fallback={initials} />
   );
 }

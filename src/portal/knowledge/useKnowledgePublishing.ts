@@ -1,3 +1,4 @@
+import type { KnowledgeMessageSetter } from "./types";
 import { useState } from "react";
 import { useKnowledgeRequestSession } from "./useKnowledgeRequestSession";
 import type { KnowledgeItem, KnowledgeSection, KnowledgeServiceAccessMode, KnowledgeTranslate } from "./types";
@@ -25,7 +26,7 @@ export function useKnowledgePublishing({ userId, tree, section, t, setMessage, s
   tree: Pick<ReturnType<typeof useKnowledgeTree>, "items" | "setItems" | "currentFolderId" | "treeCache" | "updateKnownKnowledgeItem" | "setSelectedId">;
   section: KnowledgeSection;
   t: KnowledgeTranslate;
-  setMessage: (message: string) => void;
+  setMessage: KnowledgeMessageSetter;
   setContextMenu: (menu: KnowledgeContextMenu | undefined) => void;
 }) {
   const { items, setItems, currentFolderId, treeCache, updateKnownKnowledgeItem, setSelectedId } = tree;
@@ -116,12 +117,12 @@ export function useKnowledgePublishing({ userId, tree, section, t, setMessage, s
             setKnowledgeServiceSettingsReady(true);
           } else {
             setKnowledgeServiceSettingsReady(false);
-            setMessage(t("knowledge.serviceSettingsUnavailable"));
+            setMessage(t("knowledge.serviceSettingsUnavailable"), "error");
           }
         }
       })
       .catch((error) => {
-        if (session.isCurrent(ticket)) setMessage(errorMessage(error, t("knowledge.serviceLoadFailed")));
+        if (session.isCurrent(ticket)) setMessage(errorMessage(error, t("knowledge.serviceLoadFailed")), "error");
       })
       .then(() => {
         if (session.isCurrent(ticket)) setIsKnowledgeServiceLoading(false);
@@ -318,17 +319,17 @@ export function useKnowledgePublishing({ userId, tree, section, t, setMessage, s
           indexStatus: response.service?.indexStatus ?? current.indexStatus ?? "pending",
           withinKnowledgeService: true
         } : current);
-        setMessage(t(target.agentEnabled ? "knowledge.serviceUpdated" : "knowledge.serviceEnabled"));
+        setMessage(t(target.agentEnabled ? "knowledge.serviceUpdated" : "knowledge.serviceEnabled"), "success");
       }
     } catch (error) {
       if (session.isCurrent(ticket)) {
         if (error instanceof Error && error.message.includes("knowledge_service_handbook_missing")) {
           setKnowledgeServiceHandbookStatus("missing");
-          setMessage(t("knowledge.handbookRequired"));
+          setMessage(t("knowledge.handbookRequired"), "error");
         } else if (error instanceof Error && error.message.includes("knowledge_service_inherited_viewer_conflict")) {
-          setMessage(t("knowledge.serviceInheritedViewerConflict"));
+          setMessage(t("knowledge.serviceInheritedViewerConflict"), "error");
         } else {
-          setMessage(errorMessage(error, t("knowledge.serviceSaveFailed")));
+          setMessage(errorMessage(error, t("knowledge.serviceSaveFailed")), "error");
         }
       }
     } finally {
@@ -366,14 +367,14 @@ export function useKnowledgePublishing({ userId, tree, section, t, setMessage, s
       }));
       if (isDedicatedDialog && isCurrent()) {
         closeDisableKnowledgeService();
-        setMessage(t("knowledge.serviceDisabled"));
+        setMessage(t("knowledge.serviceDisabled"), "success");
       } else if (!isDedicatedDialog && session.isCurrent(ticket)) {
         closeKnowledgeServiceSettings();
-        setMessage(t("knowledge.serviceDisabled"));
+        setMessage(t("knowledge.serviceDisabled"), "success");
       }
     } catch (error) {
       if (isCurrent()) {
-        setMessage(errorMessage(error, t("knowledge.serviceDisableFailed")));
+        setMessage(errorMessage(error, t("knowledge.serviceDisableFailed")), "error");
       }
     } finally {
       if (isCurrent()) setIsSavingKnowledgeService(false);

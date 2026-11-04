@@ -8,7 +8,7 @@
 }
 
 .portal-admin-knowledge-filter .workspaceListboxTrigger {
-  min-height: 38px;
+  min-height: var(--fw-control-height);
 }
 
 .portal-admin-knowledge-metrics {
@@ -131,9 +131,9 @@
   border-radius: 999px;
   display: inline-flex;
   font-size: var(--portal-type-micro);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
   gap: 5px;
-  padding: 4px 8px;
+  padding: var(--fw-space-1) var(--fw-space-2);
   white-space: nowrap;
 }
 
@@ -194,7 +194,7 @@
 .portal-admin-knowledge-policy-note > svg {
   color: var(--portal-green);
   flex: 0 0 auto;
-  margin-top: 2px;
+  margin-top: var(--fw-space-half);
 }
 
 .portal-admin-knowledge-policy-note span,
@@ -247,7 +247,7 @@
 .portal-admin-knowledge-detail-grid dt {
   color: var(--portal-muted);
   font-size: var(--portal-type-micro);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
   text-transform: uppercase;
 }
 
@@ -275,7 +275,7 @@
 
 .portal-admin-knowledge-activity-strip svg {
   color: var(--portal-green);
-  margin-top: 2px;
+  margin-top: var(--fw-space-half);
 }
 
 .portal-admin-knowledge-activity-strip span,
@@ -287,7 +287,7 @@
 .portal-admin-knowledge-activity-strip small {
   color: var(--portal-muted);
   font-size: var(--portal-type-micro);
-  font-weight: 800;
+  font-weight: var(--fw-weight-strong);
   text-transform: uppercase;
 }
 
@@ -376,7 +376,7 @@
 .portal-admin-knowledge-principal small {
   color: var(--portal-muted);
   font-size: var(--portal-type-ui);
-  margin-top: 2px;
+  margin-top: var(--fw-space-half);
 }
 
 .portal-admin-knowledge-principal-icon {

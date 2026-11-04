@@ -1,3 +1,5 @@
+import { SearchField } from "../../../../src/portal/components/SearchField";
+import { PageHeading } from "../../../../src/portal/components/PageHeading";
 import { AppsOwnerTransferInbox } from '../../../../src/portal/studio/components/AppsOwnership';
 import { ArrowUpRight, BookOpen, Boxes, Cable, Plus, Search, ShieldCheck } from "lucide-react";
 import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -38,14 +40,25 @@ export function PortalApps({ catalog, onRefresh }: { catalog: PortalCatalog; onR
   return (
     <div className="portal-workspace-inner portal-apps-workspace">
       <section className="portal-page portal-apps-page" aria-labelledby="portal-apps-title">
-        <header className="portal-page-heading portal-apps-heading">
-          <div className="portal-page-heading-copy">
-            <div className="portal-apps-kicker">
+        <PageHeading
+          id="portal-apps-title"
+          className="portal-apps-heading"
+          title={t("portal.apps.title")}
+          eyebrow={<><div className="portal-apps-kicker">
               <span aria-hidden="true" className="portal-apps-orbit-mark"><i /></span>
               <span>{t("portal.apps.kicker")}</span>
-            </div>
-            <h1 id="portal-apps-title">{t("portal.apps.title")}</h1>
-            <blockquote className="portal-apps-quote">
+            </div></>}
+          actions={<><div className="portal-apps-heading-actions">
+            <span className="portal-apps-object-count">
+              <b>{appsObjectCount.toString().padStart(2, "0")}</b>
+              {t("portal.apps.objectCount")}
+            </span>
+            <PortalAppsCreateMenu
+              onCreateApp={() => controller.setIsCreateOpen(true)}
+              onSelectSkills={() => controller.setKindFilter("skills")}
+            />
+          </div></>}
+        ><blockquote className="portal-apps-quote">
               <p>{t("portal.apps.subtitle")}</p>
               <cite>
                 <a
@@ -58,26 +71,17 @@ export function PortalApps({ catalog, onRefresh }: { catalog: PortalCatalog; onR
                   <ArrowUpRight aria-hidden="true" size={13} />
                 </a>
               </cite>
-            </blockquote>
-          </div>
-          <div className="portal-apps-heading-actions">
-            <span className="portal-apps-object-count">
-              <b>{appsObjectCount.toString().padStart(2, "0")}</b>
-              {t("portal.apps.objectCount")}
-            </span>
-            <PortalAppsCreateMenu
-              onCreateApp={() => controller.setIsCreateOpen(true)}
-              onSelectSkills={() => controller.setKindFilter("skills")}
-            />
-          </div>
-        </header>
+            </blockquote></PageHeading>
 
         <div className="portal-apps-surface">
           <section className="portal-apps-controls">
-            <label className="portal-search-field portal-apps-search">
-              <Search size={16} />
-              <input onChange={(event) => controller.setQuery(event.target.value)} placeholder={t("apps.searchPlaceholder")} value={controller.query} />
-            </label>
+            <SearchField
+              className="portal-search-field portal-apps-search"
+              label={t("apps.searchPlaceholder")}
+              onChange={(event) => controller.setQuery(event.target.value)}
+              placeholder={t("apps.searchPlaceholder")}
+              value={controller.query}
+            />
             <div className="portal-apps-filter-group">
               <SegmentedControl<AppsKindFilter>
                 ariaLabel={t("apps.filter.all")}

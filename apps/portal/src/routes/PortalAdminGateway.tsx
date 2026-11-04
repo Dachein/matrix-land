@@ -1,3 +1,4 @@
+import { PageHeading } from "../../../../src/portal/components/PageHeading";
 import { Database, RefreshCw, ShieldAlert } from "lucide-react";
 import { useState } from "react";
 import { Button } from "../../../../src/portal/components/Button";
@@ -55,16 +56,15 @@ function PortalAdminGatewayAuthenticated({
   return (
     <div className="portal-workspace-inner portal-admin-workspace">
       <section className="portal-page portal-admin-page" aria-labelledby="portal-admin-title">
-        <header className="portal-page-heading portal-admin-heading">
-          <div className="portal-page-heading-copy">
-            <h1 id="portal-admin-title">{t("portal.admin.title")}</h1>
-            <p>{t("portal.admin.subtitle")}</p>
-          </div>
-          <div className="portal-admin-source">
+        <PageHeading
+          id="portal-admin-title"
+          className="portal-admin-heading"
+          title={t("portal.admin.title")}
+          actions={<><div className="portal-admin-source">
             <span><Database size={15} /> {t("portal.admin.sourceName")}</span>
             <small>{fetchedAt ? t("portal.admin.syncedAt", { time: formatSourceTime(fetchedAt, locale) }) : t("portal.admin.sourcePending")}</small>
-          </div>
-        </header>
+          </div></>}
+        ><p>{t("portal.admin.subtitle")}</p></PageHeading>
 
         <div className="portal-admin-section-bar">
           <SegmentedControl

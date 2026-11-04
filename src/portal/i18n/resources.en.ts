@@ -1,6 +1,11 @@
 import type { TranslationResource } from "./resources";
 
 export const en: TranslationResource = {
+  "design.patternsTitle": "Page patterns and overlays",
+  "design.patternsBody": "Headings, search, filters and empty states share the same components across the workspace. Switch palettes to inspect controls and overlays.",
+  "design.sampleData": "Component sample data",
+  "design.openPicker": "Test a filter inside a dialog",
+  "design.pickerHelp": "Open the picker and search. Escape closes the picker before the dialog. Closing restores focus to its trigger.",
   "design.feedbackTitle": "Status & recovery",
   "design.feedbackBody": "One feedback component explains what happened, preserves context and offers a useful next step.",
   "design.feedbackKind": "Feedback type",

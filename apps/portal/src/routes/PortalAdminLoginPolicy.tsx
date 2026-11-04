@@ -1,3 +1,4 @@
+import { PageHeading } from "../../../../src/portal/components/PageHeading";
 import { FeedbackNotice } from "../../../../src/portal/components/FeedbackNotice";
 import { KeyRound, Plus, Save, ShieldAlert, ShieldCheck, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
@@ -100,13 +101,12 @@ export function PortalAdminLoginPolicy({ catalog }: { catalog: PortalCatalog }) 
   return (
     <div className="portal-workspace-inner portal-admin-workspace">
       <section className="portal-page portal-admin-operations-page" aria-labelledby="login-email-policy-title">
-        <header className="portal-page-heading portal-admin-heading">
-          <div className="portal-page-heading-copy">
-            <h1 id="login-email-policy-title">{t("admin.loginEmailPolicy.title")}</h1>
-            <p>{t("admin.loginEmailPolicy.subtitle")}</p>
-          </div>
-          <div className="portal-admin-source"><span><ShieldCheck size={15} /> {t("admin.loginEmailPolicy.source")}</span></div>
-        </header>
+        <PageHeading
+          id="login-email-policy-title"
+          className="portal-admin-heading"
+          title={t("admin.loginEmailPolicy.title")}
+          actions={<><div className="portal-admin-source"><span><ShieldCheck size={15} /> {t("admin.loginEmailPolicy.source")}</span></div></>}
+        ><p>{t("admin.loginEmailPolicy.subtitle")}</p></PageHeading>
 
         {error && <div className="portal-admin-notice error" role="alert">{error}</div>}
         {notice && <div className="portal-admin-notice" role="status">{notice}</div>}

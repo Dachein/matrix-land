@@ -42,6 +42,17 @@ export function PlatformBrandProvider({ children, previewBrand }: { children: Re
     for (const [key, value] of Object.entries(variables)) root.style.setProperty(key, value);
     const oldTitle = document.title;
     document.title = current.name;
+    const metadata = [
+      ['meta[property="og:site_name"]', current.name],
+      ['meta[property="og:title"]', current.name],
+      ['meta[name="twitter:title"]', current.name],
+      ['meta[name="theme-color"]', current.primaryColor]
+    ].map(([selector, value]) => {
+      const element = document.querySelector<HTMLMetaElement>(selector);
+      const previous = element?.getAttribute("content");
+      element?.setAttribute("content", value);
+      return { element, previous };
+    });
     const icon = document.querySelector<HTMLLinkElement>('link[rel="icon"]');
     const oldIcon = icon?.getAttribute("href");
     const oldIconType = icon?.getAttribute("type");
@@ -53,7 +64,11 @@ export function PlatformBrandProvider({ children, previewBrand }: { children: Re
     return () => {
       for (const [key, value] of Object.entries(previous)) value ? root.style.setProperty(key, value) : root.style.removeProperty(key);
       document.title = oldTitle;
-      if (icon && oldIcon) icon.setAttribute("href", oldIcon);
+      for (const { element, previous } of metadata) {
+        if (previous != null) element?.setAttribute("content", previous);
+        else element?.removeAttribute("content");
+      }
+      if (icon) oldIcon != null ? icon.setAttribute("href", oldIcon) : icon.removeAttribute("href");
       if (icon) oldIconType ? icon.setAttribute("type", oldIconType) : icon.removeAttribute("type");
     };
   }, [current]);

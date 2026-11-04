@@ -1,3 +1,4 @@
+import type { KnowledgeMessageSetter } from "./types";
 import { useState } from "react";
 import { useKnowledgeRequestSession } from "./useKnowledgeRequestSession";
 import type { KnowledgeApiItem, KnowledgeItem, KnowledgeTranslate } from "./types";
@@ -10,7 +11,7 @@ export function useKnowledgePublicShare({ userId, tree, t, setMessage, setContex
   userId: string;
   tree: Pick<ReturnType<typeof useKnowledgeTree>, "updateKnownKnowledgeItem" | "setSelectedId">;
   t: KnowledgeTranslate;
-  setMessage: (message: string) => void;
+  setMessage: KnowledgeMessageSetter;
   setContextMenu: (menu: KnowledgeContextMenu | undefined) => void;
 }) {
   const { updateKnownKnowledgeItem, setSelectedId } = tree;
@@ -42,7 +43,7 @@ export function useKnowledgePublicShare({ userId, tree, t, setMessage, setContex
         if (session.isCurrent(ticket)) { reconcilePublicShareItem(response.item); applyPublicShareResponse(response); }
       })
       .catch((error) => {
-        if (session.isCurrent(ticket)) setMessage(errorMessage(error, t("knowledge.shareLinkLoadFailed")));
+        if (session.isCurrent(ticket)) setMessage(errorMessage(error, t("knowledge.shareLinkLoadFailed")), "error");
       })
       .then(() => {
         if (session.isCurrent(ticket)) setIsSharing(false);
@@ -89,10 +90,10 @@ export function useKnowledgePublicShare({ userId, tree, t, setMessage, setContex
       reconcilePublicShareItem(response.item);
       if (session.isCurrent(ticket)) {
         applyPublicShareResponse(response);
-        setMessage(t("knowledge.shareLinkCreated"));
+        setMessage(t("knowledge.shareLinkCreated"), "success");
       }
     } catch (error) {
-      if (session.isCurrent(ticket)) setMessage(errorMessage(error, t("knowledge.shareLinkCreateFailed")));
+      if (session.isCurrent(ticket)) setMessage(errorMessage(error, t("knowledge.shareLinkCreateFailed")), "error");
     } finally {
       if (session.isCurrent(ticket)) setIsSharing(false);
     }
@@ -121,10 +122,10 @@ export function useKnowledgePublicShare({ userId, tree, t, setMessage, setContex
         setShareUrl("");
         setShareExpiresAt(undefined);
         setShareCopied(false);
-        setMessage(t("knowledge.shareLinkRevoked"));
+        setMessage(t("knowledge.shareLinkRevoked"), "success");
       }
     } catch (error) {
-      if (session.isCurrent(ticket)) setMessage(errorMessage(error, t("knowledge.shareLinkRevokeFailed")));
+      if (session.isCurrent(ticket)) setMessage(errorMessage(error, t("knowledge.shareLinkRevokeFailed")), "error");
     } finally {
       if (session.isCurrent(ticket)) setIsSharing(false);
     }
@@ -143,10 +144,10 @@ export function useKnowledgePublicShare({ userId, tree, t, setMessage, setContex
       await navigator.clipboard.writeText(url);
       if (session.isCurrent(ticket)) {
         setShareCopied(true);
-        setMessage(t("knowledge.shareLinkCopied"));
+        setMessage(t("knowledge.shareLinkCopied"), "success");
       }
     } catch (error) {
-      if (session.isCurrent(ticket)) setMessage(errorMessage(error, t("knowledge.shareLinkCopyFailed")));
+      if (session.isCurrent(ticket)) setMessage(errorMessage(error, t("knowledge.shareLinkCopyFailed")), "error");
     } finally {
       if (session.isCurrent(ticket)) setIsSharing(false);
     }

@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { useI18n } from "../../i18n";
 import { hashText, personInitials, personPalette } from "./visualIdentity";
+import { ResourceMark } from "../ResourceMark";
 
 export function PersonAvatar({ imageUrl, name, size = "default" }: { imageUrl?: string; name: string; size?: "default" | "large" }) {
   const palette = personPalette(hashText(name));
@@ -11,9 +12,8 @@ export function PersonAvatar({ imageUrl, name, size = "default" }: { imageUrl?: 
   } as CSSProperties;
 
   return (
-    <span className={`personAvatar ${size}`} style={style} title={name}>
-      {imageUrl ? <img alt="" src={imageUrl} /> : personInitials(name)}
-    </span>
+    <ResourceMark className={`personAvatar ${size}`} style={style} title={name}
+      imageUrl={imageUrl} fallback={personInitials(name)} />
   );
 }
 
@@ -33,9 +33,8 @@ export function AvatarStack({ label, people }: { label?: string; people: Array<{
         } as CSSProperties;
 
         return (
-          <span className="avatarStackItem" key={`${normalized.name}:${index}`} style={style} title={normalized.name}>
-            {normalized.imageUrl ? <img alt="" src={normalized.imageUrl} /> : personInitials(normalized.name)}
-          </span>
+          <ResourceMark className="avatarStackItem" key={`${normalized.name}:${index}`} style={style} title={normalized.name}
+            imageUrl={normalized.imageUrl} fallback={personInitials(normalized.name)} />
         );
       })}
       {label && <span className="avatarStackLabel">{label}</span>}

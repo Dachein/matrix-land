@@ -8,7 +8,7 @@
   display: flex;
   min-height: 112px;
   align-items: center;
-  gap: 12px;
+  gap: var(--fw-space-3);
 }
 
 .mateAvatarChoicesCurrent > img {
@@ -21,13 +21,13 @@
   width: 112px;
   min-height: 32px;
   padding: 5px 10px;
-  border: 1px solid var(--line, #d8d5ce);
-  border-radius: 4px;
-  background: #fff;
-  color: var(--ink, #20201f);
+  border: 1px solid var(--fw-color-border);
+  border-radius: var(--fw-radius-control);
+  background: var(--fw-color-raised);
+  color: var(--fw-color-text);
   cursor: pointer;
   font: inherit;
-  font-size: 13px;
+  font-size: var(--fw-text-label);
   box-shadow: none;
 }
 
@@ -41,8 +41,8 @@
 .mateAvatarChoicesRow {
   display: flex;
   width: max-content;
-  gap: 8px;
-  padding: 2px 0 8px;
+  gap: var(--fw-space-2);
+  padding: var(--fw-space-half) 0 var(--fw-space-2);
 }
 
 .mateAvatarChoice {
@@ -53,15 +53,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: var(--fw-space-1);
   padding: 6px 3px;
   border: 1px solid transparent;
-  border-radius: 6px;
+  border-radius: var(--fw-radius-control);
   background: transparent;
-  color: var(--muted, #77746d);
+  color: var(--fw-color-text-muted);
   cursor: pointer;
   font: inherit;
-  font-size: 12px;
+  font-size: var(--fw-text-caption);
 }
 
 .mateAvatarChoice img {
@@ -71,7 +71,7 @@
 }
 
 .mateAvatarChoice.selected {
-  border-color: var(--accent, #dd6a38);
+  border-color: var(--fw-color-action);
   background: transparent;
 }
 
@@ -100,8 +100,8 @@
 }
 
 .portal-apps-surface .mateAvatarChoicesViewport {
-  border: 1px solid var(--line, #d8d5ce);
-  background: #fff;
+  border: 1px solid var(--fw-color-border);
+  background: var(--fw-color-raised);
   box-shadow: none;
 }
 
@@ -112,11 +112,11 @@
   flex: 0 0 76px;
   overflow: visible;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: var(--fw-radius-control);
   background: transparent;
   padding: 6px 3px;
-  color: var(--muted, #77746d);
-  font-size: 11px;
+  color: var(--fw-color-text-muted);
+  font-size: var(--fw-text-meta);
   box-shadow: none;
 }
 

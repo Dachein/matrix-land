@@ -1,3 +1,4 @@
+import { PageHeading } from "../../../../src/portal/components/PageHeading";
 import { KeyRound, Plus, RefreshCw } from "lucide-react";
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { Button } from "../../../../src/portal/components/Button";
@@ -515,19 +516,15 @@ export function PortalToken({
   return (
     <div className="portal-workspace-inner portal-token-workspace">
       <section className="portal-page portal-token-page" aria-labelledby="portal-token-title">
-        <header className="portal-page-heading portal-editorial-heading portal-token-heading">
-          <div className="portal-page-heading-copy">
-            <div className="portal-editorial-kicker">
+        <PageHeading
+          id="portal-token-title"
+          className="portal-editorial-heading portal-token-heading"
+          title={t("portal.token.title")}
+          eyebrow={<><div className="portal-editorial-kicker">
               <span aria-hidden="true" className="portal-editorial-mark"><i /></span>
               <span>{t("portal.token.kicker")}</span>
-            </div>
-            <h1 id="portal-token-title">{t("portal.token.title")}</h1>
-            <blockquote className="portal-editorial-quote">
-              <p>{t("portal.token.editorialQuote")}</p>
-              <cite>{t("portal.token.editorialSource")}</cite>
-            </blockquote>
-          </div>
-          <div className="portal-token-heading-actions">
+            </div></>}
+          actions={<><div className="portal-token-heading-actions">
             <Button
               disabled={!access}
               iconBefore={<RefreshCw size={16} />}
@@ -539,8 +536,11 @@ export function PortalToken({
             <Button iconBefore={<Plus size={16} />} onClick={openCreateModal} variant="primary">
               {t("my.createNewToken")}
             </Button>
-          </div>
-        </header>
+          </div></>}
+        ><blockquote className="portal-editorial-quote">
+              <p>{t("portal.token.editorialQuote")}</p>
+              <cite>{t("portal.token.editorialSource")}</cite>
+            </blockquote></PageHeading>
 
         {!access ? (
           <>

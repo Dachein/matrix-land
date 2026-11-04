@@ -39,6 +39,14 @@ export function onBrandColor(color: string): string {
   return colorContrast(color, "#000000") >= colorContrast(color, "#ffffff") ? "#000000" : "#ffffff";
 }
 
+export function brandInkOnInverse(color: string): string {
+  for (let step = 0; step <= 20; step++) {
+    const candidate = mixColor(color, "#ffffff", step / 20);
+    if (colorContrast(candidate, platformSurfaces.ink) >= 4.5) return candidate;
+  }
+  return "#ffffff";
+}
+
 export function platformPalette(input?: PlatformBrand) {
   const brand = resolvePlatformBrand(input);
   return {
@@ -46,6 +54,7 @@ export function platformPalette(input?: PlatformBrand) {
     primary: brand.primaryColor, onPrimary: onBrandColor(brand.primaryColor),
     primaryInk: readableBrandInk(brand.primaryColor), primarySoft: mixColor(brand.primaryColor, platformSurfaces.canvas, 0.91),
     primaryHover: mixColor(brand.primaryColor, "#000000", 0.12),
+    primaryOnInverse: brandInkOnInverse(brand.primaryColor),
     accent: brand.accentColor, onAccent: onBrandColor(brand.accentColor),
     accentInk: readableBrandInk(brand.accentColor), accentSoft: mixColor(brand.accentColor, platformSurfaces.canvas, 0.9),
     focus: readableBrandInk(brand.primaryColor)
@@ -58,7 +67,19 @@ export function platformCssVariables(brand?: PlatformBrand): Record<string, stri
     "--portal-brand-primary": p.primary, "--portal-brand-on-primary": p.onPrimary,
     "--portal-brand-primary-ink": p.primaryInk, "--portal-brand-primary-soft": p.primarySoft,
     "--portal-brand-primary-hover": p.primaryHover, "--portal-brand-accent": p.accent,
+    "--portal-brand-primary-on-inverse": p.primaryOnInverse,
     "--portal-brand-on-accent": p.onAccent, "--portal-brand-accent-ink": p.accentInk,
-    "--portal-brand-accent-soft": p.accentSoft, "--portal-focus-ring": p.focus
+    "--portal-brand-accent-soft": p.accentSoft, "--portal-brand-focus": p.focus, "--portal-focus-ring": p.focus
+  };
+}
+
+/** Canvas/SVG chart libraries need resolved colors rather than CSS var() strings. */
+export function platformChartPalette(brand?: PlatformBrand) {
+  const p = platformPalette(brand);
+  return {
+    text: p.ink,
+    muted: p.muted,
+    surface: p.panel,
+    heat: [p.canvas, ...[0.18, 0.4, 0.7, 1].map(amount => mixColor(p.canvas, p.primary, amount))]
   };
 }

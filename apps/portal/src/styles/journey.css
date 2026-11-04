@@ -15,7 +15,7 @@
   width: 58px;
   height: 58px;
   border-width: 2px;
-  font-size: 18px;
+  font-size: var(--fw-text-subheading);
 }
 
 .journeyProfileModal .profileAvatarUploadCue {
@@ -33,13 +33,13 @@
 }
 
 .journeyProfileModal .profileHeroCopy h2 {
-  font-size: 19px;
+  font-size: var(--fw-text-subtitle);
 }
 
 .journeyProfileModal .profileHeroCopy .profileHeroBio {
   max-width: 620px;
   overflow: hidden;
-  font-size: 12px;
+  font-size: var(--fw-text-caption);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -47,11 +47,11 @@
 .journeyProfileModal .profileLevelMarker {
   min-height: 24px;
   border-color: var(--portal-line-strong);
-  border-radius: 2px;
+  border-radius: var(--fw-radius-control);
   background: var(--portal-paper);
   color: var(--portal-ink);
-  padding: 0 8px;
-  font-size: 10px;
+  padding: 0 var(--fw-space-2);
+  font-size: var(--fw-text-micro);
 }
 
 .journeyProfileModal .profileTabs {
@@ -64,7 +64,7 @@
 
 .journeyProfileModal .profileBody {
   background: var(--portal-paper-soft);
-  padding: 20px 26px 30px;
+  padding: var(--fw-space-5) 26px 30px;
 }
 
 .journeyProfileModal .profileFooter {
@@ -83,12 +83,12 @@
 .journeyHero {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 240px;
-  gap: 12px;
+  gap: var(--fw-space-3);
   min-width: 0;
   border: 1px solid var(--portal-line-strong);
   border-radius: var(--portal-radius);
   background: var(--portal-paper);
-  padding: 12px;
+  padding: var(--fw-space-3);
   box-shadow: var(--portal-shadow-paper);
 }
 
@@ -106,7 +106,7 @@
   width: 148px;
   height: 148px;
   border: 1px solid var(--portal-line);
-  border-radius: 2px;
+  border-radius: var(--fw-radius-control);
   background: var(--portal-warm-paper);
 }
 
@@ -126,7 +126,7 @@
   width: 40px;
   height: 40px;
   border: 1px solid var(--portal-ink);
-  border-radius: 2px;
+  border-radius: var(--fw-radius-control);
   background: var(--portal-white-a94);
 }
 
@@ -145,9 +145,9 @@
 
 .journeyHeroCopy > span,
 .journeySectionHeader > span {
-  color: var(--portal-red);
-  font-size: 10px;
-  font-weight: 900;
+  color: var(--fw-color-action-ink);
+  font-size: var(--fw-text-micro);
+  font-weight: var(--fw-weight-strong);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -159,7 +159,7 @@
 }
 
 .journeyHeroCopy h2 {
-  font-size: 28px;
+  font-size: var(--fw-text-section);
   line-height: 1.04;
 }
 
@@ -173,14 +173,14 @@
 
 .journeyHeroCopy p,
 .journeyNextLevel p {
-  font-size: 14px;
+  font-size: var(--fw-text-body);
 }
 
 .journeyHeroStats {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: 4px;
+  margin-top: var(--fw-space-1);
 }
 
 .journeyHeroStats strong,
@@ -191,18 +191,18 @@
   border-top: 2px solid var(--portal-ink);
   color: var(--portal-ink);
   padding-top: 5px;
-  font-size: 18px;
+  font-size: var(--fw-text-subheading);
 }
 
 .journeyHeroStats b {
-  font-weight: 930;
+  font-weight: var(--fw-weight-strong);
 }
 
 .journeyHeroStats small,
 .journeyBadgeSummary small {
   color: var(--portal-soft);
-  font-size: 11px;
-  font-weight: 850;
+  font-size: var(--fw-text-meta);
+  font-weight: var(--fw-weight-strong);
   text-transform: uppercase;
 }
 
@@ -213,7 +213,7 @@
   min-width: 0;
   border-left: 1px solid var(--portal-line);
   background: var(--portal-paper-soft);
-  padding: 16px;
+  padding: var(--fw-space-4);
 }
 
 .journeyNextLevelGlyph {
@@ -231,16 +231,16 @@
 }
 
 .journeyNextLevel small {
-  color: var(--portal-red);
-  font-size: 9px;
-  font-weight: 900;
+  color: var(--fw-color-action-ink);
+  font-size: var(--fw-text-micro);
+  font-weight: var(--fw-weight-strong);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 .journeyNextLevel strong {
   color: var(--portal-ink);
-  font-size: 16px;
+  font-size: var(--fw-text-lead);
 }
 
 .journeyNextLevel.complete {
@@ -264,7 +264,7 @@
   min-width: 0;
   min-height: 174px;
   border-right: 1px solid var(--portal-line);
-  padding: 13px 12px 14px;
+  padding: 13px var(--fw-space-3) 14px;
 }
 
 .journeyLevelStep:last-child {
@@ -273,7 +273,7 @@
 
 .journeyLevelStep.current {
   background: var(--portal-paper-soft);
-  box-shadow: inset 0 3px 0 var(--portal-red);
+  box-shadow: inset 0 3px 0 var(--fw-color-action);
 }
 
 .journeyLevelStep.upcoming {
@@ -284,7 +284,7 @@
   display: flex;
   align-items: start;
   justify-content: space-between;
-  gap: 8px;
+  gap: var(--fw-space-2);
 }
 
 .journeyLevelStepGlyph {
@@ -320,20 +320,20 @@
 
 .journeyLevelStepCopy {
   display: grid;
-  gap: 4px;
+  gap: var(--fw-space-1);
   min-width: 0;
 }
 
 .journeyLevelStep small {
   color: var(--portal-soft);
-  font-size: 10px;
-  font-weight: 900;
+  font-size: var(--fw-text-micro);
+  font-weight: var(--fw-weight-strong);
   letter-spacing: 0.06em;
 }
 
 .journeyLevelStep strong {
   color: inherit;
-  font-size: 17px;
+  font-size: var(--fw-text-lead);
   line-height: 1.2;
 }
 
@@ -342,8 +342,8 @@
   border-top: 2px solid currentColor;
   color: var(--portal-ink);
   padding-top: 5px;
-  font-size: 10px;
-  font-weight: 900;
+  font-size: var(--fw-text-micro);
+  font-weight: var(--fw-weight-strong);
   letter-spacing: 0.02em;
   line-height: 1.25;
 }
@@ -357,7 +357,7 @@
   overflow: hidden;
   margin: 0;
   color: var(--portal-muted);
-  font-size: 13px;
+  font-size: var(--fw-text-label);
   line-height: 1.45;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
@@ -365,7 +365,7 @@
 
 .journeyBadgeCatalog {
   display: grid;
-  gap: 12px;
+  gap: var(--fw-space-3);
   min-width: 0;
   border: 1px solid var(--portal-line-strong);
   border-radius: var(--portal-radius);
@@ -383,12 +383,12 @@
 
 .journeySectionHeader {
   display: grid;
-  gap: 4px;
+  gap: var(--fw-space-1);
   min-width: 0;
 }
 
 .journeySectionHeader h3 {
-  font-size: 24px;
+  font-size: var(--fw-text-section);
 }
 
 .journeyBadgeSummary {
@@ -403,7 +403,7 @@
   gap: 5px;
   border-top: 1px solid var(--portal-line);
   border-bottom: 1px solid var(--portal-line);
-  padding: 8px 0;
+  padding: var(--fw-space-2) 0;
 }
 
 .journeyBadgeFilters button {
@@ -412,12 +412,12 @@
   gap: 6px;
   min-height: 36px;
   border: 1px solid transparent;
-  border-radius: 2px;
+  border-radius: var(--fw-radius-control);
   background: transparent;
   color: var(--portal-muted);
   padding: 0 11px;
-  font-size: 12px;
-  font-weight: 850;
+  font-size: var(--fw-text-caption);
+  font-weight: var(--fw-weight-strong);
 }
 
 .journeyBadgeFilters button:hover,
@@ -435,7 +435,7 @@
 .journeyBadgeFilters em {
   min-width: 18px;
   color: inherit;
-  font-size: 11px;
+  font-size: var(--fw-text-meta);
   font-style: normal;
   text-align: center;
 }
@@ -443,7 +443,7 @@
 .journeyBadgeGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: var(--fw-space-3);
   min-width: 0;
 }
 
@@ -452,13 +452,13 @@
   display: grid;
   grid-template-columns: 112px minmax(0, 1fr);
   grid-template-rows: minmax(112px, auto) auto;
-  gap: 10px 12px;
+  gap: 10px var(--fw-space-3);
   align-items: start;
   min-width: 0;
   border: 1px solid var(--portal-line);
-  border-radius: 2px;
+  border-radius: var(--fw-radius-control);
   background: var(--portal-paper);
-  padding: 12px;
+  padding: var(--fw-space-3);
 }
 
 .journeyBadgeCard.earned {
@@ -521,15 +521,15 @@
 .journeyBadgeRowText {
   display: grid;
   align-content: start;
-  gap: 4px;
+  gap: var(--fw-space-1);
   min-width: 0;
   padding-right: 36px;
 }
 
 .journeyBadgeCategory {
-  color: var(--portal-red);
-  font-size: 11px;
-  font-weight: 900;
+  color: var(--fw-color-action-ink);
+  font-size: var(--fw-text-meta);
+  font-weight: var(--fw-weight-strong);
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
@@ -537,7 +537,7 @@
 .journeyBadgeRowText > strong {
   overflow: hidden;
   color: var(--portal-ink);
-  font-size: 17px;
+  font-size: var(--fw-text-lead);
   line-height: 1.2;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -546,7 +546,7 @@
 .journeyBadgeRowText p {
   display: -webkit-box;
   overflow: hidden;
-  font-size: 14px;
+  font-size: var(--fw-text-body);
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
@@ -556,7 +556,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 8px;
+  gap: var(--fw-space-2);
   min-width: 0;
   border-top: 1px solid var(--portal-line);
   padding-top: 7px;
@@ -565,10 +565,10 @@
 .journeyBadgePoints {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--fw-space-1);
   color: var(--portal-soft);
-  font-size: 12px;
-  font-weight: 850;
+  font-size: var(--fw-text-caption);
+  font-weight: var(--fw-weight-strong);
   white-space: nowrap;
 }
 
@@ -580,13 +580,13 @@
 .journeyActionPanel {
   border: 1px solid var(--portal-line);
   background: var(--portal-paper);
-  padding: 12px;
+  padding: var(--fw-space-3);
 }
 
 .journeyCompactStatus {
   display: grid;
   grid-template-columns: 92px minmax(0, 1fr);
-  gap: 12px;
+  gap: var(--fw-space-3);
 }
 
 .journeyCompactStatus .journeyHeroImage {
@@ -597,7 +597,7 @@
 .journeyActionPanel,
 .journeyActionList {
   display: grid;
-  gap: 8px;
+  gap: var(--fw-space-2);
 }
 
 .journeyActionList {
@@ -607,10 +607,10 @@
 .journeyActionItem {
   display: grid;
   grid-template-columns: 52px minmax(0, 1fr);
-  gap: 8px;
+  gap: var(--fw-space-2);
   min-width: 0;
   border: 1px solid var(--portal-line);
-  padding: 8px;
+  padding: var(--fw-space-2);
 }
 
 .journeyActionItem img {
@@ -678,12 +678,12 @@
   }
 
   .journeyProfileModal .profileBody {
-    padding: 12px;
+    padding: var(--fw-space-3);
   }
 
   .journeyCurrentLevel {
     grid-template-columns: 96px minmax(0, 1fr);
-    gap: 12px;
+    gap: var(--fw-space-3);
   }
 
   .journeyHeroImage {
@@ -704,11 +704,11 @@
   }
 
   .journeyHeroCopy h2 {
-    font-size: 20px;
+    font-size: var(--fw-text-subtitle);
   }
 
   .journeyHeroStats strong {
-    font-size: 14px;
+    font-size: var(--fw-text-body);
   }
 
   .journeyBadgeCatalogHeader {

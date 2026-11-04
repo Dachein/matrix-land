@@ -1,3 +1,4 @@
+import { SearchField } from "../../../../src/portal/components/SearchField";
 import { useInstallationEndpoints } from "../../../../src/portal/brand/PlatformBrandProvider";
 import {
   BookOpenCheck,
@@ -355,11 +356,13 @@ export function PortalMcpHandbook() {
             </section>
 
             <div className="mcp-handbook-filters">
-              <label className="mcp-handbook-search">
-                <Search size={16} />
-                <span className="visuallyHidden">{t("mcp.handbook.searchLabel")}</span>
-                <input onChange={(event) => setQuery(event.target.value)} placeholder={t("mcp.handbook.searchPlaceholder")} type="search" value={query} />
-              </label>
+              <SearchField
+              className="mcp-handbook-search"
+              label={t("mcp.handbook.searchLabel")}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder={t("mcp.handbook.searchPlaceholder")}
+              value={query}
+            />
               <label>
                 <span className="visuallyHidden">{t("mcp.handbook.groupFilter")}</span>
                 <select aria-label={t("mcp.handbook.groupFilter")} onChange={(event) => setGroup(event.target.value as (typeof GROUP_ORDER)[number] | "all")} value={group}>

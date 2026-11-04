@@ -4,11 +4,11 @@
   font: var(--fw-weight-regular) var(--fw-text-body)/var(--fw-line-body) var(--fw-font-body);
 }
 .fw-scope[data-density="compact"] { --fw-control-height: var(--fw-control-height-compact); }
-.fw-scope :is(button, input, select, textarea, a):focus-visible {
+:is(:root, .fw-scope) :is(button, input, select, textarea, a):focus-visible {
   outline: 0;
   box-shadow: inset 0 calc(-1 * var(--fw-focus-width)) 0 var(--fw-color-focus);
 }
-.fw-scope [data-ui="button"] {
+:is(:root, .fw-scope) [data-ui="button"] {
   display: inline-flex; align-items: center; justify-content: center; gap: var(--fw-space-2);
   min-height: var(--fw-control-height); padding: var(--fw-space-2) var(--fw-space-4);
   border: var(--fw-border-width) solid var(--fw-color-border); border-radius: var(--fw-radius-control);
@@ -17,91 +17,91 @@
   text-decoration: none; cursor: pointer;
   transition: background var(--fw-motion-normal) var(--fw-ease-standard), color var(--fw-motion-normal) var(--fw-ease-standard), transform var(--fw-motion-fast) var(--fw-ease-standard), box-shadow var(--fw-motion-fast) var(--fw-ease-standard);
 }
-.fw-scope [data-ui="button"][data-variant="primary"] {
+:is(:root, .fw-scope) [data-ui="button"][data-variant="primary"] {
   background: var(--fw-color-action); color: var(--fw-color-on-action); border-color: var(--fw-color-text);
 }
-.fw-scope [data-ui="button"][data-variant="danger"] {
+:is(:root, .fw-scope) [data-ui="button"][data-variant="danger"] {
   background: var(--fw-color-danger); color: var(--fw-color-on-danger); border-color: var(--fw-color-danger);
 }
-.fw-scope [data-ui="button"][data-variant="icon"] { padding: var(--fw-space-2); min-width: var(--fw-control-height); }
-.fw-scope [data-ui="button"][data-size="compact"] { min-height: var(--fw-control-height-compact); }
-.fw-scope [data-ui="button"]:not(:disabled):not([aria-disabled="true"]):hover { text-decoration: underline; text-underline-offset: var(--fw-space-1); }
-.fw-scope [data-ui="button"]:is(:disabled, [aria-disabled="true"]) { cursor: not-allowed; opacity: var(--fw-opacity-disabled); }
-.fw-scope [data-ui="button-icon"] { display: inline-flex; }
-.fw-scope [data-ui="button-icon"] svg { width: var(--fw-icon-size); height: var(--fw-icon-size); }
-.fw-scope [data-ui="field"] { display: grid; gap: var(--fw-space-2); min-width: 0; font-size: var(--fw-text-label); }
-.fw-scope [data-ui="field"] .formFieldLabel { color: var(--fw-color-text); font-weight: var(--fw-weight-medium); }
+:is(:root, .fw-scope) [data-ui="button"][data-variant="icon"] { padding: var(--fw-space-2); min-width: var(--fw-control-height); }
+:is(:root, .fw-scope) [data-ui="button"][data-size="compact"] { min-height: var(--fw-control-height-compact); }
+:is(:root, .fw-scope) [data-ui="button"]:not(:disabled):not([aria-disabled="true"]):hover { text-decoration: underline; text-underline-offset: var(--fw-space-1); }
+:is(:root, .fw-scope) [data-ui="button"]:is(:disabled, [aria-disabled="true"]) { cursor: not-allowed; opacity: var(--fw-opacity-disabled); }
+:is(:root, .fw-scope) [data-ui="button-icon"] { display: inline-flex; }
+:is(:root, .fw-scope) [data-ui="button-icon"] svg { width: var(--fw-icon-size); height: var(--fw-icon-size); }
+:is(:root, .fw-scope) [data-ui="field"] { display: grid; gap: var(--fw-space-2); min-width: 0; font-size: var(--fw-text-label); }
+:is(:root, .fw-scope) [data-ui="field"] .formFieldLabel { color: var(--fw-color-text); font-weight: var(--fw-weight-medium); }
 /* A field is identified by its label and one baseline, never a nested box. */
-.fw-scope :is([data-ui="input"], [data-ui="textarea"], [data-ui="select"]) {
+:is(:root, .fw-scope) :is([data-ui="input"], [data-ui="textarea"], [data-ui="select"]) {
   width: 100%; min-width: 0; min-height: var(--fw-control-height); padding: var(--fw-space-2) 0;
   border: 0; border-bottom: var(--fw-border-width) solid var(--fw-color-border); border-radius: 0;
   box-shadow: none; background: transparent; color: var(--fw-color-text); font: inherit;
   transition: border-color var(--fw-motion-normal) var(--fw-ease-standard), background var(--fw-motion-normal) var(--fw-ease-standard);
 }
-.fw-scope :is([data-ui="input"], [data-ui="textarea"], [data-ui="select"]):not(:disabled):hover { border-bottom-color: var(--fw-color-text-muted); }
-.fw-scope :is([data-ui="input"], [data-ui="textarea"], [data-ui="select"]):not(:disabled):focus { outline: 0; border-bottom-color: var(--fw-color-focus); box-shadow: none; }
-.fw-scope [data-ui="textarea"] { min-height: calc(var(--fw-control-height) * 3); resize: vertical; }
-.fw-scope :is([data-ui="input"], [data-ui="textarea"], [data-ui="select"]):disabled { opacity: var(--fw-opacity-disabled); cursor: not-allowed; }
-.fw-scope [data-ui="select-shell"] { display: block; position: relative; min-width: 0; }
-.fw-scope [data-ui="select-shell"] > select { appearance: none; padding-right: var(--fw-space-6); cursor: pointer; }
-.fw-scope [data-ui="select-chevron"] { position: absolute; right: var(--fw-space-1); top: 50%; transform: translateY(-50%); width: var(--fw-icon-size); height: var(--fw-icon-size); pointer-events: none; color: var(--fw-color-text-muted); }
-.fw-scope [data-ui="field"] .formFieldDescription { color: var(--fw-color-text-muted); font-size: var(--fw-text-caption); }
-.fw-scope [data-ui="field"] :is(.formFieldRequired, .formFieldMessage) { color: var(--fw-color-danger); font-size: var(--fw-text-caption); }
-.fw-scope [data-ui="field"] [aria-invalid="true"] { border-bottom-color: var(--fw-color-danger); }
-.fw-scope [data-ui="field"] [aria-invalid="true"]:is(:hover, :focus) { border-bottom-color: var(--fw-color-danger); }
+:is(:root, .fw-scope) :is([data-ui="input"], [data-ui="textarea"], [data-ui="select"]):not(:disabled):hover { border-bottom-color: var(--fw-color-text-muted); }
+:is(:root, .fw-scope) :is([data-ui="input"], [data-ui="textarea"], [data-ui="select"]):not(:disabled):focus { outline: 0; border-bottom-color: var(--fw-color-focus); box-shadow: none; }
+:is(:root, .fw-scope) [data-ui="textarea"] { min-height: calc(var(--fw-control-height) * 3); resize: vertical; }
+:is(:root, .fw-scope) :is([data-ui="input"], [data-ui="textarea"], [data-ui="select"]):disabled { opacity: var(--fw-opacity-disabled); cursor: not-allowed; }
+:is(:root, .fw-scope) [data-ui="select-shell"] { display: block; position: relative; min-width: 0; }
+:is(:root, .fw-scope) [data-ui="select-shell"] > select { appearance: none; padding-right: var(--fw-space-6); cursor: pointer; }
+:is(:root, .fw-scope) [data-ui="select-chevron"] { position: absolute; right: var(--fw-space-1); top: 50%; transform: translateY(-50%); width: var(--fw-icon-size); height: var(--fw-icon-size); pointer-events: none; color: var(--fw-color-text-muted); }
+:is(:root, .fw-scope) [data-ui="field"] .formFieldDescription { color: var(--fw-color-text-muted); font-size: var(--fw-text-caption); }
+:is(:root, .fw-scope) [data-ui="field"] :is(.formFieldRequired, .formFieldMessage) { color: var(--fw-color-danger); font-size: var(--fw-text-caption); }
+:is(:root, .fw-scope) [data-ui="field"] [aria-invalid="true"] { border-bottom-color: var(--fw-color-danger); }
+:is(:root, .fw-scope) [data-ui="field"] [aria-invalid="true"]:is(:hover, :focus) { border-bottom-color: var(--fw-color-danger); }
 /* Short navigation marks; no surrounding frame or full-width rule. */
-.fw-scope [data-ui="segmented-control"] { display: flex; flex-wrap: wrap; gap: var(--fw-space-6); min-height: 0; padding: 0; border: 0; border-radius: 0; background: transparent; }
-.fw-scope [data-ui="segmented-control"] > button {
+:is(:root, .fw-scope) [data-ui="segmented-control"] { display: flex; flex-wrap: wrap; gap: var(--fw-space-6); min-height: 0; padding: 0; border: 0; border-radius: 0; background: transparent; }
+:is(:root, .fw-scope) [data-ui="segmented-control"] > button {
   position: relative; gap: var(--fw-space-2); padding: var(--fw-space-2) 0; min-height: var(--fw-control-height);
   border: 0; border-radius: 0; box-shadow: none; background: transparent; color: var(--fw-color-text-muted);
   font: var(--fw-weight-regular) var(--fw-text-body)/var(--fw-line-control) var(--fw-font-body); cursor: pointer;
   transition: color var(--fw-motion-normal) var(--fw-ease-standard), background var(--fw-motion-normal) var(--fw-ease-standard);
 }
-.fw-scope [data-ui="segmented-control"][data-appearance="underline"] > button::after {
+:is(:root, .fw-scope) [data-ui="segmented-control"][data-appearance="underline"] > button::after {
   content: ""; position: absolute; inset-inline: 0; bottom: 0; height: var(--fw-border-width); background: var(--fw-color-text);
   transform: scaleX(0); transform-origin: left; transition: transform var(--fw-motion-normal) var(--fw-ease-standard);
 }
-.fw-scope [data-ui="segmented-control"][data-appearance="underline"] > button:not(:disabled):is(:hover, :focus-visible, [aria-pressed="true"])::after { transform: scaleX(1); }
-.fw-scope [data-ui="segmented-control"] > button:not(:disabled):hover { color: var(--fw-color-text); }
-.fw-scope [data-ui="segmented-control"] > button[aria-pressed="true"] { color: var(--fw-color-text); }
-.fw-scope [data-ui="segmented-control"][data-appearance="underline"] > button[aria-pressed="true"]::after { background: var(--fw-color-action-ink); }
-.fw-scope [data-ui="segmented-control"][data-appearance="quiet"] { gap: var(--fw-space-1); }
-.fw-scope [data-ui="segmented-control"][data-appearance="quiet"] > button { padding: var(--fw-space-1) var(--fw-space-3); min-height: var(--fw-control-height-compact); font-size: var(--fw-text-caption); }
-.fw-scope [data-ui="segmented-control"][data-appearance="quiet"] > button[aria-pressed="true"] { background: var(--fw-color-hover); }
-.fw-scope [data-ui="segmented-control"] > button:disabled { opacity: var(--fw-opacity-disabled); cursor: not-allowed; }
-.fw-scope [data-ui="segmented-control"] > button:focus-visible { outline: 0; box-shadow: inset 0 calc(-1 * var(--fw-focus-width)) 0 var(--fw-color-focus); }
-.fw-scope [data-ui="button"][data-variant="secondary"] { border-color: transparent; border-bottom-color: var(--fw-color-border); background: transparent; padding-inline: 0; }
-.fw-scope [data-ui="button"][data-variant="icon"] { border-color: transparent; background: transparent; }
-.fw-scope [data-ui="button"]:not(:disabled):not([aria-disabled="true"]):hover { text-decoration: none; filter: brightness(0.96); }
-.fw-scope [data-ui="button"][data-variant="secondary"]:not(:disabled):hover { border-bottom-color: var(--fw-color-text); }
-.fw-scope .languageSwitcher { border: 0; background: transparent; padding: 0; }
-.fw-scope .languageSwitcherOptions { gap: var(--fw-space-3); }
-.fw-scope .languageSwitcherOptions button { background: transparent; border: 0; padding: var(--fw-space-2) 0; min-height: var(--fw-control-height); color: var(--fw-color-text-muted); font: var(--fw-weight-regular) var(--fw-text-caption)/var(--fw-line-control) var(--fw-font-body); }
-.fw-scope .languageSwitcherOptions button.active { color: var(--fw-color-text); box-shadow: none; }
-.fw-scope .languageSwitcherDivider { display: none; }
+:is(:root, .fw-scope) [data-ui="segmented-control"][data-appearance="underline"] > button:not(:disabled):is(:hover, :focus-visible, [aria-pressed="true"])::after { transform: scaleX(1); }
+:is(:root, .fw-scope) [data-ui="segmented-control"] > button:not(:disabled):hover { color: var(--fw-color-text); }
+:is(:root, .fw-scope) [data-ui="segmented-control"] > button[aria-pressed="true"] { color: var(--fw-color-text); }
+:is(:root, .fw-scope) [data-ui="segmented-control"][data-appearance="underline"] > button[aria-pressed="true"]::after { background: var(--fw-color-action-ink); }
+:is(:root, .fw-scope) [data-ui="segmented-control"][data-appearance="quiet"] { gap: var(--fw-space-1); }
+:is(:root, .fw-scope) [data-ui="segmented-control"][data-appearance="quiet"] > button { padding: var(--fw-space-1) var(--fw-space-3); min-height: var(--fw-control-height-compact); font-size: var(--fw-text-caption); }
+:is(:root, .fw-scope) [data-ui="segmented-control"][data-appearance="quiet"] > button[aria-pressed="true"] { background: var(--fw-color-hover); }
+:is(:root, .fw-scope) [data-ui="segmented-control"] > button:disabled { opacity: var(--fw-opacity-disabled); cursor: not-allowed; }
+:is(:root, .fw-scope) [data-ui="segmented-control"] > button:focus-visible { outline: 0; box-shadow: inset 0 calc(-1 * var(--fw-focus-width)) 0 var(--fw-color-focus); }
+:is(:root, .fw-scope) [data-ui="button"][data-variant="secondary"] { border-color: transparent; border-bottom-color: var(--fw-color-border); background: transparent; padding-inline: 0; }
+:is(:root, .fw-scope) [data-ui="button"][data-variant="icon"] { border-color: transparent; background: transparent; }
+:is(:root, .fw-scope) [data-ui="button"]:not(:disabled):not([aria-disabled="true"]):hover { text-decoration: none; filter: brightness(0.96); }
+:is(:root, .fw-scope) [data-ui="button"][data-variant="secondary"]:not(:disabled):hover { border-bottom-color: var(--fw-color-text); }
+:is(:root, .fw-scope) .languageSwitcher { border: 0; background: transparent; padding: 0; }
+:is(:root, .fw-scope) .languageSwitcherOptions { gap: var(--fw-space-3); }
+:is(:root, .fw-scope) .languageSwitcherOptions button { background: transparent; border: 0; padding: var(--fw-space-2) 0; min-height: var(--fw-control-height); color: var(--fw-color-text-muted); font: var(--fw-weight-regular) var(--fw-text-caption)/var(--fw-line-control) var(--fw-font-body); }
+:is(:root, .fw-scope) .languageSwitcherOptions button.active { color: var(--fw-color-text); box-shadow: none; }
+:is(:root, .fw-scope) .languageSwitcherDivider { display: none; }
 .fw-scope [data-ui="modal-overlay"] { position: fixed; inset: 0; z-index: var(--fw-z-modal); display: grid; place-items: center; padding: var(--fw-space-4); background: var(--fw-color-backdrop); }
 .fw-scope [data-ui="modal"] { width: 100%; max-width: var(--fw-dialog-max); max-height: 90dvh; overflow: auto; padding: var(--fw-space-6); background: var(--fw-color-surface); border: var(--fw-border-width) solid var(--fw-color-border); border-radius: var(--fw-radius-panel); box-shadow: var(--fw-shadow-overlay); }
 .fw-scope [data-ui="modal"] > header { display: flex; align-items: center; justify-content: space-between; gap: var(--fw-space-4); margin-bottom: var(--fw-space-6); }
 @media (prefers-reduced-motion: reduce) {
-  .fw-scope .spinIcon { animation: none; }
+  :is(:root, .fw-scope) .spinIcon { animation: none; }
 }
 
 /* Small responses belong to the action, not to surrounding decoration. */
-.fw-scope [data-ui="button-icon"] { transition: transform var(--fw-motion-normal) var(--fw-ease-standard); }
-.fw-scope [data-ui="button"][data-variant="primary"]:not(:disabled):hover [data-ui="button-icon"] { transform: translateX(var(--fw-motion-nudge)); }
+:is(:root, .fw-scope) [data-ui="button-icon"] { transition: transform var(--fw-motion-normal) var(--fw-ease-standard); }
+:is(:root, .fw-scope) [data-ui="button"][data-variant="primary"]:not(:disabled):hover [data-ui="button-icon"] { transform: translateX(var(--fw-motion-nudge)); }
 @media (prefers-reduced-motion: reduce) {
-  .fw-scope [data-ui="button-icon"] { transform: none; }
-  .fw-scope [data-ui="button"][data-variant="primary"]:not(:disabled):hover [data-ui="button-icon"] { transform: none; }
+  :is(:root, .fw-scope) [data-ui="button-icon"] { transform: none; }
+  :is(:root, .fw-scope) [data-ui="button"][data-variant="primary"]:not(:disabled):hover [data-ui="button-icon"] { transform: none; }
 }
 
 /* The primary action carries the stronger visual signature; fields stay calm. */
-.fw-scope [data-ui="button"][data-variant="primary"]:not(:disabled):not([aria-disabled="true"]):hover {
+:is(:root, .fw-scope) [data-ui="button"][data-variant="primary"]:not(:disabled):not([aria-disabled="true"]):hover {
   box-shadow: var(--fw-shadow-action); transform: translate(calc(-1 * var(--fw-motion-nudge)), calc(-1 * var(--fw-motion-nudge)));
 }
-.fw-scope [data-ui="button"][data-variant="primary"]:not(:disabled):active { transform: none; box-shadow: none; }
-.fw-scope [data-ui="button"][data-variant]:not(:disabled):not([aria-disabled="true"]):focus-visible { outline: 0; box-shadow: inset 0 calc(-1 * var(--fw-focus-width)) 0 var(--fw-color-focus); }
-.fw-scope [data-ui="segmented-control"] > button[aria-pressed="true"] { font-weight: var(--fw-weight-strong); }
-.fw-scope [data-ui="segmented-control"][data-appearance="underline"] > button[aria-pressed="true"]::after { height: var(--fw-focus-width); }
+:is(:root, .fw-scope) [data-ui="button"][data-variant="primary"]:not(:disabled):active { transform: none; box-shadow: none; }
+:is(:root, .fw-scope) [data-ui="button"][data-variant]:not(:disabled):not([aria-disabled="true"]):focus-visible { outline: 0; box-shadow: inset 0 calc(-1 * var(--fw-focus-width)) 0 var(--fw-color-focus); }
+:is(:root, .fw-scope) [data-ui="segmented-control"] > button[aria-pressed="true"] { font-weight: var(--fw-weight-strong); }
+:is(:root, .fw-scope) [data-ui="segmented-control"][data-appearance="underline"] > button[aria-pressed="true"]::after { height: var(--fw-focus-width); }
 @media (prefers-reduced-motion: reduce) {
-  .fw-scope [data-ui="button"][data-variant="primary"]:not(:disabled):not([aria-disabled="true"]):hover { transform: none; }
+  :is(:root, .fw-scope) [data-ui="button"][data-variant="primary"]:not(:disabled):not([aria-disabled="true"]):hover { transform: none; }
 }

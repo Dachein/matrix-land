@@ -1,3 +1,4 @@
+import { PageHeading } from "../../../../src/portal/components/PageHeading";
 import { FeedbackNotice } from "../../../../src/portal/components/FeedbackNotice";
 import { Activity, DatabaseBackup, Plus, RefreshCw, Server, ShieldAlert, Wifi } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState, type FormEvent } from "react";
@@ -29,7 +30,12 @@ export function PortalAdminBackups({ catalog }: { catalog: PortalCatalog }) {
 
   async function action(key: string, task: () => Promise<unknown>) { setBusy(key); setError(""); try { await task(); await load(); return true; } catch (caught) { setError(caught instanceof Error ? caught.message : "backup_action_failed"); return false; } finally { setBusy(""); } }
   return <div className="portal-workspace-inner portal-admin-workspace"><section className="portal-page portal-backup-admin-page">
-    <header className="portal-page-heading portal-admin-heading"><div className="portal-page-heading-copy"><h1>{t("backup.admin.title")}</h1><p>{t("backup.admin.subtitle")}</p></div><Button iconBefore={<Plus size={15} />} onClick={() => setNodeFormOpen(true)} size="compact" variant="primary">{t("backup.admin.addNode")}</Button></header>
+    <PageHeading
+          id="portal-admin-backups-title"
+          className="portal-admin-heading"
+          title={t("backup.admin.title")}
+          actions={<><Button iconBefore={<Plus size={15} />} onClick={() => setNodeFormOpen(true)} size="compact" variant="primary">{t("backup.admin.addNode")}</Button></>}
+        ><p>{t("backup.admin.subtitle")}</p></PageHeading>
     <p className="portal-admin-scope">{t("portal.admin.scopeGlobal")}</p><div className="backupAdminMetrics"><Metric label={t("backup.admin.enabledApps")} value={loading || error ? "-" : summary.enabled} /><Metric label={t("backup.admin.unassigned")} value={loading || error ? "-" : summary.unassigned} /><Metric label={t("backup.admin.running")} value={loading || error ? "-" : summary.running} /><Metric label={t("backup.admin.failed")} value={loading || error ? "-" : summary.failed} /></div>
     {summary.unassigned > 0 && <div className="portal-admin-notice"><strong>{t("backup.admin.setupTitle")}</strong><p>{t("backup.admin.setupHelp")}</p><small>{t("backup.admin.archiveOnly")}</small></div>}
     <div className="backupAdminTabs" role="tablist"><button aria-selected={tab === "apps"} className={tab === "apps" ? "active" : ""} onClick={() => setTab("apps")} role="tab" type="button"><DatabaseBackup size={16} />{t("backup.admin.appsTab")}</button><button aria-selected={tab === "tasks"} className={tab === "tasks" ? "active" : ""} onClick={() => setTab("tasks")} role="tab" type="button"><Activity size={16} />{t("backup.admin.tasksTab")}</button><Button iconBefore={<RefreshCw size={14} />} onClick={() => void load()} size="compact" variant="secondary">{t("backup.admin.refresh")}</Button></div>

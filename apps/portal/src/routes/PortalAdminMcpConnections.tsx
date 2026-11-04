@@ -1,3 +1,5 @@
+import { SearchField } from "../../../../src/portal/components/SearchField";
+import { PageHeading } from "../../../../src/portal/components/PageHeading";
 import { Ban, Clock3, Monitor, Radio, Search, ShieldAlert, ShieldCheck } from "lucide-react";
 import { useDeferredValue, useState } from "react";
 import { Button } from "../../../../src/portal/components/Button";
@@ -47,13 +49,12 @@ function PortalAdminMcpConnectionsAuthenticated({ catalog }: { catalog: PortalCa
   return (
     <div className="portal-workspace-inner portal-admin-workspace">
       <section className="portal-page portal-admin-operations-page portal-admin-mcp-page" aria-labelledby="portal-admin-mcp-title">
-        <header className="portal-page-heading portal-admin-heading">
-          <div className="portal-page-heading-copy">
-            <h1 id="portal-admin-mcp-title">{t("portal.adminMcp.title")}</h1>
-            <p>{t("portal.adminMcp.subtitle")}</p>
-          </div>
-          <div className="portal-admin-source"><span><ShieldCheck size={15} /> {t("portal.adminMcp.source")}</span></div>
-        </header>
+        <PageHeading
+          id="portal-admin-mcp-title"
+          className="portal-admin-heading"
+          title={t("portal.adminMcp.title")}
+          actions={<><div className="portal-admin-source"><span><ShieldCheck size={15} /> {t("portal.adminMcp.source")}</span></div></>}
+        ><p>{t("portal.adminMcp.subtitle")}</p></PageHeading>
 
         <p className="portal-admin-scope">{t("portal.admin.scopeGlobal")}</p>
         <section className="portal-admin-metrics portal-admin-mcp-metrics" aria-label={t("admin.mcp.summaryAria")}>
@@ -70,15 +71,13 @@ function PortalAdminMcpConnectionsAuthenticated({ catalog }: { catalog: PortalCa
           </header>
           <p className="portal-admin-help">{t("admin.mcp.statusHelp")}</p>
           <div className="portal-admin-toolbar">
-            <label className="portal-admin-search">
-              <Search size={15} />
-              <TextInput
-                aria-label={t("admin.mcp.searchAria")}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder={t("admin.mcp.searchPlaceholder")}
-                value={query}
-              />
-            </label>
+            <SearchField
+              className="portal-admin-search"
+              label={t("admin.mcp.searchAria")}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder={t("admin.mcp.searchPlaceholder")}
+              value={query}
+            />
             <WorkspaceListbox<AdminMcpConnectionStatusFilter>
               ariaLabel={t("admin.mcp.statusFilterAria")}
               className="portal-admin-mcp-status-filter"

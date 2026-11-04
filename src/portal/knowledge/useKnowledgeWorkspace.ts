@@ -32,7 +32,7 @@ export type {
   KnowledgeAuditCategory,
   KnowledgeAuditScope
 } from "./workspaceTypes";
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import type { ChangeEvent } from "react";
 import type { PortalCatalog } from "../../shared/types";
 import { useAccessTargetUsers } from "../hooks/useAccessTargetUsers";
@@ -47,6 +47,7 @@ import type {
   KnowledgeSection,
   KnowledgeViewMode
 } from "./types";
+import type { KnowledgeMessageSetter, KnowledgeNoticeTone } from "./types";
 import {
   canManageKnowledgeAccess,
   errorMessage,
@@ -77,7 +78,12 @@ export function useKnowledgeWorkspace({
   const [folderName, setFolderName] = useState("");
   const [publishOnCreate, setPublishOnCreate] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
-  const [message, setMessage] = useState("");
+  const [message, setMessageText] = useState("");
+  const [messageTone, setMessageTone] = useState<KnowledgeNoticeTone>("info");
+  const setMessage: KnowledgeMessageSetter = useCallback((text, tone = "info") => {
+    setMessageText(text);
+    setMessageTone(tone);
+  }, []);
   const [versionTarget, setVersionTarget] = useState<KnowledgeItem>();
   const [renameTarget, setRenameTarget] = useState<KnowledgeItem>();
   const [renameName, setRenameName] = useState("");
@@ -210,7 +216,7 @@ export function useKnowledgeWorkspace({
     const shouldPublish = creationMode === "knowledgeBase" && publishOnCreate;
     const validationError = folderNameError(normalizedName);
     if (validationError) {
-      setMessage(t(validationError));
+      setMessage(t(validationError), "error");
       return;
     }
 
@@ -244,10 +250,10 @@ export function useKnowledgeWorkspace({
         openKnowledgeServiceSettings(createdItem);
       } else {
         await refreshCurrentFolder();
-        setMessage(t("knowledge.folderCreated"));
+        setMessage(t("knowledge.folderCreated"), "success");
       }
     } catch (error) {
-      setMessage(errorMessage(error, t("knowledge.folderCreateFailed")));
+      setMessage(errorMessage(error, t("knowledge.folderCreateFailed")), "error");
     } finally {
       setIsBusy(false);
     }
@@ -276,7 +282,7 @@ export function useKnowledgeWorkspace({
     const normalizedName = renameName.trim();
     const validationError = knowledgeItemNameError(normalizedName);
     if (validationError) {
-      setMessage(t(validationError));
+      setMessage(t(validationError), "error");
       return;
     }
     if (!target) {
@@ -307,9 +313,9 @@ export function useKnowledgeWorkspace({
       await refreshCurrentFolder();
       setSelectedId(response.item?.id ?? target.id);
       closeRenameDialog();
-      setMessage(t("knowledge.renamed"));
+      setMessage(t("knowledge.renamed"), "success");
     } catch (error) {
-      setMessage(errorMessage(error, t("knowledge.renameFailed")));
+      setMessage(errorMessage(error, t("knowledge.renameFailed")), "error");
     } finally {
       setIsBusy(false);
     }
@@ -353,9 +359,9 @@ export function useKnowledgeWorkspace({
         ? undefined
         : current);
       closeDeleteDialog();
-      setMessage(t("knowledge.deleted"));
+      setMessage(t("knowledge.deleted"), "success");
     } catch (error) {
-      setMessage(errorMessage(error, t("knowledge.deleteFailed")));
+      setMessage(errorMessage(error, t("knowledge.deleteFailed")), "error");
     } finally {
       setIsBusy(false);
     }
@@ -402,9 +408,9 @@ export function useKnowledgeWorkspace({
       if (await refreshCurrentFolder()) {
         setSelectedId(uploaded[0]?.id ?? selectedId);
       }
-      setMessage(t("knowledge.filesUploaded", { count: uploaded.length }));
+      setMessage(t("knowledge.filesUploaded", { count: uploaded.length }), "success");
     } catch (error) {
-      setMessage(errorMessage(error, t("knowledge.uploadFailed")));
+      setMessage(errorMessage(error, t("knowledge.uploadFailed")), "error");
     } finally {
       setIsBusy(false);
     }
@@ -445,9 +451,9 @@ export function useKnowledgeWorkspace({
       });
       await refreshCurrentFolder();
       setSelectedId(response.item?.id ?? target.id);
-      setMessage(t("knowledge.versionUploaded"));
+      setMessage(t("knowledge.versionUploaded"), "success");
     } catch (error) {
-      setMessage(errorMessage(error, t("knowledge.versionUploadFailed")));
+      setMessage(errorMessage(error, t("knowledge.versionUploadFailed")), "error");
     } finally {
       setIsBusy(false);
       setVersionTarget(undefined);
@@ -480,7 +486,7 @@ export function useKnowledgeWorkspace({
         }
       })
       .catch((error) => {
-        if (accessSession.isCurrent(ticket)) setMessage(errorMessage(error, t("knowledge.accessLoadFailed")));
+        if (accessSession.isCurrent(ticket)) setMessage(errorMessage(error, t("knowledge.accessLoadFailed")), "error");
       })
       .then(() => {
         if (accessSession.isCurrent(ticket)) setIsAccessLoading(false);
@@ -529,11 +535,11 @@ export function useKnowledgeWorkspace({
           collaboratorCount: savedUserIds.length,
           collaboratorUserIds: savedUserIds
         }));
-        setMessage(t("knowledge.collaboratorsSaved"));
+        setMessage(t("knowledge.collaboratorsSaved"), "success");
         closeAccessSettings();
       }
     } catch (error) {
-      if (accessSession.isCurrent(ticket)) setMessage(errorMessage(error, t("knowledge.collaboratorsSaveFailed")));
+      if (accessSession.isCurrent(ticket)) setMessage(errorMessage(error, t("knowledge.collaboratorsSaveFailed")), "error");
     } finally {
       if (accessSession.isCurrent(ticket)) setIsAccessLoading(false);
     }
@@ -573,9 +579,9 @@ export function useKnowledgeWorkspace({
       });
       if (!ownerTransferSession.isCurrent(ticket)) return;
       closeOwnerTransfer();
-      setMessage(t("knowledge.ownerTransferStarted"));
+      setMessage(t("knowledge.ownerTransferStarted"), "success");
     } catch (error) {
-      if (ownerTransferSession.isCurrent(ticket)) setMessage(errorMessage(error, t("knowledge.ownerTransferFailed")));
+      if (ownerTransferSession.isCurrent(ticket)) setMessage(errorMessage(error, t("knowledge.ownerTransferFailed")), "error");
     } finally {
       if (ownerTransferSession.isCurrent(ticket)) setIsAccessLoading(false);
     }
@@ -594,7 +600,7 @@ export function useKnowledgeWorkspace({
     accessTargetUsers,
     async saveKnowledgeService() {
       if (publishing.knowledgeServiceAccessMode === "targeted" && accessTargetDirectoryState !== "ready") {
-        setMessage(t("knowledge.serviceAccessDirectoryError"));
+        setMessage(t("knowledge.serviceAccessDirectoryError"), "error");
         return;
       }
       return publishing.saveKnowledgeService();
@@ -628,6 +634,8 @@ export function useKnowledgeWorkspace({
     isLoading,
     items,
     message,
+    messageTone,
+    refreshCurrentFolder,
     openCreateFolderDialog,
     openCreateKnowledgeBaseDialog,
     openDeleteDialog,

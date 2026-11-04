@@ -96,8 +96,8 @@ export function WorkspaceMultiListbox({
   }
 
   const popoverStyle: CSSProperties = popoverPosition
-    ? { ...popoverPosition, position: "fixed", zIndex: 10000 }
-    : { left: 0, position: "fixed", top: 0, visibility: "hidden", width: 0, zIndex: 10000 };
+    ? { ...popoverPosition, position: "fixed", zIndex: "var(--fw-z-dropdown)" }
+    : { left: 0, position: "fixed", top: 0, visibility: "hidden", width: 0, zIndex: "var(--fw-z-dropdown)" };
   const selectedOption = values.length === 1 ? options.find((option) => option.value === values[0]) : undefined;
   const selectedLabel = values.length === 0 ? placeholder : values.length === 1 ? selectedOption?.label ?? selectedCountLabel(1) : selectedCountLabel(values.length);
 

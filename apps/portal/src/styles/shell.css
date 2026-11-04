@@ -1212,6 +1212,13 @@
   text-align: left;
 }
 
+.iconSelectTrigger:focus,
+.iconSelectTrigger[aria-expanded="true"] {
+  outline: 0;
+  border-bottom-color: var(--portal-focus-ring);
+  box-shadow: inset 0 -2px 0 var(--portal-focus-ring);
+}
+
 .iconSelectLabel {
   color: var(--portal-muted);
   font-size: var(--portal-type-ui);

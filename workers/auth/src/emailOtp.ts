@@ -3,7 +3,7 @@ import { renderLoginCodeEmail } from "../../../src/shared/systemEmailTemplates.t
 import { readAuthUserByEmail, isLoginEligibleAuthUser } from "./repositories/users/reads.ts";
 import { sealOtpRecipient } from "./emailOtpEnrollment.ts";
 import { HttpError, type Env } from "./types.ts";
-import { isEmailAllowedByPolicy, readAuthEmailPolicy } from "../../../src/shared/authEmailPolicy.ts";
+import { isEmailAllowedByInstallation, isEmailAllowedByPolicy, readAuthEmailPolicy } from "../../../src/shared/authEmailPolicy.ts";
 
 const DEFAULT_TTL_SECONDS = 600;
 const DEFAULT_COOLDOWN_SECONDS = 60;
@@ -61,7 +61,8 @@ export async function createEmailOtpChallenge(input: {
   const config = requireEmailOtpConfig(input.env);
   const trustedRequest = requireTrustedEmailOtpRequest(input.request, input.env);
   const normalizedEmail = normalizeEmail(input.email);
-  if (!isEmailAllowedByPolicy(await readAuthEmailPolicy(input.env.AUTH_DB), normalizedEmail)) {
+  if (!isEmailAllowedByInstallation(input.env.AUTH_LOGIN_ALLOWED_EMAILS_JSON, normalizedEmail)
+    || !isEmailAllowedByPolicy(await readAuthEmailPolicy(input.env.AUTH_DB), normalizedEmail)) {
     throw new HttpError(403, "email_otp_not_eligible");
   }
 
@@ -434,7 +435,8 @@ function allowedPortalOrigins(env: Env, request: Request) {
 
 export async function requireLoginEmailAllowed(env: Env, email: unknown) {
   const policy = await readAuthEmailPolicy(env.AUTH_DB);
-  if (!isEmailAllowedByPolicy(policy, email)) throw new HttpError(403, "company_email_required");
+  if (!isEmailAllowedByInstallation(env.AUTH_LOGIN_ALLOWED_EMAILS_JSON, email)
+    || !isEmailAllowedByPolicy(policy, email)) throw new HttpError(403, "company_email_required");
 }
 
 function normalizeEmail(value: unknown) {

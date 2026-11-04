@@ -28,6 +28,15 @@ test('plan selects only needed resources and fingerprints deployable source',asy
  await writeFile(resolve(root,'src/change.ts'),'export const release=2');assert.notEqual((await buildPlan(example,root)).id,plan.id);
  const expanded=await buildPlan({...example,modules:['knowledge','studio','operations']},root);assert(expanded.resources.some(x=>x.kind==='queue'));assert(expanded.services.includes('backup'));assert(!expanded.services.includes('mate'));
 });
+test('exact mailbox configuration includes the owner and reaches the authentication worker',async t=>{
+ const root=await fixture(t),input={...example,identity:{...example.identity,allowedEmails:['OWNER@example.com','owner@example.com']}};
+ const config=resolveConfig(input);assert.deepEqual(config.identity.allowedEmails,['owner@example.com']);
+ assert.throws(()=>resolveConfig({...input,identity:{...input.identity,allowedEmails:['other@example.com']}}),/owner_email_outside_exact_allowlist/);
+ assert.throws(()=>resolveConfig({...input,identity:{...input.identity,allowedEmails:[]}}));
+ const plan=await buildPlan(input,root),state={resources:Object.fromEntries(plan.resources.map(r=>[`${r.kind}:${r.key}`,{name:r.name,id:`test-${r.key}`}]))};
+ assert.equal(renderWorker('auth',plan,state,root).vars.AUTH_LOGIN_ALLOWED_EMAILS_JSON,'["owner@example.com"]');
+ assert.equal(renderWorker('auth',await buildPlan(example,root),state,root).vars.AUTH_LOGIN_ALLOWED_EMAILS_JSON,undefined);
+});
 
 test('missing runtime credentials stop installation before creating state or calling Cloudflare',async t=>{
  const root=await fixture(t),input={...example,modules:['studio'],cloudflare:{...example.cloudflare,runtimeTokenRef:'env:WORKSPACE_RUNTIME_CF_TOKEN'}};

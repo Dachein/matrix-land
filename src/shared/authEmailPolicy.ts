@@ -86,6 +86,20 @@ export function normalizeEmailAddress(value: unknown) {
   return /^[^@\s]+@[^@\s]+$/.test(email) ? email : "";
 }
 
+// An installation may impose a narrower boundary than its editable domain policy.
+// A configured but invalid or empty list must never open registration.
+export function isEmailAllowedByInstallation(configured: string | undefined, email: unknown) {
+  if (configured === undefined) return true;
+  try {
+    const values: unknown = JSON.parse(configured);
+    if (!Array.isArray(values) || values.length === 0) return false;
+    if (!values.every(value => typeof value === "string" && normalizeEmailAddress(value))) return false;
+    return values.map(normalizeEmailAddress).includes(normalizeEmailAddress(email));
+  } catch {
+    return false;
+  }
+}
+
 function parseDomains(value: string) {
   try {
     const parsed = JSON.parse(value) as unknown;

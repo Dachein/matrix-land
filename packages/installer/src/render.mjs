@@ -16,6 +16,7 @@ export function renderWorker(name,plan,state,root,{stage=false}={}){
  if(!stage)config.services=Object.entries(serviceBindings[name]??{}).filter(([,target])=>plan.services.includes(target)).map(([binding,target])=>({binding,service:`${c.installationId}-${target}`}));
  if(s.durable){config.durable_objects={bindings:s.durable.map((class_name,i)=>({name:s.durableBindings[i],class_name}))};config.migrations=[{tag:'v1',new_sqlite_classes:s.durable}];}
  if(name==='auth')config.send_email=[{name:'AUTH_EMAIL',allowed_sender_addresses:[c.identity.senderEmail]}];
+ if(name==='auth'&&c.identity.allowedEmails)config.vars.AUTH_LOGIN_ALLOWED_EMAILS_JSON=JSON.stringify(c.identity.allowedEmails);
  if(name==='apps')config.send_email=[{name:'EMAIL',allowed_sender_addresses:[c.identity.senderEmail]}];
  if(name==='mail')config.send_email=[{name:'EMAIL'}];
  if(name==='mate'){config.ai={binding:'AI'};config.images={binding:'IMAGES'};config.browser={binding:'BROWSER'};}

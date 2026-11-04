@@ -1,7 +1,7 @@
 import { base64UrlDecodeBytes, randomBase64Url } from "./crypto.ts";
 import { readAuthUserByEmail } from "./repositories/users/reads.ts";
 import { HttpError, type Env } from "./types.ts";
-import { isEmailAllowedByPolicy, readAuthEmailPolicy } from "../../../src/shared/authEmailPolicy.ts";
+import { isEmailAllowedByInstallation, isEmailAllowedByPolicy, readAuthEmailPolicy } from "../../../src/shared/authEmailPolicy.ts";
 
 // A challenge may precede an account. Keep its recipient encrypted and bind it
 // to the challenge ID; neither the recipient nor a user record is a login proof.
@@ -30,7 +30,8 @@ export async function enrollVerifiedOtpRecipient(env: Env, challengeId: string, 
     }, await recipientKey(env), Uint8Array.from(atob(encoded), char => char.charCodeAt(0)));
     email = new TextDecoder().decode(plaintext);
   } catch { throw new HttpError(400, "email_otp_invalid"); }
-  if (!isEmailAllowedByPolicy(await readAuthEmailPolicy(env.AUTH_DB), email)) {
+  if (!isEmailAllowedByInstallation(env.AUTH_LOGIN_ALLOWED_EMAILS_JSON, email)
+    || !isEmailAllowedByPolicy(await readAuthEmailPolicy(env.AUTH_DB), email)) {
     throw new HttpError(403, "email_otp_not_eligible");
   }
   // The unique normalized email index handles simultaneous verified challenges

@@ -27,9 +27,13 @@
 
 首位所有者必须使用配置中的邮箱。普通邮箱注册不自动成为管理员；不能直接停用或删除现有所有者，应先移交给有效账号。
 
+个人邮箱试用可设置 `identity.allowedEmails`，例如 `["owner@gmail.com"]`，同时保留对应的 `allowedEmailDomains`。具体邮箱名单是安装级登录上限，与可编辑的邮箱域策略同时生效；未列出的同域邮箱不能申请验证码或完成登录。名单必须包含首位管理员，空名单或非法配置会被拒绝。图形安装页可填写“允许的具体邮箱”；修改已部署实例的名单需通过安装器升级。
+
 安装器按实例标识生成 Worker 名称，并注入 `WORKSPACE_AUTH_WORKER_NAME`、`WORKSPACE_STREAM_WORKER_NAME` 和 `WORKSPACE_EMAIL_ROUTER_WORKER`。手工部署也必须使用当前实例的真实服务名；缺少配置会阻止对应的应用部署或邮件路由操作。
 
 Cloudflare 配置区的“如何创建？需要哪些权限？”包含创建步骤及第一阶段权限用途。平台运维令牌（Platform Operations Token）由机构运维人员管理，用于平台部署、初始化与升级；用户资源执行令牌（User Resource Execution Token）由后台服务保管，用于工作室执行用户已获授权的资源创建和应用发布。图形安装流程分别配置两枚令牌，便于独立更换和撤销。执行令牌不是每个用户的登录身份或个人 Token；已有应用访问、普通内容操作和模型对话不一定调用 Cloudflare 管理 API。当前两类令牌仍有账号级权限重叠，不能据此声称实现了每用户的 Cloudflare 权限隔离。账号、Zone 范围需在 Cloudflare 确认。旧配置的同一凭据引用仍可读取，但不再提供共用的图形配置入口。
+
+Generate 链接只请求预填范围，并不保证 Cloudflare 页面已采用这些设置。本轮控制台实测中，Zone Resources 仍默认显示 All zones；须手动改为 Specific zone 并选中目标域名，在 Token Summary 再次核对后创建。账号级权限覆盖该账号内对应产品的资源，不能通过资源名前缀限制到单个应用。参考 [Cloudflare Token 模板说明](https://developers.cloudflare.com/fundamentals/api/how-to/account-owned-token-template/)。
 
 本机会话有效期两小时。刷新可继续当前会话、计划和执行进度；停止安装服务后，应使用同一实例配置、目录和凭据库密码重新生成/执行计划，已成功的步骤会通过状态记录恢复。密码不会自动上传或找回。
 

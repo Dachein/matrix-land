@@ -40,6 +40,7 @@ export interface Env {
   AUTH_DB: D1Database;
   AUTH_EMAIL_OTP_SECRET?: string;
   AUTH_ISSUER?: string;
+  AUTH_LOGIN_ALLOWED_EMAILS_JSON?: string;
   AUTH_JWT_SECRET?: string;
   AUTH_PUBLIC_URL?: string;
   AUTH_CODE_TTL_SECONDS?: string;

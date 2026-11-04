@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {cloudflareTokenUrl} from '../ui/app.js';
 
 const ids={accountId:'44420482579679f9392919a4dcd2a980',zoneId:'764ef377bcfc9638e08b64959bfefa0a'};
-test('token consent links are scoped to the selected account and zone',()=>{
+test('token consent links request the selected account and zone',()=>{
  const url=new URL(cloudflareTokenUrl({...ids,kind:'installation',modules:['knowledge']}));
  assert.equal(url.origin,'https://dash.cloudflare.com');
  assert.equal(url.pathname,'/profile/api-tokens');

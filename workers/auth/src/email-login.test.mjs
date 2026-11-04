@@ -961,6 +961,41 @@ describe("OTP enrollment for fresh installations", () => {
     return fixture;
   }
   const countUsers = async fixture => (await fixture.env.AUTH_DB.prepare("SELECT count(*) AS count FROM auth_users").first()).count;
+  it("restricts signup to the exact installation mailbox even when its domain policy is open", async () => {
+    const fixture = enrollmentFixture();
+    fixture.env.AUTH_LOGIN_ALLOWED_EMAILS_JSON = JSON.stringify(["owner@example.invalid"]);
+    await fixture.env.AUTH_DB.prepare("UPDATE auth_login_email_policy SET mode = 'open'").run();
+    assert.equal((await requestOtp(fixture, "other@example.invalid")).response.status, 403);
+    assert.equal(fixture.messages.length, 0);
+    const request = await requestOtp(fixture, "OWNER@example.invalid");
+    assert.equal(request.response.status, 202);
+    const response = await verifyOtp(fixture, { ...request, code: extractCode(fixture.messages[0]) });
+    assert.equal(response.status, 200);
+    assert.equal((await verifyAuthToken(fixture.env, sessionCookie(response))).email, "owner@example.invalid");
+    assert.equal(await countUsers(fixture), 1);
+  });
+  it("rechecks a changed exact mailbox restriction before enrolling or signing in", async () => {
+    for (const existing of [false, true]) {
+      const fixture = enrollmentFixture();
+      fixture.env.AUTH_LOGIN_ALLOWED_EMAILS_JSON = JSON.stringify(["owner@example.invalid"]);
+      if (existing) await seedUser(fixture, { email: "owner@example.invalid", role: "member" });
+      const request = await requestOtp(fixture, "owner@example.invalid");
+      assert.equal(request.response.status, 202);
+      fixture.env.AUTH_LOGIN_ALLOWED_EMAILS_JSON = JSON.stringify(["other@example.invalid"]);
+      const response = await verifyOtp(fixture, { ...request, code: extractCode(fixture.messages[0]) });
+      assert.equal(response.status, 403);
+      assert.doesNotMatch(response.headers.get("set-cookie") ?? "", /workspace_session=/);
+      assert.equal(await countUsers(fixture), existing ? 1 : 0);
+    }
+  });
+  it("rejects malformed or empty installation lists before sending a login code", async () => {
+    for (const configured of ["", "[]", "{}", "not-json", '["owner@example.invalid",123]']) {
+      const fixture = enrollmentFixture();
+      fixture.env.AUTH_LOGIN_ALLOWED_EMAILS_JSON = configured;
+      assert.equal((await requestOtp(fixture, "owner@example.invalid")).response.status, 403);
+      assert.equal(fixture.messages.length, 0);
+    }
+  });
   it("enables email-only authentication and creates no account until a code is verified", async () => {
     const fixture = enrollmentFixture();
     const before = await worker.fetch(new Request("https://auth.test/auth/session"), fixture.env);

@@ -27,7 +27,7 @@ export const en: TranslationResource = {
   "design.palette.teal": "Teal",
   "design.palette.indigo": "Indigo",
 
-  "design.eyebrow": "FRONTIER WORKSPACE · DESIGN SYSTEM",
+  "design.eyebrow": "{platformName} · DESIGN SYSTEM",
   "design.heading": "One foundation.\nEvery organization’s identity.",
   "design.intro": "Build consistent components, rules and states before redesigning the pages.",
   "design.preview": "Components",
@@ -35,6 +35,7 @@ export const en: TranslationResource = {
   "design.settings": "Brand settings",
   "design.settingsBody": "Configure your identity; the system handles readability and consistency.",
   "design.name": "Platform name",
+  "design.defaultLocale": "Default language (interface and system emails)",
   "design.mark": "Lettermark",
   "design.primary": "Primary brand color",
   "design.accent": "Companion color",

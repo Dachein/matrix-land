@@ -243,6 +243,16 @@ describe("forum domain helpers", () => {
     assert.deepEqual(statements[2].values.slice(1, 8), ["user-2", "user-1", "forum.mention", "forum_post", "post-1", "forum_topic", "topic-1"]);
   });
 
+  it("persists English mention text while preserving user-authored titles", () => {
+    const { db, statements } = recordingDb();
+    appendForumMentionInserts([], db, {
+      defaultLocale: "en", actorUserId: "user-1", actorName: "Ada",
+      mentions: [{ userId: "user-2", text: "@grace" }], notifyMentionedUsers: true,
+      postId: "post-1", topicId: "topic-1", topicTitle: "项目计划"
+    });
+    assert.ok(statements[1].values.includes('Ada mentioned you in "项目计划"'));
+  });
+
   it("notifies only newly added mention recipients during an edit", () => {
     const { db, statements } = recordingDb();
     const batch = [];

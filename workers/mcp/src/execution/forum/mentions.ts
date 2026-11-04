@@ -32,7 +32,7 @@ export async function resolveMcpMentionTargets(db: D1Database, prefixes: string[
 export function appendMcpMentionStatements(
   statements: D1PreparedStatement[],
   db: D1Database,
-  options: { actorName: string; actorUserId: string; mentions: McpMentionTarget[]; postId: string; topicId: string; topicTitle: string }
+  options: { defaultLocale?: "zh-CN" | "en"; actorName: string; actorUserId: string; mentions: McpMentionTarget[]; postId: string; topicId: string; topicTitle: string }
 ) {
   const notificationIds: string[] = [];
   options.mentions.forEach((mention) => {
@@ -61,7 +61,7 @@ export function appendMcpMentionStatements(
       options.actorUserId,
       options.postId,
       options.topicId,
-      `${options.actorName} 提到了你：《${options.topicTitle}》`,
+      options.defaultLocale === "en" ? `${options.actorName} mentioned you in "${options.topicTitle}"` : `${options.actorName} 提到了你：《${options.topicTitle}》`,
       `#/posts/${encodeURIComponent(options.topicId)}`,
       JSON.stringify({ mentionText: mention.text, postId: options.postId, topicId: options.topicId, topicTitle: options.topicTitle }),
       `forum.mention:${options.postId}:${mention.userId}`

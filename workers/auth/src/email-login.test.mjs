@@ -1064,3 +1064,11 @@ describe("OTP enrollment for fresh installations", () => {
     assert.equal(await countUsers(fixture), 1);
   });
 });
+
+it('sends an English sign-in email when the installation language is English',async()=>{
+ const fixture=createFixture();fixture.env.PLATFORM_BRAND_JSON=JSON.stringify({name:'Matrix land',logoText:'ML',defaultLocale:'en'});
+ const user=await seedUser(fixture);const requested=await requestOtp(fixture,user.email);assert.equal(requested.response.status,202);
+ const message=fixture.messages[0];assert.equal(message.subject,'[Matrix land] Sign-in code');assert.doesNotMatch(message.text+message.html,/[\u3400-\u9fff]/);
+ const verified=await verifyOtp(fixture,{challengeId:requested.challengeId,stateCookie:requested.stateCookie,code:extractCode(message)});assert.equal(verified.status,200);
+ fixture.env.AUTH_DB.database.close();
+});

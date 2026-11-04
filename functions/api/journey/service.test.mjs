@@ -738,6 +738,55 @@ describe("journey service", () => {
     assert.equal(emitted.length, 4);
   });
 
+  it("emits English badge and level notifications for an English installation", async () => {
+    const db = createJourneyActivityDb({
+      agentPreference: "codex",
+      mcpInstallConfirmedAt: "2026-06-30T00:00:00.000Z"
+    });
+    const emitted = [];
+    const user = {
+      ...currentUser,
+      avatarUrl: "https://avatar.example.com/a.png",
+      bio: "Builds internal AI workflows."
+    };
+
+    const journey = await readPortalJourney(db, user, {
+      defaultLocale: "en",
+      async emitActivityEvent(_db, input) {
+        emitted.push(input);
+        return `evt-${emitted.length}`;
+      }
+    });
+
+    assert.equal(journey.level.key, "explorer");
+    assert.deepEqual(emitted.map((event) => event.actionType), [
+      "journey.badge.awarded",
+      "journey.badge.awarded",
+      "journey.badge.awarded",
+      "journey.level.upgraded"
+    ]);
+    assert.equal(emitted[0].metadata.badgeKey, "profile_ready");
+    assert.equal(emitted[3].target.type, "journey_level");
+    assert.equal(emitted[3].metadata.levelKey, "explorer");
+    assert.equal(emitted[3].metadata.levelRank, 2);
+
+    await readPortalJourney(db, user, {
+      defaultLocale: "en",
+      async emitActivityEvent(_db, input) {
+        emitted.push(input);
+        return `evt-${emitted.length}`;
+      }
+    });
+
+    assert.equal(emitted.length, 4);
+    for (const event of emitted) {
+      assert.doesNotMatch(event.summary, /[\p{Script=Han}]/u);
+      assert.doesNotMatch(event.target.title, /[\p{Script=Han}]/u);
+    }
+    assert.match(emitted[0].summary, /earned the/);
+    assert.match(emitted[3].summary, /reached Level 2/);
+  });
+
   it("syncs the initial and changed level once while skipping an unchanged level", async () => {
     const profile = {};
     const db = createJourneyActivityDb(profile);

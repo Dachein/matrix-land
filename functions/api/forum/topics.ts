@@ -1,3 +1,4 @@
+import { platformBrandFromEnv } from "../../../src/shared/platformBrand.ts";
 import { defaultForumCategoryIdForTopicType, forumCategoryIdForSlug, normalizeForumCategorySlug } from "./categories.ts";
 import { readCatalogDiscussion } from "../catalog/forumProjection.ts";
 import { normalizeForumAnonymousPersona } from "../../../src/portal/forum/forumAnonymousIdentity.ts";
@@ -143,6 +144,7 @@ export function createForumTopicApi<TEnv extends ForumEnv>(deps: ForumDeps<TEnv>
         topicId
       });
       const notificationIds = appendForumMentionInserts(statements, db, {
+        defaultLocale: platformBrandFromEnv(context.env).defaultLocale,
         actorUserId: currentUser.id,
         actorName: publicActor.name,
         notificationActorUserId: anonymous ? null : currentUser.id,
@@ -179,7 +181,7 @@ export function createForumTopicApi<TEnv extends ForumEnv>(deps: ForumDeps<TEnv>
           id: topicId,
           title
         },
-        summary: `${publicActor.name} 发布了帖子《${title}》`,
+        summary: platformBrandFromEnv(context.env).defaultLocale === "en" ? `${publicActor.name} published "${title}"` : `${publicActor.name} 发布了帖子《${title}》`,
         href: `#/community/${topicId}`,
         teamId: userTeam?.teamId ?? context.env.DEFAULT_TEAM_ID,
         metadata: {
@@ -359,6 +361,7 @@ export function createForumTopicApi<TEnv extends ForumEnv>(deps: ForumDeps<TEnv>
       });
 
       const notificationIds = appendForumMentionInserts(statements, db, {
+        defaultLocale: platformBrandFromEnv(context.env).defaultLocale,
         actorUserId: currentUser.id,
         actorName: publicActor.name,
         notificationActorUserId: anonymous ? null : currentUser.id,

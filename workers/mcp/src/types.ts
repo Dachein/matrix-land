@@ -3,6 +3,7 @@ export const SUPPORTED_AGENTS = ["workbuddy", "claude-code", "codex", "cursor"] 
 export type SupportedAgent = typeof SUPPORTED_AGENTS[number];
 
 export interface Env {
+  PLATFORM_BRAND_JSON?: string;
   AI?: Ai;
   DB: D1Database;
   FORUM_MEDIA?: R2Bucket;

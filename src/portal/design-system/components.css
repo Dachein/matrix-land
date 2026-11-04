@@ -86,9 +86,6 @@
   .fw-scope .spinIcon { animation: none; }
 }
 
-.fw-scope .languageSwitcherLine { min-width: var(--fw-space-12); }
-.fw-scope .languageSwitcherLine select { font-size: var(--fw-text-caption); padding-right: var(--fw-space-8); }
-
 /* Small responses belong to the action, not to surrounding decoration. */
 .fw-scope [data-ui="button-icon"] { transition: transform var(--fw-motion-normal) var(--fw-ease-standard); }
 .fw-scope [data-ui="button"][data-variant="primary"]:not(:disabled):hover [data-ui="button-icon"] { transform: translateX(var(--fw-motion-nudge)); }

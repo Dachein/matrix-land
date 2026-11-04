@@ -1,3 +1,4 @@
+import { platformBrandFromEnv } from "../../../src/shared/platformBrand.ts";
 import { schedulePortalLiveEvent } from "../../../src/shared/portalLivePublisher.ts";
 import { portalCommunityContributionRules } from "../../../src/shared/journey.ts";
 import {
@@ -98,7 +99,7 @@ async function awardForumContributor<TEnv extends ForumEnv>(
         parentId: target.topicId,
         parentType: "forum_topic",
         recipientUserId: target.recipientUserId,
-        summary: `${currentUser.name} 给你的内容添加了社区贡献（+${points}）`
+        summary: platformBrandFromEnv(context.env).defaultLocale === "en" ? `${currentUser.name} recognized your community contribution (+${points} points)` : `${currentUser.name} 给你的内容添加了社区贡献（+${points}）`
       });
   const statements: D1PreparedStatement[] = [
     db
@@ -173,7 +174,7 @@ async function awardForumContributor<TEnv extends ForumEnv>(
       id: target.topicId,
       title: target.topicTitle
     },
-    summary: `${recipientActor.name} 获得了社区贡献（+${points}）：${activityNote(note)}`,
+    summary: platformBrandFromEnv(context.env).defaultLocale === "en" ? `${recipientActor.name} received a community contribution award (+${points} points): ${activityNote(note)}` : `${recipientActor.name} 获得了社区贡献（+${points}）：${activityNote(note)}`,
     href: `#/community/${encodeURIComponent(target.topicId)}`,
     teamId: target.recipientTeamId || context.env.DEFAULT_TEAM_ID,
     metadata: {

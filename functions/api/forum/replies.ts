@@ -1,3 +1,4 @@
+import { platformBrandFromEnv } from "../../../src/shared/platformBrand.ts";
 import { MAX_FORUM_ATTACHMENTS, sanitizeForumAttachments } from "./media.ts";
 import { schedulePortalLiveEvent } from "../../../src/shared/portalLivePublisher.ts";
 import { canModerateForumUser } from "./moderation.ts";
@@ -106,6 +107,7 @@ export function createForumReplyApi<TEnv extends ForumEnv>(deps: ForumDeps<TEnv>
         topicId
       });
       const notificationIds = appendForumMentionInserts(statements, db, {
+        defaultLocale: platformBrandFromEnv(context.env).defaultLocale,
         actorUserId: currentUser.id,
         actorName: publicActor.name,
         notificationActorUserId: anonymous ? null : currentUser.id,
@@ -133,7 +135,7 @@ export function createForumReplyApi<TEnv extends ForumEnv>(deps: ForumDeps<TEnv>
           parentId: topicId,
           parentType: "forum_topic",
           recipientUserId: topicAuthor.authorUserId,
-          summary: `${publicActor.name} 回复了你的帖子《${topic.title}》`
+          summary: platformBrandFromEnv(context.env).defaultLocale === "en" ? `${publicActor.name} replied to your post "${topic.title}"` : `${publicActor.name} 回复了你的帖子《${topic.title}》`
         });
         notificationIds.push(notification.id);
         statements.push(notificationInsertStatement(db, notification));
@@ -163,14 +165,14 @@ export function createForumReplyApi<TEnv extends ForumEnv>(deps: ForumDeps<TEnv>
         target: {
           type: "forum_post",
           id: postId,
-          title: "回复"
+          title: platformBrandFromEnv(context.env).defaultLocale === "en" ? "Reply" : "回复"
         },
         parent: {
           type: "forum_topic",
           id: topicId,
           title: topic.title
         },
-        summary: `${publicActor.name} 回复了帖子《${topic.title}》`,
+        summary: platformBrandFromEnv(context.env).defaultLocale === "en" ? `${publicActor.name} replied to "${topic.title}"` : `${publicActor.name} 回复了帖子《${topic.title}》`,
         href: `#/community/${topicId}`,
         teamId,
         metadata: {
@@ -342,6 +344,7 @@ export function createForumReplyApi<TEnv extends ForumEnv>(deps: ForumDeps<TEnv>
       });
 
       const notificationIds = appendForumMentionInserts(statements, db, {
+        defaultLocale: platformBrandFromEnv(context.env).defaultLocale,
         actorUserId: currentUser.id,
         actorName: publicActor.name,
         notificationActorUserId: anonymous ? null : currentUser.id,

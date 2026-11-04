@@ -1,3 +1,4 @@
+import { platformBrandFromEnv } from "../../../../../src/shared/platformBrand.ts";
 import { emitMcpForumCommunityActivity, scheduleMcpForumNotifications } from "../../activity.ts";
 import { readString } from "../../http.ts";
 import { MAX_FORUM_BODY_CHARS } from "../../toolDefinitions/shared.ts";
@@ -30,7 +31,7 @@ export async function createForumReply(
     .prepare("SELECT title, author_user_id AS authorUserId FROM forum_topics WHERE id = ? LIMIT 1")
     .bind(topicId)
     .first<{ authorUserId?: string; title?: string }>();
-  const topicTitle = readString(notificationTopic?.title) || "帖子";
+  const topicTitle = readString(notificationTopic?.title) || (platformBrandFromEnv(env).defaultLocale === "en" ? "Post" : "帖子");
   const topicAuthorUserId = readString(notificationTopic?.authorUserId);
 
   if (!bodyMarkdown) {
@@ -65,6 +66,7 @@ export async function createForumReply(
       .bind(topicId)
   ];
   const notificationIds = appendMcpMentionStatements(statements, db, {
+    defaultLocale: platformBrandFromEnv(env).defaultLocale,
     actorUserId: author.id,
     actorName: readString(principal.name) || "Agent",
     mentions,
@@ -90,7 +92,7 @@ export async function createForumReply(
       author.id,
       postId,
       topicId,
-      `${readString(principal.name) || "Agent"} 回复了你的帖子《${topicTitle}》`,
+      platformBrandFromEnv(env).defaultLocale === "en" ? `${readString(principal.name) || "Agent"} replied to your post "${topicTitle}"` : `${readString(principal.name) || "Agent"} 回复了你的帖子《${topicTitle}》`,
       `#/posts/${encodeURIComponent(topicId)}`,
       JSON.stringify({ postId, topicId, topicTitle, replyPreview: bodyMarkdown.slice(0, 180) }),
       `forum.thread_replied:${postId}:${topicAuthorUserId}`
@@ -119,9 +121,9 @@ export async function createForumReply(
     parentTitle: topicTitle,
     parentType: "forum_topic",
     sourceEventId: `forum.reply.created:${postId}`,
-    summary: `${mcpForumActorName(principal)} 回复了帖子《${topicTitle}》`,
+    summary: platformBrandFromEnv(env).defaultLocale === "en" ? `${mcpForumActorName(principal)} replied to "${topicTitle}"` : `${mcpForumActorName(principal)} 回复了帖子《${topicTitle}》`,
     targetId: postId,
-    targetTitle: "回复",
+    targetTitle: platformBrandFromEnv(env).defaultLocale === "en" ? "Reply" : "回复",
     targetType: "forum_post",
     teamId: author.teamId
   }, executionContext);

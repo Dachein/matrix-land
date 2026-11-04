@@ -1,5 +1,6 @@
 {
   "name": "Matrix land",
   "logoText": "ML",
-  "paletteId": "frontier"
+  "paletteId": "frontier",
+  "defaultLocale": "zh-CN"
 }

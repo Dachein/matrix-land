@@ -5,6 +5,7 @@ export type PlatformBrand = {
   name: string;
   logoText: string;
   logoUrl?: string;
+  defaultLocale?: "zh-CN" | "en";
   primaryColor: string;
   accentColor: string;
 };
@@ -16,8 +17,9 @@ export type PlatformBrandEnv = {
 // The open-source seed brand. Every installation can override it.
 export const defaultPlatformBrand: Readonly<PlatformBrand> = Object.freeze({
   paletteId: "frontier",
-  name: "Frontier Workspace",
-  logoText: "FW",
+  name: "Matrix land",
+  logoText: "ML",
+  defaultLocale: "zh-CN",
   primaryColor: "#e85e19",
   accentColor: "#66765b"
 });
@@ -27,12 +29,14 @@ export function resolvePlatformBrand(input: unknown = {}): PlatformBrand {
     throw new Error("invalid_platform_brand");
   }
   const value = input as Record<string, unknown>;
-  const allowed = new Set(["name", "logoText", "logoUrl", "primaryColor", "accentColor", "paletteId"]);
+  const allowed = new Set(["name", "logoText", "logoUrl", "primaryColor", "accentColor", "paletteId", "defaultLocale"]);
   if (Object.keys(value).some((key) => !allowed.has(key))) {
     throw new Error("unknown_platform_brand_field");
   }
   const name = brandText(value.name, defaultPlatformBrand.name, 80);
   const logoText = brandText(value.logoText, defaultPlatformBrand.logoText, 8);
+  const defaultLocale = value.defaultLocale ?? "zh-CN";
+  if (defaultLocale !== "zh-CN" && defaultLocale !== "en") throw new Error("invalid_platform_locale");
   const preset = value.paletteId === undefined ? undefined : findPlatformBrandPreset(value.paletteId);
   if (value.paletteId !== undefined && !preset) throw new Error("invalid_platform_palette");
   const primaryColor = brandColor(value.primaryColor, preset?.primaryColor ?? defaultPlatformBrand.primaryColor);
@@ -40,7 +44,7 @@ export function resolvePlatformBrand(input: unknown = {}): PlatformBrand {
   if (preset && (primaryColor !== preset.primaryColor || accentColor !== preset.accentColor)) throw new Error("platform_palette_color_mismatch");
   const paletteId = preset?.id ?? (value.primaryColor === undefined && value.accentColor === undefined ? "frontier" : undefined);
   const logoUrl = value.logoUrl === undefined ? undefined : publicHttpsUrl(value.logoUrl);
-  return { ...(paletteId ? { paletteId } : {}), name, logoText, ...(logoUrl ? { logoUrl } : {}), primaryColor, accentColor };
+  return { ...(paletteId ? { paletteId } : {}), name, logoText, defaultLocale, ...(logoUrl ? { logoUrl } : {}), primaryColor, accentColor };
 }
 
 export function platformBrandFromEnv(env: PlatformBrandEnv): PlatformBrand {

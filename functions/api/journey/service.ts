@@ -1,3 +1,4 @@
+import { platformBrandFromEnv } from "../../../src/shared/platformBrand.ts";
 import {
   buildPortalJourneySnapshot,
   categoryCountsForBadges,
@@ -27,6 +28,7 @@ import { normalizeIdentityProvider, normalizeRole } from "../values.ts";
 type CurrentUser = PortalCatalog["currentUser"];
 
 type JourneyEnv = PortalLivePublisherEnv & {
+  PLATFORM_BRAND_JSON?: string;
   WORKSPACE_MODULES_JSON?: string;
   AUTH_WORKER_URL?: string;
   DB?: D1Database;
@@ -43,6 +45,7 @@ type JourneyActivityEmitter = (
   publishContext?: PortalLiveDeferredContext<PortalLivePublisherEnv>
 ) => Promise<string | undefined>;
 type JourneyActivityOptions = {
+  defaultLocale?: "zh-CN" | "en";
   activeGatewayTokenCount?: number;
   authorizedMcpConnectionCount?: number;
   connectedAgentPreference?: PortalJourneyProfile["agentPreference"];
@@ -115,6 +118,7 @@ export function createJourneyApi<TEnv extends JourneyEnv>(deps: JourneyDeps<TEnv
     ]);
     const journey = await readPortalJourney(db, currentUser, {
       ...externalEvidence,
+      defaultLocale: platformBrandFromEnv(context.env).defaultLocale,
       emitActivityEvent: deps.emitActivityEvent
         ? (activityDb, input) => deps.emitActivityEvent!(activityDb, input, context)
         : undefined,
@@ -194,6 +198,7 @@ export function createJourneyApi<TEnv extends JourneyEnv>(deps: JourneyDeps<TEnv
       ]);
       return await readPortalJourney(db, currentUser, {
         ...externalEvidence,
+        defaultLocale: platformBrandFromEnv(context.env).defaultLocale,
         emitActivityEvent: deps.emitActivityEvent
           ? (activityDb, input) => deps.emitActivityEvent!(activityDb, input, context)
           : undefined,
@@ -230,7 +235,7 @@ export async function readPortalJourney(db: D1Database, currentUser: CurrentUser
     });
     const newlyAwardedBadges = journey.badges.filter((badge) => !previousBadgeKeys.has(badge.badgeKey));
 
-    await emitJourneyProgressActivity(db, currentUser, journey, newlyAwardedBadges, previousLevel ?? portalJourneyLevels[0], options.emitActivityEvent);
+    await emitJourneyProgressActivity(db, currentUser, journey, newlyAwardedBadges, previousLevel ?? portalJourneyLevels[0], options.emitActivityEvent, options.defaultLocale);
     return journey;
   } catch (error) {
     if (isMissingJourneyTableError(error)) {
@@ -261,7 +266,7 @@ export type PortalUserJourneySummary = {
 export async function recomputePortalUserJourney(
   db: D1Database,
   userId: string,
-  options: Pick<JourneyActivityOptions, "emitActivityEvent"> = {}
+  options: Pick<JourneyActivityOptions, "emitActivityEvent" | "defaultLocale"> = {}
 ): Promise<PortalUserJourneySummary | undefined> {
   const row = await db
     .prepare(
@@ -795,7 +800,8 @@ async function emitJourneyProgressActivity(
   journey: PortalJourney,
   newlyAwardedBadges: PortalJourneyUserBadge[],
   previousLevel: PortalJourney["level"],
-  emitActivityEvent?: JourneyActivityEmitter
+  emitActivityEvent?: JourneyActivityEmitter,
+  defaultLocale: "zh-CN" | "en" = "zh-CN"
 ) {
   if (!emitActivityEvent) {
     return;
@@ -808,9 +814,9 @@ async function emitJourneyProgressActivity(
     target: {
       type: "journey_badge",
       id: badge.badgeKey,
-      title: badge.nameZh
+      title: defaultLocale === "en" ? badge.nameEn : badge.nameZh
     },
-    summary: `${currentUser.name} 获得了 ${badge.nameZh} Badge`,
+    summary: defaultLocale === "en" ? `${currentUser.name} earned the ${badge.nameEn} badge` : `${currentUser.name} 获得了 ${badge.nameZh} Badge`,
     metadata: {
       badgeKey: badge.badgeKey,
       badgeNameZh: badge.nameZh,
@@ -829,9 +835,9 @@ async function emitJourneyProgressActivity(
       target: {
         type: "journey_level",
         id: journey.level.key,
-        title: journey.level.nameZh
+        title: defaultLocale === "en" ? journey.level.nameEn : journey.level.nameZh
       },
-      summary: `${currentUser.name} 升级为 Level ${journey.level.rank} · ${journey.level.nameZh}`,
+      summary: defaultLocale === "en" ? `${currentUser.name} reached Level ${journey.level.rank} · ${journey.level.nameEn}` : `${currentUser.name} 升级为 Level ${journey.level.rank} · ${journey.level.nameZh}`,
       metadata: {
         previousLevelKey: previousLevel.key,
         levelKey: journey.level.key,

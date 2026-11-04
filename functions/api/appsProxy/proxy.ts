@@ -1,3 +1,4 @@
+import { platformBrandFromEnv } from "../../../src/shared/platformBrand.ts";
 import type { PortalCatalog } from "../../../src/shared/types";
 import type {
   PortalLiveDeferredContext,
@@ -10,6 +11,7 @@ import { appsScopesForProxyRequest } from "./scopes.ts";
 type CurrentUser = PortalCatalog["currentUser"];
 
 type AppsProxyEnv = PortalLivePublisherEnv & {
+  PLATFORM_BRAND_JSON?: string;
   DB?: D1Database;
   APPS_JWT_SECRET?: string;
   APPS_ORG_ID?: string;
@@ -216,7 +218,7 @@ export async function recordAppsAppPublishedActivity<TEnv extends AppsProxyEnv>(
       id: appId,
       title: appName
     },
-    summary: `${currentUser.name} 部署了应用《${appName}》`,
+    summary: platformBrandFromEnv(env).defaultLocale === "en" ? `${currentUser.name} deployed "${appName}"` : `${currentUser.name} 部署了应用《${appName}》`,
     href: "#/apps",
     teamId,
     metadata: {

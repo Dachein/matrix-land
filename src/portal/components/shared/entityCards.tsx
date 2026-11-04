@@ -142,7 +142,7 @@ export function DataServiceCard({ service }: { service: DataService }) {
 
 export function PublicationListingCard({ listing }: { listing: PublicationListing }) {
   const { t } = useI18n();
-  const owner = publicationOwnerLabel(listing, "Frontier Workspace");
+  const owner = publicationOwnerLabel(listing, t("portal.brand.name"));
   const primaryMetricCount = listing.type === "app"
     ? listing.visitCount ?? 0
     : (listing.agentAddCount ?? 0) + (listing.downloadCount ?? listing.installs);

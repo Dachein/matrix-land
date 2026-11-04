@@ -1,3 +1,4 @@
+import { platformBrandFromEnv } from "../../../src/shared/platformBrand.ts";
 import { emitActivityEvent } from "../activity/service.ts";
 import { audit } from "../audit.ts";
 import { HttpError, readBody, requireDb } from "../http.ts";
@@ -19,6 +20,7 @@ export function createForumServices() {
       httpError: (status, message) => new HttpError(status, message),
       readBody,
       refreshUserJourneyState: (db, userId, publishContext) => recomputePortalUserJourney(db, userId, {
+        defaultLocale: platformBrandFromEnv(publishContext?.env ?? {}).defaultLocale,
         emitActivityEvent: (activityDb, input) => emitActivityEvent(activityDb, input, publishContext)
       }),
       requireDb,

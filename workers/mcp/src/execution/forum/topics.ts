@@ -1,3 +1,4 @@
+import { platformBrandFromEnv } from "../../../../../src/shared/platformBrand.ts";
 import { emitMcpForumCommunityActivity, scheduleMcpForumNotifications } from "../../activity.ts";
 import { readNumber, readString } from "../../http.ts";
 import { MAX_FORUM_ATTACHMENTS, MAX_FORUM_BODY_CHARS } from "../../toolDefinitions/shared.ts";
@@ -117,6 +118,7 @@ export async function createForumTopic(
     statements.push(db.prepare("INSERT OR IGNORE INTO forum_topic_tags (topic_id, tag) VALUES (?, ?)").bind(topicId, tag));
   });
   const notificationIds = appendMcpMentionStatements(statements, db, {
+    defaultLocale: platformBrandFromEnv(env).defaultLocale,
     actorUserId: author.id,
     actorName: readString(principal.name) || "Agent",
     mentions,
@@ -148,7 +150,7 @@ export async function createForumTopic(
       tags
     },
     sourceEventId: `forum.topic.created:${topicId}`,
-    summary: `${mcpForumActorName(principal)} 发布了帖子《${title}》`,
+    summary: platformBrandFromEnv(env).defaultLocale === "en" ? `${mcpForumActorName(principal)} published "${title}"` : `${mcpForumActorName(principal)} 发布了帖子《${title}》`,
     targetId: topicId,
     targetTitle: title,
     targetType: "forum_topic",

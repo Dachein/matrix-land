@@ -26,6 +26,7 @@ export function renderLoginCodeEmail(
     throw new Error("invalid_email_template_limits");
   }
   const minutes = Math.ceil(ttlSeconds / 60);
+  if (brand.defaultLocale === "en") return englishLoginEmail(code, minutes, maxAttempts, brand);
   const subject = `[${brand.name}] 登录验证码`;
   const expiry = `验证码将在 ${minutes} 分钟后失效，最多可尝试 ${maxAttempts} 次。`;
   const footer = `这是一封由 ${brand.name} 自动发送的登录验证邮件，请勿直接回复。`;
@@ -48,6 +49,7 @@ export function renderAccountInvitationEmail(
 ): SystemEmail {
   const brand = resolvePlatformBrand(input);
   const url = publicHttpsUrl(portalUrl);
+  if (brand.defaultLocale === "en") return englishInvitationEmail(name, email, url, brand);
   const subject = `欢迎使用 ${brand.name}｜你的账户已准备就绪`;
   const content = `你的 ${brand.name} 账户已创建。使用下方公司邮箱完成首次登录，即可激活账户并开始使用。`;
   return {
@@ -69,9 +71,9 @@ export function renderAccountInvitationEmail(
   };
 }
 
-function emailFrame(brand: PlatformBrand, subject: string, badge: string, title: string, body: string, footer: string) {
+export function emailFrame(brand: PlatformBrand, subject: string, badge: string, title: string, body: string, footer: string) {
   return `<!doctype html>
-<html lang="zh-Hans"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="supported-color-schemes" content="light"><title>${escapeEmailHtml(subject)}</title></head>
+<html lang="${brand.defaultLocale === "en" ? "en" : "zh-Hans"}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="supported-color-schemes" content="light"><title>${escapeEmailHtml(subject)}</title></head>
 <body style="margin:0;padding:0;background:#f2efe6;color:#11110f;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',Arial,sans-serif">
 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f2efe6"><tr><td align="center" style="padding:32px 16px">
 <!--[if mso]><table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0"><tr><td><![endif]-->
@@ -86,4 +88,30 @@ function emailFrame(brand: PlatformBrand, subject: string, badge: string, title:
 
 export function escapeEmailHtml(value: string) {
   return value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#39;");
+}
+
+function englishLoginEmail(code: string, minutes: number, attempts: number, brand: PlatformBrand): SystemEmail {
+ const subject = `[${brand.name}] Sign-in code`;
+ const expiry = `This code expires in ${minutes} minutes. You have up to ${attempts} attempts.`;
+ const notice = "If you did not request this code, you can ignore this email.";
+ return {subject,
+  text:[`Your ${brand.name} sign-in code:`, "", code, "", expiry, notice].join("\n"),
+  html:emailFrame(brand,subject,"Sign-in verification","Your sign-in code",`
+   <p style="color:#5e5a52;font-size:15px;line-height:24px">Enter this 6-digit code on the ${escapeEmailHtml(brand.name)} sign-in page:</p>
+   <div style="border:1px solid #11110f;border-left:8px solid ${brand.accentColor};background:#faf9f3;color:#11110f;font-size:36px;line-height:48px;letter-spacing:11px;font-weight:900;padding:17px 16px;text-align:center">${code}</div>
+   <p style="font-size:13px;line-height:21px;color:#6f6a61">${expiry}</p>`,`This sign-in email was sent automatically by ${brand.name}. Please do not reply.\n${notice}`)
+ };
+}
+function englishInvitationEmail(name: string,email: string,url: string,brand: PlatformBrand): SystemEmail {
+ const subject=`Welcome to ${brand.name} | Your account is ready`;
+ const content=`Your ${brand.name} account has been created. Sign in with the work email below to activate your account and get started.`;
+ const help="If you have trouble signing in, contact your workspace administrator.";
+ return {subject,
+  text:[`Hi ${name},`,"",content,`Sign-in email: ${email}`,`Open ${brand.name}: ${url}`,"",help,"",`${brand.name} team`].join("\n"),
+  html:emailFrame(brand,subject,"Account invitation",`Welcome to ${brand.name}`,`
+   <p>Hi ${escapeEmailHtml(name)},</p><p style="color:#44403c;font-size:16px;line-height:26px">${escapeEmailHtml(content)}</p>
+   <div style="padding:18px 20px;background:#faf9f3;border:1px solid #c9c4ba"><div>Sign-in email</div><strong>${escapeEmailHtml(email)}</strong></div>
+   <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin-top:24px"><tr><td bgcolor="${brand.primaryColor}"><a href="${escapeEmailHtml(url)}" style="display:inline-block;padding:14px 24px;color:${onBrandColor(brand.primaryColor)};text-decoration:none;font-size:16px;font-weight:700">Open ${escapeEmailHtml(brand.name)} →</a></td></tr></table>
+   <p>If the button does not work, open this address in your browser:<br><a href="${escapeEmailHtml(url)}">${escapeEmailHtml(url)}</a></p><p>${help}</p>`,`This account invitation was sent automatically by ${brand.name}. Please do not reply.`)
+ };
 }

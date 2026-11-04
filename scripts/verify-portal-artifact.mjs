@@ -13,7 +13,7 @@ const javascriptPayload = (await Promise.all(
 const customNotFoundArtifact = await stat(resolve("dist/404.html")).catch(() => undefined);
 
 const checks = [
-  [html.includes("<title>Frontier Workspace</title>"), "missing neutral platform title"],
+  [html.includes("<title>Matrix land</title>"), "missing Matrix land platform title"],
   [html.includes('<html lang="zh-CN">'), "missing canonical locale marker"],
   [html.includes("vendor-react-"), "missing Portal React chunk"],
   [html.includes("vendor-icons-"), "missing Portal icon chunk"],

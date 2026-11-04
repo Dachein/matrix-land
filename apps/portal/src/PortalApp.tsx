@@ -276,7 +276,7 @@ export function PortalApp() {
     }
 
     if (target === "admin") {
-      navigate({ page: "admin", section: "tokens" });
+      navigate(modules.includes("models") ? { page: "admin", section: "tokens" } : { page: "admin-backups" });
       return;
     }
 
@@ -308,7 +308,7 @@ export function PortalApp() {
     if (target === "admin-login-policy") {
       navigate({ page: "admin-login-policy" });
     }
-  }, [navigate, navigateLanding]);
+  }, [modules, navigate, navigateLanding]);
 
   const requestNewPost = useCallback(() => {
     setComposerLinkedItem(undefined);

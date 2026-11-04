@@ -11,6 +11,7 @@ import { command } from './process.mjs';
 import { initializeEntra, initializeLiteLLM } from './integrations.mjs';
 import { deployServer, backupAndRestoreServer } from './server.mjs';
 import { deployWithMetadataRetry } from './deployRetry.mjs';
+import { backupFtsDatabase } from './databaseBackup.mjs';
 
 export async function applyPlan(plan,root,{directory=resolve(root,'.workspace',plan.installationId),env=process.env,fetchImpl=fetch,run=command,onProgress=()=>{}}={}){
  const expected=await buildPlan(plan.config,root,{upgrade:plan.mode==='upgrade'});if(expected.id!==plan.id)throw new Error('reviewed_plan_changed_regenerate_plan');
@@ -52,7 +53,7 @@ export async function applyPlan(plan,root,{directory=resolve(root,'.workspace',p
    }
    if(step.id==='backup'){
     const dir=resolve(directory,'backups',plan.id.slice(0,16));await mkdir(dir,{recursive:true,mode:0o700});
-    for(const [resource,value]of Object.entries(state.resources).filter(([r])=>r.startsWith('d1:'))){const database=resource.slice(3),file=resolve(dir,`${database}.sql`),cfg=resolve(generated,`backup-${database}.json`);await atomicJson(cfg,{name:'workspace-backup-export',compatibility_date:'2026-10-01',d1_databases:[{binding:'DB',database_id:value.id,database_name:value.name}]});await wr(['d1','export',value.name,'--remote','--config',cfg,'--output',file]);}
+    for(const [resource,value]of Object.entries(state.resources).filter(([r])=>r.startsWith('d1:'))){const database=resource.slice(3),file=resolve(dir,`${database}.sql`),cfg=resolve(generated,`backup-${database}.json`);await atomicJson(cfg,{name:'workspace-backup-export',compatibility_date:'2026-10-01',d1_databases:[{binding:'DB',database_id:value.id,database_name:value.name}]});if(database==='knowledge')await backupFtsDatabase(cf,value.id,file,{fetchImpl});else await wr(['d1','export',value.name,'--remote','--config',cfg,'--output',file]);}
     state.backupDirectory=dir;await save();return {directory:dir,databases:Object.keys(state.resources).filter(x=>x.startsWith('d1:')).length};
    }
    if(step.id==='litellm:server')return deployServer(plan.config,vault,{saveVault,env,run});

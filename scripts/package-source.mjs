@@ -22,7 +22,7 @@ async function collect(path) {
 for (const directory of directories) await collect(directory);
 for (const entry of await readdir(root)) if (/^playwright.*\.config\.ts$/.test(entry)) files.push(entry);
 const {version} = JSON.parse(await readFile(resolve(root,'package.json'),'utf8'));
-const prefix = `matrix-land-si-${version}`;
+const prefix = `matrix-land-${version}`;
 const entries = {};
 const contentHash = createHash('sha256');
 for (const path of files.sort()) {
@@ -35,7 +35,7 @@ await mkdir(resolve(root,'release'), {recursive:true});
 const name = `${prefix}-candidate.zip`;
 await writeFile(resolve(root,'release',name),archive);
 const sha256=createHash('sha256').update(archive).digest('hex');
-const manifest={product:'Matrix Land SI',version,stage:'candidate',archive:name,sha256,sourceContentSha256:contentHash.digest('hex'),fileCount:files.length,cloudAcceptance:'pending',excluded:['local credentials and instance state','build output and dependencies','Git history','marketing website and its deployment account']};
+const manifest={product:'Matrix land',version,stage:'candidate',archive:name,sha256,sourceContentSha256:contentHash.digest('hex'),fileCount:files.length,cloudAcceptance:'pending',excluded:['local credentials and instance state','build output and dependencies','Git history','marketing website and its deployment account']};
 await writeFile(resolve(root,'release/candidate.json'),JSON.stringify(manifest,null,2)+'\n');
 await writeFile(resolve(root,'release/CANDIDATE-SHA256SUMS'),`${sha256}  ${name}\n`);
 console.log(JSON.stringify({archive:resolve(root,'release',name),...manifest},null,2));

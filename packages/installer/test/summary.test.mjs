@@ -6,7 +6,7 @@ import {resolve} from 'node:path';
 import {saveSummary,installationBackup,readInstallationSummary} from '../src/summary.mjs';
 import {atomicJson,seal,unseal} from '../src/state.mjs';
 
-const plan={installationId:'summary-lab',release:'0.1.0',config:{brand:{name:'Matrix Land SI'},domains:{portalHostname:'play.matrixland.si'},cloudflare:{accountId:'account',zoneId:'zone'},identity:{ownerEmail:'owner@example.test'},modules:['knowledge']}};
+const plan={installationId:'summary-lab',release:'0.1.0',config:{brand:{name:'Matrix land'},domains:{portalHostname:'play.matrixland.si'},cloudflare:{accountId:'account',zoneId:'zone'},identity:{ownerEmail:'owner@example.test'},modules:['knowledge']}};
 test('summary persists incomplete and deployed outcomes without declaring business acceptance complete',async t=>{
  const root=await mkdtemp(resolve(tmpdir(),'installer-summary-'));t.after(()=>rm(root,{recursive:true,force:true}));
  const failed=await saveSummary(root,plan,{ok:false,error:'missing_secret_reference:env:CF_TOKEN'},[{step:'preflight',status:'failed'}]);

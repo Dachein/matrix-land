@@ -1,8 +1,8 @@
 # 0.1.0 交付状态
 
-首次交付：2026-10-30；当前源码本地复核：2026-11-04。此仓库以 **Matrix Land SI** 名义交付，仓库名为 `matrix-land-si`；内部 Frontier Workspace 包名、CLI 与协议保持兼容。不包含其他企业仓库的历史或生产配置。官网保留独立项目、Git 历史与部署，不纳入本软件仓库。
+首次交付：2026-10-30；当前源码本地复核：2026-11-04。此仓库以 **Matrix land** 名义交付，仓库名为 `matrix-land`；内部 Frontier Workspace 包名、CLI 与协议保持兼容。不包含其他企业仓库的历史或生产配置。官网保留独立项目、Git 历史与部署，不纳入本软件仓库。
 
-使用 `npm run release:source` 为当前源码生成 `release/matrix-land-si-0.1.0-candidate.zip`，同时生成候选版本清单与 SHA-256 校验文件。旧 Frontier Workspace 归档属于历史交付，不代表当前品牌版本。候选版本仍待真实云端安装验收。
+使用 `npm run release:source` 为当前源码生成 `release/matrix-land-0.1.0-candidate.zip`，同时生成候选版本清单与 SHA-256 校验文件。旧 Frontier Workspace 归档属于历史交付，不代表当前品牌版本。候选版本仍待真实云端安装验收。
 
 ## 已实现
 

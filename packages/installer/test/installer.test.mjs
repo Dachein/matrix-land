@@ -74,6 +74,7 @@ test('Pages uses its account environment and omits the unsupported Worker accoun
  const pages=renderWorker('portal',plan,state,root);
  assert.equal(Object.hasOwn(pages,'account_id'),false);
  assert.equal(pages.pages_build_output_dir,resolve(root,'dist'));
+ assert.equal(pages.vars.DEFAULT_TEAM_ID,example.installationId);
  assert.equal(renderWorker('auth',plan,state,root).account_id,example.cloudflare.accountId);
 });
 test('installation lock excludes concurrent runs and clears after failure',async t=>{const root=await fixture(t);await withLock(root,async()=>{await assert.rejects(withLock(root,async()=>{}),/locked/);});await assert.rejects(withLock(root,async()=>{throw new Error('test-stop');}),/test-stop/);await withLock(root,async()=>{});});
@@ -129,8 +130,12 @@ test('install, interrupted retry and upgrade preserve data, secrets and resource
  assert.equal(vaultBefore.INSTALLER_CREDENTIALS.CLOUDFLARE_API_TOKEN,env.CLOUDFLARE_API_TOKEN);
  assert(!JSON.stringify(vaultBefore.INSTALLER_CREDENTIALS).includes(env.WORKSPACE_VAULT_PASSWORD));
  assert(!JSON.stringify(before).includes(vaultBefore.AUTH_JWT_SECRET));const authDb=dbs.get(before.resources['d1:auth'].id);authDb.exec("INSERT INTO auth_users (id,email,name,status) VALUES('saved-user','person@example.com','Person','active')");
+ const coreDb=dbs.get(before.resources['d1:core'].id);
+ assert.equal(coreDb.prepare('SELECT name FROM teams WHERE id=?').get(example.installationId).name,example.brand.name);
+ coreDb.prepare('INSERT INTO users(id,team_id,name,email,role) VALUES(?,?,?,?,?)').run('saved-user',example.installationId,'Person','person@example.com','admin');
  await writeFile(resolve(root,'package.json'),JSON.stringify({version:'0.2.0'}));await writeFile(resolve(root,'schemas/auth/0003_upgrade_test.sql'),'CREATE TABLE upgrade_marker (id TEXT PRIMARY KEY);');
  const upgrade=await buildPlan(example,root,{upgrade:true});await applyPlan(upgrade,root,{env:{WORKSPACE_VAULT_PASSWORD:env.WORKSPACE_VAULT_PASSWORD},fetchImpl,run});assert.equal(authDb.prepare("SELECT email FROM auth_users WHERE id='saved-user'").get().email,'person@example.com');assert(authDb.prepare("SELECT name FROM sqlite_master WHERE name='upgrade_marker'").get());
  const after=JSON.parse(await readFile(resolve(directory,'state.json'),'utf8'));assert.equal(after.deployedRelease,'0.2.0');assert.deepEqual(after.resources,before.resources);assert.equal(unseal(JSON.parse(await readFile(resolve(directory,'vault.json'),'utf8')),env.WORKSPACE_VAULT_PASSWORD).AUTH_JWT_SECRET,vaultBefore.AUTH_JWT_SECRET);assert(after.backupDirectory);assert.equal(remote.databases.length,2);assert.equal(deployments.length,3);
+ assert.equal(coreDb.prepare("SELECT role FROM users WHERE id='saved-user'").get().role,'admin');
  for(const db of dbs.values())db.close();
 });

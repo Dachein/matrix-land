@@ -6,7 +6,7 @@ import { registry } from './registry.mjs';
 import { atomicJson, readJson, seal, unseal, withLock, runSteps } from './state.mjs';
 import { resolveSecret, validateCredentials, installationCredentials } from './config.mjs';
 import { Cloudflare } from './cloudflare.mjs';
-import { renderWorker } from './render.mjs';
+import { renderWorker, runtimeVariables } from './render.mjs';
 import { command } from './process.mjs';
 import { initializeEntra, initializeLiteLLM } from './integrations.mjs';
 import { deployServer, backupAndRestoreServer } from './server.mjs';
@@ -64,6 +64,8 @@ export async function applyPlan(plan,root,{directory=resolve(root,'.workspace',p
     await wr(['d1','migrations','apply',resource.name,'--remote','--config',cfg]);return {databaseId:resource.id};
    }
    if(step.id==='identity:initialize'){
+    const vars=runtimeVariables(plan,state);
+    await cf.query(state.resources['d1:core'].id,'INSERT INTO teams(id,name,slug) VALUES(?,?,?) ON CONFLICT(id) DO NOTHING',[vars.DEFAULT_TEAM_ID,vars.DEFAULT_TEAM_NAME,plan.installationId]);
     const id=state.resources['d1:auth'].id;
     await cf.query(id,'UPDATE auth_login_email_policy SET mode = ?, allowed_domains_json = ?, updated_at = CURRENT_TIMESTAMP WHERE id = 1',['company_email_only',JSON.stringify(plan.config.identity.allowedEmailDomains)]);
     if(!state.deployedRelease){const hash=createHash('sha256').update(vault.OWNER_CLAIM_TOKEN).digest('base64url'),now=Math.floor(Date.now()/1000);await cf.query(id,`INSERT INTO workspace_bootstrap_claim(id,token_hash,email,expires_at,created_at) SELECT 1,?,?,?,? WHERE NOT EXISTS(SELECT 1 FROM workspace_ownership) ON CONFLICT(id) DO NOTHING`,[hash,plan.config.identity.ownerEmail,now+86400,now]);}

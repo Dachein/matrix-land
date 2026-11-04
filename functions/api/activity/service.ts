@@ -1,3 +1,4 @@
+import { platformBrandFromEnv } from "../../../src/shared/platformBrand.ts";
 import type { ActivityEvent, ActivityScenario, PortalCatalog } from "../../../src/shared/types";
 import {
   schedulePortalLiveEvent,
@@ -17,6 +18,7 @@ import { cacheableUserAvatarUrl } from "../users/avatar.ts";
 type CurrentUser = PortalCatalog["currentUser"];
 
 type ActivityEnv = PortalLivePublisherEnv & {
+  PLATFORM_BRAND_JSON?: string;
   DB?: D1Database;
   DEFAULT_TEAM_ID?: string;
 };
@@ -87,9 +89,9 @@ export function createActivityApi<TEnv extends ActivityEnv>(deps: ActivityDeps<T
         target: {
           type: "community",
           id: "default",
-          title: "Frontier Workspace 社区"
+          title: `${platformBrandFromEnv(context.env).name} ${platformBrandFromEnv(context.env).defaultLocale === "en" ? "community" : "社区"}`
         },
-        summary: `${currentUser.name} 新加入了社区`,
+        summary: platformBrandFromEnv(context.env).defaultLocale === "en" ? `${currentUser.name} joined the community` : `${currentUser.name} 新加入了社区`,
         href: "#/community",
         teamId,
         sourceEventId: `community.member.joined:${currentUser.id}`
@@ -108,7 +110,7 @@ export function createActivityApi<TEnv extends ActivityEnv>(deps: ActivityDeps<T
       const actionType = normalizeAgentActivityActionType(body.actionType);
       const action = readOptionalString(body.action);
       const summary = readOptionalString(body.summary)
-        ?? (action ? `${agentName} ${action}` : `${agentName} 提交了一条操作动态`);
+        ?? (action ? `${agentName} ${action}` : (platformBrandFromEnv(context.env).defaultLocale === "en" ? `${agentName} submitted an activity update` : `${agentName} 提交了一条操作动态`));
       const sourceEventId = readOptionalString(body.sourceEventId);
 
       const eventId = await emitActivityEvent(db, {

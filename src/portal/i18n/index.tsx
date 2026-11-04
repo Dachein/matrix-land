@@ -1,4 +1,5 @@
-import { usePlatformBrand } from "../brand/PlatformBrandProvider";
+import { usePlatformBrand, usePlatformBrandReady } from "../brand/PlatformBrandProvider";
+import { initialInstallationLocale } from "../../shared/installationLocale";
 import {
   createContext,
   useCallback,
@@ -36,8 +37,13 @@ const storageKey = "workspace-ai:locale";
 const I18nContext = createContext<I18nContextValue | undefined>(undefined);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
+  const ready = usePlatformBrandReady();
+  return ready ? <ReadyI18nProvider>{children}</ReadyI18nProvider> : <I18nBootstrap failed={false} />;
+}
+
+function ReadyI18nProvider({ children }: { children: ReactNode }) {
   const brand = usePlatformBrand();
-  const [initialLocale] = useState<Locale>(() => detectInitialLocale());
+  const [initialLocale] = useState<Locale>(() => detectInitialLocale(brand.defaultLocale));
   const [loadedLocale, setLoadedLocale] = useState<LoadedLocale | undefined>(() => {
     const resource = readLoadedLocaleResource(initialLocale);
     return resource ? { locale: initialLocale, resource } : undefined;
@@ -146,18 +152,16 @@ export function normalizeLocale(value?: string | null): Locale {
   return defaultLocale;
 }
 
-export function detectInitialLocale(): Locale {
+export function detectInitialLocale(installationDefault?: Locale): Locale {
+  let savedLocale: string | null = null;
   try {
-    const savedLocale = window.localStorage.getItem(storageKey);
-    if (savedLocale) {
-      return normalizeLocale(savedLocale);
-    }
+    savedLocale = window.localStorage.getItem(storageKey);
   } catch {
     // Fall back to browser preferences when storage is unavailable.
   }
 
   const browserLocale = window.navigator.languages?.[0] ?? window.navigator.language;
-  return normalizeLocale(browserLocale);
+  return initialInstallationLocale(savedLocale, installationDefault, browserLocale);
 }
 
 function translate(resource: TranslationResource, key: TranslationKey, values: TranslationValues = {}) {

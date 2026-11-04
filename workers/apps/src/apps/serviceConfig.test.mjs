@@ -172,7 +172,7 @@ describe("APPS app capability config", () => {
     assert.equal(messages.length, 1);
     assert.equal(messages[0].to, principal.email);
     assert.equal(messages[0].cc, undefined);
-    assert.equal(messages[0].subject, "[Frontier Workspace] 应用创建成功 · <Test & App>");
+    assert.equal(messages[0].subject, "[Matrix land] 应用创建成功 · <Test & App>");
     assert.ok(messages[0].text.includes(app.productionUrl));
     assert.doesNotMatch(messages[0].text, /example-org|办公室允许|尖沙咀/i);
     assert.ok(messages[0].html.includes(`应用域名：${new URL(app.productionUrl).hostname}`));

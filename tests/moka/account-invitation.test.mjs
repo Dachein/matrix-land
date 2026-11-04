@@ -107,7 +107,7 @@ test("HTML escapes employee data and uses the configured installation", () => {
   const html = renderInvitationEmail('<script>alert(1)</script>', "person@example.com", "https://work.example.com").html;
   assert.ok(!html.includes("<script>")); assert.ok(html.includes("&lt;script&gt;"));
   assert.ok(html.includes('href="https://work.example.com/"'));
-  assert.match(html, /Frontier Workspace/);
+  assert.match(html, /Matrix land/);
   assert.doesNotMatch(html, /https:\/\/ai\.example\.invalid/);
 });
 

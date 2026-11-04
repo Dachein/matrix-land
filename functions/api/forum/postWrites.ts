@@ -160,6 +160,7 @@ export function appendForumMentionInserts(
   options: {
     actorUserId: string;
     actorName?: string;
+    defaultLocale?: "zh-CN" | "en";
     notificationActorUserId?: string | null;
     mentions: ForumMentionTarget[];
     notificationUserIds?: string[];
@@ -206,7 +207,9 @@ export function appendForumMentionInserts(
         parentId: options.topicId,
         parentType: "forum_topic",
         recipientUserId: mention.userId,
-        summary: `${options.actorName || "有人"} 提到了你${options.topicTitle ? `：《${options.topicTitle}》` : ""}`
+        summary: options.defaultLocale === "en"
+          ? `${options.actorName || "Someone"} mentioned you${options.topicTitle ? ` in "${options.topicTitle}"` : ""}`
+          : `${options.actorName || "有人"} 提到了你${options.topicTitle ? `：《${options.topicTitle}》` : ""}`
       });
       notificationIds.push(notification.id);
       statements.push(

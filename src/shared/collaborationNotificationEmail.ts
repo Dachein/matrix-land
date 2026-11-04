@@ -68,6 +68,15 @@ const notificationCopy: Record<CollaborationNotificationKind, {
   }
 };
 
+const englishCopy: typeof notificationCopy = {
+  app_created: { badge: "App created", cta: "View app", title: "Your app has been created" },
+  collaborator_added: { badge: "Collaboration invitation", cta: "View shared content", title: "You have been added as a collaborator" },
+  mention: { badge: "Mention", cta: "View mention", title: "You were mentioned" },
+  contribution_awarded: { badge: "Community contribution", cta: "View contribution", title: "Your contribution was recognized" },
+  visibility_granted: { badge: "Access granted", cta: "View content", title: "You have been granted access" }
+};
+const englishResourceLabels: typeof resourceLabels = { app: "app", forum: "discussion", knowledge: "knowledge resource" };
+
 export function canReceiveCollaborationNotificationEmail(status: string) {
   return status === "active" || status === "invited";
 }
@@ -81,48 +90,51 @@ export function renderCollaborationNotificationEmail(
   }
 
   const brand = resolvePlatformBrand(brandInput);
-  const copy = notificationCopy[input.kind];
-  const resourceLabel = resourceLabels[input.resourceType];
-  const actorName = cleanSingleLine(input.actorName, 120) || "一位同事";
+  const en = brand.defaultLocale === "en";
+  const copy = (en ? englishCopy : notificationCopy)[input.kind];
+  const resourceLabel = (en ? englishResourceLabels : resourceLabels)[input.resourceType];
+  const actorName = cleanSingleLine(input.actorName, 120) || (en ? "A colleague" : "一位同事");
   const recipientName = cleanSingleLine(input.recipientName, 120);
-  const resourceName = cleanSingleLine(input.resourceName, 180) || `未命名${resourceLabel}`;
-  const permissionLabel = cleanSingleLine(input.permissionLabel, 80) || defaultPermissionLabel(input.kind);
+  const resourceName = cleanSingleLine(input.resourceName, 180) || (en ? `Untitled ${resourceLabel}` : `未命名${resourceLabel}`);
+  const rawPermission = cleanSingleLine(input.permissionLabel, 80);
+  const permissionTranslations: Record<string, string> = { "协作者": "Collaborator", "可查看": "Can view", "社区贡献": "Community contribution", "被提及人": "Mentioned", "可编辑": "Can edit", "可管理": "Can manage" };
+  const permissionLabel = en ? ((permissionTranslations[rawPermission] ?? rawPermission.replace(/积分/g, "points")) || englishPermissionLabel(input.kind)) : rawPermission || defaultPermissionLabel(input.kind);
   const showPermission = input.kind !== "mention" && input.kind !== "contribution_awarded" && input.kind !== "app_created";
   const excerpt = cleanMultiline(input.excerpt, MAX_EXCERPT_LENGTH);
   const resourceUrl = safeHttpUrl(input.resourceUrl);
-  const resourceCardLabel = input.kind === "app_created" ? "应用域名" : resourceLabel;
+  const resourceCardLabel = input.kind === "app_created" ? (en ? "App domain" : "应用域名") : resourceLabel;
   const resourceCardValue = input.kind === "app_created" ? new URL(resourceUrl).hostname : resourceName;
-  const actionSentence = actionSentenceFor(input.kind, actorName, resourceLabel, resourceName);
+  const actionSentence = actionSentenceFor(input.kind, actorName, resourceLabel, resourceName, en);
   const subject = `[${brand.name}] ${copy.title} · ${resourceName}`;
-  const preheader = truncate(`${actionSentence} 点击邮件即可查看。`, 180);
-  const greeting = recipientName ? `${recipientName}，你好` : "你好";
-  const footer = `这是一封由 ${brand.name} 自动发送的${input.kind === "app_created" ? "应用创建" : "协作"}通知，请勿直接回复。`;
-  const footerNotice = input.kind === "app_created"
+  const preheader = truncate(`${actionSentence} ${en ? "Open this email to view the details." : "点击邮件即可查看。"}`, 180);
+  const greeting = en ? (recipientName ? `Hi ${recipientName}` : "Hello") : recipientName ? `${recipientName}，你好` : "你好";
+  const footer = en ? `This ${input.kind === "app_created" ? "app creation" : "collaboration"} notification was sent automatically by ${brand.name}. Please do not reply.` : `这是一封由 ${brand.name} 自动发送的${input.kind === "app_created" ? "应用创建" : "协作"}通知，请勿直接回复。`;
+  const footerNotice = en ? (input.kind === "app_created" ? "The app record has been created. Resources may still be initializing; the app has not necessarily been deployed or published." : "Only invited or active workspace members receive this email. Disabled accounts do not receive notifications.") : input.kind === "app_created"
     ? "应用记录已创建，资源可能仍在初始化。创建成功不代表应用已部署上线。"
     : "只有受邀或已激活的组织成员会收到此邮件；停用账号不会收到通知。";
   const invitedNotice = input.recipientStatus === "invited"
-    ? `你的 ${brand.name} 账号仍处于邀请状态，相关权限已经为你保留。打开链接并完成首次登录后即可使用。`
+    ? en ? `Your ${brand.name} account is still invited. Your access is reserved; open the link and sign in for the first time to activate it.` : `你的 ${brand.name} 账号仍处于邀请状态，相关权限已经为你保留。打开链接并完成首次登录后即可使用。`
     : "";
 
   const text = [
     copy.title,
     "",
-    `${greeting}：`,
+    `${greeting}${en ? "," : "："}`,
     actionSentence,
     "",
-    `${resourceCardLabel}：${resourceCardValue}`,
-    ...(showPermission ? [`你的权限：${permissionLabel}`] : []),
-    ...(excerpt ? ["", `相关内容：${excerpt}`] : []),
+    `${resourceCardLabel}${en ? ": " : "："}${resourceCardValue}`,
+    ...(showPermission ? [`${en ? "Your access: " : "你的权限："}${permissionLabel}`] : []),
+    ...(excerpt ? ["", `${en ? "Related content: " : "相关内容："}${excerpt}`] : []),
     ...(invitedNotice ? ["", invitedNotice] : []),
     "",
-    `${copy.cta}：${resourceUrl}`,
+    `${copy.cta}${en ? ": " : "："}${resourceUrl}`,
     "",
     footer,
     ...(input.kind === "app_created" ? [footerNotice] : [])
   ].join("\n");
 
   const html = `<!doctype html>
-<html lang="zh-Hans">
+<html lang="${en ? "en" : "zh-Hans"}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="supported-color-schemes" content="light">
@@ -143,16 +155,16 @@ export function renderCollaborationNotificationEmail(
             <td style="padding:32px 28px">
               <div style="display:inline-block;padding:6px 10px;border-left:5px solid ${brand.accentColor};background:#f2efe6;color:${INK_COLOR};font-size:12px;line-height:16px;font-weight:800">${escapeHtml(copy.badge)}</div>
               <h1 style="font-family:Georgia,'Songti SC',serif;font-weight:500;margin:18px 0 12px;font-size:28px;line-height:36px;color:${INK_COLOR};font-weight:800">${escapeHtml(copy.title)}</h1>
-              <p style="margin:0 0 10px;font-size:16px;line-height:26px;color:#44403c">${escapeHtml(greeting)}：</p>
+              <p style="margin:0 0 10px;font-size:16px;line-height:26px;color:#44403c">${escapeHtml(greeting)}${en ? "," : "："}</p>
               <p style="margin:0 0 24px;font-size:16px;line-height:26px;color:#44403c">${escapeHtml(actionSentence)}</p>
 
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="width:100%;background:#faf9f3;border:1px solid #c9c4ba">
                 <tr>
                   <td style="padding:18px 20px">
                     ${input.kind === "app_created"
-                      ? `<div style="font-size:17px;line-height:25px;font-weight:800;color:${INK_COLOR};overflow-wrap:anywhere">应用域名：${escapeHtml(resourceCardValue)}</div>`
+                      ? `<div style="font-size:17px;line-height:25px;font-weight:800;color:${INK_COLOR};overflow-wrap:anywhere">${en ? "App domain: " : "应用域名："}${escapeHtml(resourceCardValue)}</div>`
                       : `<div style="font-size:12px;line-height:18px;color:#78716c">${escapeHtml(resourceLabel)}</div><div style="margin-top:3px;font-size:17px;line-height:25px;font-weight:800;color:${INK_COLOR}">${escapeHtml(resourceName)}</div>`}
-                    ${showPermission ? `<div style="margin-top:10px;font-size:13px;line-height:20px;color:#57534e">你的权限：<strong>${escapeHtml(permissionLabel)}</strong></div>` : ""}
+                    ${showPermission ? `<div style="margin-top:10px;font-size:13px;line-height:20px;color:#57534e">${en ? "Your access: " : "你的权限："}<strong>${escapeHtml(permissionLabel)}</strong></div>` : ""}
                   </td>
                 </tr>
               </table>
@@ -189,8 +201,16 @@ function actionSentenceFor(
   kind: CollaborationNotificationKind,
   actorName: string,
   resourceLabel: string,
-  resourceName: string
+  resourceName: string,
+  en = false
 ) {
+  if (en) {
+    if (kind === "app_created") return `Your app “${resourceName}” has been created.`;
+    if (kind === "mention") return `${actorName} mentioned you in the ${resourceLabel} “${resourceName}”.`;
+    if (kind === "collaborator_added") return `${actorName} added you as a collaborator on the ${resourceLabel} “${resourceName}”.`;
+    if (kind === "contribution_awarded") return `${actorName} recognized your contribution to the ${resourceLabel} “${resourceName}”.`;
+    return `${actorName} granted you access to the ${resourceLabel} “${resourceName}”.`;
+  }
   if (kind === "app_created") {
     return `你的应用“${resourceName}”已创建成功。`;
   }
@@ -211,6 +231,10 @@ function defaultPermissionLabel(kind: CollaborationNotificationKind) {
   if (kind === "visibility_granted") return "可查看";
   if (kind === "contribution_awarded") return "社区贡献";
   return "被提及人";
+}
+
+function englishPermissionLabel(kind: CollaborationNotificationKind) {
+  return kind === "collaborator_added" ? "Collaborator" : kind === "visibility_granted" ? "Can view" : kind === "contribution_awarded" ? "Community contribution" : "Mentioned";
 }
 
 function cleanSingleLine(value: unknown, maxLength: number) {

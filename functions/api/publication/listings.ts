@@ -1,3 +1,4 @@
+import { platformBrandFromEnv } from "../../../src/shared/platformBrand.ts";
 import { isPublicHomeApp } from "../../../src/shared/homeApplications.ts";
 import type { HomeAppDisplay, PortalCatalog } from "../../../src/shared/types.ts";
 import { normalizeMarketCategoryName } from "../../../src/shared/marketCategories.ts";
@@ -40,6 +41,7 @@ type CurrentUser = PortalCatalog["currentUser"];
 type PublicationBehaviorAction = "app.visit_url" | "skill.add_to_agent" | "skill.download_zip";
 
 type PublicationListingsEnv = PortalLivePublisherEnv & {
+  PLATFORM_BRAND_JSON?: string;
   AUTH_SERVICE_TOKEN?: string;
   AUTH_WORKER_URL?: string;
   DB?: D1Database;
@@ -674,7 +676,7 @@ export function createPublicationListingsApi<TEnv extends PublicationListingsEnv
             parentType: "publication_listing",
             recipientUserId,
             id: notificationId,
-            summary: `APPS「${name}」审核已通过`
+            summary: platformBrandFromEnv(context.env).defaultLocale === "en" ? `"${name}" has been approved` : `APPS「${name}」审核已通过`
           }));
         });
       }

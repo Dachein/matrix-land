@@ -20,7 +20,7 @@ function notifications(brand) {
 test("all seven built-in email kinds have neutral defaults and configurable identity", () => {
   for (const email of notifications(undefined)) {
     assert.doesNotMatch(JSON.stringify(email), /办公室允许访问/i);
-    assert.match(email.html, /Frontier Workspace/);
+    assert.match(email.html, /Matrix land/);
   }
   for (const email of notifications(companyBrand)) {
     assert.match(email.subject, /Example & Partners/);
@@ -72,7 +72,7 @@ test("OTP is only in the message body and rendered with valid limits", () => {
 });
 
 test("invalid deployment JSON fails explicitly without revealing its values", () => {
-  assert.equal(platformBrandFromEnv({}).name, "Frontier Workspace");
+  assert.equal(platformBrandFromEnv({}).name, "Matrix land");
   assert.deepEqual(platformBrandFromEnv({ PLATFORM_BRAND_JSON: JSON.stringify(companyBrand) }), companyBrand);
   for (const value of ["", "not-json", "null", "[]", JSON.stringify({ token: "private-value" })]) {
     assert.throws(() => platformBrandFromEnv({ PLATFORM_BRAND_JSON: value }), (error) => {
@@ -80,4 +80,17 @@ test("invalid deployment JSON fails explicitly without revealing its values", ()
       return true;
     });
   }
+});
+
+test('installation language localizes all seven built-in emails, including body and HTML language',()=>{
+ const brand=resolvePlatformBrand({name:'Matrix land',logoText:'ML',defaultLocale:'en'});
+ for(const email of notifications(brand)){
+  assert.match(email.html,/<html lang="en"/);
+  assert.doesNotMatch(email.subject+email.text+email.html,/[\u3400-\u9fff]/);
+  assert.match(email.html,/Please do not reply/);
+ }
+ const otp=renderLoginCodeEmail('123456',61,3,brand);
+ assert.match(otp.text,/2 minutes/);assert.match(otp.text,/3 attempts/);assert.doesNotMatch(otp.subject,/123456/);
+ assert.throws(()=>resolvePlatformBrand({defaultLocale:'fr'}),/invalid_platform_locale/);
+ assert.equal(resolvePlatformBrand({}).defaultLocale,'zh-CN');
 });

@@ -8,7 +8,7 @@ import { serveSetup } from './local-server.mjs';
 const root=fileURLToPath(new URL('../../../',import.meta.url));
 const [action='serve',...args]=process.argv.slice(2);
 try{
- if(action==='serve'){const {url}=await serveSetup(root,{port:Number(args[0]??5194)});process.stdout.write(`Frontier Workspace Setup\nOpen this one-time local link:\n${url}\nKeep this process open during installation.\n`);}
+ if(action==='serve'){const {url}=await serveSetup(root,{port:Number(args[0]??5194)});process.stdout.write(`Matrix land Setup\nOpen this one-time local link:\n${url}\nKeep this process open during installation.\n`);}
  else if(action==='plan'||action==='upgrade'){
   if(!args[0])throw new Error('Usage: setup:plan -- installation.json [plan.json]; upgrade -- installation.json [upgrade-plan.json]');
   const plan=await buildPlan(JSON.parse(await readFile(resolve(args[0]),'utf8')),root,{upgrade:action==='upgrade'});const output=resolve(args[1]??`${action}-plan.json`);await atomicJson(output,plan);process.stdout.write(`Plan ${plan.id}\n${plan.steps.map(x=>`${x.id}: ${x.action}`).join('\n')}\nSaved ${output}\nReview, then: npm run setup:apply -- ${output} ${plan.id}\n`);

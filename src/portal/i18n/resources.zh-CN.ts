@@ -25,7 +25,7 @@ export const zhCN = {
   "design.palette.teal": "湖青",
   "design.palette.indigo": "靛蓝",
 
-  "design.eyebrow": "FRONTIER WORKSPACE · 设计系统",
+  "design.eyebrow": "{platformName} · 设计系统",
   "design.heading": "同一套基础，\n每一家企业的品牌。",
   "design.intro": "先把组件、规则和状态做好，再让每一个页面自然一致。",
   "design.preview": "组件预览",
@@ -33,6 +33,7 @@ export const zhCN = {
   "design.settings": "品牌设置",
   "design.settingsBody": "只配置品牌表达，系统负责可读性与一致性。",
   "design.name": "平台名称",
+  "design.defaultLocale": "默认语言（界面与系统邮件）",
   "design.mark": "文字标记",
   "design.primary": "品牌主色",
   "design.accent": "品牌配套色",

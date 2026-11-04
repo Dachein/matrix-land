@@ -20,7 +20,7 @@ describe("collaboration notification email", () => {
       permissionLabel: "协作者"
     });
 
-    assert.equal(email.subject, "[Frontier Workspace] 你已被添加为协作者 · Investment Research");
+    assert.equal(email.subject, "[Matrix land] 你已被添加为协作者 · Investment Research");
     assert.match(email.preheader, /Grace <Admin>/);
     assert.match(email.html, /账号仍处于邀请状态/);
     assert.match(email.html, /Grace &lt;Admin&gt;/);
@@ -59,7 +59,7 @@ describe("collaboration notification email", () => {
     assert.doesNotMatch(email.text, /你的权限|被提及人/);
     assert.match(email.html, /#66765b/);
     assert.match(email.html, /bgcolor="#e85e19"/);
-    assert.match(email.html, />FW<\/td>/);
+    assert.match(email.html, />ML<\/td>/);
     assert.doesNotMatch(email.html, /border-bottom:4px solid #b7f43a/);
     assert.doesNotMatch(email.html, /#ff5a1f/);
     assert.doesNotMatch(email.html, /#9f1239/);
@@ -78,7 +78,7 @@ describe("collaboration notification email", () => {
       resourceUrl: "https://portal.example.com/#/community/topic-1"
     });
 
-    assert.equal(email.subject, "[Frontier Workspace] 你获得了社区贡献 · 模型调用报错排查");
+    assert.equal(email.subject, "[Matrix land] 你获得了社区贡献 · 模型调用报错排查");
     assert.match(email.text, /社区贡献/);
     assert.match(email.text, /修复重大缺陷/);
     assert.doesNotMatch(email.text, /你的权限/);

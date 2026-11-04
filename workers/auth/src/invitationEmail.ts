@@ -43,7 +43,7 @@ export async function deliverUserInvitations(env: Env, userIds?: string[]) {
       const result = await env.AUTH_EMAIL.send({
         from,
         to,
-        ...renderInvitationEmail(user.name || "同事", to, portalUrl, brand)
+        ...renderInvitationEmail(user.name || (brand.defaultLocale === "en" ? "there" : "同事"), to, portalUrl, brand)
       });
       if (result?.status?.toLowerCase() === "failed") {
         await env.AUTH_DB.prepare(`UPDATE auth_user_invitation_emails SET status='failed',error_code='provider_rejected',updated_at=CURRENT_TIMESTAMP WHERE user_id=?`).bind(user_id).run();

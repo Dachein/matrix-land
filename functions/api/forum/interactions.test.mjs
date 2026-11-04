@@ -483,7 +483,7 @@ describe("forum interaction contracts", () => {
       assert.equal(requests[0].init.headers.Authorization, "Bearer portal-auth-token");
       const payload = JSON.parse(requests[0].init.body);
       assert.equal(payload.to, "ada@example.test");
-      assert.equal(payload.subject, "[Frontier Workspace] 你获得了社区贡献 · 模型调用报错排查");
+      assert.equal(payload.subject, "[Matrix land] 你获得了社区贡献 · 模型调用报错排查");
     } finally {
       globalThis.fetch = originalFetch;
     }

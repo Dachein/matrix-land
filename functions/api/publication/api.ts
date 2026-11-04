@@ -1,3 +1,4 @@
+import { platformBrandFromEnv } from "../../../src/shared/platformBrand.ts";
 import type { Env } from "../env.ts";
 import { audit } from "../audit.ts";
 import { emitActivityEvent } from "../activity/service.ts";
@@ -85,6 +86,7 @@ export function createPublicationServices() {
       requireDb,
       requireText,
       refreshUserJourneyState: (db, userId, publishContext) => recomputePortalUserJourney(db, userId, {
+        defaultLocale: platformBrandFromEnv(publishContext?.env ?? {}).defaultLocale,
         emitActivityEvent: (activityDb, input) => emitActivityEvent(activityDb, input, publishContext)
       }),
       resolveCurrentUser,

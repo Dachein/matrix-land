@@ -146,3 +146,10 @@ test('fresh core includes every built-in discussion category without user data',
   assert.equal(db.prepare('SELECT count(*) AS n FROM users').get().n,0);
  }finally{db.close();}
 });
+test('installation preserves official language across plan, runtime and upgrade configuration',async t=>{
+ const root=await fixture(t),plan=await buildPlan({...example,brand:{...example.brand,defaultLocale:'en'}},root);
+ const state={resources:Object.fromEntries(plan.resources.map(r=>[`${r.kind}:${r.key}`,{name:r.name,id:`test-${r.key}`}]))};
+ for(const name of plan.services)assert.equal(JSON.parse(renderWorker(name,plan,state,root).vars.PLATFORM_BRAND_JSON).defaultLocale,'en');
+ assert.equal((await buildPlan(plan.config,root,{upgrade:true})).config.brand.defaultLocale,'en');
+ assert.throws(()=>resolveConfig({...example,brand:{...example.brand,defaultLocale:'de'}}),/invalid_platform_locale/);
+});

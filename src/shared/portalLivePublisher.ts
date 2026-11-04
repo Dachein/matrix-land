@@ -3,6 +3,7 @@ export type PortalLiveEventLookup =
   | { notificationId: string };
 
 export type PortalLivePublisherEnv = {
+  PLATFORM_BRAND_JSON?: string;
   LIVE_PUBLISH_TOKEN?: string;
   LIVE_WORKER_URL?: string;
   PORTAL_LIVE_WORKSPACE_ID?: string;

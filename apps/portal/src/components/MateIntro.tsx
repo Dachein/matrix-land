@@ -1,3 +1,4 @@
+import { usePlatformBrand } from "../../../../src/portal/brand/PlatformBrandProvider";
 import { ArrowRight, Check } from "lucide-react";
 import { useState, type CSSProperties, type FocusEvent, type PointerEvent } from "react";
 import { MATE_PET_OPTIONS, matePetMotionUrl, type MatePetId, type MatePetMotion } from "../../../../src/shared/matePet";
@@ -22,6 +23,7 @@ export function MateIntro({ zh, selectedAvatar, onSelect, onNext, onWeixinCreate
   onNext: () => void;
   onWeixinCreate: () => void;
 }) {
+  const brand = usePlatformBrand();
   const [focusedId, setFocusedId] = useState<MatePetId | null>(null);
   const [motionSettings] = useState(() => MATE_PET_OPTIONS.map(() => ({
     duration: 4.2 + Math.random() * 3.8,

@@ -1,0 +1,17 @@
+/* The same native dropdown in login, workspace, previews and administration. */
+.languageSwitcherLine { width: 96px; min-width: 80px; flex-shrink: 0; }
+.languageSwitcherLine [data-ui="select-shell"] { display: block; position: relative; }
+.languageSwitcherLine select.selectInput {
+  display: block; width: 100%; min-height: 40px; padding: 8px 24px 8px 0;
+  border: 0; border-bottom: 1px solid var(--portal-line); border-radius: 0;
+  background: transparent; color: var(--portal-ink); box-shadow: none;
+  font: inherit; font-size: 12px; font-weight: 400; line-height: 1.4; cursor: pointer; appearance: none;
+}
+.languageSwitcherLine select.selectInput:not(:disabled):hover { border-bottom-color: var(--portal-muted); }
+.languageSwitcherLine select.selectInput:not(:disabled):focus {
+  outline: 0; box-shadow: none; border-bottom-color: var(--portal-focus-ring);
+}
+.languageSwitcherLine [data-ui="select-chevron"] {
+  position: absolute; right: 0; top: 50%; width: 16px; height: 16px;
+  transform: translateY(-50%); pointer-events: none; color: var(--portal-muted);
+}

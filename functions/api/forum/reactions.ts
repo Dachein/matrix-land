@@ -1,3 +1,4 @@
+import { platformBrandFromEnv } from "../../../src/shared/platformBrand.ts";
 import { normalizeForumReaction } from "./normalizers.ts";
 import type { ForumContext, ForumDeps, ForumEnv } from "./types.ts";
 import { readNumber } from "./utils.ts";
@@ -87,7 +88,7 @@ export function createForumReactionApi<TEnv extends ForumEnv>(deps: ForumDeps<TE
             id: topicId,
             title: rootPost.topicTitle
           },
-          summary: `${currentUser.name} 回应了帖子《${rootPost.topicTitle}》`,
+          summary: platformBrandFromEnv(context.env).defaultLocale === "en" ? `${currentUser.name} reacted to "${rootPost.topicTitle}"` : `${currentUser.name} 回应了帖子《${rootPost.topicTitle}》`,
           href: `#/community/${topicId}`,
           teamId,
           metadata: {
@@ -195,7 +196,7 @@ export function createForumReactionApi<TEnv extends ForumEnv>(deps: ForumDeps<TE
             id: topicId,
             title: reply.topicTitle
           },
-          summary: `${currentUser.name} 回应了帖子《${reply.topicTitle}》`,
+          summary: platformBrandFromEnv(context.env).defaultLocale === "en" ? `${currentUser.name} reacted to "${reply.topicTitle}"` : `${currentUser.name} 回应了帖子《${reply.topicTitle}》`,
           href: `#/community/${topicId}`,
           teamId,
           metadata: {

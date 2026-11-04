@@ -7,7 +7,7 @@
     "dev": "vite --host 127.0.0.1",
     "build": "npm run sdk:build && tsc -p apps/portal/tsconfig.json && vite build",
     "sdk:build": "npm --prefix packages/mate-sdk run build",
-    "typecheck": "tsc --noEmit && tsc -p apps/portal/tsconfig.json --noEmit",
+    "typecheck": "npm run sdk:build && tsc --noEmit && tsc -p apps/portal/tsconfig.json --noEmit",
     "test": "node scripts/test.mjs",
     "test:portal": "node scripts/test.mjs portal",
     "test:api": "node scripts/test.mjs api",
